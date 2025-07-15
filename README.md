@@ -3,25 +3,32 @@
 
 An ontology for describing authentication, HPC resources, and system interactions in an environment integrating **Keycloak**, **Digital Twins**, and **HPC job scheduling (Buffers)**.
 
-## 🔍 Description
+## 🔍 Ontology concepts
 
 This ontology models key entities and relationships involved in ExA-AToW (NumPEx PEPR):
 
-- **HPC resources** (e.g., CPU, GPU, RAM)
-- **Energy consumption**
-- **Digital Twin interactions**
-- **Dynamic resource allocation** through Buffers
-- **Workflows**
-- **Authentication**
+Main entities under the ontology (list to be discuss) :
 
-and:
-- **Physical Characteristics**: including objects not directly linked to any of the main entities, but being a physical property of them.
+- **User**: Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors.
+- **Authentication**: Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities.
+- **Workflow**: oncept grouping workflow-related entities such as execution steps, workflow engines, process definitions, dependencies, and orchestration strategies.
+- **Job**: Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments.
+- **HPC Resource**: onceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components.
+- **ProcessorIndicatorEstimator**: Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact.
+- **PhysicalCharacteristic**: Domain concept capturing the physical and structural properties of HPC components, such as memory capacity, die size, material lifetime, and energy efficiency attributes.
+
 
 The ontology is serialized in Turtle (TTL) and can be used in semantic web applications and Linked Open Data (LOD) environments.
 
-## Creation of the ontology->  Exa-AToW partners:
-- main_classes.json file describe each of the main aspects (entities) of the Exa-AToW project. 
-For each aspect of the project, there is a json file fill the information.
+## Creation of the ontology -> For Exa-AToW partners! 
+### main_classes.json
+  File that describe each of the main aspects (entities) of the Exa-AToW project. 
+
+### sub_HPC_classes.json
+  JSON file describing the HPC Resources main class. 
+  Each area of the project should ahve a JSON filw with this information.
+
+  **Each partners should fill the information needed for their field**
 
 example of entry (if entry is in the correct json file, then no need to add the parent_class):
 ```
@@ -66,7 +73,11 @@ To visualize the ontology:
 ```
 # After loading the ontology:
 
-onto.visualization()
+onto.visualize_graph(
+    output_file="my_ontology_visualization.html",
+    height="600px",
+    physics=False  # Disable physics for static layout
+
 # open the html file with a browser
 
 ```
