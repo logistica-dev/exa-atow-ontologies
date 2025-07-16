@@ -1,7 +1,7 @@
 # Exa-AToW_onto
 # HPC Authentication Ontology
 
-An ontology for describing authentication, HPC resources, and system interactions in an environment integrating **Keycloak**, **Digital Twins**, and **HPC job scheduling (Buffers)**.
+An ontology for describing the different aspects of the Exa-AToW project including HPC resources, system interactions and .
 
 ## 🔍 Ontology concepts
 
@@ -13,7 +13,7 @@ Main entities under the ontology (list to be discuss) :
 - **Authentication**: Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities.
 - **Workflow**: oncept grouping workflow-related entities such as execution steps, workflow engines, process definitions, dependencies, and orchestration strategies.
 - **Job**: Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments.
-- **HPC Resource**: onceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components.
+- **HPC Resource**: Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components.
 - **ProcessorIndicatorEstimator**: Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact.
 - **PhysicalCharacteristic**: Domain concept capturing the physical and structural properties of HPC components, such as memory capacity, die size, material lifetime, and energy efficiency attributes.
 
