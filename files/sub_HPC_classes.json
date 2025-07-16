@@ -1,0 +1,194 @@
+[
+  {
+    "id": "Supercomputer",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "Supercomputer",
+      "fr": "Superordinateur"
+    },
+    "comment": {
+      "en": "A high-performance computing system composed of multiple interconnected compute and storage components.",
+      "fr": "Un système de calcul haute performance composé de plusieurs composants de calcul et de stockage interconnectés."
+    }
+  },
+  {
+    "id": "Partition",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "Partition",
+      "fr": "Partition"
+    },
+    "comment": {
+      "en": "A logical grouping of compute nodes within a supercomputer that shares hardware characteristics or workload type, often mapped to SLURM partitions.",
+      "fr": "Un regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, souvent associé à des partitions SLURM."
+    }
+  },
+  {
+    "id": "ComputeNode",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "Compute Node",
+      "fr": "Nœud de calcul"
+    },
+    "comment": {
+      "en": "A physical or virtual machine in an HPC system that executes computational jobs.",
+      "fr": "Une machine physique ou virtuelle dans un système HPC qui exécute des tâches de calcul."
+    }
+  },
+  {
+    "id": "ScalarNode",
+    "parent_class": "ComputeNode",
+    "pref_label": {
+      "en": "Scalar Node",
+      "fr": "Nœud scalaire"
+    },
+    "comment": {
+      "en": "A compute node equipped with general-purpose CPUs only.",
+      "fr": "Un nœud de calcul équipé uniquement de processeurs généraux (CPU)."
+    }
+  },
+  {
+    "id": "AcceleratedNode",
+    "parent_class": "ComputeNode",
+    "pref_label": {
+      "en": "Accelerated Node",
+      "fr": "Nœud accéléré"
+    },
+    "comment": {
+      "en": "A compute node equipped with both CPUs and accelerators such as GPUs.",
+      "fr": "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."
+    }
+  },
+  {
+    "id": "GPU",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "GPU",
+      "fr": "GPU"
+    },
+    "comment": {
+      "en": "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads.",
+      "fr": "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."
+    }
+  },
+  {
+    "id": "CPU",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "CPU",
+      "fr": "CPU"
+    },
+    "comment": {
+      "en": "The central processing unit responsible for executing general-purpose instructions.",
+      "fr": "L'unité centrale de traitement responsable de l'exécution des instructions générales."
+    }
+  },
+  {
+    "id": "Core",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "Core",
+      "fr": "Cœur"
+    },
+    "comment": {
+      "en": "A processing unit within a CPU or GPU capable of executing tasks concurrently.",
+      "fr": "Une unité de traitement au sein d’un CPU ou GPU capable d’exécuter des tâches simultanément."
+    }
+  },
+  {
+    "id": "RAM",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "RAM",
+      "fr": "Mémoire vive (RAM)"
+    },
+    "comment": {
+      "en": "Volatile memory used by compute nodes for temporary data access during job execution.",
+      "fr": "Mémoire volatile utilisée par les nœuds de calcul pour accéder temporairement aux données pendant l'exécution d'une tâche."
+    }
+  },
+  {
+    "id": "SSD",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "SSD",
+      "fr": "SSD"
+    },
+    "comment": {
+      "en": "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O.",
+      "fr": "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."
+    }
+  },
+  {
+    "id": "HDD",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "HDD",
+      "fr": "Disque dur (HDD)"
+    },
+    "comment": {
+      "en": "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs.",
+      "fr": "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d’E/S inférieure à celle des SSD."
+    }
+  },
+  {
+    "id": "FileSystem",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "File System",
+      "fr": "Système de fichiers"
+    },
+    "comment": {
+      "en": "The shared storage infrastructure used for input/output and checkpoint data in HPC environments.",
+      "fr": "L’infrastructure de stockage partagée utilisée pour les données d’entrée/sortie et les points de sauvegarde dans les environnements HPC."
+    }
+  },
+  {
+    "id": "Interconnect",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "Interconnect",
+      "fr": "Interconnexion"
+    },
+    "comment": {
+      "en": "High-speed network infrastructure enabling communication between compute nodes and system components.",
+      "fr": "Infrastructure réseau à haute vitesse permettant la communication entre les nœuds de calcul et les composants du système."
+    }
+  },
+  {
+    "id": "Rack",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "Rack",
+      "fr": "Baie"
+    },
+    "comment": {
+      "en": "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter.",
+      "fr": "Un châssis physique abritant plusieurs nœuds de calcul et éléments d’infrastructure dans un centre de données."
+    }
+  },
+  {
+    "id": "CoolingSystem",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "Cooling System",
+      "fr": "Système de refroidissement"
+    },
+    "comment": {
+      "en": "The system responsible for maintaining temperature conditions of HPC components to ensure stable operation.",
+      "fr": "Le système responsable du maintien de la température des composants HPC afin de garantir un fonctionnement stable."
+    }
+  },
+  {
+    "id": "EnergyManagement",
+    "parent_class": "HPCResource",
+    "pref_label": {
+      "en": "Energy Management System",
+      "fr": "Système de gestion de l’énergie"
+    },
+    "comment": {
+      "en": "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment.",
+      "fr": "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d’énergie dans l’environnement HPC."
+    }
+  }
+]

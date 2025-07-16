@@ -1,0 +1,79 @@
+[
+  {
+    "id": "User",
+    "pref_label": {
+      "en": "User",
+      "fr": "Utilisateur"
+    },
+    "comment": {
+      "en": "Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors.",
+      "fr": "Concept englobant les individus ou agents qui interagissent avec le système HPC, y compris les attributs d'identité, les rôles, les autorisations et les comportements des utilisateurs."
+    }
+  },
+  {
+    "id": "Authentication",
+    "pref_label": {
+      "en": "Authentication Event",
+      "fr": "Événement d'authentification"
+    },
+    "comment": {
+      "en": "Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities.",
+      "fr": "Concept décrivant tous les aspects de l'authentification, y compris les identifiants, les protocoles d'accès, la validation d'identité et les activités de connexion."
+    }
+  },
+  {
+    "id": "Workflow",
+    "pref_label": {
+      "en": "Workflow",
+      "fr": "Flux de travail"
+    },
+    "comment": {
+      "en": "Concept grouping workflow-related entities such as execution steps, workflow engines, process definitions, dependencies, and orchestration strategies.",
+      "fr": "Concept regroupant les entités liées aux flux de travail comme les étapes d'exécution, les moteurs de flux, les définitions de processus, les dépendances et les stratégies d'orchestration."
+    }
+  },
+  {
+    "id": "Job",
+    "pref_label": {
+      "en": "Job",
+      "fr": "Tâche"
+    },
+    "comment": {
+      "en": "Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments.",
+      "fr": "Concept couvrant les tâches informatiques, les descriptions de tâches, les métadonnées de soumission, les attributs de planification et le comportement à l'exécution dans les environnements HPC."
+    }
+  },
+  {
+    "id": "HPCResource",
+    "pref_label": {
+      "en": "HPC Resource",
+      "fr": "Ressource HPC"
+    },
+    "comment": {
+      "en": "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components.",
+      "fr": "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."
+    }
+  },
+  {
+    "id": "ProcessorIndicatorEstimator",
+    "pref_label": {
+      "en": "Processor Indicator Estimator",
+      "fr": "Estimateur d’indicateurs du processeur"
+    },
+    "comment": {
+      "en": "Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact.",
+      "fr": "Concept regroupant tous les outils, métriques et modèles d’estimation des indicateurs liés au processeur, comme la consommation d’énergie, l’empreinte thermique et l’impact de la taille de la puce."
+    }
+  },
+  {
+    "id": "PhysicalCharacteristic",
+    "pref_label": {
+      "en": "Physical Characteristic",
+      "fr": "Caractéristique physique"
+    },
+    "comment": {
+      "en": "Domain concept capturing the physical and structural properties of HPC components, such as memory capacity, die size, material lifetime, and energy efficiency attributes.",
+      "fr": "Concept représentant les propriétés physiques et structurelles des composants HPC, telles que la capacité mémoire, la taille de la puce, la durée de vie du matériel et les attributs d’efficacité énergétique."
+    }
+  }
+]

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "Workload",
+    "pref_label": {
+      "en": "Workload",
+      "fr": "Charge"
+    },
+    "comment": {
+      "en": "The processing load handled by a CPU or GPU. It affects energy consumption and performance.",
+      "fr": "La charge de traitement gérée par un CPU ou un GPU. Elle influence la consommation d'énergie et les performances."
+    }
+  },
+  {
+    "id": "DieSize",
+    "pref_label": {
+      "en": "Die Size",
+      "fr": "Taille de puce"
+    },
+    "comment": {
+      "en": "The physical area of the CPU or GPU die. Used in impact estimation. Includes a value and a unit.",
+      "fr": "La surface physique de la puce du CPU ou du GPU. Utilisée pour l'estimation d'impact. Comprend une valeur et une unité."
+    }
+  },
+  {
+    "id": "Lifetime",
+    "pref_label": {
+      "en": "Lifetime",
+      "fr": "Durée de vie"
+    },
+    "comment": {
+      "en": "Operational lifespan of an electronic component, such as a server or processor.",
+      "fr": "Durée de vie d’un composant électronique, tel qu’un serveur ou un processeur."
+    }
+  },
+  {
+    "id": "MemoryCapacity",
+    "pref_label": {
+      "en": "Memory Capacity",
+      "fr": "Capacité mémoire"
+    },
+    "comment": {
+      "en": "Amount of data that can be stored in a memory device like RAM, SSD, or HDD.",
+      "fr": "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."
+    }
+  }
+]
