@@ -1,0 +1,287 @@
+@prefix exa-atow: <http://www.exa-atow.org/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+exa-atow:AcceleratedNode a owl:Class ;
+    rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en,
+        "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."@fr ;
+    rdfs:subClassOf exa-atow:ComputeNode ;
+    skos:prefLabel "Accelerated Node"@en,
+        "Nœud accéléré"@fr .
+
+exa-atow:AllocationMethod a owl:Class ;
+    rdfs:comment "Function to distribute embodied impacts across jobs."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Allocation Method"@en .
+
+exa-atow:CarbonFootprint a owl:Class ;
+    rdfs:comment "Measurement of carbon emissions from HPC operations."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Carbon Footprint"@en .
+
+exa-atow:CoolingSystem a owl:Class ;
+    rdfs:comment "The system responsible for maintaining temperature conditions of HPC components to ensure stable operation."@en,
+        "Le système responsable du maintien de la température des composants HPC afin de garantir un fonctionnement stable."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Cooling System"@en,
+        "Système de refroidissement"@fr .
+
+exa-atow:Core a owl:Class ;
+    rdfs:comment "A processing unit within a CPU or GPU capable of executing tasks concurrently."@en,
+        "Une unité de traitement au sein d’un CPU ou GPU capable d’exécuter des tâches simultanément."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Core"@en,
+        "Cœur"@fr .
+
+exa-atow:EmbodiedImpact a owl:Class ;
+    rdfs:comment "Environmental impact from manufacturing and deployment of HPC hardware."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Embodied Impact"@en .
+
+exa-atow:EnergyConsumption a owl:Class ;
+    rdfs:comment "Measurement and estimation of energy consumed by HPC resources."@en,
+        "Represents a measurement of energy usage."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Energy Consumption"@en .
+
+exa-atow:EnergyEfficiencyMetric a owl:Class ;
+    rdfs:comment "Metrics for measuring energy efficiency of HPC systems."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Energy Efficiency Metric"@en .
+
+exa-atow:EnergyManagement a owl:Class ;
+    rdfs:comment "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment."@en,
+        "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d’énergie dans l’environnement HPC."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Energy Management System"@en,
+        "Système de gestion de l’énergie"@fr .
+
+exa-atow:EnvironmentalImpact a owl:Class ;
+    rdfs:comment "Assessment of environmental effects of HPC systems."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Environmental Impact"@en .
+
+exa-atow:FileSystem a owl:Class ;
+    rdfs:comment "The shared storage infrastructure used for input/output and checkpoint data in HPC environments."@en,
+        "L’infrastructure de stockage partagée utilisée pour les données d’entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "File System"@en,
+        "Système de fichiers"@fr .
+
+exa-atow:HDD a owl:Class ;
+    rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en,
+        "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d’E/S inférieure à celle des SSD."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "HDD"@en,
+        "Disque dur (HDD)"@fr .
+
+exa-atow:ImpactFactor a owl:Class ;
+    rdfs:comment "Multiplicative coefficient to compute environmental impact based on die size."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Impact Factor"@en .
+
+exa-atow:Interconnect a owl:Class ;
+    rdfs:comment "High-speed network infrastructure enabling communication between compute nodes and system components."@en,
+        "Infrastructure réseau à haute vitesse permettant la communication entre les nœuds de calcul et les composants du système."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Interconnect"@en,
+        "Interconnexion"@fr .
+
+exa-atow:Job a owl:Class ;
+    rdfs:comment "Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments."@en,
+        "Concept couvrant les tâches informatiques, les descriptions de tâches, les métadonnées de soumission, les attributs de planification et le comportement à l'exécution dans les environnements HPC."@fr ;
+    skos:prefLabel "Job"@en,
+        "Tâche"@fr .
+
+exa-atow:LifetimeEstimator a owl:Class ;
+    rdfs:comment "Tool for estimating operational lifetime of HPC components."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Lifetime Estimator"@en .
+
+exa-atow:MemoryCapacity a owl:Class ;
+    rdfs:comment "Quantity of data can be stored in a memory (RAM, SSD, HDD)"@en ;
+    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
+    skos:prefLabel "Memory Capacity"@en .
+
+exa-atow:PUE a owl:Class ;
+    rdfs:comment "Rapport entre énergie injectée dans un parc de serveur, et l'énergie réellement utilisée pour alimenter les serveurs."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Power Usage Effectiveness"@en .
+
+exa-atow:Partition a owl:Class ;
+    rdfs:comment "A logical grouping of compute nodes within a supercomputer that shares hardware characteristics or workload type, often mapped to SLURM partitions."@en,
+        "Un regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, souvent associé à des partitions SLURM."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Partition"@en,
+        "Partition"@fr .
+
+exa-atow:PerformanceIndicator a owl:Class ;
+    rdfs:comment "Metrics for measuring computational performance of HPC systems."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Performance Indicator"@en .
+
+exa-atow:PowerUsageEffectiveness a owl:Class ;
+    rdfs:comment "Industry standard metric for measuring data center energy efficiency."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Power Usage Effectiveness (PUE)"@en .
+
+exa-atow:RAM a owl:Class ;
+    rdfs:comment "Volatile memory used by compute nodes for temporary data access during job execution."@en,
+        "Mémoire volatile utilisée par les nœuds de calcul pour accéder temporairement aux données pendant l'exécution d'une tâche."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "RAM"@en,
+        "Mémoire vive (RAM)"@fr .
+
+exa-atow:Rack a owl:Class ;
+    rdfs:comment "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter."@en,
+        "Un châssis physique abritant plusieurs nœuds de calcul et éléments d’infrastructure dans un centre de données."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Rack"@en,
+        "Baie"@fr .
+
+exa-atow:ResourceUtilization a owl:Class ;
+    rdfs:comment "Measurement of how effectively HPC resources are being used."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Resource Utilization"@en .
+
+exa-atow:SSD a owl:Class ;
+    rdfs:comment "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O."@en,
+        "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "SSD"@en,
+        "SSD"@fr .
+
+exa-atow:ScalarNode a owl:Class ;
+    rdfs:comment "A compute node equipped with general-purpose CPUs only."@en,
+        "Un nœud de calcul équipé uniquement de processeurs généraux (CPU)."@fr ;
+    rdfs:subClassOf exa-atow:ComputeNode ;
+    skos:prefLabel "Scalar Node"@en,
+        "Nœud scalaire"@fr .
+
+exa-atow:SimulationResult a owl:Class ;
+    rdfs:comment "Represents the outcome of a simulation performed by a Digital Twin."@en ;
+    rdfs:subClassOf exa-atow:DigitalTwin ;
+    skos:prefLabel "Simulation Result"@en .
+
+exa-atow:Supercomputer a owl:Class ;
+    rdfs:comment "A high-performance computing system composed of multiple interconnected compute and storage components."@en,
+        "Un système de calcul haute performance composé de plusieurs composants de calcul et de stockage interconnectés."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Supercomputer"@en,
+        "Superordinateur"@fr .
+
+exa-atow:ThermalEstimator a owl:Class ;
+    rdfs:comment "Tool for estimating thermal characteristics and cooling requirements."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Thermal Estimator"@en .
+
+exa-atow:UsageImpact a owl:Class ;
+    rdfs:comment "Environmental impact from operational use of HPC systems."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Usage Impact"@en .
+
+exa-atow:Workflow a owl:Class ;
+    rdfs:comment "Concept grouping workflow-related entities such as execution steps, workflow engines, process definitions, dependencies, and orchestration strategies."@en,
+        "Concept regroupant les entités liées aux flux de travail comme les étapes d'exécution, les moteurs de flux, les définitions de processus, les dépendances et les stratégies d'orchestration."@fr ;
+    skos:prefLabel "Workflow"@en,
+        "Flux de travail"@fr .
+
+exa-atow:Workload a owl:Class ;
+    rdfs:comment "Charge rate of a CPU or GPU. Level of processor activity that influences energy consumption"@en,
+        "Taux de charge d’un CPU ou d’un GPU. Niveau d’activité du processeur qui influence la consommation d’énergie."@fr ;
+    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
+    skos:prefLabel "Workload"@en,
+        "Charge"@fr .
+
+exa-atow:WorkloadEstimator a owl:Class ;
+    rdfs:comment "Tool for estimating and measuring computational workloads."@en ;
+    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
+    skos:prefLabel "Workload Estimator"@en .
+
+exa-atow:authenticates a owl:ObjectProperty ;
+    rdfs:comment "Relates a User to an Authentication event."@en ;
+    rdfs:domain exa-atow:User ;
+    rdfs:range exa-atow:Authentication .
+
+exa-atow:hasDieSize a owl:DatatypeProperty ;
+    rdfs:comment "CPU, GPU has a die size."@en ;
+    rdfs:domain exa-atow:CPU,
+        exa-atow:GPU ;
+    rdfs:range exa-atow:DieSize .
+
+exa-atow:hasUnit a owl:DatatypeProperty ;
+    rdfs:comment "{'en': 'Unit of measurement for the die size (e.g., mm²).', 'fr': 'Unité de mesure de la taille de la puce (ex. : mm²).'}"@en ;
+    rdfs:domain exa-atow:DieSize ;
+    rdfs:range <http://www.exa-atow.org/ontology#XSD:string> .
+
+exa-atow:hasValue a owl:DatatypeProperty ;
+    rdfs:comment "{'en': 'Numeric value of the die size.', 'fr': 'Valeur numérique de la taille de la puce.'}"@en ;
+    rdfs:domain exa-atow:DieSize ;
+    rdfs:range <http://www.exa-atow.org/ontology#XSD:decimal> .
+
+exa-atow:lifetime a owl:Class ;
+    rdfs:comment "Lifetime of an electronic component, server, etc."@en ;
+    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
+    skos:prefLabel "Lifetime"@en .
+
+exa-atow:Authentication a owl:Class ;
+    rdfs:comment "Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities."@en,
+        "Concept décrivant tous les aspects de l'authentification, y compris les identifiants, les protocoles d'accès, la validation d'identité et les activités de connexion."@fr ;
+    skos:prefLabel "Authentication Event"@en,
+        "Événement d'authentification"@fr .
+
+exa-atow:CPU a owl:Class ;
+    rdfs:comment "The central processing unit responsible for executing general-purpose instructions."@en,
+        "L'unité centrale de traitement responsable de l'exécution des instructions générales."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "CPU"@en,
+        "CPU"@fr .
+
+exa-atow:DigitalTwin a owl:Class ;
+    rdfs:comment "Represents a virtual representation of a physical or logical entity."@en ;
+    skos:prefLabel "Digital Twin"@en .
+
+exa-atow:GPU a owl:Class ;
+    rdfs:comment "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en,
+        "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "GPU"@en,
+        "GPU"@fr .
+
+exa-atow:User a owl:Class ;
+    rdfs:comment "Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors."@en,
+        "Concept englobant les individus ou agents qui interagissent avec le système HPC, y compris les attributs d'identité, les rôles, les autorisations et les comportements des utilisateurs."@fr ;
+    skos:prefLabel "User"@en,
+        "Utilisateur"@fr .
+
+exa-atow:ComputeNode a owl:Class ;
+    rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en,
+        "Une machine physique ou virtuelle dans un système HPC qui exécute des tâches de calcul."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Compute Node"@en,
+        "Nœud de calcul"@fr .
+
+exa-atow:DieSize a owl:Class ;
+    rdfs:comment "The die area of te CPU or GPU, in mm2. Used in impact estimation."@en ;
+    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
+    skos:prefLabel "Die Size"@en .
+
+exa-atow:PhysicalCharacteristic a owl:Class ;
+    rdfs:comment "Domain concept capturing the physical and structural properties of HPC components, such as memory capacity, die size, material lifetime, and energy efficiency attributes."@en,
+        "Concept représentant les propriétés physiques et structurelles des composants HPC, telles que la capacité mémoire, la taille de la puce, la durée de vie du matériel et les attributs d’efficacité énergétique."@fr ;
+    skos:prefLabel "Physical Characteristic"@en,
+        "Caractéristique physique"@fr .
+
+exa-atow:HPCResource a owl:Class ;
+    rdfs:comment "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components."@en,
+        "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."@fr ;
+    skos:prefLabel "HPC Resource"@en,
+        "Ressource HPC"@fr .
+
+exa-atow:ProcessorIndicatorEstimator a owl:Class ;
+    rdfs:comment "Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact."@en,
+        "Concept regroupant tous les outils, métriques et modèles d’estimation des indicateurs liés au processeur, comme la consommation d’énergie, l’empreinte thermique et l’impact de la taille de la puce."@fr ;
+    skos:prefLabel "Processor Indicator Estimator"@en,
+        "Estimateur d’indicateurs du processeur"@fr .
+
