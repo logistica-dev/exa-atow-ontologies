@@ -1,0 +1,710 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3.org/2002/07/owl#> .
+
+[ rdf:type owl:Ontology
+ ] .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://www.w3.org/2004/02/skos/core#prefLabel
+<http://www.w3.org/2004/02/skos/core#prefLabel> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#authenticates
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#authenticates> rdf:type owl:ObjectProperty ;
+                                                                                               rdfs:domain <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#User> ;
+                                                                                               rdfs:range <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Authentication> ;
+                                                                                               rdfs:comment "Relates a User to an Authentication event."@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasDieSize
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasDieSize> rdf:type owl:ObjectProperty ;
+                                                                                            rdfs:domain <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CPU> ,
+                                                                                                        <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#GPU> ;
+                                                                                            rdfs:range <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DieSize> .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasUnit
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasUnit> rdf:type owl:ObjectProperty ;
+                                                                                         rdfs:domain <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DieSize> ;
+                                                                                         rdfs:range <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#XSD:string> .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasValue
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasValue> rdf:type owl:ObjectProperty ;
+                                                                                          rdfs:domain <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DieSize> ;
+                                                                                          rdfs:range <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#XSD:decimal> .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasDieSize
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasDieSize> rdf:type owl:DatatypeProperty .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasUnit
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasUnit> rdf:type owl:DatatypeProperty .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasValue
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasValue> rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#AcceleratedNode
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#AcceleratedNode> rdf:type owl:Class ;
+                                                                                                 rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ComputeNode> ;
+                                                                                                 rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en ,
+                                                                                                              "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."@fr ;
+                                                                                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Accelerated Node"@en ,
+                                                                                                                                                 "Nœud accéléré"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#AllocationMethod
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#AllocationMethod> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                  rdfs:comment "Method or function to distribute embodied impacts across multiple jobs or workflows."@en ,
+                                                                                                               "Méthode ou fonction permettant de répartir les impacts incorporés entre plusieurs tâches ou workflows."@fr ;
+                                                                                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Allocation Method"@en ,
+                                                                                                                                                  "Méthode d’allocation"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Authentication
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Authentication> rdf:type owl:Class ;
+                                                                                                rdfs:comment "Concept décrivant tous les aspects de l'authentification, y compris les identifiants, les protocoles d'accès, la validation d'identité et les activités de connexion."@fr ,
+                                                                                                             "Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities."@en ;
+                                                                                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Authentication Event"@en ,
+                                                                                                                                                "Événement d'authentification"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CPU
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CPU> rdf:type owl:Class ;
+                                                                                     rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                     rdfs:comment "L'unité centrale de traitement responsable de l'exécution des instructions générales."@fr ,
+                                                                                                  "The central processing unit responsible for executing general-purpose instructions."@en ;
+                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "CPU"@en ,
+                                                                                                                                     "CPU"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CarbonFootprint
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CarbonFootprint> rdf:type owl:Class ;
+                                                                                                 rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                 rdfs:comment "Measurement of the greenhouse gas emissions associated with HPC system usage."@en ,
+                                                                                                              "Mesure des émissions de gaz à effet de serre liées à l’utilisation des systèmes HPC."@fr ;
+                                                                                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Carbon Footprint"@en ,
+                                                                                                                                                 "Empreinte carbone"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CommandLineTool
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CommandLineTool> rdf:type owl:Class ;
+                                                                                                 rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                                 rdfs:comment "An executable tool invoked from the command line within a workflow step. It can represent scripts, binaries, or containerized commands. Defined in CWL and similar engines as atomic execution units."@en ,
+                                                                                                              "Un outil exécutable appelé depuis la ligne de commande dans une étape de flux de travail. Il peut s'agir de scripts, de binaires ou de commandes conteneurisées. Défini dans CWL et autres moteurs comme des unités d'exécution atomiques."@fr ;
+                                                                                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Command Line Tool"@en ,
+                                                                                                                                                 "Outil en ligne de commande"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ComputeNode
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ComputeNode> rdf:type owl:Class ;
+                                                                                             rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                             rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en ,
+                                                                                                          "Une machine physique ou virtuelle dans un système HPC qui exécute des tâches de calcul."@fr ;
+                                                                                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Compute Node"@en ,
+                                                                                                                                             "Nœud de calcul"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Container
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Container> rdf:type owl:Class ;
+                                                                                           rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                           rdfs:comment "A portable, encapsulated execution environment containing all software dependencies required by a workflow step. Common formats include Docker and Singularity."@en ,
+                                                                                                        "Un environnement d'exécution portable et encapsulé contenant toutes les dépendances logicielles requises par une étape de flux de travail. Les formats courants incluent Docker et Singularity."@fr ;
+                                                                                           <http://www.w3.org/2004/02/skos/core#prefLabel> "Container"@en ,
+                                                                                                                                           "Conteneur"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CoolingSystem
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#CoolingSystem> rdf:type owl:Class ;
+                                                                                               rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                               rdfs:comment "Le système responsable du maintien de la température des composants HPC afin de garantir un fonctionnement stable."@fr ,
+                                                                                                            "The system responsible for maintaining temperature conditions of HPC components to ensure stable operation."@en ;
+                                                                                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Cooling System"@en ,
+                                                                                                                                               "Système de refroidissement"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Core
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Core> rdf:type owl:Class ;
+                                                                                      rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                      rdfs:comment "A processing unit within a CPU or GPU capable of executing tasks concurrently."@en ,
+                                                                                                   "Une unité de traitement au sein d’un CPU ou GPU capable d’exécuter des tâches simultanément."@fr ;
+                                                                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Core"@en ,
+                                                                                                                                      "Cœur"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DataProvenance
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DataProvenance> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                                rdfs:comment "Metadata capturing the origin, transformation, and lineage of data artifacts through workflow steps. Supports reproducibility, traceability, and accountability of scientific data processing."@en ,
+                                                                                                             "Métadonnées décrivant l'origine, la transformation et la traçabilité des artefacts de données à travers les étapes du flux de travail. Favorise la reproductibilité, la traçabilité et la responsabilité dans le traitement des données scientifiques."@fr ;
+                                                                                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Data Provenance"@en ,
+                                                                                                                                                "Provenance des données"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DatabaseConnection
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DatabaseConnection> rdf:type owl:Class ;
+                                                                                                    rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                                    rdfs:comment "A link or configuration allowing a workflow step to interact with an external database for querying, reading, or writing structured data."@en ,
+                                                                                                                 "Un lien ou une configuration permettant à une étape de flux de travail d’interagir avec une base de données externe pour effectuer des requêtes, lire ou écrire des données structurées."@fr ;
+                                                                                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Connexion à la base de données"@fr ,
+                                                                                                                                                    "Database Connection"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DatasetConstraint
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DatasetConstraint> rdf:type owl:Class ;
+                                                                                                   rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                                   rdfs:comment "Constraint specifying dataset dependencies required for a job to run."@en ,
+                                                                                                                "Contrainte spécifiant les dépendances de données nécessaires à l'exécution d'une tâche."@fr ;
+                                                                                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "Contrainte de données"@fr ,
+                                                                                                                                                   "Dataset Constraint"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DieSize
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DieSize> rdf:type owl:Class ;
+                                                                                         rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PhysicalCharacteristic> ;
+                                                                                         rdfs:comment "La surface physique de la puce du CPU ou du GPU. Utilisée pour l'estimation d'impact. Comprend une valeur et une unité."@fr ,
+                                                                                                      "The physical area of the CPU or GPU die. Used in impact estimation. Includes a value and a unit."@en ;
+                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Die Size"@en ,
+                                                                                                                                         "Taille de puce"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DigitalTwin
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DigitalTwin> rdf:type owl:Class ;
+                                                                                             rdfs:comment "Represents a virtual representation of a physical or logical entity."@en ;
+                                                                                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Digital Twin"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EmbodiedImpact
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EmbodiedImpact> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                rdfs:comment "Environmental impact associated with manufacturing, transport, and deployment of HPC hardware."@en ,
+                                                                                                             "Impact environnemental lié à la fabrication, au transport et au déploiement du matériel HPC."@fr ;
+                                                                                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Embodied Impact"@en ,
+                                                                                                                                                "Impact incorporé"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EnergyConsumption
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EnergyConsumption> rdf:type owl:Class ;
+                                                                                                   rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                   rdfs:comment "Measurement or estimation of the energy consumed by computing and supporting hardware."@en ,
+                                                                                                                "Mesure ou estimation de l'énergie consommée par le matériel informatique et les équipements de support."@fr ,
+                                                                                                                "Represents a measurement of energy usage."@en ;
+                                                                                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "Consommation d’énergie"@fr ,
+                                                                                                                                                   "Energy Consumption"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EnergyEfficiencyMetric
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EnergyEfficiencyMetric> rdf:type owl:Class ;
+                                                                                                        rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                        rdfs:comment "Indicateur permettant d’évaluer l’efficacité de l’utilisation de l’énergie pendant les opérations de calcul haute performance."@fr ,
+                                                                                                                     "Metric for evaluating how efficiently energy is used during HPC operations."@en ;
+                                                                                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Energy Efficiency Metric"@en ,
+                                                                                                                                                        "Indicateur d'efficacité énergétique"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EnergyManagement
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EnergyManagement> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                                  rdfs:comment "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment."@en ,
+                                                                                                               "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d’énergie dans l’environnement HPC."@fr ;
+                                                                                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Energy Management System"@en ,
+                                                                                                                                                  "Système de gestion de l’énergie"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EnvironmentalImpact
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#EnvironmentalImpact> rdf:type owl:Class ;
+                                                                                                     rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                     rdfs:comment "Quantitative or qualitative assessment of the environmental effects of HPC systems throughout their lifecycle."@en ,
+                                                                                                                  "Évaluation quantitative ou qualitative des effets environnementaux des systèmes HPC tout au long de leur cycle de vie."@fr ;
+                                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Environmental Impact"@en ,
+                                                                                                                                                     "Impact environnemental"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#FAIRCompliance
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#FAIRCompliance> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                                rdfs:comment "Indicates the extent to which the workflow, its components, and outputs adhere to the FAIR principles (Findable, Accessible, Interoperable, Reusable)."@en ,
+                                                                                                             "Indique dans quelle mesure le flux de travail, ses composants et ses sorties respectent les principes FAIR (Faciles à trouver, Accessibles, Interopérables, Réutilisables)."@fr ;
+                                                                                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Conformité aux principes FAIR"@fr ,
+                                                                                                                                                "FAIR Compliance"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#FileSystem
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#FileSystem> rdf:type owl:Class ;
+                                                                                            rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                            rdfs:comment "L’infrastructure de stockage partagée utilisée pour les données d’entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ,
+                                                                                                         "The shared storage infrastructure used for input/output and checkpoint data in HPC environments."@en ;
+                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "File System"@en ,
+                                                                                                                                            "Système de fichiers"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#GPU
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#GPU> rdf:type owl:Class ;
+                                                                                     rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                     rdfs:comment "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en ,
+                                                                                                  "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."@fr ;
+                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "GPU"@en ,
+                                                                                                                                     "GPU"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HDD
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HDD> rdf:type owl:Class ;
+                                                                                     rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                     rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en ,
+                                                                                                  "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d’E/S inférieure à celle des SSD."@fr ;
+                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Disque dur (HDD)"@fr ,
+                                                                                                                                     "HDD"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> rdf:type owl:Class ;
+                                                                                             rdfs:comment "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."@fr ,
+                                                                                                          "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components."@en ;
+                                                                                             <http://www.w3.org/2004/02/skos/core#prefLabel> "HPC Resource"@en ,
+                                                                                                                                             "Ressource HPC"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ImpactFactor
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ImpactFactor> rdf:type owl:Class ;
+                                                                                              rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                              rdfs:comment "Coefficient multiplicatif utilisé pour calculer l’impact environnemental lié aux caractéristiques du processeur comme la taille de la puce."@fr ,
+                                                                                                           "Multiplicative coefficient used to compute the environmental impact associated with processor attributes like die size."@en ;
+                                                                                              <http://www.w3.org/2004/02/skos/core#prefLabel> "Facteur d'impact"@fr ,
+                                                                                                                                              "Impact Factor"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#InputParameter
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#InputParameter> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                                rdfs:comment "A data value or configuration setting required by a workflow step or command-line tool to begin execution. Inputs may include file paths, memory limits, container images, or dataset identifiers."@en ,
+                                                                                                             "Une valeur de donnée ou un paramètre de configuration requis par une étape ou un outil en ligne de commande pour démarrer l'exécution. Les entrées peuvent inclure des chemins de fichiers, des limites de mémoire, des images de conteneurs ou des identifiants de jeux de données."@fr ;
+                                                                                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Input Parameter"@en ,
+                                                                                                                                                "Paramètre d’entrée"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Interconnect
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Interconnect> rdf:type owl:Class ;
+                                                                                              rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                              rdfs:comment "High-speed network infrastructure enabling communication between compute nodes and system components."@en ,
+                                                                                                           "Infrastructure réseau à haute vitesse permettant la communication entre les nœuds de calcul et les composants du système."@fr ;
+                                                                                              <http://www.w3.org/2004/02/skos/core#prefLabel> "Interconnect"@en ,
+                                                                                                                                              "Interconnexion"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> rdf:type owl:Class ;
+                                                                                     rdfs:comment "Concept couvrant les tâches informatiques, les descriptions de tâches, les métadonnées de soumission, les attributs de planification et le comportement à l'exécution dans les environnements HPC."@fr ,
+                                                                                                  "Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments."@en ;
+                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Job"@en ,
+                                                                                                                                     "Tâche"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobDuration
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobDuration> rdf:type owl:Class ;
+                                                                                             rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                             rdfs:comment "Durée totale pendant laquelle la tâche a été activement exécutée."@fr ,
+                                                                                                          "Total time the job was actively running."@en ;
+                                                                                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Durée de la tâche"@fr ,
+                                                                                                                                             "Job Duration"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobEndTime
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobEndTime> rdf:type owl:Class ;
+                                                                                            rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                            rdfs:comment "L'horodatage indiquant la fin de l'exécution de la tâche."@fr ,
+                                                                                                         "The timestamp when the job finishes execution."@en ;
+                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Heure de fin de tâche"@fr ,
+                                                                                                                                            "Job End Time"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobExecutionSite
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobExecutionSite> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                                  rdfs:comment "Le site informatique ou le cluster où la tâche est exécutée."@fr ,
+                                                                                                               "The computing site or cluster where the job is executed."@en ;
+                                                                                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Job Execution Site"@en ,
+                                                                                                                                                  "Site d'exécution de la tâche"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobImpactAllocation
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobImpactAllocation> rdf:type owl:Class ;
+                                                                                                     rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                                     rdfs:comment "Part de l'impact environnemental attribuée à la tâche, selon des méthodes d'attribution."@fr ,
+                                                                                                                  "The share of environmental impact attributed to the job, based on allocation methods."@en ;
+                                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Attribution d'impact de la tâche"@fr ,
+                                                                                                                                                     "Job Impact Allocation"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobInput
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobInput> rdf:type owl:Class ;
+                                                                                          rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                          rdfs:comment "Datasets or configuration files used as input for the job."@en ,
+                                                                                                       "Jeux de données ou fichiers de configuration utilisés en entrée de la tâche."@fr ;
+                                                                                          <http://www.w3.org/2004/02/skos/core#prefLabel> "Entrée de la tâche"@fr ,
+                                                                                                                                          "Job Input"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobOutput
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobOutput> rdf:type owl:Class ;
+                                                                                           rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                           rdfs:comment "Results or datasets generated by the job."@en ,
+                                                                                                        "Résultats ou jeux de données générés par la tâche."@fr ;
+                                                                                           <http://www.w3.org/2004/02/skos/core#prefLabel> "Job Output"@en ,
+                                                                                                                                           "Sortie de la tâche"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobPriority
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobPriority> rdf:type owl:Class ;
+                                                                                             rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                             rdfs:comment "Le niveau de priorité attribué à la tâche lors de sa soumission."@fr ,
+                                                                                                          "The priority level assigned to the job during submission."@en ;
+                                                                                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Job Priority"@en ,
+                                                                                                                                             "Priorité de la tâche"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobResourceRequest
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobResourceRequest> rdf:type owl:Class ;
+                                                                                                    rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                                    rdfs:comment "Les ressources (CPU, GPU, mémoire, etc.) demandées lors de la soumission de la tâche."@fr ,
+                                                                                                                 "The resources (CPUs, GPUs, memory, etc.) requested for the job at submission time."@en ;
+                                                                                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Demande de ressources de la tâche"@fr ,
+                                                                                                                                                    "Job Resource Request"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobScheduling
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobScheduling> rdf:type owl:Class ;
+                                                                                               rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                               rdfs:comment "Information related to the scheduling of jobs, including algorithm or queue policy."@en ,
+                                                                                                            "Informations liées à la planification des tâches, y compris l'algorithme ou la politique de file d'attente."@fr ;
+                                                                                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Job Scheduling"@en ,
+                                                                                                                                               "Ordonnancement de tâche"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobStartTime
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobStartTime> rdf:type owl:Class ;
+                                                                                              rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                              rdfs:comment "L'horodatage indiquant le début de l'exécution de la tâche."@fr ,
+                                                                                                           "The timestamp when the job begins execution."@en ;
+                                                                                              <http://www.w3.org/2004/02/skos/core#prefLabel> "Heure de début de tâche"@fr ,
+                                                                                                                                              "Job Start Time"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobStatus
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobStatus> rdf:type owl:Class ;
+                                                                                           rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                           rdfs:comment "Le statut actuel ou final de la tâche (ex. en attente, en cours, échouée, terminée)."@fr ,
+                                                                                                        "The current or final status of the job (e.g., pending, running, failed, completed)."@en ;
+                                                                                           <http://www.w3.org/2004/02/skos/core#prefLabel> "Job Status"@en ,
+                                                                                                                                           "Statut de la tâche"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobSubmissionMetadata
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobSubmissionMetadata> rdf:type owl:Class ;
+                                                                                                       rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                                       rdfs:comment "Metadata associated with job submission such as submitter, date, and method."@en ,
+                                                                                                                    "Métadonnées associées à la soumission de la tâche comme l'utilisateur, la date et la méthode."@fr ;
+                                                                                                       <http://www.w3.org/2004/02/skos/core#prefLabel> "Job Submission Metadata"@en ,
+                                                                                                                                                       "Métadonnées de soumission de la tâche"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Lifetime
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Lifetime> rdf:type owl:Class ;
+                                                                                          rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PhysicalCharacteristic> ;
+                                                                                          rdfs:comment "Durée de vie d’un composant électronique, tel qu’un serveur ou un processeur."@fr ,
+                                                                                                       "Operational lifespan of an electronic component, such as a server or processor."@en ;
+                                                                                          <http://www.w3.org/2004/02/skos/core#prefLabel> "Durée de vie"@fr ,
+                                                                                                                                          "Lifetime"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#LifetimeEstimator
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#LifetimeEstimator> rdf:type owl:Class ;
+                                                                                                   rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                   rdfs:comment "Outil ou modèle permettant de prédire la durée de vie opérationnelle des composants matériels."@fr ,
+                                                                                                                "Tool or model for predicting the operational lifetime of hardware components."@en ;
+                                                                                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "Estimateur de durée de vie"@fr ,
+                                                                                                                                                   "Lifetime Estimator"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#MemoryCapacity
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#MemoryCapacity> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PhysicalCharacteristic> ;
+                                                                                                rdfs:comment "Amount of data that can be stored in a memory device like RAM, SSD, or HDD."@en ,
+                                                                                                             "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."@fr ;
+                                                                                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Capacité mémoire"@fr ,
+                                                                                                                                                "Memory Capacity"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#OutputParameter
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#OutputParameter> rdf:type owl:Class ;
+                                                                                                 rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                                 rdfs:comment "A result produced by a workflow step after execution. It may be a file, dataset, metric, or computation result used by other steps or stored for future processing."@en ,
+                                                                                                              "Un résultat produit par une étape de flux de travail après exécution. Il peut s'agir d'un fichier, d'un jeu de données, d'une métrique ou d'un résultat de calcul utilisé par d'autres étapes ou stocké pour un traitement ultérieur."@fr ;
+                                                                                                 <http://www.w3.org/2004/02/skos/core#prefLabel> "Output Parameter"@en ,
+                                                                                                                                                 "Paramètre de sortie"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Partition
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Partition> rdf:type owl:Class ;
+                                                                                           rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                           rdfs:comment "A logical grouping of compute nodes within a supercomputer that shares hardware characteristics or workload type, often mapped to SLURM partitions."@en ,
+                                                                                                        "Un regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, souvent associé à des partitions SLURM."@fr ;
+                                                                                           <http://www.w3.org/2004/02/skos/core#prefLabel> "Partition"@en ,
+                                                                                                                                           "Partition"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PerformanceIndicator
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PerformanceIndicator> rdf:type owl:Class ;
+                                                                                                      rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                      rdfs:comment "Indicateur permettant d’évaluer la performance de calcul des systèmes HPC."@fr ,
+                                                                                                                   "Metric used to evaluate the computational performance of HPC systems."@en ;
+                                                                                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Indicateur de performance"@fr ,
+                                                                                                                                                      "Performance Indicator"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PhysicalCharacteristic
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PhysicalCharacteristic> rdf:type owl:Class ;
+                                                                                                        rdfs:comment "Concept représentant les propriétés physiques et structurelles des composants HPC, telles que la capacité mémoire, la taille de la puce, la durée de vie du matériel et les attributs d’efficacité énergétique."@fr ,
+                                                                                                                     "Domain concept capturing the physical and structural properties of HPC components, such as memory capacity, die size, material lifetime, and energy efficiency attributes."@en ;
+                                                                                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Caractéristique physique"@fr ,
+                                                                                                                                                        "Physical Characteristic"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PowerUsageEffectiveness
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PowerUsageEffectiveness> rdf:type owl:Class ;
+                                                                                                         rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                         rdfs:comment "Indicateur standard pour mesurer l'efficacité énergétique d'un centre de données, défini comme le rapport entre énergie injectée dans un parc de serveur, et l'énergie réellement utilisée pour alimenter les serveurs."@fr ,
+                                                                                                                      "Industry standard metric for measuring data center energy efficiency, defined as the ratio of total facility energy to IT equipment energy."@en ;
+                                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Efficacité d'utilisation de l'énergie (PUE)"@fr ,
+                                                                                                                                                         "Power Usage Effectiveness (PUE)"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Process
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Process> rdf:type owl:Class ;
+                                                                                         rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                         rdfs:comment "An active execution instance within a job."@en ,
+                                                                                                      "Une instance d'exécution active au sein d'une tâche."@fr ;
+                                                                                         <http://www.w3.org/2004/02/skos/core#prefLabel> "Process"@en ,
+                                                                                                                                         "Processus"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> rdf:type owl:Class ;
+                                                                                                             rdfs:comment "Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact."@en ,
+                                                                                                                          "Concept regroupant tous les outils, métriques et modèles d’estimation des indicateurs liés au processeur, comme la consommation d’énergie, l’empreinte thermique et l’impact de la taille de la puce."@fr ;
+                                                                                                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Estimateur d’indicateurs du processeur"@fr ,
+                                                                                                                                                             "Processor Indicator Estimator"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#RAM
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#RAM> rdf:type owl:Class ;
+                                                                                     rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                     rdfs:comment "Mémoire volatile utilisée par les nœuds de calcul pour accéder temporairement aux données pendant l'exécution d'une tâche."@fr ,
+                                                                                                  "Volatile memory used by compute nodes for temporary data access during job execution."@en ;
+                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Mémoire vive (RAM)"@fr ,
+                                                                                                                                     "RAM"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Rack
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Rack> rdf:type owl:Class ;
+                                                                                      rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                      rdfs:comment "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter."@en ,
+                                                                                                   "Un châssis physique abritant plusieurs nœuds de calcul et éléments d’infrastructure dans un centre de données."@fr ;
+                                                                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Baie"@fr ,
+                                                                                                                                      "Rack"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ResourceUtilization
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ResourceUtilization> rdf:type owl:Class ;
+                                                                                                     rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                     rdfs:comment "Indicates how effectively computing resources are being used over time."@en ,
+                                                                                                                  "Indique dans quelle mesure les ressources informatiques sont utilisées efficacement au fil du temps."@fr ;
+                                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "Resource Utilization"@en ,
+                                                                                                                                                     "Utilisation des ressources"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#SSD
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#SSD> rdf:type owl:Class ;
+                                                                                     rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                     rdfs:comment "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O."@en ,
+                                                                                                  "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."@fr ;
+                                                                                     <http://www.w3.org/2004/02/skos/core#prefLabel> "SSD"@en ,
+                                                                                                                                     "SSD"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ScalarNode
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ScalarNode> rdf:type owl:Class ;
+                                                                                            rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ComputeNode> ;
+                                                                                            rdfs:comment "A compute node equipped with general-purpose CPUs only."@en ,
+                                                                                                         "Un nœud de calcul équipé uniquement de processeurs généraux (CPU)."@fr ;
+                                                                                            <http://www.w3.org/2004/02/skos/core#prefLabel> "Nœud scalaire"@fr ,
+                                                                                                                                            "Scalar Node"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#SchedulerType
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#SchedulerType> rdf:type owl:Class ;
+                                                                                               rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#JobScheduling> ;
+                                                                                               rdfs:comment "Le type de système d'ordonnancement utilisé (ex. SLURM, PBS, Torque)."@fr ,
+                                                                                                            "The type of scheduling system used (e.g., SLURM, PBS, Torque)."@en ;
+                                                                                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Scheduler Type"@en ,
+                                                                                                                                               "Type d'ordonnanceur"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#SimulationResult
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#SimulationResult> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#DigitalTwin> ;
+                                                                                                  rdfs:comment "Represents the outcome of a simulation performed by a Digital Twin."@en ;
+                                                                                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Simulation Result"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Supercomputer
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Supercomputer> rdf:type owl:Class ;
+                                                                                               rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#HPCResource> ;
+                                                                                               rdfs:comment "A high-performance computing system composed of multiple interconnected compute and storage components."@en ,
+                                                                                                            "Un système de calcul haute performance composé de plusieurs composants de calcul et de stockage interconnectés."@fr ;
+                                                                                               <http://www.w3.org/2004/02/skos/core#prefLabel> "Supercomputer"@en ,
+                                                                                                                                               "Superordinateur"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Task
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Task> rdf:type owl:Class ;
+                                                                                      rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                      rdfs:comment "A subdivision of a job, representing a smaller unit of work that may run independently."@en ,
+                                                                                                   "Une sous-division d'une tâche, représentant une unité de travail plus petite pouvant s'exécuter indépendamment."@fr ;
+                                                                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "Sous-tâche"@fr ,
+                                                                                                                                      "Task"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ThermalEstimator
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ThermalEstimator> rdf:type owl:Class ;
+                                                                                                  rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                  rdfs:comment "Outil permettant d’estimer la production de chaleur et les besoins en refroidissement des composants HPC."@fr ,
+                                                                                                               "Tool for estimating heat production and cooling requirements of HPC components."@en ;
+                                                                                                  <http://www.w3.org/2004/02/skos/core#prefLabel> "Estimateur thermique"@fr ,
+                                                                                                                                                  "Thermal Estimator"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Thread
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Thread> rdf:type owl:Class ;
+                                                                                        rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Job> ;
+                                                                                        rdfs:comment "A lightweight unit of execution within a process."@en ,
+                                                                                                     "Une unité légère d'exécution dans un processus."@fr ;
+                                                                                        <http://www.w3.org/2004/02/skos/core#prefLabel> "Fil d'exécution"@fr ,
+                                                                                                                                        "Thread"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#UsageImpact
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#UsageImpact> rdf:type owl:Class ;
+                                                                                             rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                             rdfs:comment "Environmental impact from the operational phase of HPC systems, including energy usage and emissions."@en ,
+                                                                                                          "Impact environnemental lié à la phase d’utilisation des systèmes HPC, y compris la consommation d’énergie et les émissions."@fr ;
+                                                                                             <http://www.w3.org/2004/02/skos/core#prefLabel> "Impact en usage"@fr ,
+                                                                                                                                             "Usage Impact"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#User
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#User> rdf:type owl:Class ;
+                                                                                      rdfs:comment "Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors."@en ,
+                                                                                                   "Concept englobant les individus ou agents qui interagissent avec le système HPC, y compris les attributs d'identité, les rôles, les autorisations et les comportements des utilisateurs."@fr ;
+                                                                                      <http://www.w3.org/2004/02/skos/core#prefLabel> "User"@en ,
+                                                                                                                                      "Utilisateur"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> rdf:type owl:Class ;
+                                                                                          rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                          rdfs:comment "A workflow defines a set of interconnected steps or actions that process data, allocate resources, and produce outputs. It encompasses definitions from workflow engines (e.g., CWL, NiFi, Python), manages input/output parameters, orchestrates execution order, and interacts with HPC environments. Workflows facilitate reproducibility and enable provenance tracking for FAIR research practices."@en ,
+                                                                                                       "Un flux de travail définit un ensemble d'étapes ou d'actions interconnectées qui traitent des données, allouent des ressources et produisent des résultats. Il inclut les définitions des moteurs de flux de travail (par exemple, CWL, NiFi, Python), gère les paramètres d'entrée/sortie, orchestre l'ordre d'exécution et interagit avec les environnements HPC. Les workflows favorisent la reproductibilité et permettent le suivi de la provenance pour une recherche conforme aux principes FAIR."@fr ;
+                                                                                          <http://www.w3.org/2004/02/skos/core#prefLabel> "Flux de travail"@fr ,
+                                                                                                                                          "Workflow"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#WorkflowDependency
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#WorkflowDependency> rdf:type owl:Class ;
+                                                                                                    rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                                    rdfs:comment "An explicit link that defines the execution order or data dependency between two workflow steps. Dependencies control the flow of data and ensure correct sequencing of actions."@en ,
+                                                                                                                 "Un lien explicite qui définit l'ordre d'exécution ou la dépendance de données entre deux étapes de flux de travail. Les dépendances contrôlent le flux de données et garantissent le bon enchaînement des actions."@fr ;
+                                                                                                    <http://www.w3.org/2004/02/skos/core#prefLabel> "Dépendance de flux de travail"@fr ,
+                                                                                                                                                    "Workflow Dependency"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#WorkflowEngine
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#WorkflowEngine> rdf:type owl:Class ;
+                                                                                                rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                                rdfs:comment "A software framework or environment that interprets, schedules, and executes workflow definitions. Examples include CWL, Apache NiFi, Snakemake, and Airflow. Workflow engines support execution tracking and data lineage."@en ,
+                                                                                                             "Un cadre logiciel qui interprète, planifie et exécute les définitions de flux de travail. Exemples : CWL, Apache NiFi, Snakemake et Airflow. Les moteurs de flux de travail prennent en charge le suivi d'exécution et la traçabilité des données."@fr ;
+                                                                                                <http://www.w3.org/2004/02/skos/core#prefLabel> "Moteur de flux de travail"@fr ,
+                                                                                                                                                "Workflow Engine"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#WorkflowStep
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#WorkflowStep> rdf:type owl:Class ;
+                                                                                              rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workflow> ;
+                                                                                              rdfs:comment "A discrete unit within a workflow representing a task, command, or function that contributes to the overall workflow goal. It may execute computations, data manipulations, or invoke external services. Dependencies and scheduling are defined between steps to control execution order."@en ,
+                                                                                                           "Une unité discrète au sein d'un flux de travail représentant une tâche, une commande ou une fonction contribuant à l'objectif global du workflow. Elle peut exécuter des calculs, manipuler des données ou appeler des services externes. Les dépendances et la planification entre les étapes contrôlent l'ordre d'exécution."@fr ;
+                                                                                              <http://www.w3.org/2004/02/skos/core#prefLabel> "Workflow Step"@en ,
+                                                                                                                                              "Étape du flux de travail"@fr .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workload
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#Workload> rdf:type owl:Class ;
+                                                                                          rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#PhysicalCharacteristic> ;
+                                                                                          rdfs:comment "La charge de traitement gérée par un CPU ou un GPU. Elle influence la consommation d'énergie et les performances."@fr ,
+                                                                                                       "The processing load handled by a CPU or GPU. It affects energy consumption and performance."@en ;
+                                                                                          <http://www.w3.org/2004/02/skos/core#prefLabel> "Charge"@fr ,
+                                                                                                                                          "Workload"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#WorkloadEstimator
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#WorkloadEstimator> rdf:type owl:Class ;
+                                                                                                   rdfs:subClassOf <https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#ProcessorIndicatorEstimator> ;
+                                                                                                   rdfs:comment "Outil ou méthode permettant d’estimer et d’analyser la charge de travail exécutée sur les systèmes HPC."@fr ,
+                                                                                                                "Tool or method for estimating and analyzing the workload executed on HPC systems."@en ;
+                                                                                                   <http://www.w3.org/2004/02/skos/core#prefLabel> "Estimateur de charge"@fr ,
+                                                                                                                                                   "Workload Estimator"@en .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#XSD:decimal
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#XSD:decimal> rdf:type owl:Class .
+
+
+###  https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#XSD:string
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#XSD:string> rdf:type owl:Class .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasDieSize> rdfs:comment "CPU, GPU has a die size."@en .
+
+
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasUnit> rdfs:comment "{'en': 'Unit of measurement (e.g., mm²).', 'fr': 'Unité de mesure (ex. : mm²).'}"@en .
+
+
+<https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#hasValue> rdfs:comment "{'en': 'Numeric value.', 'fr': 'Valeur numérique.'}"@en .
+
+
+###  Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/
