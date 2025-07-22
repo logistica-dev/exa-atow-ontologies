@@ -1,6 +1,6 @@
 import glob
 import json
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
 
 class OntologyItem:
@@ -22,7 +22,7 @@ class OntologyItem:
         pref_label: Dict[str, str],
         comment: Dict[str, str],
         sourcefile: str,
-        parent_class: Optional["OntologyItem"] = None,
+        parent_entry: Union["OntologyItem", None] = None,
         ):
     
         self._id = id
@@ -31,7 +31,7 @@ class OntologyItem:
 
         self._sourcefile = sourcefile  # Path to the JSON file where this item is defined
 
-        self._parent = parent_class
+        self._parent = parent_entry
 
     def __hash__(self) -> int:
         return hash(self.id)
@@ -91,6 +91,7 @@ class OntologyItem:
 
         if self.parent is not None:
             data["parent_class"] = self.parent.id
+
         return data
 
 
@@ -140,7 +141,7 @@ class JSONOntology:
                 if parent_id is not None:
                     has_parents[item["id"]] = parent_id
 
-                self.add_entry(sourcefile=path, **item)
+                self._add_entry(sourcefile=path, **item)
 
         # Link any entries that have parents
         for id, parent_id in has_parents.items():
@@ -150,10 +151,59 @@ class JSONOntology:
     def paths(self) -> List[str]:
         return self._paths
     
-    def add_entry(self, *args, force: bool = False, **kwargs):
+    def add_entry(
+            self, 
+            id: str,
+            label_en: str,
+            comment_en: str,
+            label_fr: Optional[str] = "",
+            comment_fr: Optional[str] = "",
+            parent_class: Optional[str] = None,
+            sourcefile: Optional[str] = None,
+        ) -> None:
+        """
+        Add an entry to the Ontology.
+
+        Args:
+            id (str): The unique identifier for the entry.
+            label_en (str): The English label for the entry.
+            comment_en (str): The English comment for the entry.
+            label_fr (Optional[str]): The French label for the entry.
+            comment_fr (Optional[str]): The French comment for the entry.
+            parent_class (Optional[str]): The parent class for the entry. If not provided, no links will be made.
+            sourcefile (Optional[str]): The source file for the entry. If not provided, this entry will never be dumped to json.
+
+        """
+        if sourcefile is None:
+            print(f"Warning: No sourcefile provided for id '{id}', this entry will not be written")
+            sourcefile = ""
+        
+        label = {
+            "en": label_en,
+            "fr": label_fr,
+        }
+        comment = {
+            "en": comment_en,
+            "fr": comment_fr,
+        }
+
+        parent_item = None
+        if parent_class is not None:
+            parent_item = self.entries[parent_class]
+
+        self._add_entry(
+            id=id,
+            pref_label=label,
+            comment=comment,
+            sourcefile=sourcefile,
+            parent_entry=parent_item,
+        )
+
+    def _add_entry(self, *args, force: bool = False,**kwargs) -> None:
+
         entry = OntologyItem(*args, **kwargs)
 
-        if not force and entry in self._entries:
+        if not force and entry.id in self._entries:
             raise ValueError(f"Entry with ID {entry.id} already exists")
 
         self._entries[entry.id] = entry
