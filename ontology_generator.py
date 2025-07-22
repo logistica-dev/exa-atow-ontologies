@@ -243,8 +243,8 @@ class ExaAToWOnto:
             "sub_HPC_classes.json": "HPCResource",
             "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
             "sub_PhysChar_classes.json": "PhysicalCharacteristic",
-            "sub_Workflow_classes.json": "Workflow",
             "sub_Job_class.json": "Job",
+            # "sub_Workflow_classes.json": "Workflow",
         }
         
         # add all subclasses
