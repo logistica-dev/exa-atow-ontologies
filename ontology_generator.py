@@ -2,7 +2,7 @@ import os
 import rdflib
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
-from typing import Optional, Union, List
+from typing import Dict, Optional, Union, List
 import json
 import networkx as nx
 from pyvis.network import Network
@@ -121,7 +121,7 @@ class ExaAToWOnto:
                      property_type: str = "ObjectProperty",
                      domain: Optional[Union[URIRef, str, List[Union[URIRef, str]]]] = None,
                      range_: Optional[Union[URIRef, str]] = None,
-                     comment: Optional[str] = None,
+                     comment: Optional[Union[str, Dict[str, str]]] = None,
                      lang: str = "en"):
         """
         Add an OWL property to the ontology
@@ -151,8 +151,6 @@ class ExaAToWOnto:
                 d_uri = self.EXAATOW[d] if isinstance(d, str) else d
                 self.graph.add((property_uri, RDFS.domain, d_uri))
 
-                    
-        
         # Add range
         if range_:
             if isinstance(range_, str):
