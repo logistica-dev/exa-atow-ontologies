@@ -1,3 +1,4 @@
+import os
 import rdflib
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
@@ -213,8 +214,16 @@ class ExaAToWOnto:
         #--------------
         # Core Classes
         #--------------
+        
+        # if we aren't running in the `files` directory, add it as a prefix
+        if os.path.exists("files"):
+            print("Prefixing file load with 'files' directory")
+            prefix = "files"
+        else:
+            prefix = ""
+
         # Read JSON file with classes
-        with open("main_classes.json", "r", encoding="utf-8") as f:
+        with open(os.path.join(prefix, "main_classes.json"), "r", encoding="utf-8") as f:
             main_classes = json.load(f)
 
         # Add classes using add_class
@@ -228,21 +237,20 @@ class ExaAToWOnto:
         #--------------------
         # Adding subclasses
         #--------------------
+
+        # dictionary of subclasses and their default parent class
+        subclasses = {
+            "sub_HPC_classes.json": "HPCResource",
+            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
+            "sub_PhysChar_classes.json": "PhysicalCharacteristic",
+            "sub_Job_classes.json": "Job",
+            "sub_Workflow_classes.json": "Workflow",
+        }
         
-        # HPC subclasses: Add using add_class
-        self.load_and_add_classes("sub_HPC_classes.json", "HPCResource")
+        # add all subclasses
+        for sub_file, parent in subclasses.items():
+            self.load_and_add_classes(os.path.join(prefix, sub_file), parent)
 
-        # PIE subclasses: Add using add_class
-        self.load_and_add_classes("sub_PIE_classes.json", "ProcessorIndicatorEstimator")
-        
-        # PhysChar subclasses: Add using add_class
-        self.load_and_add_classes("sub_PhysChar_classes.json", "PhysicalCharacteristic")
-
-        # Job subclasses: Add using add_class
-        self.load_and_add_classes("sub_Job_classes.json", "Job")
-
-        # Workflow subclasses: Add using add_class
-        self.load_and_add_classes("sub_Workflow_classes.json", "Workflow")
 # Missing: link between subclasses.
 # CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
 
