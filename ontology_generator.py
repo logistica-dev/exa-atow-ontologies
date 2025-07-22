@@ -38,6 +38,8 @@ class ExaAToWOnto:
             "rdf": RDF,
             "rdfs": RDFS,
             "xsd": XSD,
+            "eurio" : Namespace("http://data.europa.eu/s66#"),
+            "hpc_onto" : Namespace("https://hpc-fair.github.io/ontology/#")
         }
 
         for prefix, namespace in namespaces.items():
@@ -111,43 +113,6 @@ class ExaAToWOnto:
             else:
                 self.graph.add((class_uri, RDFS.comment, Literal(comment, lang="en")))
 
-#            def add_class(self, class_name: str, 
-#                  parent_class: Optional[Union[URIRef, str]] = None,
-#                  pref_label: Optional[str] = None,
-#                  comment: Optional[str] = None,
-#                  lang: str = "en",
-#                  equivalent = None):
-        """
-        Add an OWL class to the ontology
-        
-        Args:
-            class_name: Name of the class
-            parent_class: Parent class (for subclass relationships)
-            pref_label: Preferred label for the class
-            comment: Comment describing the class
-            lang: Language tag for labels and comments
-        """
-#        class_uri = self.EXAATOW[class_name]
-#        
-#        # Add class declaration
-#        self.graph.add((class_uri, RDF.type, OWL.Class))
-#        
-#        # Add subclass relationship if parent is specified
-#        if parent_class:
-#            parent_uri = self.EXAATOW[parent_class] if isinstance(parent_class, str) else parent_class
-#            self.graph.add((class_uri, RDFS.subClassOf, parent_uri))
-#            
-#        #Add equivalent classes    
-#        if equivalent:
-#            self.graph.add(class_uri, OWL.equivalentClass, equivalent)
-#        
-#        # Add preferred label
-#        if pref_label:
-#            self.graph.add((class_uri, SKOS.prefLabel, Literal(pref_label, lang=lang)))
-#        
-#        # Add comment
-#        if comment:
-#            self.graph.add((class_uri, RDFS.comment, Literal(comment, lang=lang)))
     
     def add_property(self, property_name: str, 
                      property_type: str = "ObjectProperty",
@@ -183,22 +148,6 @@ class ExaAToWOnto:
                 d_uri = self.EXAATOW[d] if isinstance(d, str) else d
                 self.graph.add((property_uri, RDFS.domain, d_uri))
 
-#        if domain:
-#            print(domain)
-#            if isinstance(domain, list):
-#                for d_domain in domain:
-#                    print(d_domain)
-#                    if isinstance(d_domain, str):
-#                        d_domain = self.EXAATOW[d_domain]
-#                        print(d_domain)
-#                    self.graph.add((property_uri, RDFS.domain, d_domain))
-#            if isinstance(domain, str):
-#                print(domain)
-#                domain = self.EXAATOW[domain]
-#                self.graph.add((property_uri, RDFS.domain, domain))
-#            if isinstance(domain, URIRef):
-#                print(domain)
-#                self.graph.add((property_uri, RDFS.domain, domain)
                     
         
         # Add range
@@ -377,6 +326,99 @@ class ExaAToWOnto:
         else:
             return self.graph.serialize(format=format)
     
+
+    def visualize_graph(self, output_file="ontology_graph.html", height="800px", physics=True):
+        """
+        Create an enhanced interactive visualization of the ontology
+
+        Args:
+            output_file (str, optional): Filename for the output HTML file. Defaults to "ontology_graph.html".
+            height (str, optional): Height of the visualization. Defaults to "800px".
+            physics (bool, optional): Whether to enable physics simulation. Defaults to True.
+
+        Returns:
+            Network: PyVis Network object containing the visualization
+
+        Example:
+            # Create a visualization with default settings
+            net = onto.visualize_graph()
+
+            # Create a visualization with custom settings
+            net = onto.visualize_graph(
+                output_file="project_network.html",
+                height="1000px",
+                physics=False
+            )
+        """
+
+        G = nx.DiGraph()
+
+        # Store class types
+        class_types = {}
+        for s, p, o in self.graph.triples((None, RDF.type, None)):
+            if o != RDFS.Class and isinstance(s, URIRef):
+                class_types[str(s)] = str(o).split('#')[-1]
+
+        # Add class nodes with labels
+        for entity, entity_type in class_types.items():
+            labels = list(self.graph.objects(URIRef(entity), RDFS.label))
+            label = str(labels[0]) if labels else entity.split('#')[-1]
+            descriptions = list(self.graph.objects(URIRef(entity), RDFS.comment))
+            title = str(descriptions[0]) if descriptions else label
+            G.add_node(entity, label=label, title=title, group=entity_type)
+
+        # Add edges for subclass relationships (blue)
+        for s, p, o in self.graph.triples((None, RDFS.subClassOf, None)):
+            if str(s) in class_types and str(o) in class_types:
+                G.add_edge(str(s), str(o), label="subClassOf", title="subClassOf", color='blue')
+
+        # Add edges for object properties (red)
+        for s, p, o in self.graph.triples((None, None, None)):
+            if isinstance(s, URIRef) and isinstance(o, URIRef) and str(s) in class_types and str(o) in class_types:
+                pred_labels = list(self.graph.objects(p, RDFS.label))
+                pred_label = str(pred_labels[0]) if pred_labels else str(p).split('#')[-1]
+                G.add_edge(str(s), str(o), label=pred_label, title=pred_label, color='red')
+
+        # Create pyvis network
+        net = Network(height=height, width="100%", directed=True, notebook=False)
+
+        # Configure physics
+        if physics:
+            net.barnes_hut(spring_length=200, spring_strength=0.05, damping=0.09, gravity=-80)
+        else:
+            net.toggle_physics(False)
+
+        # Add nodes and edges from NetworkX
+        net.from_nx(G)
+
+        # Customize visualization
+        net.set_options("""
+        var options = {
+          "nodes": {
+            "font": { "size": 14, "face": "Arial" },
+            "borderWidth": 2,
+            "shadow": true
+          },
+          "edges": {
+            "smooth": { "enabled": true, "type": "dynamic" },
+            "arrows": { "to": { "enabled": true, "scaleFactor": 0.5 } },
+            "font": { "size": 12, "align": "middle" },
+            "shadow": true
+          },
+          "interaction": {
+            "hover": true,
+            "navigationButtons": true,
+            "keyboard": true
+          }
+        }
+        """)
+
+        # Save visualization
+        net.save_graph(output_file)
+        print(f"Graph visualization saved to {output_file}")
+
+        return net
+
     def get_graph(self):
         """Return the RDF graph"""
         return self.graph

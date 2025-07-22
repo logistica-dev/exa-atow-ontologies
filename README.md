@@ -39,7 +39,8 @@ example of entry (if entry is in the correct json file, then no need to add the 
     "comment": {
        "en": "A physical or virtual server that executes computational jobs within a partition.",
        "fr": "Un serveur physique ou virtuel qui exécute des tâches de calcul au sein d'une partition."
-    }
+    },
+    "equivalent": ONTOLOGY.Name,
   },
 ```
 
