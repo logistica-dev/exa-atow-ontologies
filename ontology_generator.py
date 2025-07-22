@@ -4,6 +4,8 @@ from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
 from typing import Optional, Union, List
 import json
+import networkx as nx
+from pyvis.network import Network
 
 class ExaAToWOnto:
     """
