@@ -199,7 +199,7 @@ class ExaAToWOnto:
             s_classes = json.load(f)
     
         for s_class in s_classes:
-            print(s_class)
+            # print(s_class)
             self.add_class(
                 s_class["id"],
                 pref_label=s_class["pref_label"],
