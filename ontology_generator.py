@@ -478,12 +478,14 @@ class ExaAToWOnto:
             if id not in data:
                 data[id] = {}
 
-            try:
-                # attempt to update an existing dictionary (comment/label)
-                data[id][key].update(val)
-            except (KeyError, AttributeError):
-                # otherwise just add this pair as-is
-                data[id][key] = val
+            if key in data[id] and isinstance(data[id][key], dict):
+                # If the dictionary already exists, we need to ensure that the keys
+                # are sorted to prevent the json files randomising the order every time
+                tmp = data[id][key]
+                tmp.update(val)
+                val = dict(sorted(tmp.items()))
+
+            data[id][key] = val
 
         return data
 
