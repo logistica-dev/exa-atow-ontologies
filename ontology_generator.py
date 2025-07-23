@@ -538,7 +538,7 @@ class ExaAToWOnto:
                 o.write("\n")
 
         if len(file_grouping[None]) > 0:
-            print(f"Warning: {len(file_grouping[None])} entries have no JSON target:")
+            print(f"\nWarning: {len(file_grouping[None])} entries were not written (Do they have an assigned JSON file?)")
         
             for id in file_grouping[None]:
                 print(f"  {id}")
