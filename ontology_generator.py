@@ -486,7 +486,7 @@ class ExaAToWOnto:
         # collect the data
         # This is a dict of {id: {data}}
         mapping = self.create_json_mapping()
-        print(f"  We have {len(mapping)} entries in the mapping.")
+        print(f"  We have {len(mapping)} entries in the graph derived mapping.\n")
 
         # for efficient file writing, we should group by file
         # entries without a file go in None
