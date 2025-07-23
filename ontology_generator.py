@@ -226,17 +226,8 @@ class ExaAToWOnto:
         else:
             prefix = ""
 
-        # Read JSON file with classes
-        with open(os.path.join(prefix, "main_classes.json"), "r", encoding="utf-8") as f:
-            main_classes = json.load(f)
-
-        # Add classes using add_class
-        for m_class in main_classes:
-            self.add_class(
-                m_class["id"],
-                pref_label=m_class["pref_label"],
-                comment=m_class["comment"]
-               )
+        # Read JSON file with main classes
+        self.load_and_add_classes(os.path.join(prefix, "main_classes.json"), None)
 
         #--------------------
         # Adding subclasses
