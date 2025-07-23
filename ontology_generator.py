@@ -520,9 +520,9 @@ class ExaAToWOnto:
                 if val is None:
                     continue
 
-                tmp[item] = val
+                tmp[item] = val  # type: ignore
 
-            tmp.update(data)
+            tmp.update(data)  # type: ignore
 
             file_grouping[file][id] = tmp
 
