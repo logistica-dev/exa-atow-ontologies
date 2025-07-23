@@ -466,20 +466,18 @@ class ExaAToWOnto:
             if key is None:
                 continue
             # We need to select between a simple key: val and the language subtree
-            val = None
             if isinstance(item[2], URIRef):
                 val = str(item[2]).split("#")[-1]
             # Literal is used for comments and labels, collect them into a properly nested dict
             elif isinstance(item[2], Literal):
-                val = {item[2].language: item[2].value}
-            
-            if val is None:
+                val = {item[2].language: item[2].value}            
+            else:
                 continue
 
             # Create this entry if it does not exist
             if id not in data:
                 data[id] = {}
-            
+
             try:
                 # attempt to update an existing dictionary (comment/label)
                 data[id][key].update(val)
@@ -549,7 +547,9 @@ class ExaAToWOnto:
 
             output = []
             for id in existing_id_ordering:
-                output.append(entries.pop(id))
+                data = entries.pop(id)
+                print(data["pref_label"])
+                output.append(data)
 
             for id, data in entries.items():
                 output.append(data)
