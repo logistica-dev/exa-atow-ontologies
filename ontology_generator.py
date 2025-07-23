@@ -504,7 +504,7 @@ class ExaAToWOnto:
 
         # key ordering for json output
         # id is always first, so not needed here
-        key_order = ["pref_label", "comment"]
+        key_order = ["parent_class", "pref_label", "comment"]
         file_grouping = {}
         for id, data in mapping.items():
 
