@@ -25,6 +25,8 @@ class ExaAToWOnto:
         self.base_uri = base_uri
         self.EXAATOW = Namespace(base_uri)
         self.graph = Graph()
+
+        self.json_file_mapping = {}
         
         # Bind standard namespaces
         self._bind_namespaces()
@@ -207,6 +209,8 @@ class ExaAToWOnto:
                 comment=s_class["comment"]
              )
             
+            self.json_file_mapping[s_class["id"]] = json_file
+
     
     def _init_basic_structure(self):
         """Initialize the basic structure of the ExaAToW ontology"""
@@ -435,7 +439,7 @@ class ExaAToWOnto:
         """Return the ExaAToW namespace"""
         return self.EXAATOW
     
-    def create_json_mapping(self) -> Dict[str, Union[str, Dict[str, str]]]:
+    def create_json_mapping(self) -> Dict[str, Dict[str, Union[str, Dict[str, str]]]]:
         """Create a dictionary mapping JSON files to their corresponding entries"""
         translate = {
             "prefLabel": "pref_label",
@@ -484,6 +488,70 @@ class ExaAToWOnto:
                 data[id][key] = val
 
         return data
+
+    def dump_to_json(self) -> None:
+        print("Dumping ontology to json")
+
+        # collect the data
+        # This is a dict of {id: {data}}
+        mapping = self.create_json_mapping()
+        print(f"  We have {len(mapping)} entries in the mapping.")
+
+        # for efficient file writing, we should group by file
+        # entries without a file go in None
+        # the end result of this should be a dict in the form:
+        # {path: {id: {data}}}
+
+        # key ordering for json output
+        # id is always first, so not needed here
+        key_order = ["pref_label", "comment"]
+        file_grouping = {}
+        for id, data in mapping.items():
+
+            file = self.json_file_mapping.get(id, None)
+
+            if file not in file_grouping:
+                file_grouping[file] = {}
+
+            # we need to ensure a common ordering of the keys
+            # easiest to add the id into the data here
+            tmp = {"id": id}
+
+            for item in key_order:
+                tmp[item] = data.pop(item, None)
+
+            tmp.update(data)
+
+            file_grouping[file][id] = tmp
+
+        # Now write the JSON
+        for file, entries in file_grouping.items():
+            if file is None:
+                continue
+            print(f"Treating file: {file}")
+            print("  Loading existing ids", end="... ")
+            try:
+                with open(file, "r") as o:
+                    existing_id_ordering = [item["id"] for item in json.load(o)]
+                print(f"Done ({len(existing_id_ordering)})")
+            except:
+                print("Error")
+                raise
+
+            output = []
+            for id in existing_id_ordering:
+                output.append(entries[id])
+
+            with open(file, "w+") as o:
+                json.dump(output, o, indent=2, ensure_ascii=False)
+                o.write("\n")
+
+        if len(file_grouping[None]) > 0:
+            print(f"Warning: {len(file_grouping[None])} entries have no JSON target:")
+        
+            for id in file_grouping[None]:
+                print(f"  {id}")
+
 
 # Example usage
 if __name__ == "__main__":
