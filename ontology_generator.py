@@ -434,7 +434,56 @@ class ExaAToWOnto:
     def get_namespace(self):
         """Return the ExaAToW namespace"""
         return self.EXAATOW
+    
+    def create_json_mapping(self) -> Dict[str, Union[str, Dict[str, str]]]:
+        """Create a dictionary mapping JSON files to their corresponding entries"""
+        translate = {
+            "prefLabel": "pref_label",
+            "subClassOf": "parent_class",
+            "type": None,
+        }
 
+        data = {}
+        for item in self.graph:
+            # Each node on the rdf graph consists of 3 values
+            # (id, key, value)
+            # Where id is the JSON representation
+            # We must collect these key: val pairs onto their respective
+            # JSON identifier before dumping
+
+            # Group by id
+            id = str(item[0]).split("#")[-1]
+
+            # get the key of the key: val pair   
+            key = str(item[1]).split("#")[-1]
+            # translate from rdf term to json term
+            # we default to the key itself, in case there are no translations available
+            key = translate.get(key, key)
+            # set translation to None to avoid dumping this key
+            if key is None:
+                continue
+            # We need to select between a simple key: val and the language subtree
+            val = None
+            if isinstance(item[2], URIRef):
+                val = str(item[2]).split("#")[-1]
+            # Literal is used for comments and labels, collect them into a properly nested dict
+            elif isinstance(item[2], Literal):
+                val = {item[2].language: item[2].value}
+            # Create this entry if it does not exist
+            if id not in data:
+                data[id] = {}
+            
+            if val is None:
+                continue
+            
+            try:
+                # attempt to update an existing dictionary (comment/label)
+                data[id][key].update(val)
+            except (KeyError, AttributeError):
+                # otherwise just add this pair as-is
+                data[id][key] = val
+
+        return data
 
 # Example usage
 if __name__ == "__main__":
