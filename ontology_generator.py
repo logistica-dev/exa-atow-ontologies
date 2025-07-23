@@ -28,6 +28,13 @@ class ExaAToWOnto:
 
         self.json_file_mapping = {}
         
+        # if we aren't running in the `files` directory, add it as a prefix
+        if os.path.exists("files"):
+            print("Prefixing file load with 'files' directory")
+            self.json_dir = "files"
+        else:
+            self.json_dir = ""
+        
         # Bind standard namespaces
         self._bind_namespaces()
         
@@ -224,16 +231,9 @@ class ExaAToWOnto:
         #--------------
         # Core Classes
         #--------------
-        
-        # if we aren't running in the `files` directory, add it as a prefix
-        if os.path.exists("files"):
-            print("Prefixing file load with 'files' directory")
-            prefix = "files"
-        else:
-            prefix = ""
 
         # Read JSON file with main classes
-        self.load_and_add_classes(os.path.join(prefix, "main_classes.json"), None)
+        self.load_and_add_classes(os.path.join(self.json_dir, "main_classes.json"), None)
 
         #--------------------
         # Adding subclasses
@@ -250,7 +250,7 @@ class ExaAToWOnto:
         
         # add all subclasses
         for sub_file, parent in subclasses.items():
-            self.load_and_add_classes(os.path.join(prefix, sub_file), parent)
+            self.load_and_add_classes(os.path.join(self.json_dir, sub_file), parent)
 
 # Missing: link between subclasses.
 # CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
