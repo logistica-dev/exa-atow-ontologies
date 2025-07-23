@@ -548,7 +548,6 @@ class ExaAToWOnto:
             output = []
             for id in existing_id_ordering:
                 data = entries.pop(id)
-                print(data["pref_label"])
                 output.append(data)
 
             for id, data in entries.items():
