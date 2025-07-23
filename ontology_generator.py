@@ -77,7 +77,9 @@ class ExaAToWOnto:
               parent_class: Optional[Union[URIRef, str]] = None,
               pref_label: Optional[Union[str, dict]] = None,
               comment: Optional[Union[str, dict]] = None,
-              equivalent=None):
+              equivalent=None,
+              json_path: Optional[str] = None,
+              ):
         """
         Add an OWL class to the ontology
  
@@ -87,8 +89,12 @@ class ExaAToWOnto:
             pref_label: Preferred label for the class. Can be a string (default "en") or dict with lang keys.
             comment: Comment describing the class. Can be a string (default "en") or dict with lang keys.
             equivalent: Optional equivalent class
+            json_path: Optional path to the JSON file in which this class should be dumped
         """
         class_uri = self.EXAATOW[class_name]
+
+        if json_path is not None:
+            self.json_file_mapping[class_name] = json_path
 
         # Add class declaration
         self.graph.add((class_uri, RDF.type, OWL.Class))
