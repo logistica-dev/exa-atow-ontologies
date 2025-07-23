@@ -509,7 +509,12 @@ class ExaAToWOnto:
             tmp = {"id": id}
 
             for item in key_order:
-                tmp[item] = data.pop(item, None)
+                val = data.pop(item, None)
+
+                if val is None:
+                    continue
+
+                tmp[item] = val
 
             tmp.update(data)
 
