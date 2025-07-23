@@ -472,12 +472,13 @@ class ExaAToWOnto:
             # Literal is used for comments and labels, collect them into a properly nested dict
             elif isinstance(item[2], Literal):
                 val = {item[2].language: item[2].value}
-            # Create this entry if it does not exist
-            if id not in data:
-                data[id] = {}
             
             if val is None:
                 continue
+
+            # Create this entry if it does not exist
+            if id not in data:
+                data[id] = {}
             
             try:
                 # attempt to update an existing dictionary (comment/label)
