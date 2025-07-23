@@ -548,7 +548,10 @@ class ExaAToWOnto:
 
             output = []
             for id in existing_id_ordering:
-                output.append(entries[id])
+                output.append(entries.pop(id))
+
+            for id, data in entries.items():
+                output.append(data)
 
             with open(file, "w+") as o:
                 json.dump(output, o, indent=2, ensure_ascii=False)
