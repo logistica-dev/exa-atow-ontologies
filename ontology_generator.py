@@ -101,6 +101,8 @@ class ExaAToWOnto:
         class_uri = self.EXAATOW[class_name]
 
         if json_path is not None:
+            if self.json_dir not in json_path:
+                json_path =  os.path.join(self.json_dir, json_path)
             self.json_file_mapping[class_name] = json_path
 
         # Add class declaration
@@ -533,9 +535,13 @@ class ExaAToWOnto:
             print(f"Treating file: {file}")
             print("  Loading existing ids", end="... ")
             try:
-                with open(file, "r") as o:
-                    existing_id_ordering = [item["id"] for item in json.load(o)]
-                print(f"Done ({len(existing_id_ordering)})")
+                if not os.path.exists(file):
+                    existing_id_ordering = []
+                    print("File not found, will be created.")
+                else:
+                    with open(file, "r") as o:
+                        existing_id_ordering = [item["id"] for item in json.load(o)]
+                    print(f"Done ({len(existing_id_ordering)})")
             except:
                 print("Error")
                 raise
