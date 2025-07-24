@@ -1,8 +1,9 @@
 import rdflib
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
-from typing import Optional, Union, List
+from typing import Optional, Union, List, Dict, Any
 import json
+from pathlib import Path
 
 class ExaAToWOnto:
     """
@@ -12,15 +13,15 @@ class ExaAToWOnto:
     for HPC, digital twin, and energy consumption monitoring applications.
     """
     
-    def __init__(self, base_uri: str = "https://github.com/cnherrera/Exa-AToW_onto/blob/main/test_ontology_exaatow.ttl#"):
+    def __init__(self, base_uri: str = "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#"):
         """
         Initialize the ExaAToW ontology manager
         
         Args:
             base_uri (str): Base URI for the ExaAToW ontology namespace
         """
-        self.base_uri = base_uri
-        self.EXAATOW = Namespace(base_uri)
+        self.base_uri = base_uri.rstrip() + ("#" if not base_uri.endswith("#") else "")
+        self.EXAATOW = Namespace(self.base_uri)
         self.graph = Graph()
         
         # Bind standard namespaces
@@ -44,6 +45,44 @@ class ExaAToWOnto:
 
         for prefix, namespace in namespaces.items():
             self.graph.bind(prefix, namespace)
+
+    def _resolve_uri(self, uri_or_name: Union[URIRef, str], namespace: Optional[Namespace] = None) -> URIRef:
+        """
+        Resolve a URI or name to a proper URIRef using a global namespace lookup
+        
+        Args:
+            uri_or_name: URI string or local name
+            namespace: Namespace to use for local names (defaults to EXAATOW)
+            
+        Returns:
+            URIRef: Resolved URI reference
+        """
+        if isinstance(uri_or_name, URIRef):
+            return uri_or_name
+        
+        if isinstance(uri_or_name, str):
+            # Handle full URIs
+            if uri_or_name.startswith('http'):
+                return URIRef(uri_or_name)
+            
+            # Handle prefixed names like "xsd:string", "rdfs:label"
+            if ':' in uri_or_name:
+                prefix, local = uri_or_name.split(':', 1)
+                prefix_lower = prefix.lower()
+                
+                # Look up namespace globally
+                if prefix_lower in self.namespaces:
+                    return self.namespaces[prefix_lower][local]
+                else:
+                    logger.warning(f"Unknown namespace prefix: {prefix}. Using EXAATOW namespace.")
+                    return self.EXAATOW[uri_or_name]
+            
+            # Handle local names - use provided namespace or default to EXAATOW
+            ns = namespace or self.EXAATOW
+            return ns[uri_or_name]
+        
+        raise ValueError(f"Cannot resolve URI: {uri_or_name}")
+
 
     def add_triple(self, subject: Union[URIRef, str], 
                    predicate: Union[URIRef, str], 
@@ -83,36 +122,51 @@ class ExaAToWOnto:
             comment: Comment describing the class. Can be a string (default "en") or dict with lang keys.
             equivalent: Optional equivalent class
         """
-        class_uri = self.EXAATOW[class_name]
+        #class_uri = self.EXAATOW[class_name]
 
+        class_uri = self._resolve_uri(class_name)
+        
         # Add class declaration
-        self.graph.add((class_uri, RDF.type, OWL.Class))
+        self.add_triple(class_uri, RDF.type, OWL.Class)
+#        self.graph.add((class_uri, RDF.type, OWL.Class))
 
         # Add subclass relationship if parent is specified
         if parent_class:
-            parent_uri = self.EXAATOW[parent_class] if isinstance(parent_class, str) else parent_class
+            parent_uri = self._resolve_uri(parent_class)
+            #self.EXAATOW[parent_class] if isinstance(parent_class, str) else parent_class
             self.graph.add((class_uri, RDFS.subClassOf, parent_uri))
 
         # Add equivalent class
         if equivalent:
-            self.graph.add((class_uri, OWL.equivalentClass, equivalent))
+            equivalent_uri = self._resolve_uri(equivalent)
+            self.graph.add((class_uri, OWL.equivalentClass, equivalent_uri))
 
         # Add prefLabel(s)
         if pref_label:
-            if isinstance(pref_label, dict):
-                for lang, label in pref_label.items():
-                    self.graph.add((class_uri, SKOS.prefLabel, Literal(label, lang=lang)))
-            else:
-                self.graph.add((class_uri, SKOS.prefLabel, Literal(pref_label, lang="en")))
+            self._add_dict_property(class_uri, SKOS.prefLabel, pref_label)
 
         # Add comment(s)
         if comment:
-            if isinstance(comment, dict):
-                for lang, com in comment.items():
-                    self.graph.add((class_uri, RDFS.comment, Literal(com, lang=lang)))
-            else:
-                self.graph.add((class_uri, RDFS.comment, Literal(comment, lang="en")))
+            self._add_dict_property(class_uri, RDFS.comment, comment)
+                
 
+    def _add_dict_property(self, subject: URIRef, predicate: URIRef, 
+                                   value: Union[str, Dict[str, str]], default_lang: str = "en"):
+        """
+        Add a property that can have multiple language variants
+        
+        Args:
+            subject: Subject URI
+            predicate: Predicate URI
+            value: String or dictionary of language->value mappings
+            default_lang: Default language if value is a string
+        """
+        if isinstance(value, dict):
+            for lang, text in value.items():
+                self.graph.add((subject, predicate, Literal(text, lang=lang)))
+        else:
+            self.graph.add((subject, predicate, Literal(value, lang=default_lang)))
+    
     
     def add_property(self, property_name: str, 
                      property_type: str = "ObjectProperty",
@@ -131,29 +185,32 @@ class ExaAToWOnto:
             comment: Comment describing the property
             lang: Language tag for comments
         """
-        property_uri = self.EXAATOW[property_name]
+        property_uri = self._resolve_uri(property_name)
         
         # Add property declaration
-        if property_type == "ObjectProperty":
-            self.graph.add((property_uri, RDF.type, OWL.ObjectProperty))
-        elif property_type == "DatatypeProperty":
-            self.graph.add((property_uri, RDF.type, OWL.DatatypeProperty))
-        elif property_type == "AnnotationProperty":
-            self.graph.add((property_uri, RDF.type, OWL.AnnotationProperty))
+        property_types = {
+            "ObjectProperty": OWL.ObjectProperty,
+            "DatatypeProperty": OWL.DatatypeProperty,
+            "AnnotationProperty": OWL.AnnotationProperty
+        }
+        
+        if property_type not in property_types:
+            raise ValueError(f"Invalid property type: {property_type}")
+            
+        self.graph.add((property_uri, RDF.type, property_types[property_type]))
         
         # Add domain(s)
         if domain:
             domains = domain if isinstance(domain, list) else [domain]
             for d in domains:
-                d_uri = self.EXAATOW[d] if isinstance(d, str) else d
-                self.graph.add((property_uri, RDFS.domain, d_uri))
-
-                    
+                d_uri = self._resolve_uri(d)
+                #self.EXAATOW[d] if isinstance(d, str) else d
+                self.graph.add((property_uri, RDFS.domain, d_uri))   
         
         # Add range
         if range_:
             if isinstance(range_, str):
-                range_ = self.EXAATOW[range_] if not range_.startswith('http') else URIRef(range_)
+                range_ =  self.EXAATOW[range_] if not range_.startswith('http') else URIRef(range_)
             self.graph.add((property_uri, RDFS.range, range_))
         
         # Add comment
@@ -205,8 +262,58 @@ class ExaAToWOnto:
                 parent_class=s_class.get("parent_class", default_parent_class),
                 comment=s_class["comment"]
              )
+
+
+    def load_and_add_properties(self, json_file: Union[str, Path]):
+        """
+        Load properties from JSON file and add them to the ontology.
+        
+        Expected JSON format:
+        [
+            {
+                "name": "property_name",
+                "type": "ObjectProperty|DatatypeProperty|AnnotationProperty",
+                "domain": ["Class1", "Class2"] or "Class1",
+                "range": "Class1" or "xsd:string",
+                "comment": "Description" or {"en": "Description", "fr": "Description français"},
+                "inverse_of": "inverse_property_name",  // optional
+            }
+        ]
+        
+        Args:
+            json_file: Path to JSON file containing property definitions
+        """
+        json_path = Path(json_file)
+        if not json_path.exists():
+            logger.error(f"JSON file not found: {json_file}")
+            return
             
+        try:
+            with open(json_path, "r", encoding="utf-8") as f:
+                properties = json.load(f)
+        except json.JSONDecodeError as e:
+            logger.error(f"Error parsing JSON file {json_file}: {e}")
+            return
+        except Exception as e:
+            logger.error(f"Error reading file {json_file}: {e}")
+            return
     
+        for prop in properties:
+            try:
+                self.add_property(
+                    property_name=prop["name"],
+                    property_type=prop.get("type", "ObjectProperty"),
+                    domain=prop.get("domain"),
+                    range_=prop.get("range"),
+                    comment=prop.get("comment"),
+                    inverse_of=prop.get("inverse_of")
+                    )
+            except KeyError as e:
+                logger.error(f"Missing required field in property definition: {e}")
+            except Exception as e:
+                logger.error(f"Error adding property {prop.get('name', 'unknown')}: {e}")
+
+                
     def _init_basic_structure(self):
         """Initialize the basic structure of the ExaAToW ontology"""
 
@@ -243,6 +350,7 @@ class ExaAToWOnto:
 
         # Workflow subclasses: Add using add_class
         self.load_and_add_classes("sub_Workflow_classes.json", "Workflow")
+        
 # Missing: link between subclasses.
 # CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
 
@@ -452,4 +560,4 @@ if __name__ == "__main__":
 #                      properties={"hasCustomProperty": "example_value"})
     
     # Print the ontology in Turtle format
-    print(onto.serialize(destination="test.ttl",format="turtle"))
+    print(onto.serialize(destination="exaatow_ontology_v02.ttl",format="turtle"))
