@@ -122,18 +122,15 @@ class ExaAToWOnto:
             comment: Comment describing the class. Can be a string (default "en") or dict with lang keys.
             equivalent: Optional equivalent class
         """
-        #class_uri = self.EXAATOW[class_name]
 
         class_uri = self._resolve_uri(class_name)
         
         # Add class declaration
         self.add_triple(class_uri, RDF.type, OWL.Class)
-#        self.graph.add((class_uri, RDF.type, OWL.Class))
 
         # Add subclass relationship if parent is specified
         if parent_class:
             parent_uri = self._resolve_uri(parent_class)
-            #self.EXAATOW[parent_class] if isinstance(parent_class, str) else parent_class
             self.graph.add((class_uri, RDFS.subClassOf, parent_uri))
 
         # Add equivalent class
@@ -172,7 +169,8 @@ class ExaAToWOnto:
                      property_type: str = "ObjectProperty",
                      domain: Optional[Union[URIRef, str, List[Union[URIRef, str]]]] = None,
                      range_: Optional[Union[URIRef, str]] = None,
-                     comment: Optional[str] = None,
+                     comment: Optional[Union[str,dict]] = None,
+                     pref_label: Optional[Union[str,dict]] = None,
                      lang: str = "en"):
         """
         Add an OWL property to the ontology
@@ -184,6 +182,23 @@ class ExaAToWOnto:
             range_: Range class or datatype for the property
             comment: Comment describing the property
             lang: Language tag for comments
+
+
+        - **OWL.ObjectProperty** vs **OWL.DatatypeProperty**: whether the property points to another class (object) or to a literal value (data).
+        - **OWL.AnnotationProperty**: used only for annotations (metadata).
+        - **OWL.inverseOf**: links a property to its inverse (e.g., hasPart inverse of isPartOf).
+        - **OWL.FunctionalProperty**: means a subject can have at most one value for this property.
+        - **OWL.TransitiveProperty**: if A relates to B and B relates to C, then A relates to C.
+        - **OWL.SymmetricProperty**: if A relates to B, then B relates to A.
+        - **OWL.AsymmetricProperty**: if A relates to B, B cannot relate to A.
+        - **OWL.ReflexiveProperty**: everything is related to itself.
+        - **OWL.IrreflexiveProperty**: nothing is related to itself.
+
+        # Define property type and features
+           g.add((p, RDF.type, OWL.ObjectProperty))
+           g.add((p, RDF.type, OWL.FunctionalProperty))
+           g.add((p, RDF.type, OWL.TransitiveProperty))
+
         """
         property_uri = self._resolve_uri(property_name)
         
@@ -204,7 +219,6 @@ class ExaAToWOnto:
             domains = domain if isinstance(domain, list) else [domain]
             for d in domains:
                 d_uri = self._resolve_uri(d)
-                #self.EXAATOW[d] if isinstance(d, str) else d
                 self.graph.add((property_uri, RDFS.domain, d_uri))   
         
         # Add range
@@ -212,10 +226,16 @@ class ExaAToWOnto:
             if isinstance(range_, str):
                 range_ =  self.EXAATOW[range_] if not range_.startswith('http') else URIRef(range_)
             self.graph.add((property_uri, RDFS.range, range_))
-        
-        # Add comment
+
+            
+        # Add prefLabel(s)
+        if pref_label:
+            self._add_dict_property(property_uri, SKOS.prefLabel, pref_label)
+
+        # Add comment(s)
         if comment:
-            self.graph.add((property_uri, RDFS.comment, Literal(comment, lang=lang)))
+            self._add_dict_property(property_uri, RDFS.comment, comment)
+            
     
     def add_instance(self, instance_name: str, 
                      class_type: Union[URIRef, str],
@@ -251,11 +271,11 @@ class ExaAToWOnto:
 
     def load_and_add_classes(self, json_file, default_parent_class):
         """Load classes from JSON file and add them with fallback parent class."""
+        
         with open(json_file, "r", encoding="utf-8") as f:
             s_classes = json.load(f)
     
         for s_class in s_classes:
-            print(s_class)
             self.add_class(
                 s_class["id"],
                 pref_label=s_class["pref_label"],
@@ -263,57 +283,23 @@ class ExaAToWOnto:
                 comment=s_class["comment"]
              )
 
+    def load_and_add_properties(self, json_file):
+        """Load properties from JSON file and add them to the ontology."""
+        with open(json_file, "r", encoding="utf-8") as f:
+            properties = json.load(f)
 
-    def load_and_add_properties(self, json_file: Union[str, Path]):
-        """
-        Load properties from JSON file and add them to the ontology.
-        
-        Expected JSON format:
-        [
-            {
-                "name": "property_name",
-                "type": "ObjectProperty|DatatypeProperty|AnnotationProperty",
-                "domain": ["Class1", "Class2"] or "Class1",
-                "range": "Class1" or "xsd:string",
-                "comment": "Description" or {"en": "Description", "fr": "Description français"},
-                "inverse_of": "inverse_property_name",  // optional
-            }
-        ]
-        
-        Args:
-            json_file: Path to JSON file containing property definitions
-        """
-        json_path = Path(json_file)
-        if not json_path.exists():
-            logger.error(f"JSON file not found: {json_file}")
-            return
-            
-        try:
-            with open(json_path, "r", encoding="utf-8") as f:
-                properties = json.load(f)
-        except json.JSONDecodeError as e:
-            logger.error(f"Error parsing JSON file {json_file}: {e}")
-            return
-        except Exception as e:
-            logger.error(f"Error reading file {json_file}: {e}")
-            return
-    
         for prop in properties:
-            try:
                 self.add_property(
-                    property_name=prop["name"],
-                    property_type=prop.get("type", "ObjectProperty"),
+                    property_name=prop.get("id"),
+                    property_type=prop.get("property_type", "ObjectProperty"),
                     domain=prop.get("domain"),
                     range_=prop.get("range"),
                     comment=prop.get("comment"),
-                    inverse_of=prop.get("inverse_of")
+                    pref_label=prop.get("pref_label")
+#                    inverse_of=prop.get("inverse_of")
                     )
-            except KeyError as e:
-                logger.error(f"Missing required field in property definition: {e}")
-            except Exception as e:
-                logger.error(f"Error adding property {prop.get('name', 'unknown')}: {e}")
 
-                
+                    
     def _init_basic_structure(self):
         """Initialize the basic structure of the ExaAToW ontology"""
 
@@ -355,6 +341,10 @@ class ExaAToWOnto:
 # CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
 
 # Supercomputer has name, etc.
+
+
+        #Adding properties for Workflow
+        self.load_and_add_properties("properties_workflow.json")
 
 
 
@@ -416,6 +406,16 @@ class ExaAToWOnto:
                          domain="User",
                          range_="Authentication",
                          comment="Relates a User to an Authentication event.")
+
+        self.add_property("hasProperty"
+                          )
+
+
+        self.add_property("hasFlowType", 
+                         property_type="ObjectProperty",
+                         domain="Workflow",
+                         range_="FlowType",
+                         comment="Specifies the flow type of the workflow (task-based, iterative, or data-driven).")
     
     def serialize(self, format: str = "turtle", destination: Optional[str] = None):
         """
@@ -560,4 +560,4 @@ if __name__ == "__main__":
 #                      properties={"hasCustomProperty": "example_value"})
     
     # Print the ontology in Turtle format
-    print(onto.serialize(destination="exaatow_ontology_v02.ttl",format="turtle"))
+    print(onto.serialize(destination="exaatow_ontology.ttl",format="turtle"))

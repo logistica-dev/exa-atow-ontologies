@@ -3,6 +3,12 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
+exa-atow: a owl:Class ;
+    rdfs:comment ""@en,
+        ""@fr ;
+    skos:prefLabel ""@en,
+        ""@fr .
+
 exa-atow:AcceleratedNode a owl:Class ;
     rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en,
         "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."@fr ;
@@ -23,13 +29,6 @@ exa-atow:CarbonFootprint a owl:Class ;
     rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
     skos:prefLabel "Carbon Footprint"@en,
         "Empreinte carbone"@fr .
-
-exa-atow:CommandLineTool a owl:Class ;
-    rdfs:comment "An executable tool invoked from the command line within a workflow step. It can represent scripts, binaries, or containerized commands. Defined in CWL and similar engines as atomic execution units."@en,
-        "Un outil exécutable appelé depuis la ligne de commande dans une étape de flux de travail. Il peut s'agir de scripts, de binaires ou de commandes conteneurisées. Défini dans CWL et autres moteurs comme des unités d'exécution atomiques."@fr ;
-    rdfs:subClassOf exa-atow:Workflow ;
-    skos:prefLabel "Command Line Tool"@en,
-        "Outil en ligne de commande"@fr .
 
 exa-atow:Container a owl:Class ;
     rdfs:comment "A portable, encapsulated execution environment containing all software dependencies required by a workflow step. Common formats include Docker and Singularity."@en,
@@ -58,13 +57,6 @@ exa-atow:DataProvenance a owl:Class ;
     rdfs:subClassOf exa-atow:Workflow ;
     skos:prefLabel "Data Provenance"@en,
         "Provenance des données"@fr .
-
-exa-atow:DatabaseConnection a owl:Class ;
-    rdfs:comment "A link or configuration allowing a workflow step to interact with an external database for querying, reading, or writing structured data."@en,
-        "Un lien ou une configuration permettant à une étape de flux de travail d’interagir avec une base de données externe pour effectuer des requêtes, lire ou écrire des données structurées."@fr ;
-    rdfs:subClassOf exa-atow:Workflow ;
-    skos:prefLabel "Database Connection"@en,
-        "Connexion à la base de données"@fr .
 
 exa-atow:DatasetConstraint a owl:Class ;
     rdfs:comment "Constraint specifying dataset dependencies required for a job to run."@en,
@@ -406,21 +398,143 @@ exa-atow:authenticates a owl:ObjectProperty ;
     rdfs:domain exa-atow:User ;
     rdfs:range exa-atow:Authentication .
 
+exa-atow:hasAbstractionLevel a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its abstraction level, indicating the conceptual level at which it is defined."@en,
+        "Associe un flux de travail avec son niveau d'abstraction, indiquant le niveau conceptuel auquel il est défini."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:AbstractionLevel ;
+    skos:prefLabel "has abstraction level"@en,
+        "a un niveau d'abstraction"@fr .
+
+exa-atow:hasCompositionMethod a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its composition method, indicating how the workflow is described and assembled within a WMS."@en,
+        "Associe un flux de travail avec sa méthode de composition, indiquant comment le flux de travail est décrit et assemblé dans un WMS."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:CompositionMethod ;
+    skos:prefLabel "has composition method"@en,
+        "a une méthode de composition"@fr .
+
+exa-atow:hasCoupling a owl:ObjectProperty ;
+    rdfs:comment "Links a workflow to its coupling type (tight or loose)."@en,
+        "Relie un flux de travail à son type de couplage (serré ou lâche)."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:Coupling ;
+    skos:prefLabel "has coupling type"@en,
+        "a un couplage de type"@fr .
+
+exa-atow:hasDataManagementGranularity a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its data management granularity, indicating how the WMS handles data operations."@en,
+        "Associe un flux de travail avec sa granularité de gestion des données, indiquant comment le WMS traite les opérations sur les données."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:DataManagementGranularity ;
+    skos:prefLabel "has data management granularity"@en,
+        "a une granularité de gestion des données"@fr .
+
+exa-atow:hasDataManagementStorage a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its data management storage model for intermediate data."@en,
+        "Associe un flux de travail avec son modèle de stockage de gestion des données pour les données intermédiaires."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:DataManagementStorage ;
+    skos:prefLabel "has data management storage"@en,
+        "a un stockage de gestion des données"@fr .
+
+exa-atow:hasDataManagementTransport a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its data management transport mechanism for transferring intermediate data."@en,
+        "Associe un flux de travail avec son mécanisme de transport de gestion des données pour transférer les données intermédiaires."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:DataManagementTransport ;
+    skos:prefLabel "has data management transport"@en,
+        "a un transport de gestion des données"@fr .
+
 exa-atow:hasDieSize a owl:DatatypeProperty ;
     rdfs:comment "CPU, GPU has a die size."@en ;
     rdfs:domain exa-atow:CPU,
         exa-atow:GPU ;
     rdfs:range exa-atow:DieSize .
 
+exa-atow:hasDomain a owl:ObjectProperty ;
+    rdfs:comment "Links a workflow to its domain specificity (domain-specific or agnostic)."@en,
+        "Relie un flux de travail à sa spécificité de domaine (spécifique ou agnostique)."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:DomainSpecificity ;
+    skos:prefLabel "has domain specificity"@en,
+        "a une spécificité du domaine"@fr .
+
+exa-atow:hasExecutionControl a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its execution control method, specifying how tasks are executed within the workflow."@en,
+        "Associe un flux de travail avec sa méthode de contrôle d'exécution, spécifiant comment les tâches sont exécutées dans le flux de travail."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:ExecutionControl ;
+    skos:prefLabel "has execution control"@en,
+        "a un contrôle d'exécution"@fr .
+
+exa-atow:hasFlowType a owl:ObjectProperty ;
+    rdfs:comment "Links a workflow to its flow type (task-based, iterative, or data-driven)."@en,
+        "Specifies the flow type of the workflow (task-based, iterative, or data-driven)."@en,
+        "Relie un flux de travail à son type de flux (basé sur des tâches, itératif ou orienté données)."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:FlowType ;
+    skos:prefLabel "has flow type"@en,
+        "a pour type de flux"@fr .
+
+exa-atow:hasGranularity a owl:ObjectProperty ;
+    rdfs:comment "Links a workflow to its granularity level (functions, standalone executables, sub-workflows)."@en,
+        "Relie un flux de travail à son niveau de granularité (fonctions, exécutables autonomes, sous-flux)."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:Granularity ;
+    skos:prefLabel "has granularity type"@en,
+        "a une granularité de type"@fr .
+
+exa-atow:hasModularity a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its modularity characteristic, describing how it is structured in terms of components."@en,
+        "Associe un flux de travail avec sa caractéristique de modularité, décrivant comment il est structuré en termes de composants."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:Modularity ;
+    skos:prefLabel "has modularity"@en,
+        "a une modularité"@fr .
+
+exa-atow:hasOrchestrationPlanning a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its orchestration planning approach, defining how the system plans execution."@en,
+        "Associe un flux de travail avec son approche de planification d'orchestration, définissant comment le système planifie l'exécution."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:OrchestrationPlanning ;
+    skos:prefLabel "has orchestration planning"@en,
+        "a une planification d'orchestration"@fr .
+
+exa-atow:hasProperty a owl:ObjectProperty ;
+    rdfs:comment "Associates a workflow with its descriptive properties."@en,
+        "Associe un flux de travail avec ses propriétés descriptives."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:WorkflowProperty ;
+    skos:prefLabel "has Property"@en,
+        "a propriété"@fr .
+
 exa-atow:hasUnit a owl:DatatypeProperty ;
-    rdfs:comment "{'en': 'Unit of measurement (e.g., mm²).', 'fr': 'Unité de mesure (ex. : mm²).'}"@en ;
+    rdfs:comment "Unit of measurement (e.g., mm²)."@en,
+        "Unité de mesure (ex. : mm²)."@fr ;
     rdfs:domain exa-atow:DieSize ;
     rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> .
 
 exa-atow:hasValue a owl:DatatypeProperty ;
-    rdfs:comment "{'en': 'Numeric value.', 'fr': 'Valeur numérique.'}"@en ;
+    rdfs:comment "Numeric value."@en,
+        "Valeur numérique."@fr ;
     rdfs:domain exa-atow:DieSize ;
     rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> .
+
+exa-atow:hasWorkflowLanguage a owl:ObjectProperty ;
+    rdfs:comment "A Workflow "@en,
+        "Associe un flux de travail avec son modèle de stockage de gestion des données pour les données intermédiaires."@fr ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range exa-atow:WorkflowLanguage ;
+    skos:prefLabel "has Workflow Language"@en,
+        "a un language workflow"@fr .
+
+exa-atow:AbstractionLevel a owl:Class ;
+    rdfs:comment "The conceptual level at which the workflow is defined. Ranges from implicit (code-level), abstract (logical steps), intermediate, to concrete (fully specified execution plans)."@en,
+        "Le niveau conceptuel auquel le flux de travail est défini. Va de implicite (niveau code), à abstrait (étapes logiques), intermédiaire, ou concret (plans d'exécution entièrement spécifiés)."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Abstraction Level"@en,
+        "Niveau d'abstraction"@fr .
 
 exa-atow:Authentication a owl:Class ;
     rdfs:comment "Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities."@en,
@@ -435,9 +549,65 @@ exa-atow:CPU a owl:Class ;
     skos:prefLabel "CPU"@en,
         "CPU"@fr .
 
+exa-atow:CompositionMethod a owl:Class ;
+    rdfs:comment "The approach used to describe and assemble a workflow within a workflow management system (WMS). Composition can be: (1) schema-based, where workflows are defined in structured text files (XML, JSON, YAML, DSL) with either ad-hoc syntax specific to a single WMS or a standardized format shared across multiple WMSs (e.g., CWL, IWIR, Wf-Format); (2) API-driven, where workflows are expressed through a programming API or template engine, enabling control structures such as loops and conditionals; or (3) GUI-based, where workflows are constructed visually via a graphical interface."@en,
+        "L’approche utilisée pour décrire et assembler un flux de travail dans un système de gestion de flux de travail (WMS). La composition peut être : (1) basée sur un schéma, où les workflows sont définis dans des fichiers texte structurés (XML, JSON, YAML, DSL) avec une syntaxe ad hoc spécifique à un WMS ou un format standard partagé par plusieurs WMS (par ex. CWL, IWIR, Wf-Format) ; (2) pilotée par API, où les workflows sont exprimés via une API de programmation ou un moteur de gabarit, permettant des structures de contrôle comme des boucles et des conditions ; ou (3) basée sur une interface graphique, où les workflows sont construits visuellement."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Composition Method"@en,
+        "Méthode de composition"@fr .
+
+exa-atow:Coupling a owl:Class ;
+    rdfs:comment "Degree of dependency between workflow components. Tight coupling implies strong interdependence and synchronous execution; loose coupling implies modularity and flexibility."@en,
+        "Degré de dépendance entre les composants du flux de travail. Le couplage fort implique une interdépendance importante et une exécution synchrone ; le couplage faible favorise la modularité et la flexibilité."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Coupling"@en,
+        "Couplage"@fr .
+
+exa-atow:DataManagementGranularity a owl:Class ;
+    rdfs:comment "Granularity at which the WMS handles data operations. Possible values: Batch (data consumed and produced in full sets), Pipelined (data streamed record by record), Partitioned (data divided into groups of records)."@en,
+        "Granularité à laquelle le système de gestion de workflow traite les opérations sur les données. Valeurs possibles : Batch (consommation et production en ensembles complets), Pipeline (flux enregistrements individuels), Partitionné (groupes d'enregistrements)."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Data Management Granularity"@en,
+        "Granularité de la gestion des données"@fr .
+
+exa-atow:DataManagementStorage a owl:Class ;
+    rdfs:comment "Storage model used for intermediate data. Possible values: LocalFileSystem, SharedFileSystem, DistributedStorage, ReplicatedStorage, TransferTasks, InMemory."@en,
+        "Modèle de stockage utilisé pour les données intermédiaires. Valeurs possibles : Système de fichiers local, Système de fichiers partagé, Stockage distribué, Stockage répliqué, Tâches de transfert, En mémoire."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Data Management Storage"@en,
+        "Stockage de la gestion des données"@fr .
+
+exa-atow:DataManagementTransport a owl:Class ;
+    rdfs:comment "Mechanism to transfer intermediate data between workflow components. Possible values: FileBased (written/read from files), StreamBased (direct streaming via memory or network)."@en,
+        "Mécanisme de transfert des données intermédiaires entre composants. Valeurs possibles : Basé sur fichiers (écriture/lecture depuis des fichiers), Basé sur flux (streaming direct via mémoire ou réseau)."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Data Management Transport"@en,
+        "Transport de la gestion des données"@fr .
+
 exa-atow:DigitalTwin a owl:Class ;
     rdfs:comment "Represents a virtual representation of a physical or logical entity."@en ;
     skos:prefLabel "Digital Twin"@en .
+
+exa-atow:DomainSpecificity a owl:Class ;
+    rdfs:comment "Describes whether the workflow is designed for a specific scientific or industrial domain, or is domain-agnostic and reusable."@en,
+        "Indique si le flux de travail est conçu pour un domaine scientifique ou industriel spécifique, ou s’il est agnostique et réutilisable."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Domain Specificity"@en,
+        "Spécificité du domaine"@fr .
+
+exa-atow:ExecutionControl a owl:Class ;
+    rdfs:comment "Specifies the method used to execute tasks within a workflow. Possible values include: Runner (workflow system fully manages resources and task execution), Resource Manager (delegates resource allocation to an external manager such as a batch scheduler), and Serverless (cloud-based model where infrastructure management is handled by the provider)."@en,
+        "Spécifie la méthode utilisée pour exécuter les tâches dans un workflow. Les valeurs possibles incluent : Exécuteur (le système gère entièrement les ressources et l'exécution), Gestionnaire de ressources (délègue l'allocation des ressources à un gestionnaire externe comme un ordonnanceur), et Sans serveur (modèle basé sur le cloud où la gestion de l'infrastructure est assurée par le fournisseur)."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Execution Control"@en,
+        "Contrôle d'exécution"@fr .
+
+exa-atow:FlowType a owl:Class ;
+    rdfs:comment "The structural nature of the workflow: task-based (sequential steps), data-driven (triggered by data availability), or iterative (looping over conditions or data)."@en,
+        "La nature structurelle du flux de travail : basé sur les tâches (étapes séquentielles), orienté données (déclenché par la disponibilité des données) ou itératif (boucles sur des conditions ou des données)."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Flow Type"@en,
+        "Type de flux"@fr .
 
 exa-atow:GPU a owl:Class ;
     rdfs:comment "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en,
@@ -446,6 +616,13 @@ exa-atow:GPU a owl:Class ;
     skos:prefLabel "GPU"@en,
         "GPU"@fr .
 
+exa-atow:Granularity a owl:Class ;
+    rdfs:comment "Level of decomposition of a workflow: from fine-grained functions to coarse-grained sub-workflows or standalone executables."@en,
+        "Niveau de décomposition d’un flux de travail : des fonctions de bas niveau aux sous-flux de travail ou exécutables autonomes de haut niveau."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Granularity"@en,
+        "Granularité"@fr .
+
 exa-atow:JobScheduling a owl:Class ;
     rdfs:comment "Information related to the scheduling of jobs, including algorithm or queue policy."@en,
         "Informations liées à la planification des tâches, y compris l'algorithme ou la politique de file d'attente."@fr ;
@@ -453,11 +630,32 @@ exa-atow:JobScheduling a owl:Class ;
     skos:prefLabel "Job Scheduling"@en,
         "Ordonnancement de tâche"@fr .
 
+exa-atow:Modularity a owl:Class ;
+    rdfs:comment "Describes how workflows are structured in terms of their components. Possible values include: Flat (single-level composition with no nested sub-workflows) and Hierarchical (nested sub-workflows enabling modular and scalable design)."@en,
+        "Décrit la façon dont les workflows sont structurés en termes de composants. Les valeurs possibles sont : Plate (composition à un seul niveau sans sous-workflows imbriqués) et Hiérarchique (sous-workflows imbriqués permettant une conception modulaire et évolutive)."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Modularity"@en,
+        "Modularité"@fr .
+
+exa-atow:OrchestrationPlanning a owl:Class ;
+    rdfs:comment "Defines how a workflow system plans its execution. Possible values include: Static (all scheduling and resource allocation decisions made before execution starts), Dynamic (decisions are adapted during execution), and Event-driven (execution reacts to triggers or conditions at runtime)."@en,
+        "Définit la manière dont un système de workflow planifie son exécution. Les valeurs possibles incluent : Statique (toutes les décisions prises avant l'exécution), Dynamique (les décisions sont adaptées pendant l'exécution) et Piloté par événements (l'exécution réagit à des déclencheurs ou conditions en temps réel)."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Orchestration Planning"@en,
+        "Planification de l'orchestration"@fr .
+
 exa-atow:User a owl:Class ;
     rdfs:comment "Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors."@en,
         "Concept englobant les individus ou agents qui interagissent avec le système HPC, y compris les attributs d'identité, les rôles, les autorisations et les comportements des utilisateurs."@fr ;
     skos:prefLabel "User"@en,
         "Utilisateur"@fr .
+
+exa-atow:WorkflowLanguage a owl:Class ;
+    rdfs:comment "The specific workflow language or format used (e.g. CWL, WDL, NiFi, Airflow, etc.)"@en,
+        "Le language de workflow ou format utilisé (e.g. CWL, WDL, NiFi, Airflow, etc)"@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Workflow Language"@en,
+        "Langage de flux de travail"@fr .
 
 exa-atow:ComputeNode a owl:Class ;
     rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en,
@@ -479,13 +677,6 @@ exa-atow:PhysicalCharacteristic a owl:Class ;
     skos:prefLabel "Physical Characteristic"@en,
         "Caractéristique physique"@fr .
 
-exa-atow:Workflow a owl:Class ;
-    rdfs:comment "A workflow defines a set of interconnected steps or actions that process data, allocate resources, and produce outputs. It encompasses definitions from workflow engines (e.g., CWL, NiFi, Python), manages input/output parameters, orchestrates execution order, and interacts with HPC environments. Workflows facilitate reproducibility and enable provenance tracking for FAIR research practices."@en,
-        "Un flux de travail définit un ensemble d'étapes ou d'actions interconnectées qui traitent des données, allouent des ressources et produisent des résultats. Il inclut les définitions des moteurs de flux de travail (par exemple, CWL, NiFi, Python), gère les paramètres d'entrée/sortie, orchestre l'ordre d'exécution et interagit avec les environnements HPC. Les workflows favorisent la reproductibilité et permettent le suivi de la provenance pour une recherche conforme aux principes FAIR."@fr ;
-    rdfs:subClassOf exa-atow:Workflow ;
-    skos:prefLabel "Workflow"@en,
-        "Flux de travail"@fr .
-
 exa-atow:HPCResource a owl:Class ;
     rdfs:comment "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components."@en,
         "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."@fr ;
@@ -498,9 +689,21 @@ exa-atow:ProcessorIndicatorEstimator a owl:Class ;
     skos:prefLabel "Processor Indicator Estimator"@en,
         "Estimateur d’indicateurs du processeur"@fr .
 
+exa-atow:WorkflowProperty a owl:Class ;
+    rdfs:comment "An abstract concept grouping all categorical properties used to describe workflows, including flow type, coupling, granularity, domain specificity, and orchestration characteristics."@en,
+        "Concept abstrait regroupant toutes les propriétés catégorielles utilisées pour décrire les flux de travail, y compris le type de flux, le couplage, la granularité, la spécificité du domaine et les caractéristiques d'orchestration."@fr ;
+    skos:prefLabel "Workflow Property"@en,
+        "Propriété du flux de travail"@fr .
+
 exa-atow:Job a owl:Class ;
     rdfs:comment "Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments."@en,
         "Concept couvrant les tâches informatiques, les descriptions de tâches, les métadonnées de soumission, les attributs de planification et le comportement à l'exécution dans les environnements HPC."@fr ;
     skos:prefLabel "Job"@en,
         "Tâche"@fr .
+
+exa-atow:Workflow a owl:Class ;
+    rdfs:comment "A workflow defines a set of interconnected steps or actions that process data, allocate resources, and produce outputs. It encompasses definitions from workflow engines (e.g., CWL, NiFi, Python), manages input/output parameters, orchestrates execution order, and interacts with HPC environments. Workflows facilitate reproducibility and enable provenance tracking for FAIR research practices."@en,
+        "Un flux de travail définit un ensemble d'étapes ou d'actions interconnectées qui traitent des données, allouent des ressources et produisent des résultats. Il inclut les définitions des moteurs de flux de travail (par exemple, CWL, NiFi, Python), gère les paramètres d'entrée/sortie, orchestre l'ordre d'exécution et interagit avec les environnements HPC. Les workflows favorisent la reproductibilité et permettent le suivi de la provenance pour une recherche conforme aux principes FAIR."@fr ;
+    skos:prefLabel "Workflow"@en,
+        "Flux de travail"@fr .
 
