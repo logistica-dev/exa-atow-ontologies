@@ -1,8 +1,11 @@
+import os
 import rdflib
 from rdflib import Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
-from typing import Optional, Union, List, Dict, Any
+from typing import Dict, Optional, Union, List, Any
 import json
+import networkx as nx
+from pyvis.network import Network
 from pathlib import Path
 
 class ExaAToWOnto:
@@ -23,6 +26,15 @@ class ExaAToWOnto:
         self.base_uri = base_uri.rstrip() + ("#" if not base_uri.endswith("#") else "")
         self.EXAATOW = Namespace(self.base_uri)
         self.graph = Graph()
+
+        self.json_file_mapping = {}
+        
+        # if we aren't running in the `files` directory, add it as a prefix
+        if os.path.exists("files"):
+            print("Prefixing file load with 'files' directory")
+            self.json_dir = "files"
+        else:
+            self.json_dir = ""
         
         # Bind standard namespaces
         self._bind_namespaces()
@@ -111,7 +123,9 @@ class ExaAToWOnto:
               parent_class: Optional[Union[URIRef, str]] = None,
               pref_label: Optional[Union[str, dict]] = None,
               comment: Optional[Union[str, dict]] = None,
-              equivalent=None):
+              equivalent=None,
+              json_path: Optional[str] = None,
+              ):
         """
         Add an OWL class to the ontology
  
@@ -121,7 +135,13 @@ class ExaAToWOnto:
             pref_label: Preferred label for the class. Can be a string (default "en") or dict with lang keys.
             comment: Comment describing the class. Can be a string (default "en") or dict with lang keys.
             equivalent: Optional equivalent class
+            json_path: Optional path to the JSON file in which this class should be dumped
         """
+
+        if json_path is not None:
+            if self.json_dir not in json_path:
+                json_path =  os.path.join(self.json_dir, json_path)
+            self.json_file_mapping[class_name] = json_path
 
         class_uri = self._resolve_uri(class_name)
         
@@ -282,6 +302,9 @@ class ExaAToWOnto:
                 parent_class=s_class.get("parent_class", default_parent_class),
                 comment=s_class["comment"]
              )
+            
+            self.json_file_mapping[s_class["id"]] = json_file
+
 
     def load_and_add_properties(self, json_file):
         """Load properties from JSON file and add them to the ontology."""
@@ -299,44 +322,38 @@ class ExaAToWOnto:
 #                    inverse_of=prop.get("inverse_of")
                     )
 
-                    
+
     def _init_basic_structure(self):
         """Initialize the basic structure of the ExaAToW ontology"""
 
         #--------------
         # Core Classes
         #--------------
-        # Read JSON file with classes
-        with open("main_classes.json", "r", encoding="utf-8") as f:
-            main_classes = json.load(f)
 
-        # Add classes using add_class
-        for m_class in main_classes:
-            self.add_class(
-                m_class["id"],
-                pref_label=m_class["pref_label"],
-                comment=m_class["comment"]
-               )
+        # Read JSON file with main classes
+        self.load_and_add_classes(os.path.join(self.json_dir, "main_classes.json"), None)
 
         #--------------------
         # Adding subclasses
         #--------------------
-        
-        # HPC subclasses: Add using add_class
-        self.load_and_add_classes("sub_HPC_classes.json", "HPCResource")
 
-        # PIE subclasses: Add using add_class
-        self.load_and_add_classes("sub_PIE_classes.json", "ProcessorIndicatorEstimator")
+        # dictionary of subclasses and their default parent class
+        subclasses = {
+            "sub_HPC_classes.json": "HPCResource",
+            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
+            "sub_PhysChar_classes.json": "PhysicalCharacteristic",
+            "sub_Job_class.json": "Job",
+            # "sub_Workflow_classes.json": "Workflow",
+        }
         
-        # PhysChar subclasses: Add using add_class
-        self.load_and_add_classes("sub_PhysChar_classes.json", "PhysicalCharacteristic")
-
-        # Job subclasses: Add using add_class
-        self.load_and_add_classes("sub_Job_classes.json", "Job")
+        # add all subclasses
+        for sub_file, parent in subclasses.items():
+            self.load_and_add_classes(os.path.join(self.json_dir, sub_file), parent)
 
         # Workflow subclasses: Add using add_class
         self.load_and_add_classes("sub_Workflow_classes.json", "Workflow")
         
+
 # Missing: link between subclasses.
 # CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
 
@@ -534,6 +551,133 @@ class ExaAToWOnto:
     def get_namespace(self):
         """Return the ExaAToW namespace"""
         return self.EXAATOW
+    
+    def create_json_mapping(self) -> Dict[str, Dict[str, Union[str, Dict[str, str]]]]:
+        """Create a dictionary mapping JSON files to their corresponding entries"""
+        translate = {
+            "prefLabel": "pref_label",
+            "subClassOf": "parent_class",
+            "type": None,
+        }
+
+        data = {}
+        for item in self.graph:
+            # Each node on the rdf graph consists of 3 values
+            # (id, key, value)
+            # Where id is the JSON representation
+            # We must collect these key: val pairs onto their respective
+            # JSON identifier before dumping
+
+            # Group by id
+            id = str(item[0]).split("#")[-1]
+
+            # get the key of the key: val pair   
+            key = str(item[1]).split("#")[-1]
+            # translate from rdf term to json term
+            # we default to the key itself, in case there are no translations available
+            key = translate.get(key, key)
+            # set translation to None to avoid dumping this key
+            if key is None:
+                continue
+            # We need to select between a simple key: val and the language subtree
+            if isinstance(item[2], URIRef):
+                val = str(item[2]).split("#")[-1]
+            # Literal is used for comments and labels, collect them into a properly nested dict
+            elif isinstance(item[2], Literal):
+                val = {item[2].language: item[2].value}            
+            else:
+                continue
+
+            # Create this entry if it does not exist
+            if id not in data:
+                data[id] = {}
+
+            if key in data[id] and isinstance(data[id][key], dict):
+                # If the dictionary already exists, we need to ensure that the keys
+                # are sorted to prevent the json files randomising the order every time
+                tmp = data[id][key]
+                tmp.update(val)
+                val = dict(sorted(tmp.items()))
+
+            data[id][key] = val
+
+        return data
+
+    def dump_to_json(self) -> None:
+        print("Dumping ontology to json")
+
+        # collect the data
+        # This is a dict of {id: {data}}
+        mapping = self.create_json_mapping()
+        print(f"  We have {len(mapping)} entries in the graph derived mapping.\n")
+
+        # for efficient file writing, we should group by file
+        # entries without a file go in None
+        # the end result of this should be a dict in the form:
+        # {path: {id: {data}}}
+
+        # key ordering for json output
+        # id is always first, so not needed here
+        key_order = ["parent_class", "pref_label", "comment"]
+        file_grouping = {}
+        for id, data in mapping.items():
+
+            file = self.json_file_mapping.get(id, None)
+
+            if file not in file_grouping:
+                file_grouping[file] = {}
+
+            # we need to ensure a common ordering of the keys
+            # easiest to add the id into the data here
+            tmp = {"id": id}
+
+            for item in key_order:
+                val = data.pop(item, None)
+
+                if val is None:
+                    continue
+
+                tmp[item] = val  # type: ignore
+
+            tmp.update(data)  # type: ignore
+
+            file_grouping[file][id] = tmp
+
+        # Now write the JSON
+        for file, entries in file_grouping.items():
+            if file is None:
+                continue
+            print(f"Treating file: {file}")
+            print("  Loading existing ids", end="... ")
+            try:
+                if not os.path.exists(file):
+                    existing_id_ordering = []
+                    print("File not found, will be created.")
+                else:
+                    with open(file, "r") as o:
+                        existing_id_ordering = [item["id"] for item in json.load(o)]
+                    print(f"Done ({len(existing_id_ordering)})")
+            except:
+                print("Error")
+                raise
+
+            output = []
+            for id in existing_id_ordering:
+                data = entries.pop(id)
+                output.append(data)
+
+            for id, data in entries.items():
+                output.append(data)
+
+            with open(file, "w+") as o:
+                json.dump(output, o, indent=2, ensure_ascii=False)
+                o.write("\n")
+
+        if len(file_grouping[None]) > 0:
+            print(f"\nWarning: {len(file_grouping[None])} entries were not written (Do they have an assigned JSON file?)")
+        
+            for id in file_grouping[None]:
+                print(f"  {id}")
 
 
 # Example usage
