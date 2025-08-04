@@ -1,0 +1,273 @@
+[
+    {
+        "id": "WorkflowStep",
+        "parent_class": "Workflow",
+        "pref_label": {
+            "en": "Workflow Step",
+            "fr": "Étape du flux de travail"
+        },
+        "comment": {
+            "en": "A discrete unit within a workflow representing a task, command, or function that contributes to the overall workflow goal. It may execute computations, data manipulations, or invoke external services. Dependencies and scheduling are defined between steps to control execution order.",
+            "fr": "Une unité discrète au sein d'un flux de travail représentant une tâche, une commande ou une fonction contribuant à l'objectif global du workflow. Elle peut exécuter des calculs, manipuler des données ou appeler des services externes. Les dépendances et la planification entre les étapes contrôlent l'ordre d'exécution."
+        },
+        "equivalentTo": "prov:Activity"
+    },
+    {
+        "id": "WorkflowEngine",
+        "parent_class": "Workflow",
+        "pref_label": {
+            "en": "Workflow Engine",
+            "fr": "Moteur de flux de travail"
+        },
+        "comment": {
+            "en": "A software framework or environment that interprets, schedules, and executes workflow definitions. Examples include CWL, Apache NiFi, Snakemake, and Airflow. Workflow engines support execution tracking and data lineage.",
+            "fr": "Un cadre logiciel qui interprète, planifie et exécute les définitions de flux de travail. Exemples : CWL, Apache NiFi, Snakemake et Airflow. Les moteurs de flux de travail prennent en charge le suivi d'exécution et la traçabilité des données."
+        }
+    },
+    {
+        "id": "InputParameter",
+        "parent_class": "Workflow",
+        "pref_label": {
+            "en": "Input Parameter",
+            "fr": "Paramètre d’entrée"
+        },
+        "comment": {
+            "en": "A data value or configuration setting required by a workflow step or command-line tool to begin execution. Inputs may include file paths, memory limits, container images, or dataset identifiers.",
+            "fr": "Une valeur de donnée ou un paramètre de configuration requis par une étape ou un outil en ligne de commande pour démarrer l'exécution. Les entrées peuvent inclure des chemins de fichiers, des limites de mémoire, des images de conteneurs ou des identifiants de jeux de données."
+        },
+        "equivalentTo": "prov:Entity"
+    },
+    {
+        "id": "OutputParameter",
+        "parent_class": "Workflow",
+        "pref_label": {
+            "en": "Output Parameter",
+            "fr": "Paramètre de sortie"
+        },
+        "comment": {
+            "en": "A result produced by a workflow step after execution. It may be a file, dataset, metric, or computation result used by other steps or stored for future processing.",
+            "fr": "Un résultat produit par une étape de flux de travail après exécution. Il peut s'agir d'un fichier, d'un jeu de données, d'une métrique ou d'un résultat de calcul utilisé par d'autres étapes ou stocké pour un traitement ultérieur."
+        },
+        "equivalentTo": "prov:Entity"
+    },
+    {
+        "id": "WorkflowDependency",
+        "parent_class": "Workflow",
+        "pref_label": {
+            "en": "Workflow Dependency",
+            "fr": "Dépendance de flux de travail"
+        },
+        "comment": {
+            "en": "An explicit link that defines the execution order or data dependency between two workflow steps. Dependencies control the flow of data and ensure correct sequencing of actions.",
+            "fr": "Un lien explicite qui définit l'ordre d'exécution ou la dépendance de données entre deux étapes de flux de travail. Les dépendances contrôlent le flux de données et garantissent le bon enchaînement des actions."
+        },
+        "equivalentTo": "prov:wasInformedBy"
+    },
+    {
+        "id": "Container",
+        "parent_class": "Workflow",
+        "pref_label": {
+            "en": "Container",
+            "fr": "Conteneur"
+        },
+        "comment": {
+            "en": "A portable, encapsulated execution environment containing all software dependencies required by a workflow step. Common formats include Docker and Singularity.",
+            "fr": "Un environnement d'exécution portable et encapsulé contenant toutes les dépendances logicielles requises par une étape de flux de travail. Les formats courants incluent Docker et Singularity."
+        }
+    },
+    {
+        "id": "DataProvenance",
+        "parent_class": "Workflow",
+        "pref_label": {
+            "en": "Data Provenance",
+            "fr": "Provenance des données"
+        },
+        "comment": {
+            "en": "Metadata capturing the origin, transformation, and lineage of data artifacts through workflow steps. Supports reproducibility, traceability, and accountability of scientific data processing.",
+            "fr": "Métadonnées décrivant l'origine, la transformation et la traçabilité des artefacts de données à travers les étapes du flux de travail. Favorise la reproductibilité, la traçabilité et la responsabilité dans le traitement des données scientifiques."
+        },
+        "equivalentTo": "prov:Entity"
+    },
+    {
+        "id": "FAIRCompliance",
+        "parent_class": "Workflow",
+        "pref_label": {
+            "en": "FAIR Compliance",
+            "fr": "Conformité aux principes FAIR"
+        },
+        "comment": {
+            "en": "Indicates the extent to which the workflow, its components, and outputs adhere to the FAIR principles (Findable, Accessible, Interoperable, Reusable).",
+            "fr": "Indique dans quelle mesure le flux de travail, ses composants et ses sorties respectent les principes FAIR (Faciles à trouver, Accessibles, Interopérables, Réutilisables)."
+        }
+    },
+    {
+        "id": "FlowType",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Flow Type",
+            "fr": "Type de flux"
+        },
+        "comment": {
+            "en": "The structural nature of the workflow: task-based (sequential steps), data-driven (triggered by data availability), or iterative (looping over conditions or data).",
+            "fr": "La nature structurelle du flux de travail : basé sur les tâches (étapes séquentielles), orienté données (déclenché par la disponibilité des données) ou itératif (boucles sur des conditions ou des données)."
+        }
+    },
+    {
+        "id": "Coupling",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Coupling",
+            "fr": "Couplage"
+        },
+        "comment": {
+            "en": "Degree of dependency between workflow components. Tight coupling implies strong interdependence and synchronous execution; loose coupling implies modularity and flexibility.",
+            "fr": "Degré de dépendance entre les composants du flux de travail. Le couplage fort implique une interdépendance importante et une exécution synchrone ; le couplage faible favorise la modularité et la flexibilité."
+        }
+    },
+    {
+        "id": "Granularity",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Granularity",
+            "fr": "Granularité"
+        },
+        "comment": {
+            "en": "Level of decomposition of a workflow: from fine-grained functions to coarse-grained sub-workflows or standalone executables.",
+            "fr": "Niveau de décomposition d’un flux de travail : des fonctions de bas niveau aux sous-flux de travail ou exécutables autonomes de haut niveau."
+        }
+    },
+    {
+        "id": "DomainSpecificity",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Domain Specificity",
+            "fr": "Spécificité du domaine"
+        },
+        "comment": {
+            "en": "Describes whether the workflow is designed for a specific scientific or industrial domain, or is domain-agnostic and reusable.",
+            "fr": "Indique si le flux de travail est conçu pour un domaine scientifique ou industriel spécifique, ou s’il est agnostique et réutilisable."
+        }
+    },
+    {
+        "id": "CompositionMethod",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Composition Method",
+            "fr": "Méthode de composition"
+        },
+        "comment": {
+            "en": "The approach used to describe and assemble a workflow within a workflow management system (WMS). Composition can be: (1) schema-based, where workflows are defined in structured text files (XML, JSON, YAML, DSL) with either ad-hoc syntax specific to a single WMS or a standardized format shared across multiple WMSs (e.g., CWL, IWIR, Wf-Format); (2) API-driven, where workflows are expressed through a programming API or template engine, enabling control structures such as loops and conditionals; or (3) GUI-based, where workflows are constructed visually via a graphical interface.",
+            "fr": "L’approche utilisée pour décrire et assembler un flux de travail dans un système de gestion de flux de travail (WMS). La composition peut être : (1) basée sur un schéma, où les workflows sont définis dans des fichiers texte structurés (XML, JSON, YAML, DSL) avec une syntaxe ad hoc spécifique à un WMS ou un format standard partagé par plusieurs WMS (par ex. CWL, IWIR, Wf-Format) ; (2) pilotée par API, où les workflows sont exprimés via une API de programmation ou un moteur de gabarit, permettant des structures de contrôle comme des boucles et des conditions ; ou (3) basée sur une interface graphique, où les workflows sont construits visuellement."
+        }
+    },
+    {
+        "id": "AbstractionLevel",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Abstraction Level",
+            "fr": "Niveau d'abstraction"
+        },
+        "comment": {
+            "en": "The conceptual level at which the workflow is defined. Ranges from implicit (code-level), abstract (logical steps), intermediate, to concrete (fully specified execution plans).",
+            "fr": "Le niveau conceptuel auquel le flux de travail est défini. Va de implicite (niveau code), à abstrait (étapes logiques), intermédiaire, ou concret (plans d'exécution entièrement spécifiés)."
+        }
+    },
+    {
+        "id": "Modularity",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Modularity",
+            "fr": "Modularité"
+        },
+        "comment": {
+            "en": "Describes how workflows are structured in terms of their components. Possible values include: Flat (single-level composition with no nested sub-workflows) and Hierarchical (nested sub-workflows enabling modular and scalable design).",
+            "fr": "Décrit la façon dont les workflows sont structurés en termes de composants. Les valeurs possibles sont : Plate (composition à un seul niveau sans sous-workflows imbriqués) et Hiérarchique (sous-workflows imbriqués permettant une conception modulaire et évolutive)."
+        }
+    },
+    {
+        "id": "OrchestrationPlanning",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Orchestration Planning",
+            "fr": "Planification de l'orchestration"
+        },
+        "comment": {
+            "en": "Defines how a workflow system plans its execution. Possible values include: Static (all scheduling and resource allocation decisions made before execution starts), Dynamic (decisions are adapted during execution), and Event-driven (execution reacts to triggers or conditions at runtime).",
+            "fr": "Définit la manière dont un système de workflow planifie son exécution. Les valeurs possibles incluent : Statique (toutes les décisions prises avant l'exécution), Dynamique (les décisions sont adaptées pendant l'exécution) et Piloté par événements (l'exécution réagit à des déclencheurs ou conditions en temps réel)."
+        }
+    },
+    {
+        "id": "ExecutionControl",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Execution Control",
+            "fr": "Contrôle d'exécution"
+        },
+        "comment": {
+            "en": "Specifies the method used to execute tasks within a workflow. Possible values include: Runner (workflow system fully manages resources and task execution), Resource Manager (delegates resource allocation to an external manager such as a batch scheduler), and Serverless (cloud-based model where infrastructure management is handled by the provider).",
+            "fr": "Spécifie la méthode utilisée pour exécuter les tâches dans un workflow. Les valeurs possibles incluent : Exécuteur (le système gère entièrement les ressources et l'exécution), Gestionnaire de ressources (délègue l'allocation des ressources à un gestionnaire externe comme un ordonnanceur), et Sans serveur (modèle basé sur le cloud où la gestion de l'infrastructure est assurée par le fournisseur)."
+        }
+    },
+    {
+        "id": "DataManagementGranularity",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Data Management Granularity",
+            "fr": "Granularité de la gestion des données"
+        },
+        "comment": {
+            "en": "Granularity at which the WMS handles data operations. Possible values: Batch (data consumed and produced in full sets), Pipelined (data streamed record by record), Partitioned (data divided into groups of records).",
+            "fr": "Granularité à laquelle le système de gestion de workflow traite les opérations sur les données. Valeurs possibles : Batch (consommation et production en ensembles complets), Pipeline (flux enregistrements individuels), Partitionné (groupes d'enregistrements)."
+        }
+    },
+    {
+        "id": "DataManagementTransport",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Data Management Transport",
+            "fr": "Transport de la gestion des données"
+        },
+        "comment": {
+            "en": "Mechanism to transfer intermediate data between workflow components. Possible values: FileBased (written/read from files), StreamBased (direct streaming via memory or network).",
+            "fr": "Mécanisme de transfert des données intermédiaires entre composants. Valeurs possibles : Basé sur fichiers (écriture/lecture depuis des fichiers), Basé sur flux (streaming direct via mémoire ou réseau)."
+        }
+    },
+    {
+        "id": "DataManagementStorage",
+        "parent_class": "WorkflowProperty",
+        "pref_label": {
+            "en": "Data Management Storage",
+            "fr": "Stockage de la gestion des données"
+        },
+        "comment": {
+            "en": "Storage model used for intermediate data. Possible values: LocalFileSystem, SharedFileSystem, DistributedStorage, ReplicatedStorage, TransferTasks, InMemory.",
+            "fr": "Modèle de stockage utilisé pour les données intermédiaires. Valeurs possibles : Système de fichiers local, Système de fichiers partagé, Stockage distribué, Stockage répliqué, Tâches de transfert, En mémoire."
+        }
+    },
+    {
+        "id": "",
+        "parent_class": "",
+        "pref_label": {
+            "en": "",
+            "fr": ""
+        },
+        "comment": {
+            "en": "",
+            "fr": ""
+        },
+        "equivalentTo": ""
+    },
+    {
+        "id": "´",
+        "parent_class": "",
+        "pref_label": {
+            "en": "",
+            "fr": ""
+        },
+        "comment": {
+            "en": "",
+            "fr": ""
+        },
+        "equivalentTo": ""
+    }
+]
