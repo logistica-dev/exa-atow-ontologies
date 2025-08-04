@@ -349,42 +349,21 @@ class ExaAToWOnto:
         # add all subclasses
         for sub_file, parent in subclasses.items():
             self.load_and_add_classes(os.path.join(self.json_dir, sub_file), parent)
-
-        # Workflow subclasses: Add using add_class
-        self.load_and_add_classes("sub_Workflow_classes.json", "Workflow")
         
+        # List of properties linking subclasses
+        list_properties=[
+            "properties_workflow.json",
+            "properties_HPC.json"
+            ]
+        
+        # Adding all properties
+        for props in list_properties:
+            self.load_and_add_properties(props)
+
 
 # Missing: link between subclasses.
 # CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
-
 # Supercomputer has name, etc.
-
-
-        #Adding properties for Workflow
-        self.load_and_add_properties("properties_workflow.json")
-
-
-
-        #----------------------------------------
-        # Properties definition
-        #----------------------------------------
-
-        prop_cpu_gpu = [{"rang": "DieSize", "comm":"CPU, GPU has a die size."}, {}]
-        self.add_property("hasDieSize", 
-                      property_type="DatatypeProperty",
-                     domain=["CPU","GPU"],
-                      range_="DieSize",
-                      comment="CPU, GPU has a die size.")
-
-        self.add_property("hasValue",
-                          property_type="DatatypeProperty",
-                          domain="DieSize",
-                          range_="XSD:decimal",
-                          comment={"en": "Numeric value.","fr": "Valeur numérique."})
-        
-        self.add_property("hasUnit", property_type="DatatypeProperty", domain="DieSize", range_="XSD:string",
-            comment={ "en": "Unit of measurement (e.g., mm²).", "fr": "Unité de mesure (ex. : mm²)."})
-        
 
 #Instances:
 #ex:cpu1 a ex:CPU ;
