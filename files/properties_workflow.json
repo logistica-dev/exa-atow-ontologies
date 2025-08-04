@@ -177,20 +177,6 @@
       "en": "Associates a workflow with its data management storage model for intermediate data.",
       "fr": "Associe un flux de travail avec son modèle de stockage de gestion des données pour les données intermédiaires."
     }
-  },
-  {
-    "id": "hasWorkflowLanguage",
-    "property_type": "ObjectProperty",
-    "domain": "Workflow",
-    "range": "WorkflowLanguage",
-    "pref_label": {
-      "en": "has Workflow Language",
-      "fr": "a un language workflow"
-    },
-    "comment": {
-      "en": "A Workflow ",
-      "fr": "Associe un flux de travail avec son modèle de stockage de gestion des données pour les données intermédiaires."
-    }
-  } 
+  }
 ]
 

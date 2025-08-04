@@ -1,13 +1,7 @@
 @prefix exa-atow: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix rdfs: <http://www.w3.org/000/01/rdf-schema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-
-exa-atow: a owl:Class ;
-    rdfs:comment ""@en,
-        ""@fr ;
-    skos:prefLabel ""@en,
-        ""@fr .
 
 exa-atow:AcceleratedNode a owl:Class ;
     rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en,
@@ -447,10 +441,13 @@ exa-atow:hasDataManagementTransport a owl:ObjectProperty ;
         "a un transport de gestion des données"@fr .
 
 exa-atow:hasDieSize a owl:DatatypeProperty ;
-    rdfs:comment "CPU, GPU has a die size."@en ;
+    rdfs:comment "CPU and GPU have a die size"@en,
+        "CPU et GPU ont taille de puce"@fr ;
     rdfs:domain exa-atow:CPU,
         exa-atow:GPU ;
-    rdfs:range exa-atow:DieSize .
+    rdfs:range exa-atow:DieSize ;
+    skos:prefLabel "has die size"@en,
+        "a taillede puce"@fr .
 
 exa-atow:hasDomain a owl:ObjectProperty ;
     rdfs:comment "Links a workflow to its domain specificity (domain-specific or agnostic)."@en,
@@ -513,21 +510,17 @@ exa-atow:hasUnit a owl:DatatypeProperty ;
     rdfs:comment "Unit of measurement (e.g., mm²)."@en,
         "Unité de mesure (ex. : mm²)."@fr ;
     rdfs:domain exa-atow:DieSize ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> .
+    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> ;
+    skos:prefLabel "has unit"@en,
+        "a unité"@fr .
 
 exa-atow:hasValue a owl:DatatypeProperty ;
     rdfs:comment "Numeric value."@en,
-        "Valeur numérique."@fr ;
+        "Valeur numérique"@fr ;
     rdfs:domain exa-atow:DieSize ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> .
-
-exa-atow:hasWorkflowLanguage a owl:ObjectProperty ;
-    rdfs:comment "A Workflow "@en,
-        "Associe un flux de travail avec son modèle de stockage de gestion des données pour les données intermédiaires."@fr ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:WorkflowLanguage ;
-    skos:prefLabel "has Workflow Language"@en,
-        "a un language workflow"@fr .
+    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> ;
+    skos:prefLabel "has numeric value"@en,
+        "a valeur numérique"@fr .
 
 exa-atow:AbstractionLevel a owl:Class ;
     rdfs:comment "The conceptual level at which the workflow is defined. Ranges from implicit (code-level), abstract (logical steps), intermediate, to concrete (fully specified execution plans)."@en,
@@ -650,13 +643,6 @@ exa-atow:User a owl:Class ;
     skos:prefLabel "User"@en,
         "Utilisateur"@fr .
 
-exa-atow:WorkflowLanguage a owl:Class ;
-    rdfs:comment "The specific workflow language or format used (e.g. CWL, WDL, NiFi, Airflow, etc.)"@en,
-        "Le language de workflow ou format utilisé (e.g. CWL, WDL, NiFi, Airflow, etc)"@fr ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    skos:prefLabel "Workflow Language"@en,
-        "Langage de flux de travail"@fr .
-
 exa-atow:ComputeNode a owl:Class ;
     rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en,
         "Une machine physique ou virtuelle dans un système HPC qui exécute des tâches de calcul."@fr ;
@@ -677,6 +663,12 @@ exa-atow:PhysicalCharacteristic a owl:Class ;
     skos:prefLabel "Physical Characteristic"@en,
         "Caractéristique physique"@fr .
 
+exa-atow:WorkflowProperty a owl:Class ;
+    rdfs:comment "An abstract concept grouping all categorical properties used to describe workflows, including flow type, coupling, granularity, domain specificity, and orchestration characteristics."@en,
+        "Concept abstrait regroupant toutes les propriétés catégorielles utilisées pour décrire les flux de travail, y compris le type de flux, le couplage, la granularité, la spécificité du domaine et les caractéristiques d'orchestration."@fr ;
+    skos:prefLabel "Workflow Property"@en,
+        "Propriété du flux de travail"@fr .
+
 exa-atow:HPCResource a owl:Class ;
     rdfs:comment "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components."@en,
         "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."@fr ;
@@ -688,12 +680,6 @@ exa-atow:ProcessorIndicatorEstimator a owl:Class ;
         "Concept regroupant tous les outils, métriques et modèles d’estimation des indicateurs liés au processeur, comme la consommation d’énergie, l’empreinte thermique et l’impact de la taille de la puce."@fr ;
     skos:prefLabel "Processor Indicator Estimator"@en,
         "Estimateur d’indicateurs du processeur"@fr .
-
-exa-atow:WorkflowProperty a owl:Class ;
-    rdfs:comment "An abstract concept grouping all categorical properties used to describe workflows, including flow type, coupling, granularity, domain specificity, and orchestration characteristics."@en,
-        "Concept abstrait regroupant toutes les propriétés catégorielles utilisées pour décrire les flux de travail, y compris le type de flux, le couplage, la granularité, la spécificité du domaine et les caractéristiques d'orchestration."@fr ;
-    skos:prefLabel "Workflow Property"@en,
-        "Propriété du flux de travail"@fr .
 
 exa-atow:Job a owl:Class ;
     rdfs:comment "Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments."@en,
