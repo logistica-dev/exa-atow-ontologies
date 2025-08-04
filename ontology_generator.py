@@ -342,8 +342,8 @@ class ExaAToWOnto:
             "sub_HPC_classes.json": "HPCResource",
             "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
             "sub_PhysChar_classes.json": "PhysicalCharacteristic",
-            "sub_Job_class.json": "Job",
-            # "sub_Workflow_classes.json": "Workflow",
+            "sub_Job_classes.json": "Job",
+            "sub_Workflow_classes.json": "Workflow"
         }
         
         # add all subclasses
@@ -362,7 +362,6 @@ class ExaAToWOnto:
 
         #Adding properties for Workflow
         self.load_and_add_properties("properties_workflow.json")
-
 
 
 
