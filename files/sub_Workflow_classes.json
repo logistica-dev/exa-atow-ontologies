@@ -243,31 +243,5 @@
             "en": "Storage model used for intermediate data. Possible values: LocalFileSystem, SharedFileSystem, DistributedStorage, ReplicatedStorage, TransferTasks, InMemory.",
             "fr": "Modèle de stockage utilisé pour les données intermédiaires. Valeurs possibles : Système de fichiers local, Système de fichiers partagé, Stockage distribué, Stockage répliqué, Tâches de transfert, En mémoire."
         }
-    },
-    {
-        "id": "",
-        "parent_class": "",
-        "pref_label": {
-            "en": "",
-            "fr": ""
-        },
-        "comment": {
-            "en": "",
-            "fr": ""
-        },
-        "equivalentTo": ""
-    },
-    {
-        "id": "´",
-        "parent_class": "",
-        "pref_label": {
-            "en": "",
-            "fr": ""
-        },
-        "comment": {
-            "en": "",
-            "fr": ""
-        },
-        "equivalentTo": ""
     }
 ]

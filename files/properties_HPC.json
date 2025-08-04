@@ -1,0 +1,42 @@
+[
+    {
+      "id": "hasDieSize",
+      "property_type": "DatatypeProperty",
+	"domain": ["CPU", "GPU"],
+      "range": "DieSize",
+	"pref_label":{"en":"has die size", "fr":"a taillede puce"},
+      "comment": {
+        "en": "CPU and GPU have a die size",
+        "fr": "CPU et GPU ont taille de puce"
+      }
+    },
+  {
+    "id": "hasValue",
+    "property_type": "DatatypeProperty",
+    "domain": "DieSize",
+    "range": "XSD:decimal",
+    "pref_label": {
+      "en": "has numeric value",
+      "fr": "a valeur numérique"
+    },
+    "comment": {
+      "en": "Numeric value.",
+      "fr": "Valeur numérique"
+    }
+  },
+      {
+    "id": "hasUnit",
+    "property_type": "DatatypeProperty",
+    "domain": "DieSize",
+    "range": "XSD:string",
+    "pref_label": {
+      "en": "has unit",
+      "fr": "a unité"
+    },
+    "comment": {
+      "en": "Unit of measurement (e.g., mm²).",
+      "fr": "Unité de mesure (ex. : mm²)."
+    }
+  }
+]
+
