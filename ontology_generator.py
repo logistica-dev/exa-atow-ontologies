@@ -1,12 +1,13 @@
 import os
 import rdflib
-from rdflib import Graph, Literal, Namespace, URIRef
+from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
 from typing import Dict, Optional, Union, List, Any
 import json
 import networkx as nx
 from pyvis.network import Network
 from pathlib import Path
+#from rdflib import BNode, RDF, RDFS, OWL, URIRef, Literal, XSD
 
 class ExaAToWOnto:
     """
@@ -203,7 +204,7 @@ class ExaAToWOnto:
             comment: Comment describing the property
             lang: Language tag for comments
 
-
+        Properties that can be added to the call.
         - **OWL.ObjectProperty** vs **OWL.DatatypeProperty**: whether the property points to another class (object) or to a literal value (data).
         - **OWL.AnnotationProperty**: used only for annotations (metadata).
         - **OWL.inverseOf**: links a property to its inverse (e.g., hasPart inverse of isPartOf).
@@ -255,39 +256,196 @@ class ExaAToWOnto:
         # Add comment(s)
         if comment:
             self._add_dict_property(property_uri, RDFS.comment, comment)
-            
-    
+
+
+###############################
+
+#Testing
+    def add_restriction_to_class(self,
+                                 class_name: str,
+                                 property_name: str,
+                                 all_values_from: Optional[Union[URIRef, str]] = None,
+                                 enumeration: Optional[list] = None,
+                                 comment: Optional[Union[str, dict]] = None):
+        """
+        Adds an OWL Restriction to an existing class without redefining it.
+
+        Args:
+            class_name: Name of the existing class
+            property_name: Property to restrict
+            all_values_from: Datatype or class for allValuesFrom
+            enumeration: List of values for owl:oneOf (only used if provided)
+            comment: Comment specifically for this restriction
+        """
+        class_uri = self._resolve_uri(class_name)
+        restriction_bnode = BNode()
+
+        # Restriction type
+        self.graph.add((restriction_bnode, RDF.type, OWL.Restriction))
+
+        # Property to restrict
+        property_uri = self._resolve_uri(property_name)
+        self.graph.add((restriction_bnode, OWL.onProperty, property_uri))
+
+        # Enumeration (e.g., GB, TB, ...)
+        if enumeration:
+            datatype_bnode = BNode()
+            enum_list = self._create_list(enumeration, datatype=True)
+            self.graph.add((datatype_bnode, RDF.type, RDFS.Datatype))
+            self.graph.add((datatype_bnode, OWL.oneOf, enum_list))
+            self.graph.add((restriction_bnode, OWL.allValuesFrom, datatype_bnode))
+
+        # Standard allValuesFrom
+        elif all_values_from:
+            range_uri = self._resolve_uri(all_values_from) if isinstance(all_values_from, str) else all_values_from
+            self.graph.add((restriction_bnode, OWL.allValuesFrom, range_uri))
+
+        # Add comment specific to restriction
+        if comment:
+            self._add_dict_property(restriction_bnode, RDFS.comment, comment)
+
+        # Link restriction to class
+        self.graph.add((class_uri, RDFS.subClassOf, restriction_bnode))
+
+
+    def _create_list(self, values, datatype=False):
+        """
+        Helper to create RDF collections (rdf:List) for enumerations.
+        """
+        first_node = BNode()
+        current_node = first_node
+        for i, val in enumerate(values):
+            lit = Literal(val) if not datatype else Literal(val, datatype=XSD.string)
+            self.graph.add((current_node, RDF.first, lit))
+            if i == len(values) - 1:
+                self.graph.add((current_node, RDF.rest, RDF.nil))
+            else:
+                next_node = BNode()
+                self.graph.add((current_node, RDF.rest, next_node))
+                current_node = next_node
+        return first_node
+
+
+################################
     def add_instance(self, instance_name: str, 
-                     class_type: Union[URIRef, str],
-                     properties: Optional[dict] = None):
+                     class_type: Union[URIRef, str, List[Union[URIRef, str]]],
+                     properties: Optional[dict] = None,
+                     pref_label: Optional[Union[str, dict]] = None,
+                     comment: Optional[Union[str, dict]] = None,
+                     json_path: Optional[str] = None):
         """
         Add an instance (individual) to the ontology
-        
+
         Args:
             instance_name: Name of the instance
-            class_type: Class that this instance belongs to
+            class_type: Class(es) that this instance belongs to - can be single class or list
             properties: Dictionary of properties and their values
+            pref_label: Preferred label for the instance. Can be a string (default "en") or dict with lang keys.
+            comment: Comment describing the instance. Can be a string (default "en") or dict with lang keys.
+            json_path: Optional path to the JSON file in which this instance should be dumped
         """
-        instance_uri = self.EXAATOW[instance_name]
-        
-        # Convert class_type to URIRef if needed
-        if isinstance(class_type, str):
-            class_type = self.EXAATOW[class_type]
-        
-        # Add instance declaration
-        self.graph.add((instance_uri, RDF.type, class_type))
-        
+        # Handle JSON file mapping (consistent with add_class)
+        if json_path is not None:
+            if self.json_dir not in json_path:
+                json_path = os.path.join(self.json_dir, json_path)
+            self.json_file_mapping[instance_name] = json_path
+
+        # Use _resolve_uri for consistency
+        instance_uri = self._resolve_uri(instance_name)
+
+        # Handle multiple class types
+        class_types = class_type if isinstance(class_type, list) else [class_type]
+
+        for cls in class_types:
+            cls_uri = self._resolve_uri(cls)
+            # Use add_triple method for consistency (if available), otherwise use graph.add
+            if hasattr(self, 'add_triple'):
+                self.add_triple(instance_uri, RDF.type, cls_uri)
+            else:
+                self.graph.add((instance_uri, RDF.type, cls_uri))
+
+        # Add prefLabel(s)
+        if pref_label:
+            self._add_dict_property(instance_uri, SKOS.prefLabel, pref_label)
+
+        # Add comment(s)
+        if comment:
+            self._add_dict_property(instance_uri, RDFS.comment, comment)
+
         # Add properties if provided
         if properties:
-            for prop, value in properties.items():
-                prop_uri = self.EXAATOW[prop] if isinstance(prop, str) else prop
-                if isinstance(value, str):
-                    value = Literal(value)
-                elif isinstance(value, (int, float)):
-                    value = Literal(value)
-                elif isinstance(value, bool):
-                    value = Literal(value)
-                self.graph.add((instance_uri, prop_uri, value))
+            for prop_name, values in properties.items():
+                prop_uri = self._resolve_uri(prop_name)
+
+                # Handle multiple values for a property
+                value_list = values if isinstance(values, list) else [values]
+
+                for value in value_list:
+                    # Convert value to appropriate RDF term inline
+                    if isinstance(value, (URIRef, Literal, BNode)):
+                        # Already an RDF term
+                        rdf_value = value
+                    elif isinstance(value, str):
+                        # Check if it's a URI or should be resolved as one
+                        if value.startswith(('http://', 'https://')):
+                            rdf_value = URIRef(value)
+                        elif ':' in value and not value.startswith('_:'):
+                            # Try to resolve as URI, fallback to literal
+                            try:
+                                rdf_value = self._resolve_uri(value)
+                            except:
+                                rdf_value = Literal(value)
+                        elif value.startswith('_:'):
+                            # Blank node
+                            rdf_value = BNode(value[2:])
+                        else:
+                            # Regular string literal
+                            rdf_value = Literal(value)
+                    elif isinstance(value, bool):
+                        rdf_value = Literal(value)
+                    elif isinstance(value, (int, float)):
+                        rdf_value = Literal(value)
+                    else:
+                        # Default to string literal
+                        rdf_value = Literal(str(value))
+
+                    if hasattr(self, 'add_triple'):
+                        self.add_triple(instance_uri, prop_uri, rdf_value)
+                    else:
+                        self.graph.add((instance_uri, prop_uri, rdf_value))
+
+########################## 
+#    def add_instance(self, instance_name: str, 
+        #              class_type: Union[URIRef, str],
+        #              properties: Optional[dict] = None):
+        # """
+        # Add an instance (individual) to the ontology
+        
+        # Args:
+        #     instance_name: Name of the instance
+        #     class_type: Class that this instance belongs to
+        #     properties: Dictionary of properties and their values
+        # """
+        # instance_uri = self.EXAATOW[instance_name]
+        
+        # # Convert class_type to URIRef if needed
+        # if isinstance(class_type, str):
+        #     class_type = self.EXAATOW[class_type]
+        
+        # # Add instance declaration
+        # self.graph.add((instance_uri, RDF.type, class_type))
+        
+        # # Add properties if provided
+        # if properties:
+        #     for prop, value in properties.items():
+        #         prop_uri = self.EXAATOW[prop] if isinstance(prop, str) else prop
+        #         if isinstance(value, str):
+        #             value = Literal(value)
+        #         elif isinstance(value, (int, float)):
+        #             value = Literal(value)
+        #         elif isinstance(value, bool):
+        #             value = Literal(value)
+        #         self.graph.add((instance_uri, prop_uri, value))
 
     def load_and_add_classes(self, json_file, default_parent_class):
         """Load classes from JSON file and add them with fallback parent class."""
@@ -301,8 +459,7 @@ class ExaAToWOnto:
                 pref_label=s_class["pref_label"],
                 parent_class=s_class.get("parent_class", default_parent_class),
                 comment=s_class["comment"]
-             )
-            
+             )            
             self.json_file_mapping[s_class["id"]] = json_file
 
 
@@ -321,7 +478,6 @@ class ExaAToWOnto:
                     pref_label=prop.get("pref_label")
 #                    inverse_of=prop.get("inverse_of")
                     )
-
 
     def _init_basic_structure(self):
         """Initialize the basic structure of the ExaAToW ontology"""
@@ -349,7 +505,8 @@ class ExaAToWOnto:
         # add all subclasses
         for sub_file, parent in subclasses.items():
             self.load_and_add_classes(os.path.join(self.json_dir, sub_file), parent)
-        
+            
+        #----------------------------------------------
         # List of properties linking subclasses
         list_properties=[
             "properties_workflow.json",
@@ -361,7 +518,64 @@ class ExaAToWOnto:
             self.load_and_add_properties(props)
 
 
-# Missing: link between subclasses.
+        # Add 2 main properties: hasUnit and hasValue
+        # Global statement of "hasUnit" and "hasValue"
+        self.add_property(
+                    property_name="hasValue",
+                    property_type="DatatypeProperty",
+                    range_="XSD:decimal",
+                    comment={"en": "Numeric value.","fr": "Valeur numérique"},
+                    pref_label={"en": "has numeric value","fr": "a valeur numérique"})
+        
+        self.add_property(
+                    property_name="hasUnit",
+                    property_type="ObjectProperty",
+                    range_="XSD:string",
+                    comment={"en": "Unit of measurement.","fr": "Unité de mesure"},
+                    pref_label={"en": "has unit","fr": "a unité"})
+##########################################################################
+
+        # Restrict hasUnit to specific string values
+        self.add_restriction_to_class(
+            class_name="MemoryCapacity",
+            property_name="hasUnit",
+            enumeration=["GB", "TB", "PB", "MB", "KB"],
+            comment={"en": "Allowed units for memory capacity"}
+        )
+
+        # Restrict hasValue to decimals
+        self.add_restriction_to_class(
+            class_name="MemoryCapacity",
+            property_name="hasValue",
+            all_values_from=XSD.decimal,
+            comment={"en": "Memory size numeric value"}
+        )
+
+        
+        #-----------------------------------------------
+        # Create fixed instances
+
+        self.add_instance(instance_name="TightCoupling",
+            class_type="Coupling",
+            pref_label={"en": "Tight Coupling", "fr": "Couplage fort"},
+            comment={
+                 "en": "Strong interdependence between workflow components with synchronous execution.",
+                 "fr": "Forte interdépendance entre les composants du flux de travail avec exécution synchrone."
+        })
+
+        self.add_instance(instance_name="LooseCoupling",
+            class_type="Coupling",
+            pref_label={"en": "Loose Coupling", "fr": "Couplage faible"},
+            comment={
+                    "en": "Modular workflow components with low interdependence, allowing asynchronous or flexible execution.",
+                    "fr": "Composants de flux de travail modulaires avec une faible interdépendance, permettant une exécution asynchrone ou flexible."
+            })
+
+
+    
+
+
+        # Missing: link between subclasses.
 # CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
 # Supercomputer has name, etc.
 
@@ -379,38 +593,25 @@ class ExaAToWOnto:
 #CPU hasFeature Workload
 #GPU hasFeature Workload
 #XXX hasFeature lifetime
-#RAM, SSD, HDD hasFeature MemoryCapacity
+
         
-        # Energy and Digital Twin Classes
-        self.add_class("EnergyConsumption", 
-                      pref_label="Energy Consumption",
-                      comment="Represents a measurement of energy usage.")
+        # Energy and Digital Twin Classes#
+#        self.add_class("EnergyConsumption", 
+#                      pref_label="Energy Consumption",
+#                      comment="Represents a measurement of energy usage.")
         
-        self.add_class("DigitalTwin", 
-                      pref_label="Digital Twin",
-                      comment="Represents a virtual representation of a physical or logical entity.")
-        
-        self.add_class("SimulationResult",
-                      parent_class = "DigitalTwin",
-                      pref_label="Simulation Result",
-                      comment="Represents the outcome of a simulation performed by a Digital Twin.")
+#        self.add_class("SimulationResult",
+#                      parent_class = "DigitalTwin",
+#                      pref_label="Simulation Result",
+#                      comment="Represents the outcome of a simulation performed by a Digital Twin.")
         
         # Object Properties
-        self.add_property("authenticates", 
-                         property_type="ObjectProperty",
-                         domain="User",
-                         range_="Authentication",
-                         comment="Relates a User to an Authentication event.")
+#        self.add_property("authenticates", 
+#                         property_type="ObjectProperty",
+#                         domain="User",
+#                         range_="Authentication",
+#                         comment="Relates a User to an Authentication event.")
 
-        self.add_property("hasProperty"
-                          )
-
-
-        self.add_property("hasFlowType", 
-                         property_type="ObjectProperty",
-                         domain="Workflow",
-                         range_="FlowType",
-                         comment="Specifies the flow type of the workflow (task-based, iterative, or data-driven).")
     
     def serialize(self, format: str = "turtle", destination: Optional[str] = None):
         """

@@ -1,7 +1,9 @@
 @prefix exa-atow: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 exa-atow:AcceleratedNode a owl:Class ;
     rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en,
@@ -16,6 +18,12 @@ exa-atow:AllocationMethod a owl:Class ;
     rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
     skos:prefLabel "Allocation Method"@en,
         "Méthode d’allocation"@fr .
+
+exa-atow:Authentication a owl:Class ;
+    rdfs:comment "Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities."@en,
+        "Concept décrivant tous les aspects de l'authentification, y compris les identifiants, les protocoles d'accès, la validation d'identité et les activités de connexion."@fr ;
+    skos:prefLabel "Authentication Event"@en,
+        "Événement d'authentification"@fr .
 
 exa-atow:CarbonFootprint a owl:Class ;
     rdfs:comment "Measurement of the greenhouse gas emissions associated with HPC system usage."@en,
@@ -59,6 +67,12 @@ exa-atow:DatasetConstraint a owl:Class ;
     skos:prefLabel "Dataset Constraint"@en,
         "Contrainte de données"@fr .
 
+exa-atow:DigitalTwin a owl:Class ;
+    rdfs:comment "Represents a virtual representation of a physical or logical entity."@en,
+        "Représente une représentation virtuelle d'une entité physique ou logique."@fr ;
+    skos:prefLabel "Digital Twin"@en,
+        "Jumeau Numérique"@fr .
+
 exa-atow:EmbodiedImpact a owl:Class ;
     rdfs:comment "Environmental impact associated with manufacturing, transport, and deployment of HPC hardware."@en,
         "Impact environnemental lié à la fabrication, au transport et au déploiement du matériel HPC."@fr ;
@@ -68,7 +82,6 @@ exa-atow:EmbodiedImpact a owl:Class ;
 
 exa-atow:EnergyConsumption a owl:Class ;
     rdfs:comment "Measurement or estimation of the energy consumed by computing and supporting hardware."@en,
-        "Represents a measurement of energy usage."@en,
         "Mesure ou estimation de l'énergie consommée par le matériel informatique et les équipements de support."@fr ;
     rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
     skos:prefLabel "Energy Consumption"@en,
@@ -108,13 +121,6 @@ exa-atow:FileSystem a owl:Class ;
     rdfs:subClassOf exa-atow:HPCResource ;
     skos:prefLabel "File System"@en,
         "Système de fichiers"@fr .
-
-exa-atow:HDD a owl:Class ;
-    rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en,
-        "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d’E/S inférieure à celle des SSD."@fr ;
-    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "HDD"@en,
-        "Disque dur (HDD)"@fr .
 
 exa-atow:ImpactFactor a owl:Class ;
     rdfs:comment "Multiplicative coefficient used to compute the environmental impact associated with processor attributes like die size."@en,
@@ -228,12 +234,11 @@ exa-atow:LifetimeEstimator a owl:Class ;
     skos:prefLabel "Lifetime Estimator"@en,
         "Estimateur de durée de vie"@fr .
 
-exa-atow:MemoryCapacity a owl:Class ;
-    rdfs:comment "Amount of data that can be stored in a memory device like RAM, SSD, or HDD."@en,
-        "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
-    skos:prefLabel "Memory Capacity"@en,
-        "Capacité mémoire"@fr .
+exa-atow:LooseCoupling a exa-atow:Coupling ;
+    rdfs:comment "Modular workflow components with low interdependence, allowing asynchronous or flexible execution."@en,
+        "Composants de flux de travail modulaires avec une faible interdépendance, permettant une exécution asynchrone ou flexible."@fr ;
+    skos:prefLabel "Loose Coupling"@en,
+        "Couplage faible"@fr .
 
 exa-atow:OutputParameter a owl:Class ;
     rdfs:comment "A result produced by a workflow step after execution. It may be a file, dataset, metric, or computation result used by other steps or stored for future processing."@en,
@@ -270,13 +275,6 @@ exa-atow:Process a owl:Class ;
     skos:prefLabel "Process"@en,
         "Processus"@fr .
 
-exa-atow:RAM a owl:Class ;
-    rdfs:comment "Volatile memory used by compute nodes for temporary data access during job execution."@en,
-        "Mémoire volatile utilisée par les nœuds de calcul pour accéder temporairement aux données pendant l'exécution d'une tâche."@fr ;
-    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "RAM"@en,
-        "Mémoire vive (RAM)"@fr .
-
 exa-atow:Rack a owl:Class ;
     rdfs:comment "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter."@en,
         "Un châssis physique abritant plusieurs nœuds de calcul et éléments d’infrastructure dans un centre de données."@fr ;
@@ -291,13 +289,6 @@ exa-atow:ResourceUtilization a owl:Class ;
     skos:prefLabel "Resource Utilization"@en,
         "Utilisation des ressources"@fr .
 
-exa-atow:SSD a owl:Class ;
-    rdfs:comment "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O."@en,
-        "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."@fr ;
-    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "SSD"@en,
-        "SSD"@fr .
-
 exa-atow:ScalarNode a owl:Class ;
     rdfs:comment "A compute node equipped with general-purpose CPUs only."@en,
         "Un nœud de calcul équipé uniquement de processeurs généraux (CPU)."@fr ;
@@ -311,11 +302,6 @@ exa-atow:SchedulerType a owl:Class ;
     rdfs:subClassOf exa-atow:JobScheduling ;
     skos:prefLabel "Scheduler Type"@en,
         "Type d'ordonnanceur"@fr .
-
-exa-atow:SimulationResult a owl:Class ;
-    rdfs:comment "Represents the outcome of a simulation performed by a Digital Twin."@en ;
-    rdfs:subClassOf exa-atow:DigitalTwin ;
-    skos:prefLabel "Simulation Result"@en .
 
 exa-atow:Supercomputer a owl:Class ;
     rdfs:comment "A high-performance computing system composed of multiple interconnected compute and storage components."@en,
@@ -345,12 +331,24 @@ exa-atow:Thread a owl:Class ;
     skos:prefLabel "Thread"@en,
         "Fil d'exécution"@fr .
 
+exa-atow:TightCoupling a exa-atow:Coupling ;
+    rdfs:comment "Strong interdependence between workflow components with synchronous execution."@en,
+        "Forte interdépendance entre les composants du flux de travail avec exécution synchrone."@fr ;
+    skos:prefLabel "Tight Coupling"@en,
+        "Couplage fort"@fr .
+
 exa-atow:UsageImpact a owl:Class ;
     rdfs:comment "Environmental impact from the operational phase of HPC systems, including energy usage and emissions."@en,
         "Impact environnemental lié à la phase d’utilisation des systèmes HPC, y compris la consommation d’énergie et les émissions."@fr ;
     rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
     skos:prefLabel "Usage Impact"@en,
         "Impact en usage"@fr .
+
+exa-atow:User a owl:Class ;
+    rdfs:comment "Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors."@en,
+        "Concept englobant les individus ou agents qui interagissent avec le système HPC, y compris les attributs d'identité, les rôles, les autorisations et les comportements des utilisateurs."@fr ;
+    skos:prefLabel "User"@en,
+        "Utilisateur"@fr .
 
 exa-atow:WorkflowDependency a owl:Class ;
     rdfs:comment "An explicit link that defines the execution order or data dependency between two workflow steps. Dependencies control the flow of data and ensure correct sequencing of actions."@en,
@@ -386,11 +384,6 @@ exa-atow:WorkloadEstimator a owl:Class ;
     rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
     skos:prefLabel "Workload Estimator"@en,
         "Estimateur de charge"@fr .
-
-exa-atow:authenticates a owl:ObjectProperty ;
-    rdfs:comment "Relates a User to an Authentication event."@en ;
-    rdfs:domain exa-atow:User ;
-    rdfs:range exa-atow:Authentication .
 
 exa-atow:hasAbstractionLevel a owl:ObjectProperty ;
     rdfs:comment "Associates a workflow with its abstraction level, indicating the conceptual level at which it is defined."@en,
@@ -467,7 +460,6 @@ exa-atow:hasExecutionControl a owl:ObjectProperty ;
 
 exa-atow:hasFlowType a owl:ObjectProperty ;
     rdfs:comment "Links a workflow to its flow type (task-based, iterative, or data-driven)."@en,
-        "Specifies the flow type of the workflow (task-based, iterative, or data-driven)."@en,
         "Relie un flux de travail à son type de flux (basé sur des tâches, itératif ou orienté données)."@fr ;
     rdfs:domain exa-atow:Workflow ;
     rdfs:range exa-atow:FlowType ;
@@ -481,6 +473,16 @@ exa-atow:hasGranularity a owl:ObjectProperty ;
     rdfs:range exa-atow:Granularity ;
     skos:prefLabel "has granularity type"@en,
         "a une granularité de type"@fr .
+
+exa-atow:hasMemoryCapacity a owl:DatatypeProperty ;
+    rdfs:comment "Add value of memory (make one for value and unit?)"@en,
+        "add value."@fr ;
+    rdfs:domain exa-atow:HDD,
+        exa-atow:RAM,
+        exa-atow:SSD ;
+    rdfs:range exa-atow:MemoryCapacity ;
+    skos:prefLabel "has memory capacity"@en,
+        "a capacité de memoire"@fr .
 
 exa-atow:hasModularity a owl:ObjectProperty ;
     rdfs:comment "Associates a workflow with its modularity characteristic, describing how it is structured in terms of components."@en,
@@ -506,34 +508,12 @@ exa-atow:hasProperty a owl:ObjectProperty ;
     skos:prefLabel "has Property"@en,
         "a propriété"@fr .
 
-exa-atow:hasUnit a owl:DatatypeProperty ;
-    rdfs:comment "Unit of measurement (e.g., mm²)."@en,
-        "Unité de mesure (ex. : mm²)."@fr ;
-    rdfs:domain exa-atow:DieSize ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> ;
-    skos:prefLabel "has unit"@en,
-        "a unité"@fr .
-
-exa-atow:hasValue a owl:DatatypeProperty ;
-    rdfs:comment "Numeric value."@en,
-        "Valeur numérique"@fr ;
-    rdfs:domain exa-atow:DieSize ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> ;
-    skos:prefLabel "has numeric value"@en,
-        "a valeur numérique"@fr .
-
 exa-atow:AbstractionLevel a owl:Class ;
     rdfs:comment "The conceptual level at which the workflow is defined. Ranges from implicit (code-level), abstract (logical steps), intermediate, to concrete (fully specified execution plans)."@en,
         "Le niveau conceptuel auquel le flux de travail est défini. Va de implicite (niveau code), à abstrait (étapes logiques), intermédiaire, ou concret (plans d'exécution entièrement spécifiés)."@fr ;
     rdfs:subClassOf exa-atow:WorkflowProperty ;
     skos:prefLabel "Abstraction Level"@en,
         "Niveau d'abstraction"@fr .
-
-exa-atow:Authentication a owl:Class ;
-    rdfs:comment "Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities."@en,
-        "Concept décrivant tous les aspects de l'authentification, y compris les identifiants, les protocoles d'accès, la validation d'identité et les activités de connexion."@fr ;
-    skos:prefLabel "Authentication Event"@en,
-        "Événement d'authentification"@fr .
 
 exa-atow:CPU a owl:Class ;
     rdfs:comment "The central processing unit responsible for executing general-purpose instructions."@en,
@@ -548,13 +528,6 @@ exa-atow:CompositionMethod a owl:Class ;
     rdfs:subClassOf exa-atow:WorkflowProperty ;
     skos:prefLabel "Composition Method"@en,
         "Méthode de composition"@fr .
-
-exa-atow:Coupling a owl:Class ;
-    rdfs:comment "Degree of dependency between workflow components. Tight coupling implies strong interdependence and synchronous execution; loose coupling implies modularity and flexibility."@en,
-        "Degré de dépendance entre les composants du flux de travail. Le couplage fort implique une interdépendance importante et une exécution synchrone ; le couplage faible favorise la modularité et la flexibilité."@fr ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    skos:prefLabel "Coupling"@en,
-        "Couplage"@fr .
 
 exa-atow:DataManagementGranularity a owl:Class ;
     rdfs:comment "Granularity at which the WMS handles data operations. Possible values: Batch (data consumed and produced in full sets), Pipelined (data streamed record by record), Partitioned (data divided into groups of records)."@en,
@@ -577,9 +550,12 @@ exa-atow:DataManagementTransport a owl:Class ;
     skos:prefLabel "Data Management Transport"@en,
         "Transport de la gestion des données"@fr .
 
-exa-atow:DigitalTwin a owl:Class ;
-    rdfs:comment "Represents a virtual representation of a physical or logical entity."@en ;
-    skos:prefLabel "Digital Twin"@en .
+exa-atow:DieSize a owl:Class ;
+    rdfs:comment "The physical area of the CPU or GPU die. Used in impact estimation. Includes a value and a unit."@en,
+        "La surface physique de la puce du CPU ou du GPU. Utilisée pour l'estimation d'impact. Comprend une valeur et une unité."@fr ;
+    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
+    skos:prefLabel "Die Size"@en,
+        "Taille de puce"@fr .
 
 exa-atow:DomainSpecificity a owl:Class ;
     rdfs:comment "Describes whether the workflow is designed for a specific scientific or industrial domain, or is domain-agnostic and reusable."@en,
@@ -616,12 +592,35 @@ exa-atow:Granularity a owl:Class ;
     skos:prefLabel "Granularity"@en,
         "Granularité"@fr .
 
+exa-atow:HDD a owl:Class ;
+    rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en,
+        "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d’E/S inférieure à celle des SSD."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "HDD"@en,
+        "Disque dur (HDD)"@fr .
+
 exa-atow:JobScheduling a owl:Class ;
     rdfs:comment "Information related to the scheduling of jobs, including algorithm or queue policy."@en,
         "Informations liées à la planification des tâches, y compris l'algorithme ou la politique de file d'attente."@fr ;
     rdfs:subClassOf exa-atow:Job ;
     skos:prefLabel "Job Scheduling"@en,
         "Ordonnancement de tâche"@fr .
+
+exa-atow:MemoryCapacity a owl:Class ;
+    rdfs:comment "Amount of data that can be stored in a memory device like RAM, SSD, or HDD."@en,
+        "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            rdfs:comment "Allowed units for memory capacity"@en ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "GB"^^xsd:string "TB"^^xsd:string "PB"^^xsd:string "MB"^^xsd:string "KB"^^xsd:string ) ] ;
+            owl:onProperty exa-atow:hasUnit ],
+        [ a owl:Restriction ;
+            rdfs:comment "Memory size numeric value"@en ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty exa-atow:hasValue ],
+        exa-atow:PhysicalCharacteristic ;
+    skos:prefLabel "Memory Capacity"@en,
+        "Capacité mémoire"@fr .
 
 exa-atow:Modularity a owl:Class ;
     rdfs:comment "Describes how workflows are structured in terms of their components. Possible values include: Flat (single-level composition with no nested sub-workflows) and Hierarchical (nested sub-workflows enabling modular and scalable design)."@en,
@@ -637,11 +636,33 @@ exa-atow:OrchestrationPlanning a owl:Class ;
     skos:prefLabel "Orchestration Planning"@en,
         "Planification de l'orchestration"@fr .
 
-exa-atow:User a owl:Class ;
-    rdfs:comment "Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors."@en,
-        "Concept englobant les individus ou agents qui interagissent avec le système HPC, y compris les attributs d'identité, les rôles, les autorisations et les comportements des utilisateurs."@fr ;
-    skos:prefLabel "User"@en,
-        "Utilisateur"@fr .
+exa-atow:RAM a owl:Class ;
+    rdfs:comment "Volatile memory used by compute nodes for temporary data access during job execution."@en,
+        "Mémoire volatile utilisée par les nœuds de calcul pour accéder temporairement aux données pendant l'exécution d'une tâche."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "RAM"@en,
+        "Mémoire vive (RAM)"@fr .
+
+exa-atow:SSD a owl:Class ;
+    rdfs:comment "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O."@en,
+        "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "SSD"@en,
+        "SSD"@fr .
+
+exa-atow:hasUnit a owl:ObjectProperty ;
+    rdfs:comment "Unit of measurement."@en,
+        "Unité de mesure"@fr ;
+    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> ;
+    skos:prefLabel "has unit"@en,
+        "a unité"@fr .
+
+exa-atow:hasValue a owl:DatatypeProperty ;
+    rdfs:comment "Numeric value."@en,
+        "Valeur numérique"@fr ;
+    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> ;
+    skos:prefLabel "has numeric value"@en,
+        "a valeur numérique"@fr .
 
 exa-atow:ComputeNode a owl:Class ;
     rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en,
@@ -650,12 +671,12 @@ exa-atow:ComputeNode a owl:Class ;
     skos:prefLabel "Compute Node"@en,
         "Nœud de calcul"@fr .
 
-exa-atow:DieSize a owl:Class ;
-    rdfs:comment "The physical area of the CPU or GPU die. Used in impact estimation. Includes a value and a unit."@en,
-        "La surface physique de la puce du CPU ou du GPU. Utilisée pour l'estimation d'impact. Comprend une valeur et une unité."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
-    skos:prefLabel "Die Size"@en,
-        "Taille de puce"@fr .
+exa-atow:Coupling a owl:Class ;
+    rdfs:comment "Degree of dependency between workflow components. Tight coupling implies strong interdependence and synchronous execution; loose coupling implies modularity and flexibility."@en,
+        "Degré de dépendance entre les composants du flux de travail. Le couplage fort implique une interdépendance importante et une exécution synchrone ; le couplage faible favorise la modularité et la flexibilité."@fr ;
+    rdfs:subClassOf exa-atow:WorkflowProperty ;
+    skos:prefLabel "Coupling"@en,
+        "Couplage"@fr .
 
 exa-atow:PhysicalCharacteristic a owl:Class ;
     rdfs:comment "Domain concept capturing the physical and structural properties of HPC components, such as memory capacity, die size, material lifetime, and energy efficiency attributes."@en,

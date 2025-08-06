@@ -10,33 +10,19 @@
         "fr": "CPU et GPU ont taille de puce"
       }
     },
-  {
-    "id": "hasValue",
+{
+    "id": "hasMemoryCapacity",
     "property_type": "DatatypeProperty",
-    "domain": "DieSize",
-    "range": "XSD:decimal",
+    "domain": ["RAM", "SSD", "HDD"],
+    "range": "MemoryCapacity",
     "pref_label": {
-      "en": "has numeric value",
-      "fr": "a valeur numérique"
+      "en": "has memory capacity",
+      "fr": "a capacité de memoire"
     },
     "comment": {
-      "en": "Numeric value.",
-      "fr": "Valeur numérique"
+      "en": "Add value of memory (make one for value and unit?)",
+      "fr": "add value."
     }
-  },
-      {
-    "id": "hasUnit",
-    "property_type": "DatatypeProperty",
-    "domain": "DieSize",
-    "range": "XSD:string",
-    "pref_label": {
-      "en": "has unit",
-      "fr": "a unité"
-    },
-    "comment": {
-      "en": "Unit of measurement (e.g., mm²).",
-      "fr": "Unité de mesure (ex. : mm²)."
-    }
-  }
+}
 ]
 
