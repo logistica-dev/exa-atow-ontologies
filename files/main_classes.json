@@ -28,8 +28,8 @@
       "fr": "Flux de travail"
     },
     "comment": {
-      "en": "Concept grouping workflow-related entities such as execution steps, workflow engines, process definitions, dependencies, and orchestration strategies.",
-      "fr": "Concept regroupant les entités liées aux flux de travail comme les étapes d'exécution, les moteurs de flux, les définitions de processus, les dépendances et les stratégies d'orchestration."
+      "en": "A workflow defines a set of interconnected steps or actions that process data, allocate resources, and produce outputs. It encompasses definitions from workflow engines (e.g., CWL, NiFi, Python), manages input/output parameters, orchestrates execution order, and interacts with HPC environments. Workflows facilitate reproducibility and enable provenance tracking for FAIR research practices.",
+      "fr": "Un flux de travail définit un ensemble d'étapes ou d'actions interconnectées qui traitent des données, allouent des ressources et produisent des résultats. Il inclut les définitions des moteurs de flux de travail (par exemple, CWL, NiFi, Python), gère les paramètres d'entrée/sortie, orchestre l'ordre d'exécution et interagit avec les environnements HPC. Les workflows favorisent la reproductibilité et permettent le suivi de la provenance pour une recherche conforme aux principes FAIR."
     }
   },
   {
@@ -65,6 +65,28 @@
       "fr": "Concept regroupant tous les outils, métriques et modèles d’estimation des indicateurs liés au processeur, comme la consommation d’énergie, l’empreinte thermique et l’impact de la taille de la puce."
     }
   },
+  {
+  "id": "DigitalTwin",
+  "pref_label": {
+      "en": "Digital Twin",
+      "fr": "Jumeau Numérique"
+       },
+   "comment":{
+         "en": "Represents a virtual representation of a physical or logical entity.",
+         "fr": "Représente une représentation virtuelle d'une entité physique ou logique."
+    }
+  }, 
+    {
+  "id": "WorkflowProperty",
+  "pref_label": {
+    "en": "Workflow Property",
+    "fr": "Propriété du flux de travail"
+  },
+  "comment": {
+    "en": "An abstract concept grouping all categorical properties used to describe workflows, including flow type, coupling, granularity, domain specificity, and orchestration characteristics.",
+    "fr": "Concept abstrait regroupant toutes les propriétés catégorielles utilisées pour décrire les flux de travail, y compris le type de flux, le couplage, la granularité, la spécificité du domaine et les caractéristiques d'orchestration."
+  }
+    },
   {
     "id": "PhysicalCharacteristic",
     "pref_label": {
