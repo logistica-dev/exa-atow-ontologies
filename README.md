@@ -46,7 +46,10 @@ example of entry (if entry is in the correct json file, then no need to add the 
     "equivalent": ONTOLOGY.Name,
   },
 ```
+## Adding properties
 
+## Adding instances
+In the ontology we will only add fixed instances are 
 
 ## 📁 Contents
 
