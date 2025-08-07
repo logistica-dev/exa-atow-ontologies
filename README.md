@@ -17,9 +17,10 @@ Main entities under the ontology (list to be discuss) :
 - **HPC Resource**: Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components.
 - **ProcessorIndicatorEstimator**: Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact.
 - **PhysicalCharacteristic**: Domain concept capturing the physical and structural properties of HPC components, such as memory capacity, die size, material lifetime, and energy efficiency attributes.
+- **Workflow**: oncept grouping workflow-related entities such as execution steps, workflow engines, process definitions, dependencies, and orchestration strategies. Workflow properties are defined based on the paper Suter, F., et al. (2026). *A terminology for scientific workflow systems*. Future Generation Computer Systems, 174, 107974. https://doi.org/10.1016/j.future.2025.107974. 
 - User: Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors.
 - Authentication: Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities.
-- Workflow: oncept grouping workflow-related entities such as execution steps, workflow engines, process definitions, dependencies, and orchestration strategies.
+
 
 The ontology is serialized in Turtle (TTL) and can be used in semantic web applications and Linked Open Data (LOD) environments.
 
@@ -48,8 +49,14 @@ example of entry (if entry is in the correct json file, then no need to add the 
 ```
 ## Adding properties
 
+
+
 ## Adding instances
-In the ontology we will only add fixed instances are 
+In the ontology we will only add fixed instances.
+
+Other instances can be defined afterwards, when describing specific elements of the project.
+
+
 
 ## 📁 Contents
 
