@@ -505,8 +505,11 @@ class ExaAToWOnto:
         # add all subclasses
         for sub_file, parent in subclasses.items():
             self.load_and_add_classes(os.path.join(self.json_dir, sub_file), parent)
-            
+
+        #--------------------------------------------------
+        # Adding individual properties
         #----------------------------------------------
+        
         # List of properties linking subclasses
         list_properties=[
             "properties_workflow.json",
@@ -516,6 +519,10 @@ class ExaAToWOnto:
         # Adding all properties
         for props in list_properties:
             self.load_and_add_properties(props)
+
+        #---------------------------------------------
+        #
+        
 
 
         # Add 2 main properties: hasUnit and hasValue
@@ -533,6 +540,8 @@ class ExaAToWOnto:
                     range_="XSD:string",
                     comment={"en": "Unit of measurement.","fr": "Unité de mesure"},
                     pref_label={"en": "has unit","fr": "a unité"})
+
+        
 ##########################################################################
 
         # Restrict hasUnit to specific string values
@@ -551,25 +560,37 @@ class ExaAToWOnto:
             comment={"en": "Memory size numeric value"}
         )
 
-        
+        #+++++++++++++++++++++++++++++++++++++++++++++++++++
+        # Add instances
         #-----------------------------------------------
         # Create fixed instances
 
-        self.add_instance(instance_name="TightCoupling",
-            class_type="Coupling",
-            pref_label={"en": "Tight Coupling", "fr": "Couplage fort"},
-            comment={
-                 "en": "Strong interdependence between workflow components with synchronous execution.",
-                 "fr": "Forte interdépendance entre les composants du flux de travail avec exécution synchrone."
-        })
+        with open("instances_workflow.json", "r", encoding="utf-8") as f:
+            instances_w = json.load(f)
+    
+        for inst in instances_w:
+            self.add_instance(
+                instance_name = inst["instance_name"],
+                class_type = inst["class_type"],
+                pref_label = inst["pref_label"],
+                comment = inst["comment"]
+             )   
 
-        self.add_instance(instance_name="LooseCoupling",
-            class_type="Coupling",
-            pref_label={"en": "Loose Coupling", "fr": "Couplage faible"},
-            comment={
-                    "en": "Modular workflow components with low interdependence, allowing asynchronous or flexible execution.",
-                    "fr": "Composants de flux de travail modulaires avec une faible interdépendance, permettant une exécution asynchrone ou flexible."
-            })
+#        self.add_instance(instance_name="TightCoupling",
+#            class_type="Coupling",
+#            pref_label={"en": "Tight Coupling", "fr": "Couplage fort"},
+#            comment={
+#                 "en": "Strong interdependence between workflow components with synchronous execution.",
+#                 "fr": "Forte interdépendance entre les composants du flux de travail avec exécution synchrone."
+#        })
+#
+#        self.add_instance(instance_name="LooseCoupling",
+#            class_type="Coupling",
+#            pref_label={"en": "Loose Coupling", "fr": "Couplage faible"},
+#            comment={
+#                    "en": "Modular workflow components with low interdependence, allowing asynchronous or flexible execution.",
+#                    "fr": "Composants de flux de travail modulaires avec une faible interdépendance, permettant une exécution asynchrone ou flexible."
+#            })
 
 
     

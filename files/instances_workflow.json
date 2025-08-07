@@ -1,0 +1,293 @@
+[
+    {
+        "instance_name": "TaskBased",
+        "class_type": "FlowType",
+        "pref_label": {"en": "Task-based", "fr": "Basé sur les tâches"},
+        "comment": {
+            "en": "Workflow progresses through a defined sequence of tasks.",
+            "fr": "Le flux de travail progresse à travers une séquence définie de tâches."
+        }
+    },
+    {
+        "instance_name": "DataDriven",
+        "class_type": "FlowType",
+        "pref_label": {"en": "Data-driven", "fr": "Orienté données"},
+        "comment": {
+            "en": "Workflow execution is triggered by data availability.",
+            "fr": "L'exécution du flux est déclenchée par la disponibilité des données."
+        }
+    },
+    {
+        "instance_name": "Iterative",
+        "class_type": "FlowType",
+        "pref_label": {"en": "Iterative", "fr": "Itératif"},
+        "comment": {
+            "en": "Workflow loops over conditions or data until a criterion is met.",
+            "fr": "Le flux de travail boucle sur des conditions ou des données jusqu’à ce qu’un critère soit satisfait."
+        }
+    },
+    {
+        "instance_name": "TightCoupling",
+        "class_type": "Coupling",
+        "pref_label": {"en": "Tight Coupling", "fr": "Couplage fort"},
+        "comment": {
+            "en": "Strong interdependence and synchronous execution between components.",
+            "fr": "Forte interdépendance et exécution synchrone entre les composants."
+        }
+    },
+    {
+        "instance_name": "LooseCoupling",
+        "class_type": "Coupling",
+        "pref_label": {"en": "Loose Coupling", "fr": "Couplage faible"},
+        "comment": {
+            "en": "Modular and flexible interaction between workflow components.",
+            "fr": "Interaction modulaire et flexible entre les composants du flux de travail."
+        }
+    },
+    {
+        "instance_name": "FineGrained",
+        "class_type": "Granularity",
+        "pref_label": {"en": "Fine-grained", "fr": "Finesse granulaire"},
+        "comment": {
+            "en": "Workflow is composed of small, atomic tasks or functions.",
+            "fr": "Le flux est composé de petites tâches atomiques ou fonctions."
+        }
+    },
+    {
+        "instance_name": "CoarseGrained",
+        "class_type": "Granularity",
+        "pref_label": {"en": "Coarse-grained", "fr": "Gros grain"},
+        "comment": {
+            "en": "Workflow is built with larger components such as sub-workflows or complete applications.",
+            "fr": "Le flux est construit avec des composants plus larges comme des sous-flux ou des applications complètes."
+        }
+    },
+    {
+        "instance_name": "SchemaBased",
+        "class_type": "CompositionMethod",
+        "pref_label": {"en": "Schema-based", "fr": "Basée sur un schéma"},
+        "comment": {
+            "en": "Workflows defined in structured text files.",
+            "fr": "Workflows définis dans des fichiers texte structurés."
+        }
+    },
+    {
+        "instance_name": "APIDriven",
+        "class_type": "CompositionMethod",
+        "pref_label": {"en": "API-driven", "fr": "Pilotée par API"},
+        "comment": {
+            "en": "Workflows expressed via a programming API.",
+            "fr": "Workflows exprimés via une API de programmation."
+        }
+    },
+    {
+        "instance_name": "GUIBased",
+        "class_type": "CompositionMethod",
+        "pref_label": {"en": "GUI-based", "fr": "Basée sur une interface graphique"},
+        "comment": {
+            "en": "Workflows built visually through a GUI.",
+            "fr": "Workflows construits visuellement via une interface graphique."
+        }
+    },
+    {
+        "instance_name": "Implicit",
+        "class_type": "AbstractionLevel",
+        "pref_label": {"en": "Implicit", "fr": "Implicite"},
+        "comment": {
+            "en": "Workflow defined at code level.",
+            "fr": "Flux de travail défini au niveau du code."
+        }
+    },
+    {
+        "instance_name": "Abstract",
+        "class_type": "AbstractionLevel",
+        "pref_label": {"en": "Abstract", "fr": "Abstrait"},
+        "comment": {
+            "en": "Workflow defined as logical steps.",
+            "fr": "Flux de travail défini comme étapes logiques."
+        }
+    },
+    {
+        "instance_name": "Concrete",
+        "class_type": "AbstractionLevel",
+        "pref_label": {"en": "Concrete", "fr": "Concret"},
+        "comment": {
+            "en": "Fully specified execution plans.",
+            "fr": "Plans d'exécution entièrement spécifiés."
+        }
+    },
+    {
+        "instance_name": "Flat",
+        "class_type": "Modularity",
+        "pref_label": {"en": "Flat", "fr": "Plate"},
+        "comment": {
+            "en": "Single-level composition with no nesting.",
+            "fr": "Composition à un seul niveau sans sous-workflows imbriqués."
+        }
+    },
+    {
+        "instance_name": "Hierarchical",
+        "class_type": "Modularity",
+        "pref_label": {"en": "Hierarchical", "fr": "Hiérarchique"},
+        "comment": {
+            "en": "Nested sub-workflows for modular design.",
+            "fr": "Sous-workflows imbriqués pour une conception modulaire."
+        }
+    },
+    {
+        "instance_name": "StaticPlanning",
+        "class_type": "OrchestrationPlanning",
+        "pref_label": {"en": "Static", "fr": "Statique"},
+        "comment": {
+            "en": "Decisions made before execution.",
+            "fr": "Décisions prises avant l'exécution."
+        }
+    },
+    {
+        "instance_name": "DynamicPlanning",
+        "class_type": "OrchestrationPlanning",
+        "pref_label": {"en": "Dynamic", "fr": "Dynamique"},
+        "comment": {
+            "en": "Adapted during execution.",
+            "fr": "Adapté pendant l'exécution."
+        }
+    },
+    {
+        "instance_name": "EventDriven",
+        "class_type": "OrchestrationPlanning",
+        "pref_label": {"en": "Event-driven", "fr": "Piloté par événements"},
+        "comment": {
+            "en": "Execution reacts to runtime triggers.",
+            "fr": "Réagit à des déclencheurs en temps réel."
+        }
+    },
+    {
+        "instance_name": "Runner",
+        "class_type": "ExecutionControl",
+        "pref_label": {"en": "Runner", "fr": "Exécuteur"},
+        "comment": {
+            "en": "Manages task execution and resources.",
+            "fr": "Gère l'exécution des tâches et les ressources."
+        }
+    },
+    {
+        "instance_name": "ResourceManager",
+        "class_type": "ExecutionControl",
+        "pref_label": {"en": "Resource Manager", "fr": "Gestionnaire de ressources"},
+        "comment": {
+            "en": "Delegates to external resource managers.",
+            "fr": "Délègue à un gestionnaire de ressources externe."
+        }
+    },
+    {
+        "instance_name": "Serverless",
+        "class_type": "ExecutionControl",
+        "pref_label": {"en": "Serverless", "fr": "Sans serveur"},
+        "comment": {
+            "en": "Infrastructure handled by the provider.",
+            "fr": "Infrastructure gérée par le fournisseur."
+        }
+    },
+    {
+        "instance_name": "Batch",
+        "class_type": "DataManagementGranularity",
+        "pref_label": {"en": "Batch", "fr": "Batch"},
+        "comment": {
+            "en": "Full sets of data consumed/produced.",
+            "fr": "Jeux de données complets consommés/produits."
+        }
+    },
+    {
+        "instance_name": "Pipelined",
+        "class_type": "DataManagementGranularity",
+        "pref_label": {"en": "Pipelined", "fr": "Pipeline"},
+        "comment": {
+            "en": "Data streamed record by record.",
+            "fr": "Flux de données enregistrements par enregistrements."
+        }
+    },
+    {
+        "instance_name": "Partitioned",
+        "class_type": "DataManagementGranularity",
+        "pref_label": {"en": "Partitioned", "fr": "Partitionné"},
+        "comment": {
+            "en": "Data divided into groups of records.",
+            "fr": "Données divisées en groupes d'enregistrements."
+        }
+    },
+    {
+        "instance_name": "FileBased",
+        "class_type": "DataManagementTransport",
+        "pref_label": {"en": "File-based", "fr": "Basé sur fichiers"},
+        "comment": {
+            "en": "Transfer via file writing/reading.",
+            "fr": "Transfert via fichiers."
+        }
+    },
+    {
+        "instance_name": "StreamBased",
+        "class_type": "DataManagementTransport",
+        "pref_label": {"en": "Stream-based", "fr": "Basé sur flux"},
+        "comment": {
+            "en": "Streaming via memory or network.",
+            "fr": "Streaming via mémoire ou réseau."
+        }
+    },
+    {
+        "instance_name": "LocalFileSystem",
+        "class_type": "DataManagementStorage",
+        "pref_label": {"en": "Local File System", "fr": "Système de fichiers local"},
+        "comment": {
+            "en": "Data stored locally on one machine.",
+            "fr": "Données stockées localement sur une machine."
+        }
+    },
+    {
+        "instance_name": "SharedFileSystem",
+        "class_type": "DataManagementStorage",
+        "pref_label": {"en": "Shared File System", "fr": "Système de fichiers partagé"},
+        "comment": {
+            "en": "Accessible by multiple nodes.",
+            "fr": "Accessible par plusieurs nœuds."
+        }
+    },
+    {
+        "instance_name": "DistributedStorage",
+        "class_type": "DataManagementStorage",
+        "pref_label": {"en": "Distributed Storage", "fr": "Stockage distribué"},
+        "comment": {
+            "en": "Data spread across several machines.",
+            "fr": "Données réparties sur plusieurs machines."
+        }
+    },
+    {
+        "instance_name": "ReplicatedStorage",
+        "class_type": "DataManagementStorage",
+        "pref_label": {"en": "Replicated Storage", "fr": "Stockage répliqué"},
+        "comment": {
+            "en": "Copies of data stored in multiple locations.",
+            "fr": "Copies de données dans plusieurs emplacements."
+        }
+    },
+    {
+        "instance_name": "TransferTasks",
+        "class_type": "DataManagementStorage",
+        "pref_label": {"en": "Transfer Tasks", "fr": "Tâches de transfert"},
+        "comment": {
+            "en": "Intermediate tasks move data.",
+            "fr": "Tâches intermédiaires déplacent les données."
+        }
+    },
+    {
+        "instance_name": "InMemory",
+        "class_type": "DataManagementStorage",
+        "pref_label": {"en": "In-Memory", "fr": "En mémoire"},
+        "comment": {
+            "en": "Data held in RAM.",
+            "fr": "Données conservées en RAM."
+        }
+    }
+]
+
+
+
