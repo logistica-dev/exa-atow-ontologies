@@ -1,32 +1,30 @@
-# Exa-AToW_onto
+# Exa-AToW Ontology
 
-An ontology for describing the different aspects of the Exa-AToW project including HPC resources, system interactions, etc.
+This ontology models the core entities and relationships involved in the **Exa-AToW**  project (part of the NumPEX PEPR initiative), focusing on high-performance computing (HPC) workflows, resources, and user interactions.
+
+The ontology is serialized in **Turtle (TTL)** format and can be used in **Semantic Web** applications and **Linked Open Data (LOD)** environments.
 
 https://cnherrera.github.io/Exa-AToW_onto/index-en.html
 
 
-## 🔍 Ontology concepts
+## 🔍 Ontology Concepts
 
-This ontology models key entities and relationships involved in ExA-AToW (NumPEx PEPR):
-
-Main entities under the ontology (list to be discuss) :
-(In bold, those needed to be checked)
-
-
-- **Job**: Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments.
-- **HPC Resource**: Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components.
-- **ProcessorIndicatorEstimator**: Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact.
-- **PhysicalCharacteristic**: Domain concept capturing the physical and structural properties of HPC components, such as memory capacity, die size, material lifetime, and energy efficiency attributes.
-- **Workflow**: oncept grouping workflow-related entities such as execution steps, workflow engines, process definitions, dependencies, and orchestration strategies. Workflow properties are defined based on the paper Suter, F., et al. (2026). *A terminology for scientific workflow systems*. Future Generation Computer Systems, 174, 107974. https://doi.org/10.1016/j.future.2025.107974. 
-- User: Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors.
-- Authentication: Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities.
+The ontology defines key concepts for the ExA-AToW ecosystem:
+(*Bold items indicate concepts that are under review*)
+- **Job**: Represents computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments.
+- **HPCResource**: Covers physical and virtual resources in HPC, including compute nodes, storage, interconnects, and infrastructure.
+- **ProcessorIndicatorEstimator**: Groups estimation tools, metrics, and models used to assess processor indicators such as power consumption, thermal footprint, and die size.
+- **PhysicalCharacteristic**: Captures physical and structural properties of HPC components like memory capacity, die size, material lifetime, and energy efficiency.
+- **Workflow**: Encompasses workflow-related entities such as execution steps, workflow engines, orchestration strategies, and dependencies. Based on:  
+  > Suter, F., et al. (2026). *A terminology for scientific workflow systems*. FGCS 174, 107974. [DOI](https://doi.org/10.1016/j.future.2025.107974)
+- User: (TBD) Describes individuals or agents interacting with HPC systems, including identity attributes, roles, and behaviors.
+- Authentication: (TBD) Models authentication concepts including credentials, identity validation, access protocols, and login activities.
+- Digital Twins: (TBD)
 
 
-The ontology is serialized in Turtle (TTL) and can be used in semantic web applications and Linked Open Data (LOD) environments.
-
-## Creation of the ontology -> For Exa-AToW partners! 
-### main_classes.json
-  File that describe each of the main aspects (entities) of the Exa-AToW project. 
+## Ontology Contruction: For Exa-AToW partners! 
+### `main_classes.json`
+Describes each main concept (entity) in Exa-AToW. 
 
 ### sub_HPC_classes.json
   JSON file describing the HPC Resources main class. 
