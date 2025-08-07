@@ -30,10 +30,10 @@ Describes each main concept (entity) in Exa-AToW.
   JSON file describing the HPC Resources main class. 
   Each area of the project should ahve a JSON filw with this information.
 
-  **Each partners should fill the information needed for their field**
+#### Entry example
+Each project area should have its own JSON file using the same structure. This, ech partner should fill the required information.
 
-example of entry (if entry is in the correct json file, then no need to add the parent_class):
-```
+`parent_class' can be omitted if the entry directly belongs (subclassOf) the class designed in the name of the JSON file.
   {
     "id": "ComputeNode",
     "parent_class": "HPCResource",
@@ -47,10 +47,11 @@ example of entry (if entry is in the correct json file, then no need to add the 
 ```
 ## Adding properties
 
-
+TBD
 
 ## Adding instances
-In the ontology we will only add fixed instances.
+Only fixed instances will be included in the ontology.
+To create instances for your area, create a JSON file with each instance defined as this (also see files/instances_workflow.json): 
 Example:
 ```
     {
@@ -64,35 +65,12 @@ Example:
 
 ```
 
-Other instances can be defined afterwards, when describing specific elements of the project.
-
-```
-from ontology_generator import ExaAToWOnto
-
-onto =  ExaAToWOnto()
-onto.add_instance(instance_name = "instance_naame", class_type = "class_type", pref_label = "pref_label", comment = "comment")
-```
-
 
 ## 📁 Contents
 
 - `exaatow-ontology.ttl`: Main ontology file
-- `files/*.json`: JSON files describing each concept in the ontology, separated by classes.
+- `files/*.json`: JSON files describing each concept in the ontology, separated by classes, properties and fixed instances.
 - `docs/`: HTML documentation generated with Wicodo. (TBD)
-
-## Recreation of the ontology in Python (rdflib)
-This will be done at the project level. But if you wish to recreate the full ontology with additional information:
-```
-from ontology_generator import ExaAToWOnto
-
-onto = ExaAToWOnto()
-# we can add things here
-
-onto.save_ontology("exaatoe_onto_vN.ttl", format="turtle")
-
-```
-
-
 
 ## Visualization
 
