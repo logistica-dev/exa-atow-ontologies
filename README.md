@@ -53,9 +53,27 @@ example of entry (if entry is in the correct json file, then no need to add the 
 
 ## Adding instances
 In the ontology we will only add fixed instances.
+Example:
+```
+    {
+        "instance_name": "InMemory",
+        "class_type": "DataManagementStorage",
+        "pref_label": {"en": "In-Memory", "fr": "En mémoire"},
+        "comment": {
+            "en": "Data held in RAM.",
+            "fr": "Données conservées en RAM."
+        }
+
+```
 
 Other instances can be defined afterwards, when describing specific elements of the project.
 
+```
+from ontology_generator import ExaAToWOnto
+
+onto =  ExaAToWOnto()
+onto.add_instance(instance_name = "instance_naame", class_type = "class_type", pref_label = "pref_label", comment = "comment")
+```
 
 
 ## 📁 Contents
@@ -67,7 +85,7 @@ Other instances can be defined afterwards, when describing specific elements of 
 ## Recreation of the ontology in Python (rdflib)
 This will be done at the project level. But if you wish to recreate the full ontology with additional information:
 ```
-from exaatow_onto.py import ExaAToWOnto
+from ontology_generator import ExaAToWOnto
 
 onto = ExaAToWOnto()
 # we can add things here
