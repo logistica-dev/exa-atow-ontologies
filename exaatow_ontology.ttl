@@ -43,6 +43,13 @@ exa-atow:Batch a exa-atow:DataManagementGranularity ;
     skos:prefLabel "Batch"@en,
         "Batch"@fr .
 
+exa-atow:CPU a owl:Class ;
+    rdfs:comment "The central processing unit responsible for executing general-purpose instructions."@en,
+        "L'unité centrale de traitement responsable de l'exécution des instructions générales."@fr ;
+    rdfs:subClassOf exa-atow:Processor ;
+    skos:prefLabel "CPU"@en,
+        "CPU"@fr .
+
 exa-atow:CarbonFootprint a owl:Class ;
     rdfs:comment "Measurement of the greenhouse gas emissions associated with HPC system usage."@en,
         "Mesure des émissions de gaz à effet de serre liées à l’utilisation des systèmes HPC."@fr ;
@@ -194,6 +201,13 @@ exa-atow:Flat a exa-atow:Modularity ;
     skos:prefLabel "Flat"@en,
         "Plate"@fr .
 
+exa-atow:GPU a owl:Class ;
+    rdfs:comment "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en,
+        "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."@fr ;
+    rdfs:subClassOf exa-atow:Processor ;
+    skos:prefLabel "GPU"@en,
+        "GPU"@fr .
+
 exa-atow:GUIBased a exa-atow:CompositionMethod ;
     rdfs:comment "Workflows built visually through a GUI."@en,
         "Workflows construits visuellement via une interface graphique."@fr ;
@@ -321,13 +335,6 @@ exa-atow:JobSubmissionMetadata a owl:Class ;
     rdfs:subClassOf exa-atow:Job ;
     skos:prefLabel "Job Submission Metadata"@en,
         "Métadonnées de soumission de la tâche"@fr .
-
-exa-atow:Lifetime a owl:Class ;
-    rdfs:comment "Operational lifespan of an electronic component, such as a server or processor."@en,
-        "Durée de vie d’un composant électronique, tel qu’un serveur ou un processeur."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
-    skos:prefLabel "Lifetime"@en,
-        "Durée de vie"@fr .
 
 exa-atow:LifetimeEstimator a owl:Class ;
     rdfs:comment "Tool or model for predicting the operational lifetime of hardware components."@en,
@@ -551,13 +558,6 @@ exa-atow:WorkflowStep a owl:Class ;
     skos:prefLabel "Workflow Step"@en,
         "Étape du flux de travail"@fr .
 
-exa-atow:Workload a owl:Class ;
-    rdfs:comment "The processing load handled by a CPU or GPU. It affects energy consumption and performance."@en,
-        "La charge de traitement gérée par un CPU ou un GPU. Elle influence la consommation d'énergie et les performances."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
-    skos:prefLabel "Workload"@en,
-        "Charge"@fr .
-
 exa-atow:WorkloadEstimator a owl:Class ;
     rdfs:comment "Tool or method for estimating and analyzing the workload executed on HPC systems."@en,
         "Outil ou méthode permettant d’estimer et d’analyser la charge de travail exécutée sur les systèmes HPC."@fr ;
@@ -614,13 +614,12 @@ exa-atow:hasDataManagementTransport a owl:ObjectProperty ;
         "a un transport de gestion des données"@fr .
 
 exa-atow:hasDieSize a owl:DatatypeProperty ;
-    rdfs:comment "CPU and GPU have a die size"@en,
-        "CPU et GPU ont taille de puce"@fr ;
-    rdfs:domain exa-atow:CPU,
-        exa-atow:GPU ;
+    rdfs:comment "Processor has a die size, including a numeric value and a unit (e.g., mm2)."@en,
+        "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."@fr ;
+    rdfs:domain exa-atow:Processor ;
     rdfs:range exa-atow:DieSize ;
     skos:prefLabel "has die size"@en,
-        "a taillede puce"@fr .
+        "a taille de puce"@fr .
 
 exa-atow:hasDomain a owl:ObjectProperty ;
     rdfs:comment "Links a workflow to its domain specificity (domain-specific or agnostic)."@en,
@@ -654,15 +653,24 @@ exa-atow:hasGranularity a owl:ObjectProperty ;
     skos:prefLabel "has granularity type"@en,
         "a une granularité de type"@fr .
 
+exa-atow:hasLifetime a owl:DatatypeProperty ;
+    rdfs:comment "The processor or server has an operational lifetime, including numeric value and unit (e.g. years, hours)."@en,
+        "Le processeur ou le serveur a une durée de vie opérationnelle avec valeur numérique et unité (ex : années ou heures)."@fr ;
+    rdfs:domain exa-atow:Processor,
+        exa-atow:Server ;
+    rdfs:range exa-atow:Lifetime ;
+    skos:prefLabel "has lifetime"@en,
+        "a durée de vie"@fr .
+
 exa-atow:hasMemoryCapacity a owl:DatatypeProperty ;
-    rdfs:comment "Add value of memory (make one for value and unit?)"@en,
-        "add value."@fr ;
+    rdfs:comment "The memory device has a certain memory capacity, including numeric value and unit (e.g., GB, TB)."@en,
+        "Le dispositif de mémoire a une certaine capacité mémoire incluant valeur numérique et unité (ex : Go, To)."@fr ;
     rdfs:domain exa-atow:HDD,
         exa-atow:RAM,
         exa-atow:SSD ;
     rdfs:range exa-atow:MemoryCapacity ;
     skos:prefLabel "has memory capacity"@en,
-        "a capacité de memoire"@fr .
+        "a capacité mémoire"@fr .
 
 exa-atow:hasModularity a owl:ObjectProperty ;
     rdfs:comment "Associates a workflow with its modularity characteristic, describing how it is structured in terms of components."@en,
@@ -688,17 +696,29 @@ exa-atow:hasProperty a owl:ObjectProperty ;
     skos:prefLabel "has Property"@en,
         "a propriété"@fr .
 
-exa-atow:CPU a owl:Class ;
-    rdfs:comment "The central processing unit responsible for executing general-purpose instructions."@en,
-        "L'unité centrale de traitement responsable de l'exécution des instructions générales."@fr ;
-    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "CPU"@en,
-        "CPU"@fr .
+exa-atow:hasWorkload a owl:DatatypeProperty ;
+    rdfs:comment "The numerical workload of a processor, which affects its energy consumption and performance. Includes a value and a unit (e.g., % utilization)."@en,
+        "La charge numérique d’un processeur, qui affecte sa consommation d’énergie et ses performances. Comprend une valeur et une unité (ex. : % d’utilisation)."@fr ;
+    rdfs:domain exa-atow:Processor ;
+    rdfs:range exa-atow:Workload ;
+    skos:prefLabel "has workload"@en,
+        "a charge"@fr .
 
 exa-atow:DieSize a owl:Class ;
     rdfs:comment "The physical area of the CPU or GPU die. Used in impact estimation. Includes a value and a unit."@en,
         "La surface physique de la puce du CPU ou du GPU. Utilisée pour l'estimation d'impact. Comprend une valeur et une unité."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalCharacteristic ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            rdfs:comment "Allowed units for die size"@en,
+                "Unités autorisées pour la taille de puce"@fr ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "mm²"^^xsd:string "cm²"^^xsd:string ) ] ;
+            owl:onProperty exa-atow:hasUnit ],
+        [ a owl:Restriction ;
+            rdfs:comment "Numeric value of the die size"@en,
+                "Valeur numérique de la taille de puce"@fr ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty exa-atow:hasValue ],
+        exa-atow:PhysicalCharacteristic ;
     skos:prefLabel "Die Size"@en,
         "Taille de puce"@fr .
 
@@ -708,13 +728,6 @@ exa-atow:DomainSpecificity a owl:Class ;
     rdfs:subClassOf exa-atow:WorkflowProperty ;
     skos:prefLabel "Domain Specificity"@en,
         "Spécificité du domaine"@fr .
-
-exa-atow:GPU a owl:Class ;
-    rdfs:comment "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en,
-        "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."@fr ;
-    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "GPU"@en,
-        "GPU"@fr .
 
 exa-atow:HDD a owl:Class ;
     rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en,
@@ -730,16 +743,36 @@ exa-atow:JobScheduling a owl:Class ;
     skos:prefLabel "Job Scheduling"@en,
         "Ordonnancement de tâche"@fr .
 
+exa-atow:Lifetime a owl:Class ;
+    rdfs:comment "Operational lifespan of an electronic component, such as a server or processor."@en,
+        "Durée de vie d’un composant électronique, tel qu’un serveur ou un processeur."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            rdfs:comment "Numeric value for component lifetime"@en,
+                "Valeur numérique pour la durée de vie d’un composant"@fr ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty exa-atow:hasValue ],
+        [ a owl:Restriction ;
+            rdfs:comment "Allowed units for component lifetime"@en,
+                "Unités autorisées pour la durée de vie d’un composant"@fr ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "hours"^^xsd:string "days"^^xsd:string "months"^^xsd:string "years"^^xsd:string ) ] ;
+            owl:onProperty exa-atow:hasUnit ],
+        exa-atow:PhysicalCharacteristic ;
+    skos:prefLabel "Lifetime"@en,
+        "Durée de vie"@fr .
+
 exa-atow:MemoryCapacity a owl:Class ;
     rdfs:comment "Amount of data that can be stored in a memory device like RAM, SSD, or HDD."@en,
         "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."@fr ;
     rdfs:subClassOf [ a owl:Restriction ;
-            rdfs:comment "Allowed units for memory capacity"@en ;
+            rdfs:comment "Allowed units for memory capacity"@en,
+                "Unités autorisées pour la capacité mémoire"@fr ;
             owl:allValuesFrom [ a rdfs:Datatype ;
                     owl:oneOf ( "GB"^^xsd:string "TB"^^xsd:string "PB"^^xsd:string "MB"^^xsd:string "KB"^^xsd:string ) ] ;
             owl:onProperty exa-atow:hasUnit ],
         [ a owl:Restriction ;
-            rdfs:comment "Memory size numeric value"@en ;
+            rdfs:comment "Numeric value of the memory size"@en,
+                "Valeur numérique de la taille de la mémoire"@fr ;
             owl:allValuesFrom xsd:decimal ;
             owl:onProperty exa-atow:hasValue ],
         exa-atow:PhysicalCharacteristic ;
@@ -760,19 +793,23 @@ exa-atow:SSD a owl:Class ;
     skos:prefLabel "SSD"@en,
         "SSD"@fr .
 
-exa-atow:hasUnit a owl:ObjectProperty ;
-    rdfs:comment "Unit of measurement."@en,
-        "Unité de mesure"@fr ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> ;
-    skos:prefLabel "has unit"@en,
-        "a unité"@fr .
-
-exa-atow:hasValue a owl:DatatypeProperty ;
-    rdfs:comment "Numeric value."@en,
-        "Valeur numérique"@fr ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> ;
-    skos:prefLabel "has numeric value"@en,
-        "a valeur numérique"@fr .
+exa-atow:Workload a owl:Class ;
+    rdfs:comment "The processing load handled by a CPU or GPU. It affects energy consumption and performance."@en,
+        "La charge de traitement gérée par un CPU ou un GPU. Elle influence la consommation d'énergie et les performances."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            rdfs:comment "Numeric value representing processor workload"@en,
+                "Valeur numérique représentant la charge du processeur"@fr ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty exa-atow:hasValue ],
+        [ a owl:Restriction ;
+            rdfs:comment "Allowed units for workload measurement"@en,
+                "Unités autorisées pour la mesure de la charge"@fr ;
+            owl:allValuesFrom [ a rdfs:Datatype ;
+                    owl:oneOf ( "%"^^xsd:string "operations/s"^^xsd:string "FLOPS"^^xsd:string ) ] ;
+            owl:onProperty exa-atow:hasUnit ],
+        exa-atow:PhysicalCharacteristic ;
+    skos:prefLabel "Workload"@en,
+        "Charge"@fr .
 
 exa-atow:ComputeNode a owl:Class ;
     rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en,
@@ -857,6 +894,27 @@ exa-atow:PhysicalCharacteristic a owl:Class ;
     skos:prefLabel "Physical Characteristic"@en,
         "Caractéristique physique"@fr .
 
+exa-atow:hasUnit a owl:ObjectProperty ;
+    rdfs:comment "Unit of measurement."@en,
+        "Unité de mesure"@fr ;
+    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> ;
+    skos:prefLabel "has unit"@en,
+        "a unité"@fr .
+
+exa-atow:hasValue a owl:DatatypeProperty ;
+    rdfs:comment "Numeric value."@en,
+        "Valeur numérique"@fr ;
+    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> ;
+    skos:prefLabel "has numeric value"@en,
+        "a valeur numérique"@fr .
+
+exa-atow:Processor a owl:Class ;
+    rdfs:comment "A general category for processing units, including CPUs and GPUs."@en,
+        "Catégorie générale pour les unités de traitement, y compris les CPU et les GPU."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Processor"@en,
+        "Processeur"@fr .
+
 exa-atow:DataManagementStorage a owl:Class ;
     rdfs:comment "Storage model used for intermediate data. Possible values: LocalFileSystem, SharedFileSystem, DistributedStorage, ReplicatedStorage, TransferTasks, InMemory."@en,
         "Modèle de stockage utilisé pour les données intermédiaires. Valeurs possibles : Système de fichiers local, Système de fichiers partagé, Stockage distribué, Stockage répliqué, Tâches de transfert, En mémoire."@fr ;
@@ -864,17 +922,17 @@ exa-atow:DataManagementStorage a owl:Class ;
     skos:prefLabel "Data Management Storage"@en,
         "Stockage de la gestion des données"@fr .
 
-exa-atow:WorkflowProperty a owl:Class ;
-    rdfs:comment "An abstract concept grouping all categorical properties used to describe workflows, including flow type, coupling, granularity, domain specificity, and orchestration characteristics."@en,
-        "Concept abstrait regroupant toutes les propriétés catégorielles utilisées pour décrire les flux de travail, y compris le type de flux, le couplage, la granularité, la spécificité du domaine et les caractéristiques d'orchestration."@fr ;
-    skos:prefLabel "Workflow Property"@en,
-        "Propriété du flux de travail"@fr .
-
 exa-atow:HPCResource a owl:Class ;
     rdfs:comment "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components."@en,
         "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."@fr ;
     skos:prefLabel "HPC Resource"@en,
         "Ressource HPC"@fr .
+
+exa-atow:WorkflowProperty a owl:Class ;
+    rdfs:comment "An abstract concept grouping all categorical properties used to describe workflows, including flow type, coupling, granularity, domain specificity, and orchestration characteristics."@en,
+        "Concept abstrait regroupant toutes les propriétés catégorielles utilisées pour décrire les flux de travail, y compris le type de flux, le couplage, la granularité, la spécificité du domaine et les caractéristiques d'orchestration."@fr ;
+    skos:prefLabel "Workflow Property"@en,
+        "Propriété du flux de travail"@fr .
 
 exa-atow:ProcessorIndicatorEstimator a owl:Class ;
     rdfs:comment "Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact."@en,

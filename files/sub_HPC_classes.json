@@ -60,8 +60,20 @@
         }
     },
     {
-        "id": "GPU",
+        "id": "Processor",
         "parent_class": "HPCResource",
+        "pref_label": {
+            "en": "Processor",
+            "fr": "Processeur"
+        },
+        "comment": {
+            "en": "A general category for processing units, including CPUs and GPUs.",
+	    "fr": "Catégorie générale pour les unités de traitement, y compris les CPU et les GPU."
+        }
+    },
+    {
+        "id": "GPU",
+        "parent_class": "Processor",
         "pref_label": {
             "en": "GPU",
             "fr": "GPU"
@@ -73,7 +85,7 @@
     },
     {
         "id": "CPU",
-        "parent_class": "HPCResource",
+        "parent_class": "Processor",
         "pref_label": {
             "en": "CPU",
             "fr": "CPU"

@@ -1,0 +1,86 @@
+[
+  {
+    "class_name": "MemoryCapacity",
+    "restrictions": [
+      {
+        "property_name": "hasUnit",
+        "enumeration": ["GB", "TB", "PB", "MB", "KB"],
+        "comment": {
+          "en": "Allowed units for memory capacity",
+          "fr": "Unités autorisées pour la capacité mémoire"
+        }
+      },
+      {
+        "property_name": "hasValue",
+        "all_values_from": "xsd:decimal",
+        "comment": {
+          "en": "Numeric value of the memory size",
+          "fr": "Valeur numérique de la taille de la mémoire"
+        }
+      }
+    ]
+  },
+  {
+    "class_name": "DieSize",
+    "restrictions": [
+      {
+        "property_name": "hasUnit",
+        "enumeration": ["mm²", "cm²"],
+        "comment": {
+          "en": "Allowed units for die size",
+          "fr": "Unités autorisées pour la taille de puce"
+        }
+      },
+      {
+        "property_name": "hasValue",
+        "all_values_from": "xsd:decimal",
+        "comment": {
+          "en": "Numeric value of the die size",
+          "fr": "Valeur numérique de la taille de puce"
+        }
+      }
+    ]
+  },
+  {
+    "class_name": "Workload",
+    "restrictions": [
+      {
+        "property_name": "hasUnit",
+        "enumeration": ["%", "operations/s", "FLOPS"],
+        "comment": {
+          "en": "Allowed units for workload measurement",
+          "fr": "Unités autorisées pour la mesure de la charge"
+        }
+      },
+      {
+        "property_name": "hasValue",
+        "all_values_from": "xsd:decimal",
+        "comment": {
+          "en": "Numeric value representing processor workload",
+          "fr": "Valeur numérique représentant la charge du processeur"
+        }
+      }
+    ]
+  },
+  {
+    "class_name": "Lifetime",
+    "restrictions": [
+      {
+        "property_name": "hasUnit",
+        "enumeration": ["hours", "days", "months", "years"],
+        "comment": {
+          "en": "Allowed units for component lifetime",
+          "fr": "Unités autorisées pour la durée de vie d’un composant"
+        }
+      },
+      {
+        "property_name": "hasValue",
+        "all_values_from": "xsd:decimal",
+        "comment": {
+          "en": "Numeric value for component lifetime",
+          "fr": "Valeur numérique pour la durée de vie d’un composant"
+        }
+      }
+    ]
+  }
+]

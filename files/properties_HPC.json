@@ -1,28 +1,59 @@
 [
     {
-      "id": "hasDieSize",
-      "property_type": "DatatypeProperty",
-	"domain": ["CPU", "GPU"],
-      "range": "DieSize",
-	"pref_label":{"en":"has die size", "fr":"a taillede puce"},
-      "comment": {
-        "en": "CPU and GPU have a die size",
-        "fr": "CPU et GPU ont taille de puce"
-      }
+    "id": "hasDieSize",
+    "property_type": "DatatypeProperty",
+    "domain": "Processor",
+    "range": "DieSize",
+    "pref_label": {
+      "en": "has die size",
+      "fr": "a taille de puce"
     },
-{
+    "comment": {
+      "en": "Processor has a die size, including a numeric value and a unit (e.g., mm2).",
+      "fr": "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."
+    }
+  },
+  {
+    "id": "hasWorkload",
+    "property_type": "DatatypeProperty",
+    "domain": "Processor",
+    "range": "Workload",
+    "pref_label": {
+      "en": "has workload",
+      "fr": "a charge"
+    },
+      "comment": {
+	  "en": "The numerical workload of a processor, which affects its energy consumption and performance. Includes a value and a unit (e.g., % utilization).",
+	  "fr": "La charge numérique d’un processeur, qui affecte sa consommation d’énergie et ses performances. Comprend une valeur et une unité (ex. : % d’utilisation)."
+      }
+  },
+  {
+    "id": "hasLifetime",
+    "property_type": "DatatypeProperty",
+    "domain": ["Processor", "Server"],
+    "range": "Lifetime",
+    "pref_label": {
+      "en": "has lifetime",
+      "fr": "a durée de vie"
+    },
+    "comment": {
+      "en": "The processor or server has an operational lifetime, including numeric value and unit (e.g. years, hours).",
+      "fr": "Le processeur ou le serveur a une durée de vie opérationnelle avec valeur numérique et unité (ex : années ou heures)."
+    }
+  },
+  {
     "id": "hasMemoryCapacity",
     "property_type": "DatatypeProperty",
     "domain": ["RAM", "SSD", "HDD"],
     "range": "MemoryCapacity",
     "pref_label": {
       "en": "has memory capacity",
-      "fr": "a capacité de memoire"
+      "fr": "a capacité mémoire"
     },
     "comment": {
-      "en": "Add value of memory (make one for value and unit?)",
-      "fr": "add value."
+      "en": "The memory device has a certain memory capacity, including numeric value and unit (e.g., GB, TB).",
+      "fr": "Le dispositif de mémoire a une certaine capacité mémoire incluant valeur numérique et unité (ex : Go, To)."
     }
-}
+  }
 ]
 
