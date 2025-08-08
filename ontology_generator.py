@@ -415,37 +415,7 @@ class ExaAToWOnto:
                         self.graph.add((instance_uri, prop_uri, rdf_value))
 
 ########################## 
-#    def add_instance(self, instance_name: str, 
-        #              class_type: Union[URIRef, str],
-        #              properties: Optional[dict] = None):
-        # """
-        # Add an instance (individual) to the ontology
-        
-        # Args:
-        #     instance_name: Name of the instance
-        #     class_type: Class that this instance belongs to
-        #     properties: Dictionary of properties and their values
-        # """
-        # instance_uri = self.EXAATOW[instance_name]
-        
-        # # Convert class_type to URIRef if needed
-        # if isinstance(class_type, str):
-        #     class_type = self.EXAATOW[class_type]
-        
-        # # Add instance declaration
-        # self.graph.add((instance_uri, RDF.type, class_type))
-        
-        # # Add properties if provided
-        # if properties:
-        #     for prop, value in properties.items():
-        #         prop_uri = self.EXAATOW[prop] if isinstance(prop, str) else prop
-        #         if isinstance(value, str):
-        #             value = Literal(value)
-        #         elif isinstance(value, (int, float)):
-        #             value = Literal(value)
-        #         elif isinstance(value, bool):
-        #             value = Literal(value)
-        #         self.graph.add((instance_uri, prop_uri, value))
+
 
     def load_and_add_classes(self, json_file, default_parent_class):
         """Load classes from JSON file and add them with fallback parent class."""
@@ -522,8 +492,6 @@ class ExaAToWOnto:
 
         #---------------------------------------------
         #
-        
-
 
         # Add 2 main properties: hasUnit and hasValue
         # Global statement of "hasUnit" and "hasValue"
@@ -539,26 +507,46 @@ class ExaAToWOnto:
                     property_type="ObjectProperty",
                     range_="XSD:string",
                     comment={"en": "Unit of measurement.","fr": "Unité de mesure"},
-                    pref_label={"en": "has unit","fr": "a unité"})
+                    pref_label={"en": "has unit","fr": "a unité"})#
 
         
 ##########################################################################
 
-        # Restrict hasUnit to specific string values
-        self.add_restriction_to_class(
-            class_name="MemoryCapacity",
-            property_name="hasUnit",
-            enumeration=["GB", "TB", "PB", "MB", "KB"],
-            comment={"en": "Allowed units for memory capacity"}
-        )
+        with open("add_restrictions_hasValues_hasUnit.json", "r", encoding="utf-8") as f:
+            restrictions_data = json.load(f)
+#            print(restrictions_data)
 
-        # Restrict hasValue to decimals
-        self.add_restriction_to_class(
-            class_name="MemoryCapacity",
-            property_name="hasValue",
-            all_values_from=XSD.decimal,
-            comment={"en": "Memory size numeric value"}
-        )
+        for entry in restrictions_data:
+            class_name = entry["class_name"]
+            for restriction in entry["restrictions"]:
+                kwargs = {
+                    "class_name": class_name,
+                    "property_name": restriction["property_name"],
+                    "comment": restriction["comment"]
+                }
+                if "enumeration" in restriction:
+                    kwargs["enumeration"] = restriction["enumeration"]
+                if "all_values_from" in restriction:
+                    kwargs["all_values_from"] = getattr(XSD, restriction["all_values_from"].split(":")[-1])
+
+                self.add_restriction_to_class(**kwargs)
+
+
+#        # Restrict hasUnit to specific string values
+#        self.add_restriction_to_class(
+#            class_name="MemoryCapacity",
+#            property_name="hasUnit",
+#            enumeration=["GB", "TB", "PB", "MB", "KB"],
+#            comment={"en": "Allowed units for memory capacity"}
+#        )
+
+#        # Restrict hasValue to decimals
+#        self.add_restriction_to_class(
+#            class_name="MemoryCapacity",
+#            property_name="hasValue",
+#            all_values_from=XSD.decimal,
+#            comment={"en": "Memory size numeric value"}
+#        )
 
         #+++++++++++++++++++++++++++++++++++++++++++++++++++
         # Add instances
@@ -574,29 +562,12 @@ class ExaAToWOnto:
                 class_type = inst["class_type"],
                 pref_label = inst["pref_label"],
                 comment = inst["comment"]
-             )   
+             )
 
-#        self.add_instance(instance_name="TightCoupling",
-#            class_type="Coupling",
-#            pref_label={"en": "Tight Coupling", "fr": "Couplage fort"},
-#            comment={
-#                 "en": "Strong interdependence between workflow components with synchronous execution.",
-#                 "fr": "Forte interdépendance entre les composants du flux de travail avec exécution synchrone."
-#        })
-#
-#        self.add_instance(instance_name="LooseCoupling",
-#            class_type="Coupling",
-#            pref_label={"en": "Loose Coupling", "fr": "Couplage faible"},
-#            comment={
-#                    "en": "Modular workflow components with low interdependence, allowing asynchronous or flexible execution.",
-#                    "fr": "Composants de flux de travail modulaires avec une faible interdépendance, permettant une exécution asynchrone ou flexible."
-#            })
+        #=+++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-    
-
-
-        # Missing: link between subclasses.
+# Missing: link between subclasses.
 # CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
 # Supercomputer has name, etc.
 
@@ -615,7 +586,6 @@ class ExaAToWOnto:
 #GPU hasFeature Workload
 #XXX hasFeature lifetime
 
-        
         # Energy and Digital Twin Classes#
 #        self.add_class("EnergyConsumption", 
 #                      pref_label="Energy Consumption",
