@@ -1,5 +1,17 @@
 [
     {
+        "id": "Classe",
+        "parent_class": "is a",
+        "pref_label": {
+            "en": "Terme (en)",
+            "fr": "Terme (fr)"
+        },
+        "comment": {
+            "en": "Définition (en)",
+            "fr": "Définition (fr)"
+        }
+},
+ 
         "id": "adpe",
         "parent_class": "environmentalImpact",
         "pref_label": {
