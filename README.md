@@ -49,25 +49,26 @@ Each project area should have its own JSON file using the same structure. This, 
 ## Adding properties
 
 ### Property Definitions
-Goal: define relationships between existing classes using JSON property definitions.
+**Goal**: define relationships between *existing* classes using JSON property definitions.
 For example, connect a `Processor' class to a `DieSize' class using a `hasDieSize' property.
 Example:
 ```
 {
-"id": "hasDieSize",
-"property_type": "DatatypeProperty",
-"domain": "Processor",
-"range": "DieSize",
-"pref_label": {
-"en": "has die size",
-"fr": "a taille de puce"
-},
-"comment": {
-"en": "Processor has a die size, including a numeric value and a unit (e.g., mm2).",
-"fr": "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."
-}
+    "id": "hasDieSize",
+    "property_type": "DatatypeProperty",    
+    "domain": "Processor",
+    "range": "DieSize",
+    "pref_label": {
+    "en": "has die size",
+    "fr": "a taille de puce"
+    },
+    "comment": {
+    "en": "Processor has a die size, including a numeric value and a unit (e.g., mm2).",
+    "fr": "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."  
+    }
 }
 ```
+
 ### Steps:
 **Option 1**: Add to existing file
 Add your property to an existing properties*.json file if it fits that domain.
