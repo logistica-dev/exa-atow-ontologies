@@ -34,6 +34,7 @@ Describes each main concept (entity) in Exa-AToW.
 Each project area should have its own JSON file using the same structure. This, ech partner should fill the required information.
 
 `parent_class' can be omitted if the entry directly belongs (subclassOf) the class designed in the name of the JSON file.
+```
   {
     "id": "ComputeNode",
     "parent_class": "HPCResource",
@@ -46,8 +47,35 @@ Each project area should have its own JSON file using the same structure. This, 
   },
 ```
 ## Adding properties
+### Property Definitions
+Goal: define relationships between existing classes using JSON property definitions. 
+For example, connect a `Processor' class to a `DieSize' class using a `hasDieSize' property.
+Example:
+```
+{
+  "id": "hasDieSize",
+  "property_type": "DatatypeProperty",
+  "domain": "Processor",
+  "range": "DieSize",
+  "pref_label": {
+    "en": "has die size",
+    "fr": "a taille de puce"
+  },
+  "comment": {
+    "en": "Processor has a die size, including a numeric value and a unit (e.g., mm2).",
+    "fr": "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."
+  }
+}
+```
+### Steps:
+**Option 1**: Add to existing file
+Add your property to an existing properties*.json file if it fits that domain.
 
-TBD
+**Option 2**: Create new file
+- Create a new file: properties_<your_field>.json (in files folder)
+- Add your properties as an array 
+- Register the file in list_properties.json in the 'ontology_generator.py' file
+
 
 ## Adding instances
 Only fixed instances will be included in the ontology.
