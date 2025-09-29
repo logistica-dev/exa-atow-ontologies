@@ -10,8 +10,8 @@
             "en": "Définition (en)",
             "fr": "Définition (fr)"
         }
-    },
-    {
+},
+ 
         "id": "adpe",
         "parent_class": "environmentalImpact",
         "pref_label": {
