@@ -747,16 +747,16 @@ exa-atow:Lifetime a owl:Class ;
     rdfs:comment "Operational lifespan of an electronic component, such as a server or processor."@en,
         "Durée de vie d’un composant électronique, tel qu’un serveur ou un processeur."@fr ;
     rdfs:subClassOf [ a owl:Restriction ;
-            rdfs:comment "Numeric value for component lifetime"@en,
-                "Valeur numérique pour la durée de vie d’un composant"@fr ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty exa-atow:hasValue ],
-        [ a owl:Restriction ;
             rdfs:comment "Allowed units for component lifetime"@en,
                 "Unités autorisées pour la durée de vie d’un composant"@fr ;
             owl:allValuesFrom [ a rdfs:Datatype ;
                     owl:oneOf ( "hours"^^xsd:string "days"^^xsd:string "months"^^xsd:string "years"^^xsd:string ) ] ;
             owl:onProperty exa-atow:hasUnit ],
+        [ a owl:Restriction ;
+            rdfs:comment "Numeric value for component lifetime"@en,
+                "Valeur numérique pour la durée de vie d’un composant"@fr ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty exa-atow:hasValue ],
         exa-atow:PhysicalCharacteristic ;
     skos:prefLabel "Lifetime"@en,
         "Durée de vie"@fr .
@@ -897,14 +897,14 @@ exa-atow:PhysicalCharacteristic a owl:Class ;
 exa-atow:hasUnit a owl:ObjectProperty ;
     rdfs:comment "Unit of measurement."@en,
         "Unité de mesure"@fr ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> ;
+    rdfs:range xsd:string ;
     skos:prefLabel "has unit"@en,
         "a unité"@fr .
 
 exa-atow:hasValue a owl:DatatypeProperty ;
     rdfs:comment "Numeric value."@en,
         "Valeur numérique"@fr ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> ;
+    rdfs:range xsd:decimal ;
     skos:prefLabel "has numeric value"@en,
         "a valeur numérique"@fr .
 

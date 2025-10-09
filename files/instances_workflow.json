@@ -1,6 +1,6 @@
 [
     {
-        "instance_name": "TaskBased",
+        "id": "TaskBased",
         "class_type": "FlowType",
         "pref_label": {"en": "Task-based", "fr": "Basé sur les tâches"},
         "comment": {
@@ -9,7 +9,7 @@
         }
     },
     {
-        "instance_name": "DataDriven",
+        "id": "DataDriven",
         "class_type": "FlowType",
         "pref_label": {"en": "Data-driven", "fr": "Orienté données"},
         "comment": {
@@ -18,7 +18,7 @@
         }
     },
     {
-        "instance_name": "Iterative",
+        "id": "Iterative",
         "class_type": "FlowType",
         "pref_label": {"en": "Iterative", "fr": "Itératif"},
         "comment": {
@@ -27,7 +27,7 @@
         }
     },
     {
-        "instance_name": "TightCoupling",
+        "id": "TightCoupling",
         "class_type": "Coupling",
         "pref_label": {"en": "Tight Coupling", "fr": "Couplage fort"},
         "comment": {
@@ -36,7 +36,7 @@
         }
     },
     {
-        "instance_name": "LooseCoupling",
+        "id": "LooseCoupling",
         "class_type": "Coupling",
         "pref_label": {"en": "Loose Coupling", "fr": "Couplage faible"},
         "comment": {
@@ -45,7 +45,7 @@
         }
     },
     {
-        "instance_name": "FineGrained",
+        "id": "FineGrained",
         "class_type": "Granularity",
         "pref_label": {"en": "Fine-grained", "fr": "Finesse granulaire"},
         "comment": {
@@ -54,7 +54,7 @@
         }
     },
     {
-        "instance_name": "CoarseGrained",
+        "id": "CoarseGrained",
         "class_type": "Granularity",
         "pref_label": {"en": "Coarse-grained", "fr": "Gros grain"},
         "comment": {
@@ -63,7 +63,7 @@
         }
     },
     {
-        "instance_name": "SchemaBased",
+        "id": "SchemaBased",
         "class_type": "CompositionMethod",
         "pref_label": {"en": "Schema-based", "fr": "Basée sur un schéma"},
         "comment": {
@@ -72,7 +72,7 @@
         }
     },
     {
-        "instance_name": "APIDriven",
+        "id": "APIDriven",
         "class_type": "CompositionMethod",
         "pref_label": {"en": "API-driven", "fr": "Pilotée par API"},
         "comment": {
@@ -81,7 +81,7 @@
         }
     },
     {
-        "instance_name": "GUIBased",
+        "id": "GUIBased",
         "class_type": "CompositionMethod",
         "pref_label": {"en": "GUI-based", "fr": "Basée sur une interface graphique"},
         "comment": {
@@ -90,7 +90,7 @@
         }
     },
     {
-        "instance_name": "Implicit",
+        "id": "Implicit",
         "class_type": "AbstractionLevel",
         "pref_label": {"en": "Implicit", "fr": "Implicite"},
         "comment": {
@@ -99,7 +99,7 @@
         }
     },
     {
-        "instance_name": "Abstract",
+        "id": "Abstract",
         "class_type": "AbstractionLevel",
         "pref_label": {"en": "Abstract", "fr": "Abstrait"},
         "comment": {
@@ -108,7 +108,7 @@
         }
     },
     {
-        "instance_name": "Concrete",
+        "id": "Concrete",
         "class_type": "AbstractionLevel",
         "pref_label": {"en": "Concrete", "fr": "Concret"},
         "comment": {
@@ -117,7 +117,7 @@
         }
     },
     {
-        "instance_name": "Flat",
+        "id": "Flat",
         "class_type": "Modularity",
         "pref_label": {"en": "Flat", "fr": "Plate"},
         "comment": {
@@ -126,7 +126,7 @@
         }
     },
     {
-        "instance_name": "Hierarchical",
+        "id": "Hierarchical",
         "class_type": "Modularity",
         "pref_label": {"en": "Hierarchical", "fr": "Hiérarchique"},
         "comment": {
@@ -135,7 +135,7 @@
         }
     },
     {
-        "instance_name": "StaticPlanning",
+        "id": "StaticPlanning",
         "class_type": "OrchestrationPlanning",
         "pref_label": {"en": "Static", "fr": "Statique"},
         "comment": {
@@ -144,7 +144,7 @@
         }
     },
     {
-        "instance_name": "DynamicPlanning",
+        "id": "DynamicPlanning",
         "class_type": "OrchestrationPlanning",
         "pref_label": {"en": "Dynamic", "fr": "Dynamique"},
         "comment": {
@@ -153,7 +153,7 @@
         }
     },
     {
-        "instance_name": "EventDriven",
+        "id": "EventDriven",
         "class_type": "OrchestrationPlanning",
         "pref_label": {"en": "Event-driven", "fr": "Piloté par événements"},
         "comment": {
@@ -162,7 +162,7 @@
         }
     },
     {
-        "instance_name": "Runner",
+        "id": "Runner",
         "class_type": "ExecutionControl",
         "pref_label": {"en": "Runner", "fr": "Exécuteur"},
         "comment": {
@@ -171,7 +171,7 @@
         }
     },
     {
-        "instance_name": "ResourceManager",
+        "id": "ResourceManager",
         "class_type": "ExecutionControl",
         "pref_label": {"en": "Resource Manager", "fr": "Gestionnaire de ressources"},
         "comment": {
@@ -180,7 +180,7 @@
         }
     },
     {
-        "instance_name": "Serverless",
+        "id": "Serverless",
         "class_type": "ExecutionControl",
         "pref_label": {"en": "Serverless", "fr": "Sans serveur"},
         "comment": {
@@ -189,7 +189,7 @@
         }
     },
     {
-        "instance_name": "Batch",
+        "id": "Batch",
         "class_type": "DataManagementGranularity",
         "pref_label": {"en": "Batch", "fr": "Batch"},
         "comment": {
@@ -198,7 +198,7 @@
         }
     },
     {
-        "instance_name": "Pipelined",
+        "id": "Pipelined",
         "class_type": "DataManagementGranularity",
         "pref_label": {"en": "Pipelined", "fr": "Pipeline"},
         "comment": {
@@ -207,7 +207,7 @@
         }
     },
     {
-        "instance_name": "Partitioned",
+        "id": "Partitioned",
         "class_type": "DataManagementGranularity",
         "pref_label": {"en": "Partitioned", "fr": "Partitionné"},
         "comment": {
@@ -216,7 +216,7 @@
         }
     },
     {
-        "instance_name": "FileBased",
+        "id": "FileBased",
         "class_type": "DataManagementTransport",
         "pref_label": {"en": "File-based", "fr": "Basé sur fichiers"},
         "comment": {
@@ -225,7 +225,7 @@
         }
     },
     {
-        "instance_name": "StreamBased",
+        "id": "StreamBased",
         "class_type": "DataManagementTransport",
         "pref_label": {"en": "Stream-based", "fr": "Basé sur flux"},
         "comment": {
@@ -234,7 +234,7 @@
         }
     },
     {
-        "instance_name": "LocalFileSystem",
+        "id": "LocalFileSystem",
         "class_type": "DataManagementStorage",
         "pref_label": {"en": "Local File System", "fr": "Système de fichiers local"},
         "comment": {
@@ -243,7 +243,7 @@
         }
     },
     {
-        "instance_name": "SharedFileSystem",
+        "id": "SharedFileSystem",
         "class_type": "DataManagementStorage",
         "pref_label": {"en": "Shared File System", "fr": "Système de fichiers partagé"},
         "comment": {
@@ -252,7 +252,7 @@
         }
     },
     {
-        "instance_name": "DistributedStorage",
+        "id": "DistributedStorage",
         "class_type": "DataManagementStorage",
         "pref_label": {"en": "Distributed Storage", "fr": "Stockage distribué"},
         "comment": {
@@ -261,7 +261,7 @@
         }
     },
     {
-        "instance_name": "ReplicatedStorage",
+        "id": "ReplicatedStorage",
         "class_type": "DataManagementStorage",
         "pref_label": {"en": "Replicated Storage", "fr": "Stockage répliqué"},
         "comment": {
@@ -270,7 +270,7 @@
         }
     },
     {
-        "instance_name": "TransferTasks",
+        "id": "TransferTasks",
         "class_type": "DataManagementStorage",
         "pref_label": {"en": "Transfer Tasks", "fr": "Tâches de transfert"},
         "comment": {
@@ -279,7 +279,7 @@
         }
     },
     {
-        "instance_name": "InMemory",
+        "id": "InMemory",
         "class_type": "DataManagementStorage",
         "pref_label": {"en": "In-Memory", "fr": "En mémoire"},
         "comment": {

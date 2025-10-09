@@ -34,7 +34,9 @@ Describes each main concept (entity) in Exa-AToW.
 Each project area should have its own JSON file using the same structure. This, ech partner should fill the required information.
 
 `parent_class' can be omitted if the entry directly belongs (subclassOf) the class designed in the name of the JSON file.
-  {
+
+```
+{
     "id": "ComputeNode",
     "parent_class": "HPCResource",
     "pref_label": {"en": "Node","fr": "Noeud"},
@@ -45,6 +47,7 @@ Each project area should have its own JSON file using the same structure. This, 
     "equivalent": ONTOLOGY.Name,
   },
 ```
+
 ## Adding properties
 
 TBD

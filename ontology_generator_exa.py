@@ -7,7 +7,6 @@ for HPC, workflows and energy consumption monitoring applications.
 
 import os
 import json
-import yaml
 from pathlib import Path
 from typing import Dict, Optional, Union, List, Any
 
@@ -18,33 +17,17 @@ from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
 import networkx as nx
 from pyvis.network import Network
 
-# ==============================
-# GLOBAL CONFIG LOADING
-# ==============================
-
-def _check_attribute_yaml(value, default):
-        """Return value if it exists and not None, otherwise return default."""
-        return value if value is not None else default
+class ExaAToWOnto:
+    """
+    ExaAToW Ontology Management Class
     
-file_config = "ontology_config.yaml"
-if os.path.exists(file_config):
-    with open(file_config, "r") as file:
-        config = yaml.safe_load(file)
-else:
-    config={}
+    This class provides a structured approach to manage the ExaAToW ontology.
+    """
 
-LANG = _check_attribute_yaml(config.get("default_lang"),"en")
-FILES_DIR = _check_attribute_yaml(config.get("files_dir"),"files")
-DEFAULT_BASE_URI = _check_attribute_yaml(config.get("base_uri"),"https://localhost/myontology#")
-
+    DEFAULT_LANG = "en"
+    FILES_DIR = "files"
+    DEFAULT_BASE_URI = "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#"
    
-class CreateOnto:
-    """
-    Ontology Management Class
-    
-    This class provides a structured approach to manage the ontology.
-    """
-    
     def __init__(self, base_uri: str = DEFAULT_BASE_URI):
         """
         Initialize the ExaAToW ontology manager
@@ -53,11 +36,9 @@ class CreateOnto:
             base_uri (str): Base URI for the ExaAToW ontology namespace
         """
         self.base_uri = base_uri.rstrip() + ("#" if not base_uri.endswith("#") else "")
-        self.ONTO = Namespace(self.base_uri)
+        self.EXAATOW = Namespace(self.base_uri)
         self.graph = Graph()
         self.json_file_mapping = {}
-        self.FILES_DIR = FILES_DIR
-        self.DEFAULT_LANG = LANG
 
         # Determine JSON directory
         self.json_dir = self.FILES_DIR if os.path.exists(self.FILES_DIR) else ""
@@ -68,10 +49,11 @@ class CreateOnto:
         self._bind_namespaces()
         self._init_basic_structure()
 
+        
     def _bind_namespaces(self):
         """Bind all necessary namespaces to the graph"""
         namespaces = {
-            "exa-atow": self.ONTO,
+            "exa-atow": self.EXAATOW,
             "skos": SKOS,
             "owl": OWL,
             "rdf": RDF,
@@ -95,7 +77,7 @@ class CreateOnto:
         
         Args:
             uri_or_name: URI string or local name
-            namespace: Namespace to use for local names (defaults to ONTO)
+            namespace: Namespace to use for local names (defaults to EXAATOW)
             
         Returns:
             URIRef: Resolved URI reference
@@ -121,12 +103,12 @@ class CreateOnto:
                     # Create a Namespace object and use it to append the local part
                     return Namespace(ns_uri)[local]
                 
-            # If prefix not found, warn and use ONTO
-            print(f"Warning: Unknown namespace prefix '{prefix}'. Using ONTO namespace.")
-            return self.ONTO[uri_or_name]
+            # If prefix not found, warn and use EXAATOW
+            print(f"Warning: Unknown namespace prefix '{prefix}'. Using EXAATOW namespace.")
+            return self.EXAATOW[uri_or_name]
 
         # Handle local names
-        ns = namespace or self.ONTO
+        ns = namespace or self.EXAATOW
         return ns[uri_or_name]
 
     
@@ -451,38 +433,6 @@ class CreateOnto:
                 
         return first_node
 
-    def load_restrictions(self, json_file: str) -> None:
-        """
-        Load restrictions from JSON file and apply them
-        
-        Args:
-            json_file: Path to JSON file containing restriction definitions
-        """
-        try:
-            restrictions_data = self._load_json(json_file)
-        except FileNotFoundError:
-            print(f"Warning: Restrictions file '{json_file}' not found. Skipping.")
-            return
-        
-        for entry in restrictions_data:
-            class_name = entry["class_name"]
-            
-            for restriction in entry["restrictions"]:
-                kwargs = {
-                    "class_name": class_name,
-                    "property_name": restriction["property_name"],
-                    "comment": restriction.get("comment")
-                }
-                
-                if "enumeration" in restriction:
-                    kwargs["enumeration"] = restriction["enumeration"]
-                
-                if "all_values_from" in restriction:
-                    xsd_type = restriction["all_values_from"].split(":")[-1]
-                    kwargs["all_values_from"] = getattr(XSD, xsd_type)
-                
-                self.add_restriction_to_class(**kwargs)
-
 
     # ==========================================
     # Instance Management
@@ -564,7 +514,105 @@ class CreateOnto:
 
                     self.add_triple(instance_uri, prop_uri, rdf_value)
 
-    def load_instances(self, json_file: str) -> None:
+
+    # ==========================================
+    # Ontology Initialization
+    # ==========================================
+
+    def _init_basic_structure(self):
+        """Initialize the basic structure of the ExaAToW ontology"""
+
+        # Load main classes
+        self.load_and_add_classes(
+            os.path.join(self.json_dir, "main_classes.json"),
+            None
+        )
+
+        # Load subclasses
+        # dictionary of subclasses and their default parent class
+        subclasses = {
+            "sub_HPC_classes.json": "HPCResource",
+            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
+            "sub_PhysChar_classes.json": "PhysicalCharacteristic",
+            "sub_Job_classes.json": "Job",
+            "sub_Workflow_classes.json": "Workflow"
+        }
+        
+        for sub_file, parent in subclasses.items():
+            self.load_and_add_classes(os.path.join(self.json_dir, sub_file), parent)
+
+        # Load properties
+        list_properties=[
+            "properties_workflow.json",
+            "properties_HPC.json"
+            ]
+        
+        for props in list_properties:
+            self.load_and_add_properties(os.path.join(self.json_dir, props))
+
+        # #############################################    
+        # Global statement of "hasUnit" and "hasValue"
+        # #############################################
+        self.add_property(
+                    property_name="hasValue",
+                    property_type="DatatypeProperty",
+                    range_="XSD:decimal",
+                    comment={"en": "Numeric value.","fr": "Valeur numérique"},
+                    pref_label={"en": "has numeric value","fr": "a valeur numérique"})
+        
+        self.add_property(
+                    property_name="hasUnit",
+                    property_type="ObjectProperty",
+                    range_="XSD:string",
+                    comment={"en": "Unit of measurement.","fr": "Unité de mesure"},
+                    pref_label={"en": "has unit","fr": "a unité"})#
+        ################################################
+        
+        # Load and add restrictions
+        self._load_restrictions("add_restrictions_hasValue_hasUnit.json")
+
+        # Load and add instances
+        list_instances=[
+            "instances_workflow.json"
+            ]
+        for instances in list_instances:
+            self._load_instances(instances)
+
+        
+    def _load_restrictions(self, json_file: str) -> None:
+        """
+        Load restrictions from JSON file and apply them
+        
+        Args:
+            json_file: Path to JSON file containing restriction definitions
+        """
+        try:
+            restrictions_data = self._load_json(json_file)
+        except FileNotFoundError:
+            print(f"Warning: Restrictions file '{json_file}' not found. Skipping.")
+            return
+        
+        for entry in restrictions_data:
+            class_name = entry["class_name"]
+            
+            for restriction in entry["restrictions"]:
+                kwargs = {
+                    "class_name": class_name,
+                    "property_name": restriction["property_name"],
+                    "comment": restriction.get("comment")
+                }
+                
+                if "enumeration" in restriction:
+                    kwargs["enumeration"] = restriction["enumeration"]
+                
+                if "all_values_from" in restriction:
+                    xsd_type = restriction["all_values_from"].split(":")[-1]
+                    kwargs["all_values_from"] = getattr(XSD, xsd_type)
+                
+                self.add_restriction_to_class(**kwargs)
+
+
+    def _load_instances(self, json_file: str) -> None:
         """
         Load instances from JSON file and add them
         
@@ -586,39 +634,6 @@ class CreateOnto:
                 properties = inst.get("properties"),
                 json_path = inst.get("json_path")
             )
-
-
-    # ==========================================
-    # Ontology Initialization
-    # ==========================================
-
-    def _init_basic_structure(self):
-        """Initialize the basic structure of the ontology"""
-
-        # Load main classes
-        self.load_and_add_classes(
-            os.path.join(self.json_dir, "main_classes.json"),
-            None
-        )
-
-        # #############################################    
-        # Global statement of "hasUnit" and "hasValue"
-        # #############################################
-        self.add_property(
-                    property_name="hasValue",
-                    property_type="DatatypeProperty",
-                    range_="XSD:decimal",
-                    comment={"en": "Numeric value.","fr": "Valeur numérique"},
-                    pref_label={"en": "has numeric value","fr": "a valeur numérique"})
-        
-        self.add_property(
-                    property_name="hasUnit",
-                    property_type="ObjectProperty",
-                    range_="XSD:string",
-                    comment={"en": "Unit of measurement.","fr": "Unité de mesure"},
-                    pref_label={"en": "has unit","fr": "a unité"})#
-        ################################################
-        
 
             
     def serialize(self, format: str = "turtle", destination: Optional[str] = None):
@@ -736,8 +751,8 @@ class CreateOnto:
         return self.graph
     
     def get_namespace(self):
-        """Return the ONTO namespace"""
-        return self.ONTO
+        """Return the ExaAToW namespace"""
+        return self.EXAATOW
     
     def create_json_mapping(self) -> Dict[str, Dict[str, Union[str, Dict[str, str]]]]:
         """Create a dictionary mapping JSON files to their corresponding entries"""
@@ -866,52 +881,22 @@ class CreateOnto:
             for id in file_grouping[None]:
                 print(f"  {id}")
 
-#_______________________________________________________________________________
-# Exa-AToW use case
 
+# Example usage
 if __name__ == "__main__":
     # Create an instance of the ontology
-    onto_exaatow = CreateOnto("https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#")
-
-    # Load subclasses
-    # dictionary of subclasses and their default parent class
-    subclasses = {
-            "sub_HPC_classes.json": "HPCResource",
-            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
-            "sub_PhysChar_classes.json": "PhysicalCharacteristic",
-            "sub_Job_classes.json": "Job",
-            "sub_Workflow_classes.json": "Workflow"
-    }
-        
-    for sub_file, parent in subclasses.items():
-        onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, sub_file), parent)
-
-    # Load properties
-    list_properties=[
-            "properties_workflow.json",
-            "properties_HPC.json"
-    ]
-        
-    for props in list_properties:
-        onto_exaatow.load_and_add_properties(os.path.join(onto_exaatow.json_dir, props))
-
-    # Load and add restrictions
-    onto_exaatow.load_restrictions("add_restrictions_hasValue_hasUnit.json")
-
-    # Load and add instances
-    list_instances=[
-            "instances_workflow.json"
-            ]
-    for instances in list_instances:
-        onto_exaatow.load_instances(instances)
-
-    # Print the ontology in Turtle format
-    print(onto_exaatow.serialize(destination="exaatow_ontology.ttl",format="turtle"))
+    onto = ExaAToWOnto()
 
 
     
+    
+    # Print the ontology in Turtle format
+    print(onto.serialize(destination="exaatow_ontology.ttl",format="turtle"))
+
+
 #################################################################################################    
-# Add a custom class
+
+    # Add a custom class
 #    onto.add_class("CustomResource", 
 #                   parent_class="HPCResource",
 #                   pref_label="Custom Resource",
@@ -929,6 +914,42 @@ if __name__ == "__main__":
 #                      "CustomResource",
 #                      properties={"hasCustomProperty": "example_value"})
     
+
+#        Properties that can be added to the call.
+#        - **OWL.ObjectProperty** vs **OWL.DatatypeProperty**: whether the property points to another class (object) or to a literal value (data).
+#        - **OWL.AnnotationProperty**: used only for annotations (metadata).
+#        - **OWL.inverseOf**: links a property to its inverse (e.g., hasPart inverse of isPartOf).
+#        - **OWL.FunctionalProperty**: means a subject can have at most one value for this property.
+#        - **OWL.TransitiveProperty**: if A relates to B and B relates to C, then A relates to C.
+#        - **OWL.SymmetricProperty**: if A relates to B, then B relates to A.
+#        - **OWL.AsymmetricProperty**: if A relates to B, B cannot relate to A.
+#        - **OWL.ReflexiveProperty**: everything is related to itself.
+#        - **OWL.IrreflexiveProperty**: nothing is related to itself.
+#
+#        # Define property type and features
+#           g.add((p, RDF.type, OWL.ObjectProperty))
+#           g.add((p, RDF.type, OWL.FunctionalProperty))
+#           g.add((p, RDF.type, OWL.TransitiveProperty))
+
+
+
+#        # Restrict hasUnit to specific string values
+#        self.add_restriction_to_class(
+#            class_name="MemoryCapacity",
+#            property_name="hasUnit",
+#            enumeration=["GB", "TB", "PB", "MB", "KB"],
+#            comment={"en": "Allowed units for memory capacity"}
+#        )
+
+#        # Restrict hasValue to decimals
+#        self.add_restriction_to_class(
+#            class_name="MemoryCapacity",
+#            property_name="hasValue",
+#            all_values_from=XSD.decimal,
+#            comment={"en": "Memory size numeric value"}
+#        )
+
+
 
         #=+++++++++++++++++++++++++++++++++++++++++++++++++++
 
