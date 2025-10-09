@@ -27,8 +27,8 @@ The ontology defines key concepts for the ExA-AToW ecosystem:
 ## Repository Structure
 This repository contains JSON files that define the ontology structure, each file serving a specific purpose:
 
-
-### Class Definitions
+### Files folder
+#### Class Definitions
 - `main_classes.json` - Core top-level classes of the ontology
 
 - `sub_HPC_classes.json` - Subclasses related to High-Performance Computing concepts
@@ -40,16 +40,16 @@ This repository contains JSON files that define the ontology structure, each fil
 
 > **Note**: Each area of the project should have a JSON file with this structure. Each partner should fill in the required information for their domain.
 
-### Property Definitions
+#### Property Definitions
 - `properties_HPC.json` - Object and data properties specific to HPC domain
 - `properties_workflow.json` - Properties for workflow description and relationships
 - ...
 
-### Instance Data
+#### Instance Data
 - `instances_workflow.json` - Individual instances of workflow entities
 - ....
 
-### Restrictions and Constraints
+#### Restrictions and Constraints
 - `add_restrictions_hasValue_hasUnit.json` - Value restrictions and unit assignments for properties
 
 ---
@@ -163,7 +163,7 @@ onto.visualize_graph(
     height="600px",
     physics=False  # Disable physics for static layout
 ```
-# open the html file with a browser
+ open the html file with a browser
 
 
 
