@@ -109,10 +109,10 @@ The `parent_class` field can be omitted if the entry directly belongs (subClassO
 }
 ```
 ### Steps:
-* Option 1* : Add to existing file
+*Option 1* : Add to existing file
 - Add your property to an existing properties_*.json file if it fits that domain
 
-* Option 2* : Create new file
+*Option 2* : Create new file
 - Create a new file: `properties_<your_field>.json` (in files folder)
 - Add your properties as an array
 - Register the file in `list_properties` in the ontology_generator.py file (`main`)
@@ -142,58 +142,7 @@ To create instances for your area, create a JSON file with each instance defined
 - Validate the JSON syntax before committing
 
 
-    "equivalent": ONTOLOGY.Name,
-  },
 ```
-
-## Adding properties
-
-### Property Definitions
-**Goal**: define relationships between *existing* classes using JSON property definitions.
-For example, connect a `Processor' class to a `DieSize' class using a `hasDieSize' property.
-Example:
-```
-{
-    "id": "hasDieSize",
-    "property_type": "DatatypeProperty",    
-    "domain": "Processor",
-    "range": "DieSize",
-    "pref_label": {
-    "en": "has die size",
-    "fr": "a taille de puce"
-    },
-    "comment": {
-    "en": "Processor has a die size, including a numeric value and a unit (e.g., mm2).",
-    "fr": "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."  
-    }
-}
-```
-
-### Steps:
-**Option 1**: Add to existing file
-Add your property to an existing properties*.json file if it fits that domain.
-
-**Option 2**: Create new file
-- Create a new file: properties_<your_field>.json (in files folder)
-- Add your properties as an array
-- Register the file in list_properties.json in the 'ontology_generator.py' file
-
-## Adding instances
-Only fixed instances will be included in the ontology.
-To create instances for your area, create a JSON file with each instance defined as this (also see files/instances_workflow.json): 
-Example:
-```
-    {
-        "instance_name": "InMemory",
-        "class_type": "DataManagementStorage",
-        "pref_label": {"en": "In-Memory", "fr": "En mémoire"},
-        "comment": {
-            "en": "Data held in RAM.",
-            "fr": "Données conservées en RAM."
-        }
-
-```
-
 
 
 
