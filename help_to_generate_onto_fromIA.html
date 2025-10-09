@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExA-AToW Ontology Visual Guide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        .section {
+            margin-bottom: 50px;
+        }
+        .section-title {
+            font-size: 1.8em;
+            color: #764ba2;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .card-header {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+        .icon-class { background: #ff6b6b; }
+        .icon-property { background: #4ecdc4; }
+        .icon-instance { background: #45b7d1; }
+        .icon-restriction { background: #feca57; }
+        .card-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .card-example {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            margin-top: 15px;
+        }
+        .example-label {
+            font-weight: bold;
+            color: #764ba2;
+            margin-bottom: 5px;
+        }
+        .diagram {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        .diagram-title {
+            text-align: center;
+            font-size: 1.5em;
+            color: #764ba2;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        svg {
+            width: 100%;
+            height: auto;
+        }
+        .node-class {
+            fill: #ff6b6b;
+            stroke: #c92a2a;
+            stroke-width: 2;
+        }
+        .node-value {
+            fill: #feca57;
+            stroke: #f39c12;
+            stroke-width: 2;
+        }
+        .arrow {
+            stroke: #667eea;
+            stroke-width: 2;
+            fill: none;
+            marker-end: url(#arrowhead);
+        }
+        .arrow-label {
+            font-size: 14px;
+            fill: #764ba2;
+            font-weight: bold;
+        }
+        .node-text {
+            font-size: 16px;
+            fill: white;
+            font-weight: bold;
+            text-anchor: middle;
+        }
+        .json-example {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        .json-key { color: #74b9ff; }
+        .json-string { color: #55efc4; }
+        .json-number { color: #ffeaa7; }
+        .highlight-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .highlight-box strong {
+            color: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 ExA-AToW Ontology Visual Guide</h1>
+        <p class="subtitle">Understanding Classes, Properties, Instances & Restrictions</p>
+
+        <!-- Building Blocks Section -->
+        <div class="section">
+            <h2 class="section-title">📦 The 4 Building Blocks</h2>
+            <div class="visual-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="icon icon-class">📋</div>
+                        Classes
+                    </div>
+                    <div class="card-description">
+                        <strong>What:</strong> Concepts or "types of things"<br>
+                        <strong>Think:</strong> Categories, templates<br>
+                        <strong>Example:</strong> Processor, GPU, Memory
+                    </div>
+                    <div class="card-example">
+                        <div class="example-label">Real world:</div>
+                        "Processor" is a CLASS<br>
+                        (like "Car" is a type of vehicle)
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="icon icon-property">🔗</div>
+                        Properties
+                    </div>
+                    <div class="card-description">
+                        <strong>What:</strong> Relationships or attributes<br>
+                        <strong>Think:</strong> Connections, characteristics<br>
+                        <strong>Types:</strong> ObjectProperty, DatatypeProperty
+                    </div>
+                    <div class="card-example">
+                        <div class="example-label">Real world:</div>
+                        "hasProcessor" connects<br>
+                        ComputeNode → Processor
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="icon icon-instance">⭐</div>
+                        Instances
+                    </div>
+                    <div class="card-description">
+                        <strong>What:</strong> Specific, named examples<br>
+                        <strong>Think:</strong> Concrete things that exist<br>
+                        <strong>Example:</strong> OAuth2, SLURM, MPI
+                    </div>
+                    <div class="card-example">
+                        <div class="example-label">Real world:</div>
+                        "OAuth2" is an INSTANCE<br>
+                        of AuthenticationProtocol
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="icon icon-restriction">⚖️</div>
+                        Restrictions
+                    </div>
+                    <div class="card-description">
+                        <strong>What:</strong> Rules for measurements<br>
+                        <strong>Think:</strong> "Must have value + unit"<br>
+                        <strong>Example:</strong> 450 mm² (value + unit)
+                    </div>
+                    <div class="card-example">
+                        <div class="example-label">Real world:</div>
+                        DieSize needs BOTH:<br>
+                        hasValue: 450<br>
+                        hasUnit: "mm²"
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Types Section -->
+        <div class="section">
+            <h2 class="section-title">🔗 Understanding Property Types</h2>
+            <div class="visual-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="icon icon-property">🔗</div>
+                        ObjectProperty
+                    </div>
+                    <div class="card-description">
+                        Connects <strong>two classes</strong> together
+                    </div>
+                    <div class="card-example">
+                        <div class="example-label">Example:</div>
+                        Job <strong>→ executesOn →</strong> ComputeNode<br><br>
+                        Processor <strong>→ hasDieSize →</strong> DieSize
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="icon icon-property">📊</div>
+                        DatatypeProperty
+                    </div>
+                    <div class="card-description">
+                        Connects a class to a <strong>simple value</strong>
+                    </div>
+                    <div class="card-example">
+                        <div class="example-label">Example:</div>
+                        Processor <strong>→ hasCoreCount →</strong> 16<br><br>
+                        Job <strong>→ hasDuration →</strong> 3600
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complete Example Diagram -->
+        <div class="section">
+            <h2 class="section-title">🎨 Complete Example: Processor with Die Size</h2>
+            
+            <div class="diagram">
+                <div class="diagram-title">Visual Representation</div>
+                <svg viewBox="0 0 800 400">
+                    <!-- Define arrowhead -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                            <polygon points="0 0, 10 3, 0 6" fill="#667eea" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Processor Class -->
+                    <rect x="50" y="150" width="180" height="100" class="node-class" rx="10"/>
+                    <text x="140" y="195" class="node-text">Processor</text>
+                    <text x="140" y="220" style="fill: white; font-size: 12px; text-anchor: middle;">(CLASS)</text>
+                    
+                    <!-- hasDieSize Property -->
+                    <path d="M 230 200 L 370 200" class="arrow"/>
+                    <text x="300" y="190" class="arrow-label">hasDieSize</text>
+                    <text x="300" y="215" style="fill: #764ba2; font-size: 12px; text-anchor: middle;">(ObjectProperty)</text>
+                    
+                    <!-- DieSize Class -->
+                    <rect x="370" y="150" width="180" height="100" class="node-class" rx="10"/>
+                    <text x="460" y="195" class="node-text">DieSize</text>
+                    <text x="460" y="220" style="fill: white; font-size: 12px; text-anchor: middle;">(CLASS)</text>
+                    
+                    <!-- hasDieSizeValue -->
+                    <path d="M 460 250 L 460 320" class="arrow"/>
+                    <text x="480" y="285" class="arrow-label">hasValue</text>
+                    
+                    <!-- Value -->
+                    <ellipse cx="460" cy="350" rx="80" ry="40" class="node-value"/>
+                    <text x="460" y="350" class="node-text" style="fill: #2d3436;">450</text>
+                    <text x="460" y="370" style="fill: #2d3436; font-size: 12px; text-anchor: middle;">(numeric value)</text>
+                    
+                    <!-- hasDieSizeUnit -->
+                    <path d="M 550 200 L 650 200" class="arrow"/>
+                    <text x="600" y="190" class="arrow-label">hasUnit</text>
+                    
+                    <!-- Unit -->
+                    <ellipse cx="700" cy="200" rx="80" ry="40" class="node-value"/>
+                    <text x="700" y="200" class="node-text" style="fill: #2d3436;">mm²</text>
+                    <text x="700" y="220" style="fill: #2d3436; font-size: 12px; text-anchor: middle;">(unit)</text>
+                </svg>
+            </div>
+
+            <div class="highlight-box">
+                <strong>💡 Key Point:</strong> DieSize is a CLASS that requires BOTH hasValue (450) and hasUnit (mm²). This is called a "restriction" - it enforces that measurements are complete.
+            </div>
+        </div>
+
+        <!-- JSON Examples Section -->
+        <div class="section">
+            <h2 class="section-title">💻 JSON Code Examples</h2>
+            
+            <h3 style="color: #667eea; margin-top: 30px;">1️⃣ Defining Classes</h3>
+            <p>File: <code>files/sub_HPC_classes.json</code></p>
+            <div class="json-example">
+[
+  {
+    <span class="json-key">"id"</span>: <span class="json-string">"Processor"</span>,
+    <span class="json-key">"parent_class"</span>: <span class="json-string">"HPCResource"</span>,
+    <span class="json-key">"pref_label"</span>: {
+      <span class="json-string">"en"</span>: <span class="json-string">"Processor"</span>,
+      <span class="json-string">"fr"</span>: <span class="json-string">"Processeur"</span>
+    },
+    <span class="json-key">"comment"</span>: {
+      <span class="json-string">"en"</span>: <span class="json-string">"A central processing unit"</span>,
+      <span class="json-string">"fr"</span>: <span class="json-string">"Une unité centrale de traitement"</span>
+    }
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-string">"DieSize"</span>,
+    <span class="json-key">"parent_class"</span>: <span class="json-string">"PhysicalCharacteristic"</span>,
+    <span class="json-key">"pref_label"</span>: {
+      <span class="json-string">"en"</span>: <span class="json-string">"Die Size"</span>,
+      <span class="json-string">"fr"</span>: <span class="json-string">"Taille de puce"</span>
+    }
+  }
+]
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 30px;">2️⃣ Defining Properties</h3>
+            <p>File: <code>files/properties_HPC.json</code></p>
+            <div class="json-example">
+[
+  {
+    <span class="json-key">"id"</span>: <span class="json-string">"hasDieSize"</span>,
+    <span class="json-key">"property_type"</span>: <span class="json-string">"ObjectProperty"</span>,
+    <span class="json-key">"domain"</span>: <span class="json-string">"Processor"</span>,
+    <span class="json-key">"range"</span>: <span class="json-string">"DieSize"</span>,
+    <span class="json-key">"pref_label"</span>: {
+      <span class="json-string">"en"</span>: <span class="json-string">"has die size"</span>,
+      <span class="json-string">"fr"</span>: <span class="json-string">"a taille de puce"</span>
+    }
+  },
+  {
+    <span class="json-key">"id"</span>: <span class="json-string">"hasCoreCount"</span>,
+    <span class="json-key">"property_type"</span>: <span class="json-string">"DatatypeProperty"</span>,
+    <span class="json-key">"domain"</span>: <span class="json-string">"Processor"</span>,
+    <span class="json-key">"range"</span>: <span class="json-string">"xsd:integer"</span>,
+    <span class="json-key">"pref_label"</span>: {
+      <span class="json-string">"en"</span>: <span class="json-string">"has core count"</span>
+    }
+  }
+]
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 30px;">3️⃣ Adding Restrictions</h3>
+            <p>File: <code>files/add_restrictions_hasValue_hasUnit.json</code></p>
+            <div class="json-example">
+[
+  {
+    <span class="json-key">"class_name"</span>: <span class="json-string">"DieSize"</span>,
+    <span class="json-key">"has_value_property"</span>: <span class="json-string">"hasDieSizeValue"</span>,
+    <span class="json-key">"has_unit_property"</span>: <span class="json-string">"hasDieSizeUnit"</span>
+  }
+]
+            </div>
+
+            <h3 style="color: #667eea; margin-top: 30px;">4️⃣ Creating Instances</h3>
+            <p>File: <code>files/instances_authentication.json</code></p>
+            <div class="json-example">
+[
+  {
+    <span class="json-key">"instance_name"</span>: <span class="json-string">"OAuth2"</span>,
+    <span class="json-key">"class_type"</span>: <span class="json-string">"AuthenticationProtocol"</span>,
+    <span class="json-key">"pref_label"</span>: {
+      <span class="json-string">"en"</span>: <span class="json-string">"OAuth 2.0"</span>
+    },
+    <span class="json-key">"comment"</span>: {
+      <span class="json-string">"en"</span>: <span class="json-string">"Industry-standard authorization protocol"</span>
+    }
+  }
+]
+            </div>
+        </div>
+
+        <!-- Quick Decision Tree -->
+        <div class="section">
+            <h2 class="section-title">🤔 Decision Tree: What Should I Create?</h2>
+            <div class="diagram">
+                <svg viewBox="0 0 800 500">
+                    <!-- Start -->
+                    <rect x="300" y="20" width="200" height="60" fill="#667eea" rx="30"/>
+                    <text x="400" y="55" class="node-text">What do I need?</text>
+                    
+                    <!-- Branch 1 -->
+                    <path d="M 350 80 L 150 150" class="arrow"/>
+                    <rect x="50" y="150" width="200" height="80" fill="#ff6b6b" rx="10"/>
+                    <text x="150" y="185" class="node-text">A concept or</text>
+                    <text x="150" y="210" class="node-text">type of thing?</text>
+                    <text x="150" y="180" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create a CLASS</text>
+                    
+                    <!-- Branch 2 -->
+                    <path d="M 400 80 L 400 150" class="arrow"/>
+                    <rect x="300" y="150" width="200" height="80" fill="#4ecdc4" rx="10"/>
+                    <text x="400" y="185" class="node-text">A relationship</text>
+                    <text x="400" y="210" class="node-text">or attribute?</text>
+                    <text x="400" y="180" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create a PROPERTY</text>
+                    
+                    <!-- Branch 3 -->
+                    <path d="M 450 80 L 650 150" class="arrow"/>
+                    <rect x="550" y="150" width="200" height="80" fill="#45b7d1" rx="10"/>
+                    <text x="650" y="185" class="node-text">A specific,</text>
+                    <text x="650" y="210" class="node-text">named example?</text>
+                    <text x="650" y="180" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create an INSTANCE</text>
+                    
+                    <!-- Property sub-branches -->
+                    <path d="M 350 230 L 250 300" class="arrow"/>
+                    <rect x="150" y="300" width="200" height="60" fill="#48dbfb" rx="10"/>
+                    <text x="250" y="325" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: bold;">Links two classes?</text>
+                    <text x="250" y="345" style="fill: white; font-size: 12px; text-anchor: middle;">ObjectProperty</text>
+                    
+                    <path d="M 450 230 L 550 300" class="arrow"/>
+                    <rect x="450" y="300" width="200" height="60" fill="#48dbfb" rx="10"/>
+                    <text x="550" y="325" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: bold;">Links to a value?</text>
+                    <text x="550" y="345" style="fill: white; font-size: 12px; text-anchor: middle;">DatatypeProperty</text>
+                    
+                    <!-- Restriction -->
+                    <path d="M 250 360 L 400 430" class="arrow"/>
+                    <path d="M 550 360 L 400 430" class="arrow"/>
+                    <rect x="250" y="430" width="300" height="60" fill="#feca57" rx="10"/>
+                    <text x="400" y="455" style="fill: #2d3436; font-size: 14px; text-anchor: middle; font-weight: bold;">Does it need value + unit?</text>
+                    <text x="400" y="475" style="fill: #2d3436; font-size: 12px; text-anchor: middle;">Add RESTRICTION</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; margin-top: 50px; padding-top: 30px; border-top: 2px solid #ddd; color: #666;">
+            <p><strong>ExA-AToW Ontology Project</strong> | NumPEX PEPR Initiative</p>
+            <p style="font-size: 0.9em;">For questions, contact the ontology coordinator or open a GitHub issue</p>
+        </div>
+    </div>
+</body>
+</html>
