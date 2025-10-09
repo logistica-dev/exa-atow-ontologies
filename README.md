@@ -142,10 +142,6 @@ To create instances for your area, create a JSON file with each instance defined
 - Validate the JSON syntax before committing
 
 
-```
-
-
-
 ## 📁 Contents
 
 - `exaatow-ontology.ttl`: Main ontology file
@@ -159,17 +155,17 @@ To visualize the ontology:
 - Use WebVOWL (through the ontology webpage generated with Widoco: XXXX)
 - Open the `exaatow-ontology.ttl` with the open-source software Protege.
 - visualization tool in the Python file:
-```
-# After loading the ontology:
 
+# After loading the ontology:
+```
 onto.visualize_graph(
     output_file="my_ontology_visualization.html",
     height="600px",
     physics=False  # Disable physics for static layout
-
+```
 # open the html file with a browser
 
-```
+
 
 
 
