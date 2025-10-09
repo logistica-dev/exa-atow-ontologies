@@ -22,32 +22,126 @@ The ontology defines key concepts for the ExA-AToW ecosystem:
 - Digital Twins: (TBD)
 
 
-## Ontology Construction: For Exa-AToW partners!
+# Ontology Construction: For Exa-AToW partners!
+
+## Repository Structure
+This repository contains JSON files that define the ontology structure, each file serving a specific purpose:
+
+
+### Class Definitions
+- `main_classes.json` - Core top-level classes of the ontology
+
+- `sub_HPC_classes.json` - Subclasses related to High-Performance Computing concepts
+- `sub_PIE_classes.json` - Subclasses for PIE (Performance, Integration, Execution) components
+- `sub_Job_classes.json` - Subclasses defining job-related entities
+- `sub_Workflow_classes.json` - Subclasses for workflow structures and components
+- `sub_PhysChar_classes.json` - Subclasses for physical characteristics
+- ...
+
+> **Note**: Each area of the project should have a JSON file with this structure. Each partner should fill in the required information for their domain.
+
+### Property Definitions
+- `properties_HPC.json` - Object and data properties specific to HPC domain
+- `properties_workflow.json` - Properties for workflow description and relationships
+- ...
+
+### Instance Data
+- `instances_workflow.json` - Individual instances of workflow entities
+- ....
+
+### Restrictions and Constraints
+- `add_restrictions_hasValue_hasUnit.json` - Value restrictions and unit assignments for properties
+
+---
+
+# Updating the Ontology
 
 ![Ontology construction description](resources/ontology_collaboration_description.png)
 
+When modifying the ontology, update the appropriate JSON file(s) based on what you're changing:
 
-### `main_classes.json`
-Describes each main concept (entity) in Exa-AToW. 
+## Adding New Classes
 
-### sub_HPC_classes.json
-  JSON file describing the HPC Resources main class. 
-  Each area of the project should ahve a JSON filw with this information.
+Each project area should have its own JSON file using the same structure.
 
-#### Entry example
-Each project area should have its own JSON file using the same structure. This, ech partner should fill the required information.
-
-`parent_class' can be omitted if the entry directly belongs (subclassOf) the class designed in the name of the JSON file.
-
-```
+### Entry Example
+The `parent_class` field can be omitted if the entry directly belongs (subClassOf) to the class designated in the name of the JSON file.
+```json
 {
     "id": "ComputeNode",
     "parent_class": "HPCResource",
-    "pref_label": {"en": "Node","fr": "Noeud"},
+    "pref_label": {"en": "Node", "fr": "Noeud"},
     "comment": {
        "en": "A physical or virtual server that executes computational jobs within a partition.",
        "fr": "Un serveur physique ou virtuel qui exécute des tâches de calcul au sein d'une partition."
     },
+    "link_html": "https://wiki.external.link" 
+    "equivalent": "ONTOLOGY.Name"
+}
+
+```
+
+### Steps:
+- Edit the relevant `main_classes.json` or `sub_*_classes.json` file
+- Add your class definition following the structure above
+- Validate the JSON syntax before committing
+
+## Adding Properties
+
+The goal is to define relationships between existing classes using JSON property definitions. For example, connect a `Processor` class to a `DieSize` class using a `hasDieSize` property.
+
+### Property Example
+The `parent_class` field can be omitted if the entry directly belongs (subClassOf) to the class designated in the name of the JSON file.
+```json
+{
+    "id": "hasDieSize",
+    "property_type": "DatatypeProperty",    
+    "domain": "Processor",
+    "range": "DieSize",
+    "pref_label": {
+        "en": "has die size",
+        "fr": "a taille de puce"
+    },
+    "comment": {
+        "en": "Processor has a die size, including a numeric value and a unit (e.g., mm²).",
+        "fr": "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm²)."  
+    }
+}
+```
+### Steps:
+* Option 1* : Add to existing file
+- Add your property to an existing properties_*.json file if it fits that domain
+
+* Option 2* : Create new file
+- Create a new file: `properties_<your_field>.json` (in files folder)
+- Add your properties as an array
+- Register the file in `list_properties` in the ontology_generator.py file (`main`)
+
+
+## Adding Instances
+
+Only fixed instances will be included in the ontology.
+To create instances for your area, create a JSON file with each instance defined as follows (see `files/instances_workflow.json` for reference):
+
+### Instance Example
+```json
+
+{
+    "instance_name": "InMemory",
+    "class_type": "DataManagementStorage",
+    "pref_label": {"en": "In-Memory", "fr": "En mémoire"},
+    "comment": {
+        "en": "Data held in RAM.",
+        "fr": "Données conservées en RAM."
+    }
+}
+```
+### Steps:
+- Modify `instances_workflow.json` or create a new instances file
+- Add your instance definitions following the structure above
+- Validate the JSON syntax before committing
+
+
     "equivalent": ONTOLOGY.Name,
   },
 ```
@@ -101,6 +195,8 @@ Example:
 ```
 
 
+
+
 ## 📁 Contents
 
 - `exaatow-ontology.ttl`: Main ontology file
@@ -112,6 +208,7 @@ Example:
 To visualize the ontology:
 
 - Use WebVOWL (through the ontology webpage generated with Widoco: XXXX)
+- Open the `exaatow-ontology.ttl` with the open-source software Protege.
 - visualization tool in the Python file:
 ```
 # After loading the ontology:
@@ -125,16 +222,6 @@ onto.visualize_graph(
 
 ```
 
-
-## Ontology Concepts
-
-Key classes include:
-
-    HPCResource → CPU, GPU, RAM, SSD, etc.
-
-    AuthenticationEntity → User, AccessToken, Session
-
-    DieSize, Workload, MemoryCapacity as datatype-linked concepts
 
 
 
