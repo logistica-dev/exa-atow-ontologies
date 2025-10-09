@@ -1,168 +1,974 @@
 [
-  {
-    "id": "PowerUsageEffectiveness",
-    "pref_label": {
-      "en": "Power Usage Effectiveness (PUE)",
-      "fr": "Efficacité d'utilisation de l'énergie (PUE)"
+    {
+        "id": "Classe",
+        "parent_class": "is a",
+        "pref_label": {
+            "en": "Terme (en)",
+            "fr": "Terme (fr)"
+        },
+        "comment": {
+            "en": "Définition (en)",
+            "fr": "Définition (fr)"
+        }
+},
+ 
+        "id": "adpe",
+        "parent_class": "environmentalImpact",
+        "pref_label": {
+            "en": "ADPE",
+            "fr": "ADPE"
+        },
+        "comment": {
+            "en": "Abiotic resources depletion",
+            "fr": "Déplétion des ressources abiotiques"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Industry standard metric for measuring data center energy efficiency, defined as the ratio of total facility energy to IT equipment energy.",
-	"fr": "Indicateur standard pour mesurer l'efficacité énergétique d'un centre de données, défini comme le rapport entre énergie injectée dans un parc de serveur, et l'énergie réellement utilisée pour alimenter les serveurs."
-    }
-  },
-  {
-    "id": "ImpactFactor",
-    "pref_label": {
-      "en": "Impact Factor",
-      "fr": "Facteur d'impact"
+    {
+        "id": "adpeFactor",
+        "parent_class": "electricalImpactFactor",
+        "pref_label": {
+            "en": "ADPE factor",
+            "fr": "facteur d'ADPE"
+        },
+        "comment": {
+            "en": "Electrical impact factor regarding the abiotic resources depletion",
+            "fr": "Facteur d'impact électrique lié à la déplétion des ressources abiotiques"
+        }
     },
-    "comment": {
-      "en": "Multiplicative coefficient used to compute the environmental impact associated with processor attributes like die size.",
-	"fr": "Coefficient multiplicatif utilisé pour calculer l’impact environnemental lié aux caractéristiques du processeur comme la taille de la puce."
-    }
-  },
-  {
-    "id": "AllocationMethod",
-    "pref_label": {
-      "en": "Allocation Method",
-      "fr": "Méthode d’allocation"
+    {
+        "id": "attributionMethod",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "attribution method",
+            "fr": "méthode d'attribution"
+        },
+        "comment": {
+            "en": "Fonction used to associate a job with its embedded impacts",
+            "fr": "Fonction utilisée pour attribuer ses impacts intégrés à une tâche en particulier "
+        }
     },
-    "comment": {
-      "en": "Method or function to distribute embodied impacts across multiple jobs or workflows.",
-      "fr": "Méthode ou fonction permettant de répartir les impacts incorporés entre plusieurs tâches ou workflows."
-    }
-  },
-  {
-    "id": "EnergyConsumption",
-    "pref_label": {
-      "en": "Energy Consumption",
-      "fr": "Consommation d’énergie"
+    {
+        "id": "battery",
+        "parent_class": "thing",
+        "pref_label": {
+            "en": "battery",
+            "fr": "batterie"
+        },
+        "comment": {
+            "en": "Electric battery",
+            "fr": "Batterie électrique"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Measurement or estimation of the energy consumed by computing and supporting hardware.",
-      "fr": "Mesure ou estimation de l'énergie consommée par le matériel informatique et les équipements de support."
-    }
-  },
-  {
-    "id": "EnergyEfficiencyMetric",
-    "pref_label": {
-      "en": "Energy Efficiency Metric",
-      "fr": "Indicateur d'efficacité énergétique"
+    {
+        "id": "batteryWeightFactor",
+        "parent_class": "impactFactor",
+        "pref_label": {
+            "en": "battery weight factor",
+            "fr": "facteur du poids de la batterie"
+        },
+        "comment": {
+            "en": "Ratio between a battery's weight and its corresponding embodied impacts",
+            "fr": "Rapport entre le poids d'une batterie et la partie correspondante de ses impacts embarqués"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Metric for evaluating how efficiently energy is used during HPC operations.",
-      "fr": "Indicateur permettant d’évaluer l’efficacité de l’utilisation de l’énergie pendant les opérations de calcul haute performance."
-    }
-  },
-  {
-    "id": "EnvironmentalImpact",
-    "pref_label": {
-      "en": "Environmental Impact",
-      "fr": "Impact environnemental"
+    {
+        "id": "chassis",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "chassis",
+            "fr": "châssis"
+        },
+        "comment": {
+            "en": "",
+            "fr": "Armature ou boîtier principal qui loge et protège les composants internes d'un ordinateur"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Quantitative or qualitative assessment of the environmental effects of HPC systems throughout their lifecycle.",
-      "fr": "Évaluation quantitative ou qualitative des effets environnementaux des systèmes HPC tout au long de leur cycle de vie."
-    }
-  },
-  {
-    "id": "EmbodiedImpact",
-    "pref_label": {
-      "en": "Embodied Impact",
-      "fr": "Impact incorporé"
+    {
+        "id": "cluster",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "cluster",
+            "fr": "partition"
+        },
+        "comment": {
+            "en": "Set of computing nodes with similar characteristics",
+            "fr": "Ensemble de nœuds de calcul ayant les mêmes caractéristiques"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Environmental impact associated with manufacturing, transport, and deployment of HPC hardware.",
-      "fr": "Impact environnemental lié à la fabrication, au transport et au déploiement du matériel HPC."
-    }
-  },
-  {
-    "id": "UsageImpact",
-    "pref_label": {
-      "en": "Usage Impact",
-      "fr": "Impact en usage"
+    {
+        "id": "component",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "component",
+            "fr": "composants"
+        },
+        "comment": {
+            "en": "Elements part of a server",
+            "fr": "Éléments composants un serveur"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Environmental impact from the operational phase of HPC systems, including energy usage and emissions.",
-      "fr": "Impact environnemental lié à la phase d’utilisation des systèmes HPC, y compris la consommation d’énergie et les émissions."
-    }
-  },
-  {
-    "id": "WorkloadEstimator",
-    "pref_label": {
-      "en": "Workload Estimator",
-      "fr": "Estimateur de charge"
+    {
+        "id": "coolingCapacity",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "cooling capacity",
+            "fr": "capacité de refroidissement"
+        },
+        "comment": {
+            "en": "Efficiency of the park's cooling system",
+            "fr": "Efficacité du système de refroidissement d'un parc"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Tool or method for estimating and analyzing the workload executed on HPC systems.",
-      "fr": "Outil ou méthode permettant d’estimer et d’analyser la charge de travail exécutée sur les systèmes HPC."
-    }
-  },
-  {
-    "id": "LifetimeEstimator",
-    "pref_label": {
-      "en": "Lifetime Estimator",
-      "fr": "Estimateur de durée de vie"
+    {
+        "id": "coolingPower",
+        "parent_class": "thing",
+        "pref_label": {
+            "en": "cooling power",
+            "fr": "puissance de refroidissement"
+        },
+        "comment": {
+            "en": "Cooling power",
+            "fr": "Puissance de refroidissement"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Tool or model for predicting the operational lifetime of hardware components.",
-      "fr": "Outil ou modèle permettant de prédire la durée de vie opérationnelle des composants matériels."
-    }
-  },
-  {
-    "id": "PerformanceIndicator",
-    "pref_label": {
-      "en": "Performance Indicator",
-      "fr": "Indicateur de performance"
+    {
+        "id": "coolingSystem",
+        "parent_class": "thing",
+        "pref_label": {
+            "en": "cooling system",
+            "fr": "système de refroidissement"
+        },
+        "comment": {
+            "en": "Cooling system of a park",
+            "fr": "Système de refroidissement d'un parc"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Metric used to evaluate the computational performance of HPC systems.",
-      "fr": "Indicateur permettant d’évaluer la performance de calcul des systèmes HPC."
-    }
-  },
-  {
-    "id": "CarbonFootprint",
-    "pref_label": {
-      "en": "Carbon Footprint",
-      "fr": "Empreinte carbone"
+    {
+        "id": "cores",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "cores",
+            "fr": "cœur"
+        },
+        "comment": {
+            "en": "The number of physical cores of the processor",
+            "fr": "Le nombre de cœurs physiques du processeur"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Measurement of the greenhouse gas emissions associated with HPC system usage.",
-      "fr": "Mesure des émissions de gaz à effet de serre liées à l’utilisation des systèmes HPC."
-    }
-  },
-  {
-    "id": "ResourceUtilization",
-    "pref_label": {
-      "en": "Resource Utilization",
-      "fr": "Utilisation des ressources"
+    {
+        "id": "cpu",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "CPU",
+            "fr": "CPU"
+        },
+        "comment": {
+            "en": "CPU",
+            "fr": "CPU"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Indicates how effectively computing resources are being used over time.",
-      "fr": "Indique dans quelle mesure les ressources informatiques sont utilisées efficacement au fil du temps."
-    }
-  },
-  {
-    "id": "ThermalEstimator",
-    "pref_label": {
-      "en": "Thermal Estimator",
-      "fr": "Estimateur thermique"
+    {
+        "id": "cpuUsage",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "CPU usage",
+            "fr": "charge CPU"
+        },
+        "comment": {
+            "en": "Indicates the amount of load handled by individual processor cores to run various programs on a computer",
+            "fr": "Intensité avec laquelle le processeur traite les programmes et processus en cours d'exécution"
+        }
     },
-    "parent_class": "ProcessorIndicatorEstimator",
-    "comment": {
-      "en": "Tool for estimating heat production and cooling requirements of HPC components.",
-      "fr": "Outil permettant d’estimer la production de chaleur et les besoins en refroidissement des composants HPC."
+    {
+        "id": "data",
+        "parent_class": "thing",
+        "pref_label": {
+            "en": "data",
+            "fr": "donnée"
+        },
+        "comment": {
+            "en": "Data used in the computation of an estimation",
+            "fr": "Donnée utilisée dans le calcul d'une estimation"
+        }
+    },
+    {
+        "id": "density",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "density",
+            "fr": "densité"
+        },
+        "comment": {
+            "en": "Memory density of the individual chips on the module",
+            "fr": "Densité de mémoire des puces individuelle du module"
+        }
+    },
+    {
+        "id": "dieSize",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "die size",
+            "fr": "taille du die"
+        },
+        "comment": {
+            "en": "The surface area of the processor's die. Used to determine its embodied impacts",
+            "fr": "La surface du die d'un processeur. Utilisé pour déterminer les impacts embarqués du processeur"
+        }
+    },
+    {
+        "id": "dieSizeFactor",
+        "parent_class": "impactFactor",
+        "pref_label": {
+            "en": "die size factor",
+            "fr": "facteur de surface du die"
+        },
+        "comment": {
+            "en": "Ratio between a die's size and its corresponding embodied impacts",
+            "fr": "Rapport entre la surface d'un die et la partie correspondante de ses impacts embarqués"
+        }
+    },
+    {
+        "id": "duration",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "duration",
+            "fr": "durée"
+        },
+        "comment": {
+            "en": "Duration of a job",
+            "fr": "Durée d'une tâche"
+        }
+    },
+    {
+        "id": "electricPower",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "electric power",
+            "fr": "puissance électrique"
+        },
+        "comment": {
+            "en": "Electric power of a device",
+            "fr": "Puissance électrique d'un appareil"
+        }
+    },
+    {
+        "id": "electricalConsumptionPerGigabyte",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "electrical consumption per gigabyte",
+            "fr": "consommation électrique par gigabyte"
+        },
+        "comment": {
+            "en": "Elecrical consumption of a memory in function of its capacity in gigabytes",
+            "fr": "Consommation électrique d'une mémoire en fonction de sa capacité en gigabytes"
+        }
+    },
+    {
+        "id": "electricalImpactFactor",
+        "parent_class": "impactFactor",
+        "pref_label": {
+            "en": "electrical impact factor",
+            "fr": "facteur d'impact électrique"
+        },
+        "comment": {
+            "en": "Set of the environmental impacts (ADPE, GWP, PEC) produced by a park consuming a kWh",
+            "fr": "Ensemble des impacts environnementaux (ADPE, GWP et PEC) associés à la consommation d'un kWh par un parc"
+        }
+    },
+    {
+        "id": "embeddedImpact",
+        "parent_class": "lifeCycleImpactType",
+        "pref_label": {
+            "en": "embedded impact",
+            "fr": "impact intégré"
+        },
+        "comment": {
+            "en": "Part of the embodied impacts attributed to a job using an attribution method",
+            "fr": "La partie des impacts embarqués attribués à une tâche, via une méthode d'attribution"
+        }
+    },
+    {
+        "id": "embodiedImpact",
+        "parent_class": "lifeCycleImpactType",
+        "pref_label": {
+            "en": "embodied impact",
+            "fr": "impact embarqué / impact gris (https://fr.wikipedia.org/wiki/%C3%89nergie_grise)"
+        },
+        "comment": {
+            "en": "Impacts of the extraction, production, distribution and end-of-life phases of an object",
+            "fr": "Les impact des phases d'extraction, de production, de distribution et de fin de vie d'un objet"
+        }
+    },
+    {
+        "id": "engravingProcessThickness",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "engraving process thickness",
+            "fr": "épaisseur de gravure"
+        },
+        "comment": {
+            "en": "Engraving process thickness",
+            "fr": "Épaisseur de gravure"
+        }
+    },
+    {
+        "id": "environmentalImpact",
+        "parent_class": "estimation",
+        "pref_label": {
+            "en": "environmental impact",
+            "fr": "impact environnemental"
+        },
+        "comment": {
+            "en": "Environmental impact category, among ADPE, PEC or GWP",
+            "fr": "Catégorie d'impact environnemental, parmi : déplétion des ressources abiotiques, consommation d'énergie primaire, potentiel de réchauffement climatique"
+        }
+    },
+    {
+        "id": "estimation",
+        "parent_class": "thing",
+        "pref_label": {
+            "en": "estimation",
+            "fr": "estimation"
+        },
+        "comment": {
+            "en": "Calculated estimation",
+            "fr": "Estimation calculée"
+        }
+    },
+    {
+        "id": "extrapolationFactor",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "extrapolation factor",
+            "fr": "facteur d'extrapolation"
+        },
+        "comment": {
+            "en": "",
+            "fr": "Technique consistant à projeter les mesures d'impacts environnementaux obtenues sur un échantillon réduit (par exemple, un sous-ensemble de serveurs ou une période de temps limitée) pour estimer l'impact sur l'ensemble du système"
+        }
+    },
+    {
+        "id": "gCO2eq",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "gCO2eq",
+            "fr": "gCO2eq"
+        },
+        "comment": {
+            "en": "Equivalents of kilograms of CO2",
+            "fr": "Gramme équivalent C02"
+        }
+    },
+    {
+        "id": "gigabytes",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "gigabytes",
+            "fr": "gigabytes"
+        },
+        "comment": {
+            "en": "Gigabytes, unit of digital information corresponding to a million bytes",
+            "fr": "Gigabytes, unité de mesure de stockage en informatique équivalent à un milliard de bytes"
+        }
+    },
+    {
+        "id": "gpu",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "GPU",
+            "fr": "GPU"
+        },
+        "comment": {
+            "en": "GPU",
+            "fr": "GPU"
+        }
+    },
+    {
+        "id": "gram",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "gram",
+            "fr": "gramme"
+        },
+        "comment": {
+            "en": "Gram",
+            "fr": "Gramme"
+        }
+    },
+    {
+        "id": "gSbeq",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "gSbeq",
+            "fr": "gSbeq"
+        },
+        "comment": {
+            "en": "Equivalents of kilograms of antimony",
+            "fr": "Gramme équivalent antimoine"
+        }
+    },
+    {
+        "id": "gwp",
+        "parent_class": "environmentalImpact",
+        "pref_label": {
+            "en": "GWP",
+            "fr": "GWP"
+        },
+        "comment": {
+            "en": "Global Warming Potential",
+            "fr": "Potentiel de réchauffement climatique"
+        }
+    },
+    {
+        "id": "gwpFactor",
+        "parent_class": "electricalImpactFactor",
+        "pref_label": {
+            "en": "GWP factor",
+            "fr": "facteur de GWP"
+        },
+        "comment": {
+            "en": "Electrical impact factor regarding the global warming potential",
+            "fr": "Facteur d'impact électrique lié au potentiel de réchauffement climatique"
+        }
+    },
+    {
+        "id": "hdd",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "HDD",
+            "fr": "HDD"
+        },
+        "comment": {
+            "en": "HDD",
+            "fr": "HDD"
+        }
+    },
+    {
+        "id": "idleElectricPower",
+        "parent_class": "electricPower",
+        "pref_label": {
+            "en": "idle electric power",
+            "fr": "puissance électrique au repos"
+        },
+        "comment": {
+            "en": "Electric power of an idle device",
+            "fr": "Puissance électrique d'un appareil inactif"
+        }
+    },
+    {
+        "id": "impactAssessedObject",
+        "parent_class": "thing",
+        "pref_label": {
+            "en": "impact assessed object",
+            "fr": "objet à impact évalué"
+        },
+        "comment": {
+            "en": "Object whose ecological impact is estimated",
+            "fr": "Objet pour lequel on estime les impacts écologiques"
+        }
+    },
+    {
+        "id": "impactFactor",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "impact factor",
+            "fr": "facteur d'impact"
+        },
+        "comment": {
+            "en": "Ratio between a measure (for example, the size of a die) and the associated environmental impacts",
+            "fr": "Rapport entre une donnée (par exemple, la taille d'un die) et les impacts environnementaux associés"
+        }
+    },
+    {
+        "id": "instantElectricPower",
+        "parent_class": "electricPower",
+        "pref_label": {
+            "en": "instant electric power",
+            "fr": "puissance électrique instantanée"
+        },
+        "comment": {
+            "en": "Electric power of a device at a given moment",
+            "fr": "Puissance électrique d'un appareil à un instant donné"
+        }
+    },
+    {
+        "id": "job",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "job",
+            "fr": "tâche"
+        },
+        "comment": {
+            "en": "Task, computation executed on a server park, on a given number of processors, with a given RAM use",
+            "fr": "Tâche, calcul effectué dans un parc de serveur, sur un certain nombre de CPU/GPU, avec une certaine utilisation de la RAM"
+        }
+    },
+    {
+        "id": "joules",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "joules",
+            "fr": "joules"
+        },
+        "comment": {
+            "en": "Joules, unit of primary energy",
+            "fr": "Joules, unité de mesure de l'énergie primaire"
+        }
+    },
+    {
+        "id": "kgCO2eqPerkWh",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "kgCO2eq/kWh",
+            "fr": "kgCO2eq/kWh"
+        },
+        "comment": {
+            "en": "Equivalents of kilograms of C02 per kilowatt-hour",
+            "fr": "Kilogramme équivalent C02 par kilowatt-heure"
+        }
+    },
+    {
+        "id": "kgSbeqPerkWh",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "kgSbeq/kWh",
+            "fr": "kgSbeq/kWh"
+        },
+        "comment": {
+            "en": "Equivalents of kilograms of antimony per kilowatt-hour",
+            "fr": "Kilogramme equivalent antimoine par kilowatt-heure"
+        }
+    },
+    {
+        "id": "kWhPerGB",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "kWh/GB",
+            "fr": "kWh/GB"
+        },
+        "comment": {
+            "en": "Kilowatt-hours per gigabytes",
+            "fr": "Kilowatt-heures par gigabyte"
+        }
+    },
+    {
+        "id": "layers",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "layers",
+            "fr": "couches"
+        },
+        "comment": {
+            "en": "Number of layers of an integrated circuit",
+            "fr": "Nombre de couches d'un circuit intégré"
+        }
+    },
+    {
+        "id": "lifeCycleImpactType",
+        "parent_class": "estimation",
+        "pref_label": {
+            "en": "lifecycle impact",
+            "fr": "impact du cycle de vie"
+        },
+        "comment": {
+            "en": "Impact type among embodied impact, usage impact and embedded impact",
+            "fr": "Type d'impact, parmi les impacts de la phase d'usage, les impacts embarqués, ou les impacts intégrés"
+        }
+    },
+    {
+        "id": "lifetime",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "lifetime",
+            "fr": "durée de vie"
+        },
+        "comment": {
+            "en": "lifetime of an object",
+            "fr": "Durée de vie d'un objet"
+        }
+    },
+    {
+        "id": "manufacturer",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "manufacturer",
+            "fr": "fabricant"
+        },
+        "comment": {
+            "en": "Manufacturer",
+            "fr": "Fabricant de l'objet"
+        }
+    },
+    {
+        "id": "memorySize",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "memory size",
+            "fr": "taille de mémoire"
+        },
+        "comment": {
+            "en": "Capacity of a memory",
+            "fr": "Capacité d'une mémoire"
+        }
+    },
+    {
+        "id": "MJPerkWh",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "MJ/kWh",
+            "fr": "MJ/kWh"
+        },
+        "comment": {
+            "en": "Megajoules per kilowatt-hour",
+            "fr": "Megajoules par kilowatt-heures"
+        }
+    },
+    {
+        "id": "motherboard",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "motherboard",
+            "fr": "carte-mère"
+        },
+        "comment": {
+            "en": "Motherboard",
+            "fr": "Carte-mère"
+        }
+    },
+    {
+        "id": "nodesCount",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "nodes count",
+            "fr": "nombre de nœuds"
+        },
+        "comment": {
+            "en": "Number of nodes of a cluster for a job",
+            "fr": "Nombre de nœuds d'un cluster pour l'exécution d'une tâche"
+        }
+    },
+    {
+        "id": "park",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "park",
+            "fr": "parc"
+        },
+        "comment": {
+            "en": "Server park, datacenter",
+            "fr": "Parc de serveurs, datacenter"
+        }
+    },
+    {
+        "id": "peakElectricPower",
+        "parent_class": "electricPower",
+        "pref_label": {
+            "en": "peak electric power",
+            "fr": "puissance électrique maximale"
+        },
+        "comment": {
+            "en": "Maximal electric power of a device",
+            "fr": "Puissance électrique maximale d'un appareil"
+        }
+    },
+    {
+        "id": "pec",
+        "parent_class": "environmentalImpact",
+        "pref_label": {
+            "en": "PEC",
+            "fr": "PEC"
+        },
+        "comment": {
+            "en": "Primary Energy Consumption",
+            "fr": "Consommation d'énergie primaire"
+        }
+    },
+    {
+        "id": "pecFactor",
+        "parent_class": "electricalImpactFactor",
+        "pref_label": {
+            "en": "PEC factor",
+            "fr": "facteur de PEC"
+        },
+        "comment": {
+            "en": "Electrical impact factor associated with primary energy consumption",
+            "fr": "Facteur d'impact électrique lié à la consommation d'énergie primaire"
+        }
+    },
+    {
+        "id": "percentage",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "percentage",
+            "fr": "pourcentage"
+        },
+        "comment": {
+            "en": "Percentage",
+            "fr": "Pourcentage"
+        }
+    },
+    {
+        "id": "powerMeasures",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "power measures",
+            "fr": "mesures de puissance"
+        },
+        "comment": {
+            "en": "Measurements of the processor's power consumption depending on its usage percentage",
+            "fr": "Mesures de la consommation électrique d'un processeur en fonction de son taux de charge"
+        }
+    },
+    {
+        "id": "powerSupply",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "power supply",
+            "fr": "alimentation"
+        },
+        "comment": {
+            "en": "An object's power supply",
+            "fr": "Alimentation électrique d'un objet"
+        }
+    },
+    {
+        "id": "processorFamily",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "processor family",
+            "fr": "famille du processeur"
+        },
+        "comment": {
+            "en": "The family of the processor",
+            "fr": "La famille du processeur"
+        }
+    },
+    {
+        "id": "processorModel",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "processor model",
+            "fr": "modèle de processeur"
+        },
+        "comment": {
+            "en": "A processor's model",
+            "fr": "Le nom d'un modèle de processeur présent dans la base de donnée"
+        }
+    },
+    {
+        "id": "processorModelRange",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "processor model range",
+            "fr": "gamme de modèles du processeur"
+        },
+        "comment": {
+            "en": "The model range of a processor",
+            "fr": "La gamme de modèles d'un processeur"
+        }
+    },
+    {
+        "id": "pue",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "PUE",
+            "fr": "PUE"
+        },
+        "comment": {
+            "en": "Power Usage Effectiveness - indicator mesuring a park's energetic efficiency ",
+            "fr": "Power Usage Effectiveness - indicateur permettant de mesurer l'efficacité énergétique d'un parc"
+        }
+    },
+    {
+        "id": "ram",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "RAM",
+            "fr": "RAM"
+        },
+        "comment": {
+            "en": "",
+            "fr": "RAM"
+        }
+    },
+    {
+        "id": "ramSize",
+        "parent_class": "memorySize",
+        "pref_label": {
+            "en": "RAM size",
+            "fr": "taille de la RAM"
+        },
+        "comment": {
+            "en": "Size of a RAM",
+            "fr": "Capacité de la RAM"
+        }
+    },
+    {
+        "id": "ramSizeFactor",
+        "parent_class": "impactFactor",
+        "pref_label": {
+            "en": "RAM size factor",
+            "fr": "facteur de la taille de RAM"
+        },
+        "comment": {
+            "en": "Ratio between a RAM's size and its corresponding embodied impacts",
+            "fr": "Rapport entre la taille d'une RAM et la partie correspondante de ses impacts embarqués"
+        }
+    },
+    {
+        "id": "releaseDateRange",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "release date range",
+            "fr": "plage de dates de sortie"
+        },
+        "comment": {
+            "en": "The date range in which the processor was released",
+            "fr": "L'intervalle de dates pendant lequel le processeur est sorti"
+        }
+    },
+    {
+        "id": "server",
+        "parent_class": "thing",
+        "pref_label": {
+            "en": "server",
+            "fr": "serveur"
+        },
+        "comment": {
+            "en": "Server",
+            "fr": "Serveur"
+        }
+    },
+    {
+        "id": "serversCount",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "servers count",
+            "fr": "nombre de serveurs"
+        },
+        "comment": {
+            "en": "Number of servers in a cluster",
+            "fr": "Nombre de serveurs dans une partition"
+        }
+    },
+    {
+        "id": "ssd",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "SSD",
+            "fr": "SSD"
+        },
+        "comment": {
+            "en": "Solid State Drive",
+            "fr": "SSD"
+        }
+    },
+    {
+        "id": "surfaceFactor",
+        "parent_class": "impactFactor",
+        "pref_label": {
+            "en": "surface factor",
+            "fr": "facteur de la surface"
+        },
+        "comment": {
+            "en": "Ratio between an object's surface and its corresponding embodied impacts",
+            "fr": "Rapport entre la surface d'un objet et la partie correspondante de ses impacts embarqués"
+        }
+    },
+    {
+        "id": "thermalDesignPower",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "thermal design power",
+            "fr": "enveloppe thermique"
+        },
+        "comment": {
+            "en": "The `Thermal Design Power` of the processor, used to determine its instant power consumption",
+            "fr": "L'enveloppe thermique d'un processeur, utilisée pour déterminée sa consommation électrique instantanée"
+        }
+    },
+    {
+        "id": "thing",
+        "parent_class": "",
+        "pref_label": {
+            "en": "thing",
+            "fr": "objet"
+        },
+        "comment": {
+            "en": "Thing",
+            "fr": "Objet"
+        }
+    },
+    {
+        "id": "unit",
+        "parent_class": "thing",
+        "pref_label": {
+            "en": "unit",
+            "fr": "unité"
+        },
+        "comment": {
+            "en": "Measure unit",
+            "fr": "Unité de mesure"
+        }
+    },
+    {
+        "id": "units",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "units",
+            "fr": "unités"
+        },
+        "comment": {
+            "en": "Number of units of an object",
+            "fr": "Nombre d'unités d'un objet"
+        }
+    },
+    {
+        "id": "usageImpact",
+        "parent_class": "lifeCycleImpactType",
+        "pref_label": {
+            "en": "usage impact",
+            "fr": "impact de la phase d'usage"
+        },
+        "comment": {
+            "en": "Impacts of an object's usage phase",
+            "fr": "Impacts de la phase d'usage d'un objet"
+        }
+    },
+    {
+        "id": "watt-hour",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "watt-hour",
+            "fr": "watt-heure"
+        },
+        "comment": {
+            "en": "Kilowatt-hour, unit of energy equals to 3600J",
+            "fr": "Kilowatt-heure, unité de mesure d'énergie valant 3600J"
+        }
+    },
+    {
+        "id": "watts",
+        "parent_class": "unit",
+        "pref_label": {
+            "en": "watts",
+            "fr": "watts"
+        },
+        "comment": {
+            "en": "Watts, unit of power",
+            "fr": "Watts, unité de puissance"
+        }
+    },
+    {
+        "id": "weight",
+        "parent_class": "data",
+        "pref_label": {
+            "en": "weight",
+            "fr": "poids"
+        },
+        "comment": {
+            "en": "An object's weight",
+            "fr": "Le poids d'un objet"
+        }
     }
-  }
 ]
