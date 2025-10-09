@@ -22,7 +22,11 @@ The ontology defines key concepts for the ExA-AToW ecosystem:
 - Digital Twins: (TBD)
 
 
-## Ontology Contruction: For Exa-AToW partners! 
+## Ontology Construction: For Exa-AToW partners!
+
+![Ontology construction description](resources/ontology_collaboration_description.png)
+
+
 ### `main_classes.json`
 Describes each main concept (entity) in Exa-AToW. 
 
