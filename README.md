@@ -56,6 +56,7 @@ This `files` folder in this repository contains JSON files that define the ontol
 - `properties_HPC.json` - Object and data properties specific to HPC domain
 - `properties_workflow.json` - Properties for workflow description and relationships
 - ...
+> **Note**: Each area of the project should have a JSON file with this structure. Each partner should fill in the required information for their domain.
 
 #### Instance Data
 - `instances_workflow.json` - Individual instances of workflow entities
@@ -63,7 +64,6 @@ This `files` folder in this repository contains JSON files that define the ontol
 
 #### Restrictions and Constraints
 - `add_restrictions_hasValue_hasUnit.json` - Value restrictions and unit assignments for properties
-
 
 ---
 
@@ -155,24 +155,19 @@ To create instances for your area, create a JSON file with each instance defined
 - Validate the JSON syntax before committing
 
 
-## 📁 Contents
-
-n
-
+## Visualization
 To visualize the ontology:
 
 - Use WebVOWL (through the ontology webpage generated with Widoco: XXXX)
 - Open the `exaatow-ontology.ttl` with the open-source software Protege.
-- visualization tool in the Python file:
-
-# After loading the ontology:
+- visualization tool in the Python file. After loading the ontology:
 ```
 onto.visualize_graph(
     output_file="my_ontology_visualization.html",
     height="600px",
     physics=False  # Disable physics for static layout
 ```
- open the html file with a browser
+and open the html file with a browser.
 
 
 
