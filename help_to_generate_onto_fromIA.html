@@ -168,6 +168,11 @@
         .highlight-box strong {
             color: #e67e22;
         }
+	img {
+            display: block;
+            margin: auto;
+            width: 50%;
+        }
     </style>
 </head>
 <body>
@@ -260,7 +265,7 @@
                         ObjectProperty
                     </div>
                     <div class="card-description">
-                        Connects <strong>two classes</strong> together
+                        Connects <strong>two classes</strong> together.
                     </div>
                     <div class="card-example">
                         <div class="example-label">Example:</div>
@@ -289,7 +294,7 @@
                         AnnotationProperty
                     </div>
                     <div class="card-description">
-                        Adds <strong>metadata or documentation</strong> to any ontology (non-semantic). You would create a custom AnnotationProperty when you need project-specific metadata that isn't covered by standard (label, comments) vocabularies.
+                        Adds <strong>metadata or documentation</strong> (non-semantic). Create it when you need project-specific metadata that isn't covered by standard (label, comments) vocabularies.
                     </div>
                     <div class="card-example">
                         <div class="example-label">Example:</div>
@@ -302,55 +307,15 @@
 
         <!-- Complete Example Diagram -->
         <div class="section">
-            <h2 class="section-title">🎨 Complete Example: Processor with Die Size</h2>
-            
-            <div class="diagram">
-                <div class="diagram-title">Visual Representation</div>
-                <svg viewBox="0 0 800 400">
-                    <!-- Define arrowhead -->
-                    <defs>
-                        <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                            <polygon points="0 0, 10 3, 0 6" fill="#667eea" />
-                        </marker>
-                    </defs>
-                    
-                    <!-- Processor Class -->
-                    <rect x="50" y="150" width="180" height="100" class="node-class" rx="10"/>
-                    <text x="140" y="195" class="node-text">Processor</text>
-                    <text x="140" y="220" style="fill: white; font-size: 12px; text-anchor: middle;">(CLASS)</text>
-                    
-                    <!-- hasDieSize Property -->
-                    <path d="M 230 200 L 370 200" class="arrow"/>
-                    <text x="300" y="190" class="arrow-label">hasDieSize</text>
-                    <text x="300" y="215" style="fill: #764ba2; font-size: 12px; text-anchor: middle;">(ObjectProperty)</text>
-                    
-                    <!-- DieSize Class -->
-                    <rect x="370" y="150" width="180" height="100" class="node-class" rx="10"/>
-                    <text x="460" y="195" class="node-text">DieSize</text>
-                    <text x="460" y="220" style="fill: white; font-size: 12px; text-anchor: middle;">(CLASS)</text>
-                    
-                    <!-- hasDieSizeValue -->
-                    <path d="M 460 250 L 460 320" class="arrow"/>
-                    <text x="480" y="285" class="arrow-label">hasValue</text>
-                    
-                    <!-- Value -->
-                    <ellipse cx="460" cy="350" rx="80" ry="40" class="node-value"/>
-                    <text x="460" y="350" class="node-text" style="fill: #2d3436;">450</text>
-                    <text x="460" y="370" style="fill: #2d3436; font-size: 12px; text-anchor: middle;">(numeric value)</text>
-                    
-                    <!-- hasDieSizeUnit -->
-                    <path d="M 550 200 L 650 200" class="arrow"/>
-                    <text x="600" y="190" class="arrow-label">hasUnit</text>
-                    
-                    <!-- Unit -->
-                    <ellipse cx="700" cy="200" rx="80" ry="40" class="node-value"/>
-                    <text x="700" y="200" class="node-text" style="fill: #2d3436;">mm²</text>
-                    <text x="700" y="220" style="fill: #2d3436; font-size: 12px; text-anchor: middle;">(unit)</text>
-                </svg>
-            </div>
+          <h2 class="section-title">🎨 Complete Example: Processor with Die Size</h2>
+	  <div>
+	    <img src="../example_DieSize.png" alt="Logo">
+	  </div>
+
+	    
 
             <div class="highlight-box">
-                <strong>💡 Key Point:</strong> DieSize is a CLASS that requires BOTH hasValue (450) and hasUnit (mm²). This is called a "restriction" - it enforces that measurements are complete.
+                <strong>💡 Key Point:</strong> DieSize is a CLASS that requires BOTH hasValue (a decimal) and hasUnit (either mm² or cm2). This is called a "restriction" - it enforces that measurements are complet.
             </div>
         </div>
 
@@ -359,85 +324,113 @@
             <h2 class="section-title">💻 JSON Code Examples</h2>
             
             <h3 style="color: #667eea; margin-top: 30px;">1️⃣ Defining Classes</h3>
-            <p>File: <code>files/sub_HPC_classes.json</code></p>
+            <p>Extract of file: <code>files/sub_HPC_classes.json</code></p>
             <div class="json-example">
-[
-  {
-    <span class="json-key">"id"</span>: <span class="json-string">"Processor"</span>,
-    <span class="json-key">"parent_class"</span>: <span class="json-string">"HPCResource"</span>,
-    <span class="json-key">"pref_label"</span>: {
-      <span class="json-string">"en"</span>: <span class="json-string">"Processor"</span>,
-      <span class="json-string">"fr"</span>: <span class="json-string">"Processeur"</span>
-    },
-    <span class="json-key">"comment"</span>: {
-      <span class="json-string">"en"</span>: <span class="json-string">"A central processing unit"</span>,
-      <span class="json-string">"fr"</span>: <span class="json-string">"Une unité centrale de traitement"</span>
-    }
-  },
-  {
-    <span class="json-key">"id"</span>: <span class="json-string">"DieSize"</span>,
-    <span class="json-key">"parent_class"</span>: <span class="json-string">"PhysicalCharacteristic"</span>,
-    <span class="json-key">"pref_label"</span>: {
-      <span class="json-string">"en"</span>: <span class="json-string">"Die Size"</span>,
-      <span class="json-string">"fr"</span>: <span class="json-string">"Taille de puce"</span>
-    }
-  }
+	      
+[<br>
+  &nbsp;{<br>
+    <span class="json-key">&nbsp;&nbsp;"id"</span>: <span class="json-string">"ComputeNode"</span>,<br>
+    <span class="json-key">&nbsp;&nbsp;"parent_class"</span>: <span class="json-string">"HPCResource"</span>,<br>
+    <span class="json-key">&nbsp;&nbsp;"pref_label"</span>: {<br>
+      <span class="json-string">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"en"</span>: <span class="json-string">"Node"</span>,<br>
+      <span class="json-string">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fr"</span>: <span class="json-string">"Noeud"</span><br>
+   &nbsp;&nbsp; },<br>
+    <span class="json-key">&nbsp;&nbsp;"comment"</span>: {<br>
+      <span class="json-string">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"en"</span>: <span class="json-string">"A physical or virtual server that executes computational jobs within a partition."</span>,<br>
+      <span class="json-string">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"fr"</span>: <span class="json-string">"Un serveur physique ou virtuel qui exécute des tâches de calcul au sein d'une partition."</span><br>
+      &nbsp;&nbsp;&nbsp;}<br>
+     <span class="json-key">&nbsp;&nbsp;"link_html"</span>: <span class="json-string">"https://wiki.external.link"</span>,<br>
+     <span class="json-key">&nbsp;&nbsp;"equivalent"</span>: <span class="json-string">"https://link.to.ontology#Concept"</span>,<br>     
+  &nbsp;&nbsp;}<br>
+  &nbsp;}<br>
 ]
             </div>
 
             <h3 style="color: #667eea; margin-top: 30px;">2️⃣ Defining Properties</h3>
             <p>File: <code>files/properties_HPC.json</code></p>
             <div class="json-example">
-[
-  {
-    <span class="json-key">"id"</span>: <span class="json-string">"hasDieSize"</span>,
-    <span class="json-key">"property_type"</span>: <span class="json-string">"ObjectProperty"</span>,
-    <span class="json-key">"domain"</span>: <span class="json-string">"Processor"</span>,
-    <span class="json-key">"range"</span>: <span class="json-string">"DieSize"</span>,
-    <span class="json-key">"pref_label"</span>: {
-      <span class="json-string">"en"</span>: <span class="json-string">"has die size"</span>,
-      <span class="json-string">"fr"</span>: <span class="json-string">"a taille de puce"</span>
-    }
-  },
-  {
-    <span class="json-key">"id"</span>: <span class="json-string">"hasCoreCount"</span>,
-    <span class="json-key">"property_type"</span>: <span class="json-string">"DatatypeProperty"</span>,
-    <span class="json-key">"domain"</span>: <span class="json-string">"Processor"</span>,
-    <span class="json-key">"range"</span>: <span class="json-string">"xsd:integer"</span>,
-    <span class="json-key">"pref_label"</span>: {
-      <span class="json-string">"en"</span>: <span class="json-string">"has core count"</span>
-    }
-  }
-]
+
+[<br>
+  &nbsp;{<br>
+&nbsp;&nbsp;<span class="json-key">"id"</span>: <span class="json-string">"hasDieSize"</span>,<br>
+    &nbsp;&nbsp;<span class="json-key">     "property_type"</span>: <span class="json-string">"ObjectProperty"</span>,<br>
+    &nbsp;&nbsp;<span class="json-key">"domain"</span>: <span class="json-string">"Processor"</span>,<br>
+    &nbsp;&nbsp;<span class="json-key">"range"</span>: <span class="json-string">"DieSize"</span>,<br>
+    &nbsp;&nbsp;<span class="json-key">"pref_label"</span>: {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"en"</span>: <span class="json-string">"has die size"</span>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"fr"</span>: <span class="json-string">"a taille de puce"</span><br>
+      &nbsp;&nbsp;&nbsp;}<br>
+         &nbsp;&nbsp;<span class="json-key">"comment"</span>: {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"en"</span>: <span class="json-string">"Relates a processor to its die size measurement."</span><br>
+      &nbsp;&nbsp;&nbsp;}<br>
+     &nbsp;}<br>
+  ]
+
             </div>
 
             <h3 style="color: #667eea; margin-top: 30px;">3️⃣ Adding Restrictions</h3>
-            <p>File: <code>files/add_restrictions_hasValue_hasUnit.json</code></p>
+            <p>Some classes (i.e. physical characteristic) have Units and Values. Add hasUnit and hasValue restrictions to those classes. File to be updated: <code>files/add_restrictions_hasValue_hasUnit.json</code></p>
+	    Example of a class (DieSize) that hasUnit (either mm2 or cm2 -> give a list with possible values with <code>enumeration</code>) and hasValue (a decimal, if all values possibles, then use <code>all_values_from</code>).
             <div class="json-example">
-[
-  {
-    <span class="json-key">"class_name"</span>: <span class="json-string">"DieSize"</span>,
-    <span class="json-key">"has_value_property"</span>: <span class="json-string">"hasDieSizeValue"</span>,
-    <span class="json-key">"has_unit_property"</span>: <span class="json-string">"hasDieSizeUnit"</span>
-  }
-]
+[<br>
+  &nbsp;{<br>
+    &nbsp;&nbsp;&nbsp;<span class="json-key">"class_name"</span>: <span class="json-string">"DieSize"</span>,<br>
+    &nbsp;&nbsp;&nbsp;<span class="json-key">"restrictions"</span>:[<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"property_name"</span>: <span class="json-string">"hasUnit"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"enumeration"</span>: <span class="json-string">["mm2","cm2"]</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"comment"</span>:{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"en"</span>: <span class="json-string">"Allowed units for die size"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"fr"</span>: <span class="json-string">"Unités autorisées pour la taille de puce"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;},<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"property_name"</span>: <span class="json-string">"hasValue"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"all_values_from"</span>: <span class="json-string">"xsd:decimal"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-key">"comment"</span>:{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"en"</span>: <span class="json-string">"Numeric value of the die size"</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"fr"</span>: <span class="json-string">"Valeur numérique de la taille de puce"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;&nbsp;]<br>
+ &nbsp;}<br>
+]<br>
             </div>
 
             <h3 style="color: #667eea; margin-top: 30px;">4️⃣ Creating Instances</h3>
-            <p>File: <code>files/instances_authentication.json</code></p>
+            <p>File: <code>files/instances_***.json</code></p>
             <div class="json-example">
-[
-  {
-    <span class="json-key">"instance_name"</span>: <span class="json-string">"OAuth2"</span>,
-    <span class="json-key">"class_type"</span>: <span class="json-string">"AuthenticationProtocol"</span>,
-    <span class="json-key">"pref_label"</span>: {
-      <span class="json-string">"en"</span>: <span class="json-string">"OAuth 2.0"</span>
-    },
-    <span class="json-key">"comment"</span>: {
-      <span class="json-string">"en"</span>: <span class="json-string">"Industry-standard authorization protocol"</span>
-    }
-  }
+	      
+[<br>
+  &nbsp;{<br>
+    &nbsp;&nbsp;<span class="json-key">"instance_name"</span>: <span class="json-string">"diesize_a100"</span>,<br>
+    &nbsp;&nbsp;<span class="json-key">"class_type"</span>: <span class="json-string">"DieSize"</span>,<br>
+    &nbsp;&nbsp;<span class="json-key">"pref_label"</span>: {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"en"</span>: <span class="json-string">"Diesize A100"</span><br>
+    &nbsp;&nbsp;&nbsp;},<br>
+    &nbsp;&nbsp;<span class="json-key">"properties"</span>: {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"hasValue"</span>: <span class="json-string">"826"</span>,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"hasUnit"</span>: <span class="json-string">"mm2"</span>,<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;<span class="json-key">"pref_label"</span>: {<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"en"</span>: <span class="json-string">"Die size for A100 GPU"</span><br>
+    &nbsp;&nbsp;&nbsp;}<br>
+&nbsp;},<br>
+  &nbsp;{<br>
+    &nbsp;&nbsp;<span class="json-key">"instance_name"</span>: <span class="json-string">"nvidia_a100"</span>,<br>
+    &nbsp;&nbsp;<span class="json-key">"class_type"</span>: <span class="json-string">"GPU"</span>,<br>
+    &nbsp;&nbsp;<span class="json-key">"pref_label"</span>: {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"en"</span>: <span class="json-string">"NVIDIA A100"</span><br>
+    &nbsp;&nbsp;&nbsp;},<br>
+    &nbsp;&nbsp;<span class="json-key">"properties"</span>: {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"hasDieSize"</span>: <span class="json-string">"diesize_a100"</span><br>
+    &nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;<span class="json-key">"pref_label"</span>: {<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;<span class="json-string">"en"</span>: <span class="json-string">"GPU NVIDIA A100"</span><br>
+    &nbsp;&nbsp;&nbsp;}<br>
+  &nbsp;}<br>
 ]
+     
             </div>
         </div>
 
@@ -453,41 +446,41 @@
                     <!-- Branch 1 -->
                     <path d="M 350 80 L 150 150" class="arrow"/>
                     <rect x="50" y="150" width="200" height="80" fill="#ff6b6b" rx="10"/>
-                    <text x="150" y="185" class="node-text">A concept or</text>
-                    <text x="150" y="210" class="node-text">type of thing?</text>
-                    <text x="150" y="180" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create a CLASS</text>
+                    <text x="150" y="175" class="node-text">A concept or</text>
+                    <text x="150" y="195" class="node-text">type of thing?</text>
+                    <text x="150" y="220" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create a CLASS</text>
                     
                     <!-- Branch 2 -->
                     <path d="M 400 80 L 400 150" class="arrow"/>
                     <rect x="300" y="150" width="200" height="80" fill="#4ecdc4" rx="10"/>
-                    <text x="400" y="185" class="node-text">A relationship</text>
-                    <text x="400" y="210" class="node-text">or attribute?</text>
-                    <text x="400" y="180" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create a PROPERTY</text>
+                    <text x="400" y="175" class="node-text">A relationship</text>
+                    <text x="400" y="195" class="node-text">or attribute?</text>
+                    <text x="400" y="220" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create a PROPERTY</text>
                     
                     <!-- Branch 3 -->
                     <path d="M 450 80 L 650 150" class="arrow"/>
                     <rect x="550" y="150" width="200" height="80" fill="#45b7d1" rx="10"/>
-                    <text x="650" y="185" class="node-text">A specific,</text>
-                    <text x="650" y="210" class="node-text">named example?</text>
-                    <text x="650" y="180" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create an INSTANCE</text>
+                    <text x="650" y="175" class="node-text">A specific,</text>
+                    <text x="650" y="195" class="node-text">named example?</text>
+                    <text x="650" y="220" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: normal;">→ Create an INSTANCE</text>
                     
                     <!-- Property sub-branches -->
                     <path d="M 350 230 L 250 300" class="arrow"/>
                     <rect x="150" y="300" width="200" height="60" fill="#48dbfb" rx="10"/>
                     <text x="250" y="325" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: bold;">Links two classes?</text>
-                    <text x="250" y="345" style="fill: white; font-size: 12px; text-anchor: middle;">ObjectProperty</text>
+                    <text x="250" y="345" style="fill: white; font-size: 12px; text-anchor: middle;">→ ObjectProperty</text>
                     
                     <path d="M 450 230 L 550 300" class="arrow"/>
                     <rect x="450" y="300" width="200" height="60" fill="#48dbfb" rx="10"/>
                     <text x="550" y="325" style="fill: white; font-size: 14px; text-anchor: middle; font-weight: bold;">Links to a value?</text>
-                    <text x="550" y="345" style="fill: white; font-size: 12px; text-anchor: middle;">DatatypeProperty</text>
+                    <text x="550" y="345" style="fill: white; font-size: 12px; text-anchor: middle;">→ DatatypeProperty</text>
                     
                     <!-- Restriction -->
                     <path d="M 250 360 L 400 430" class="arrow"/>
                     <path d="M 550 360 L 400 430" class="arrow"/>
                     <rect x="250" y="430" width="300" height="60" fill="#feca57" rx="10"/>
                     <text x="400" y="455" style="fill: #2d3436; font-size: 14px; text-anchor: middle; font-weight: bold;">Does it need value + unit?</text>
-                    <text x="400" y="475" style="fill: #2d3436; font-size: 12px; text-anchor: middle;">Add RESTRICTION</text>
+                    <text x="400" y="475" style="fill: #2d3436; font-size: 12px; text-anchor: middle;">→ Add RESTRICTION</text>
                 </svg>
             </div>
         </div>
