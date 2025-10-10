@@ -613,7 +613,7 @@ class CreateOnto:
         
         self.add_property(
                     property_name="hasUnit",
-                    property_type="ObjectProperty",
+                    property_type="DatatypeProperty",
                     range_="XSD:string",
                     comment={"en": "Unit of measurement.","fr": "Unité de mesure"},
                     pref_label={"en": "has unit","fr": "a unité"})#

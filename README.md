@@ -26,7 +26,8 @@ The ontology defines key concepts for the ExA-AToW ecosystem:
 
 
 
-**Exa-AtoW ontology visual guide**: https://cnherrera.github.io/Exa-AToW_onto/help_to_generate_onto_fromIA.html
+**Exa-AtoW ontology visual guide**:
+https://cnherrera.github.io/Exa-AToW_onto/help_to_generate_onto_fromIA.html
 
 ## Repository Structure
 
@@ -93,7 +94,7 @@ The `parent_class` field can be omitted if the entry directly belongs (subClassO
        "fr": "Un serveur physique ou virtuel qui exécute des tâches de calcul au sein d'une partition."
     },
     "link_html": "https://wiki.external.link" 
-    "equivalent": "https://link.to.ontology#Concept""
+    "equivalent": "https://link.to.ontology#Concept"
 }
 
 ```
