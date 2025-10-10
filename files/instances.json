@@ -1,9 +1,0 @@
-{
-    "instance_name":"LooseCoupling",
-    "class_type":"Coupling",
-    "pref_label":{"en": "Loose Coupling", "fr": "Couplage faible"},
-    "comment":{
-       "en": "Modular workflow components with low interdependence, allowing asynchronous or flexible execution.",
-        "fr": "Composants de flux de travail modulaires avec une faible interdépendance, permettant une exécution asynchrone ou flexible."
-     }
-}

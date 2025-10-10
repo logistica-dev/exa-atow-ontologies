@@ -24,13 +24,6 @@ exa-atow:AcceleratedNode a owl:Class ;
     skos:prefLabel "Accelerated Node"@en,
         "Nœud accéléré"@fr .
 
-exa-atow:AllocationMethod a owl:Class ;
-    rdfs:comment "Method or function to distribute embodied impacts across multiple jobs or workflows."@en,
-        "Méthode ou fonction permettant de répartir les impacts incorporés entre plusieurs tâches ou workflows."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Allocation Method"@en,
-        "Méthode d’allocation"@fr .
-
 exa-atow:Authentication a owl:Class ;
     rdfs:comment "Domain concept representing all aspects of authentication, including credentials, access protocols, identity validation, and login activities."@en,
         "Concept décrivant tous les aspects de l'authentification, y compris les identifiants, les protocoles d'accès, la validation d'identité et les activités de connexion."@fr ;
@@ -49,13 +42,6 @@ exa-atow:CPU a owl:Class ;
     rdfs:subClassOf exa-atow:Processor ;
     skos:prefLabel "CPU"@en,
         "CPU"@fr .
-
-exa-atow:CarbonFootprint a owl:Class ;
-    rdfs:comment "Measurement of the greenhouse gas emissions associated with HPC system usage."@en,
-        "Mesure des émissions de gaz à effet de serre liées à l’utilisation des systèmes HPC."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Carbon Footprint"@en,
-        "Empreinte carbone"@fr .
 
 exa-atow:CoarseGrained a exa-atow:Granularity ;
     rdfs:comment "Workflow is built with larger components such as sub-workflows or complete applications."@en,
@@ -128,40 +114,12 @@ exa-atow:DynamicPlanning a exa-atow:OrchestrationPlanning ;
     skos:prefLabel "Dynamic"@en,
         "Dynamique"@fr .
 
-exa-atow:EmbodiedImpact a owl:Class ;
-    rdfs:comment "Environmental impact associated with manufacturing, transport, and deployment of HPC hardware."@en,
-        "Impact environnemental lié à la fabrication, au transport et au déploiement du matériel HPC."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Embodied Impact"@en,
-        "Impact incorporé"@fr .
-
-exa-atow:EnergyConsumption a owl:Class ;
-    rdfs:comment "Measurement or estimation of the energy consumed by computing and supporting hardware."@en,
-        "Mesure ou estimation de l'énergie consommée par le matériel informatique et les équipements de support."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Energy Consumption"@en,
-        "Consommation d’énergie"@fr .
-
-exa-atow:EnergyEfficiencyMetric a owl:Class ;
-    rdfs:comment "Metric for evaluating how efficiently energy is used during HPC operations."@en,
-        "Indicateur permettant d’évaluer l’efficacité de l’utilisation de l’énergie pendant les opérations de calcul haute performance."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Energy Efficiency Metric"@en,
-        "Indicateur d'efficacité énergétique"@fr .
-
 exa-atow:EnergyManagement a owl:Class ;
     rdfs:comment "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment."@en,
         "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d’énergie dans l’environnement HPC."@fr ;
     rdfs:subClassOf exa-atow:HPCResource ;
     skos:prefLabel "Energy Management System"@en,
         "Système de gestion de l’énergie"@fr .
-
-exa-atow:EnvironmentalImpact a owl:Class ;
-    rdfs:comment "Quantitative or qualitative assessment of the environmental effects of HPC systems throughout their lifecycle."@en,
-        "Évaluation quantitative ou qualitative des effets environnementaux des systèmes HPC tout au long de leur cycle de vie."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Environmental Impact"@en,
-        "Impact environnemental"@fr .
 
 exa-atow:EventDriven a exa-atow:OrchestrationPlanning ;
     rdfs:comment "Execution reacts to runtime triggers."@en,
@@ -219,13 +177,6 @@ exa-atow:Hierarchical a exa-atow:Modularity ;
         "Sous-workflows imbriqués pour une conception modulaire."@fr ;
     skos:prefLabel "Hierarchical"@en,
         "Hiérarchique"@fr .
-
-exa-atow:ImpactFactor a owl:Class ;
-    rdfs:comment "Multiplicative coefficient used to compute the environmental impact associated with processor attributes like die size."@en,
-        "Coefficient multiplicatif utilisé pour calculer l’impact environnemental lié aux caractéristiques du processeur comme la taille de la puce."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Impact Factor"@en,
-        "Facteur d'impact"@fr .
 
 exa-atow:Implicit a exa-atow:AbstractionLevel ;
     rdfs:comment "Workflow defined at code level."@en,
@@ -336,13 +287,6 @@ exa-atow:JobSubmissionMetadata a owl:Class ;
     skos:prefLabel "Job Submission Metadata"@en,
         "Métadonnées de soumission de la tâche"@fr .
 
-exa-atow:LifetimeEstimator a owl:Class ;
-    rdfs:comment "Tool or model for predicting the operational lifetime of hardware components."@en,
-        "Outil ou modèle permettant de prédire la durée de vie opérationnelle des composants matériels."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Lifetime Estimator"@en,
-        "Estimateur de durée de vie"@fr .
-
 exa-atow:LocalFileSystem a exa-atow:DataManagementStorage ;
     rdfs:comment "Data stored locally on one machine."@en,
         "Données stockées localement sur une machine."@fr ;
@@ -375,25 +319,11 @@ exa-atow:Partitioned a exa-atow:DataManagementGranularity ;
     skos:prefLabel "Partitioned"@en,
         "Partitionné"@fr .
 
-exa-atow:PerformanceIndicator a owl:Class ;
-    rdfs:comment "Metric used to evaluate the computational performance of HPC systems."@en,
-        "Indicateur permettant d’évaluer la performance de calcul des systèmes HPC."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Performance Indicator"@en,
-        "Indicateur de performance"@fr .
-
 exa-atow:Pipelined a exa-atow:DataManagementGranularity ;
     rdfs:comment "Data streamed record by record."@en,
         "Flux de données enregistrements par enregistrements."@fr ;
     skos:prefLabel "Pipelined"@en,
         "Pipeline"@fr .
-
-exa-atow:PowerUsageEffectiveness a owl:Class ;
-    rdfs:comment "Industry standard metric for measuring data center energy efficiency, defined as the ratio of total facility energy to IT equipment energy."@en,
-        "Indicateur standard pour mesurer l'efficacité énergétique d'un centre de données, défini comme le rapport entre énergie injectée dans un parc de serveur, et l'énergie réellement utilisée pour alimenter les serveurs."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Power Usage Effectiveness (PUE)"@en,
-        "Efficacité d'utilisation de l'énergie (PUE)"@fr .
 
 exa-atow:Process a owl:Class ;
     rdfs:comment "An active execution instance within a job."@en,
@@ -401,6 +331,12 @@ exa-atow:Process a owl:Class ;
     rdfs:subClassOf exa-atow:Job ;
     skos:prefLabel "Process"@en,
         "Processus"@fr .
+
+exa-atow:ProcessorIndicatorEstimator a owl:Class ;
+    rdfs:comment "Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact."@en,
+        "Concept regroupant tous les outils, métriques et modèles d’estimation des indicateurs liés au processeur, comme la consommation d’énergie, l’empreinte thermique et l’impact de la taille de la puce."@fr ;
+    skos:prefLabel "Processor Indicator Estimator"@en,
+        "Estimateur d’indicateurs du processeur"@fr .
 
 exa-atow:Rack a owl:Class ;
     rdfs:comment "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter."@en,
@@ -420,13 +356,6 @@ exa-atow:ResourceManager a exa-atow:ExecutionControl ;
         "Délègue à un gestionnaire de ressources externe."@fr ;
     skos:prefLabel "Resource Manager"@en,
         "Gestionnaire de ressources"@fr .
-
-exa-atow:ResourceUtilization a owl:Class ;
-    rdfs:comment "Indicates how effectively computing resources are being used over time."@en,
-        "Indique dans quelle mesure les ressources informatiques sont utilisées efficacement au fil du temps."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Resource Utilization"@en,
-        "Utilisation des ressources"@fr .
 
 exa-atow:Runner a exa-atow:ExecutionControl ;
     rdfs:comment "Manages task execution and resources."@en,
@@ -498,13 +427,6 @@ exa-atow:TaskBased a exa-atow:FlowType ;
     skos:prefLabel "Task-based"@en,
         "Basé sur les tâches"@fr .
 
-exa-atow:ThermalEstimator a owl:Class ;
-    rdfs:comment "Tool for estimating heat production and cooling requirements of HPC components."@en,
-        "Outil permettant d’estimer la production de chaleur et les besoins en refroidissement des composants HPC."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Thermal Estimator"@en,
-        "Estimateur thermique"@fr .
-
 exa-atow:Thread a owl:Class ;
     rdfs:comment "A lightweight unit of execution within a process."@en,
         "Une unité légère d'exécution dans un processus."@fr ;
@@ -523,13 +445,6 @@ exa-atow:TransferTasks a exa-atow:DataManagementStorage ;
         "Tâches intermédiaires déplacent les données."@fr ;
     skos:prefLabel "Transfer Tasks"@en,
         "Tâches de transfert"@fr .
-
-exa-atow:UsageImpact a owl:Class ;
-    rdfs:comment "Environmental impact from the operational phase of HPC systems, including energy usage and emissions."@en,
-        "Impact environnemental lié à la phase d’utilisation des systèmes HPC, y compris la consommation d’énergie et les émissions."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Usage Impact"@en,
-        "Impact en usage"@fr .
 
 exa-atow:User a owl:Class ;
     rdfs:comment "Concept encompassing individuals or agents who interact with the HPC system, including identity attributes, roles, permissions, and user behaviors."@en,
@@ -557,13 +472,6 @@ exa-atow:WorkflowStep a owl:Class ;
     rdfs:subClassOf exa-atow:Workflow ;
     skos:prefLabel "Workflow Step"@en,
         "Étape du flux de travail"@fr .
-
-exa-atow:WorkloadEstimator a owl:Class ;
-    rdfs:comment "Tool or method for estimating and analyzing the workload executed on HPC systems."@en,
-        "Outil ou méthode permettant d’estimer et d’analyser la charge de travail exécutée sur les systèmes HPC."@fr ;
-    rdfs:subClassOf exa-atow:ProcessorIndicatorEstimator ;
-    skos:prefLabel "Workload Estimator"@en,
-        "Estimateur de charge"@fr .
 
 exa-atow:hasAbstractionLevel a owl:ObjectProperty ;
     rdfs:comment "Associates a workflow with its abstraction level, indicating the conceptual level at which it is defined."@en,
@@ -613,7 +521,7 @@ exa-atow:hasDataManagementTransport a owl:ObjectProperty ;
     skos:prefLabel "has data management transport"@en,
         "a un transport de gestion des données"@fr .
 
-exa-atow:hasDieSize a owl:DatatypeProperty ;
+exa-atow:hasDieSize a owl:ObjectProperty ;
     rdfs:comment "Processor has a die size, including a numeric value and a unit (e.g., mm2)."@en,
         "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."@fr ;
     rdfs:domain exa-atow:Processor ;
@@ -653,7 +561,7 @@ exa-atow:hasGranularity a owl:ObjectProperty ;
     skos:prefLabel "has granularity type"@en,
         "a une granularité de type"@fr .
 
-exa-atow:hasLifetime a owl:DatatypeProperty ;
+exa-atow:hasLifetime a owl:ObjectProperty ;
     rdfs:comment "The processor or server has an operational lifetime, including numeric value and unit (e.g. years, hours)."@en,
         "Le processeur ou le serveur a une durée de vie opérationnelle avec valeur numérique et unité (ex : années ou heures)."@fr ;
     rdfs:domain exa-atow:Processor,
@@ -662,7 +570,7 @@ exa-atow:hasLifetime a owl:DatatypeProperty ;
     skos:prefLabel "has lifetime"@en,
         "a durée de vie"@fr .
 
-exa-atow:hasMemoryCapacity a owl:DatatypeProperty ;
+exa-atow:hasMemoryCapacity a owl:ObjectProperty ;
     rdfs:comment "The memory device has a certain memory capacity, including numeric value and unit (e.g., GB, TB)."@en,
         "Le dispositif de mémoire a une certaine capacité mémoire incluant valeur numérique et unité (ex : Go, To)."@fr ;
     rdfs:domain exa-atow:HDD,
@@ -696,7 +604,7 @@ exa-atow:hasProperty a owl:ObjectProperty ;
     skos:prefLabel "has Property"@en,
         "a propriété"@fr .
 
-exa-atow:hasWorkload a owl:DatatypeProperty ;
+exa-atow:hasWorkload a owl:ObjectProperty ;
     rdfs:comment "The numerical workload of a processor, which affects its energy consumption and performance. Includes a value and a unit (e.g., % utilization)."@en,
         "La charge numérique d’un processeur, qui affecte sa consommation d’énergie et ses performances. Comprend une valeur et une unité (ex. : % d’utilisation)."@fr ;
     rdfs:domain exa-atow:Processor ;
@@ -765,16 +673,16 @@ exa-atow:MemoryCapacity a owl:Class ;
     rdfs:comment "Amount of data that can be stored in a memory device like RAM, SSD, or HDD."@en,
         "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."@fr ;
     rdfs:subClassOf [ a owl:Restriction ;
+            rdfs:comment "Numeric value of the memory size"@en,
+                "Valeur numérique de la taille de la mémoire"@fr ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty exa-atow:hasValue ],
+        [ a owl:Restriction ;
             rdfs:comment "Allowed units for memory capacity"@en,
                 "Unités autorisées pour la capacité mémoire"@fr ;
             owl:allValuesFrom [ a rdfs:Datatype ;
                     owl:oneOf ( "GB"^^xsd:string "TB"^^xsd:string "PB"^^xsd:string "MB"^^xsd:string "KB"^^xsd:string ) ] ;
             owl:onProperty exa-atow:hasUnit ],
-        [ a owl:Restriction ;
-            rdfs:comment "Numeric value of the memory size"@en,
-                "Valeur numérique de la taille de la mémoire"@fr ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty exa-atow:hasValue ],
         exa-atow:PhysicalCharacteristic ;
     skos:prefLabel "Memory Capacity"@en,
         "Capacité mémoire"@fr .
@@ -797,16 +705,16 @@ exa-atow:Workload a owl:Class ;
     rdfs:comment "The processing load handled by a CPU or GPU. It affects energy consumption and performance."@en,
         "La charge de traitement gérée par un CPU ou un GPU. Elle influence la consommation d'énergie et les performances."@fr ;
     rdfs:subClassOf [ a owl:Restriction ;
-            rdfs:comment "Numeric value representing processor workload"@en,
-                "Valeur numérique représentant la charge du processeur"@fr ;
-            owl:allValuesFrom xsd:decimal ;
-            owl:onProperty exa-atow:hasValue ],
-        [ a owl:Restriction ;
             rdfs:comment "Allowed units for workload measurement"@en,
                 "Unités autorisées pour la mesure de la charge"@fr ;
             owl:allValuesFrom [ a rdfs:Datatype ;
                     owl:oneOf ( "%"^^xsd:string "operations/s"^^xsd:string "FLOPS"^^xsd:string ) ] ;
             owl:onProperty exa-atow:hasUnit ],
+        [ a owl:Restriction ;
+            rdfs:comment "Numeric value representing processor workload"@en,
+                "Valeur numérique représentant la charge du processeur"@fr ;
+            owl:allValuesFrom xsd:decimal ;
+            owl:onProperty exa-atow:hasValue ],
         exa-atow:PhysicalCharacteristic ;
     skos:prefLabel "Workload"@en,
         "Charge"@fr .
@@ -894,17 +802,17 @@ exa-atow:PhysicalCharacteristic a owl:Class ;
     skos:prefLabel "Physical Characteristic"@en,
         "Caractéristique physique"@fr .
 
-exa-atow:hasUnit a owl:ObjectProperty ;
+exa-atow:hasUnit a owl:DatatypeProperty ;
     rdfs:comment "Unit of measurement."@en,
         "Unité de mesure"@fr ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:string> ;
+    rdfs:range xsd:string ;
     skos:prefLabel "has unit"@en,
         "a unité"@fr .
 
 exa-atow:hasValue a owl:DatatypeProperty ;
     rdfs:comment "Numeric value."@en,
         "Valeur numérique"@fr ;
-    rdfs:range <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#XSD:decimal> ;
+    rdfs:range xsd:decimal ;
     skos:prefLabel "has numeric value"@en,
         "a valeur numérique"@fr .
 
@@ -933,12 +841,6 @@ exa-atow:WorkflowProperty a owl:Class ;
         "Concept abstrait regroupant toutes les propriétés catégorielles utilisées pour décrire les flux de travail, y compris le type de flux, le couplage, la granularité, la spécificité du domaine et les caractéristiques d'orchestration."@fr ;
     skos:prefLabel "Workflow Property"@en,
         "Propriété du flux de travail"@fr .
-
-exa-atow:ProcessorIndicatorEstimator a owl:Class ;
-    rdfs:comment "Concept grouping all estimation tools, metrics, and models used to assess processor-related indicators such as power consumption, thermal footprint, and die size impact."@en,
-        "Concept regroupant tous les outils, métriques et modèles d’estimation des indicateurs liés au processeur, comme la consommation d’énergie, l’empreinte thermique et l’impact de la taille de la puce."@fr ;
-    skos:prefLabel "Processor Indicator Estimator"@en,
-        "Estimateur d’indicateurs du processeur"@fr .
 
 exa-atow:Job a owl:Class ;
     rdfs:comment "Concept that includes computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments."@en,
