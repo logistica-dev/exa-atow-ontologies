@@ -26,15 +26,10 @@ The ontology defines key concepts for the ExA-AToW ecosystem:
 
 
 
-**Exa-AtoW ontology visual guide**:
+**`Exa-AtoW ontology visual guide`**:
 https://cnherrera.github.io/Exa-AToW_onto/help_to_generate_onto_fromIA.html
 
-:::success
->[!Tip] test
-:::
-### Highlight
-Syntax: `==highlight==`
-==highlight==
+
 ## Repository Structure
 
 ### Main Files (Root Directory)

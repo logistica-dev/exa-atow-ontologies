@@ -254,7 +254,7 @@ class CreateOnto:
             json_file: Path to JSON file containing class definitions
             default_parent_class: Fallback parent class if not specified in JSON
         """
-        
+        print(json_file)
         with open(json_file, "r", encoding="utf-8") as f:
             classes_data = json.load(f)
     
@@ -877,7 +877,7 @@ if __name__ == "__main__":
     # dictionary of subclasses and their default parent class
     subclasses = {
             "sub_HPC_classes.json": "HPCResource",
-            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
+#            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
             "sub_PhysChar_classes.json": "PhysicalCharacteristic",
             "sub_Job_classes.json": "Job",
             "sub_Workflow_classes.json": "Workflow"
@@ -906,7 +906,7 @@ if __name__ == "__main__":
         onto_exaatow.load_instances(instances)
 
     # Print the ontology in Turtle format
-    print(onto_exaatow.serialize(destination="exaatow_ontology.ttl",format="turtle"))
+    onto_exaatow.serialize(destination="exaatow_ontology.ttl",format="turtle")
 
 
     
