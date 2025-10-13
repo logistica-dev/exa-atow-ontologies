@@ -1,23 +1,51 @@
+"""
+ExaAToW Ontology Management System
+
+This module provides a structured approach to manage the ExaAToW ontology
+for HPC, workflows and energy consumption monitoring applications.
+"""
+
 import os
+import json
+import yaml
+from pathlib import Path
+from typing import Dict, Optional, Union, List, Any
+
 import rdflib
 from rdflib import BNode, Graph, Literal, Namespace, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, SKOS
-from typing import Dict, Optional, Union, List, Any
-import json
+
 import networkx as nx
 from pyvis.network import Network
-from pathlib import Path
-#from rdflib import BNode, RDF, RDFS, OWL, URIRef, Literal, XSD
 
-class ExaAToWOnto:
-    """
-    ExaAToW Ontology Management Class
+# ==============================
+# GLOBAL CONFIG LOADING
+# ==============================
+
+def _check_attribute_yaml(value, default):
+        """Return value if it exists and not None, otherwise return default."""
+        return value if value is not None else default
     
-    This class provides a structured approach to manage the ExaAToW ontology
-    for HPC, digital twin, and energy consumption monitoring applications.
+file_config = "ontology_config.yaml"
+if os.path.exists(file_config):
+    with open(file_config, "r") as file:
+        config = yaml.safe_load(file)
+else:
+    config={}
+
+LANG = _check_attribute_yaml(config.get("default_lang"),"en")
+FILES_DIR = _check_attribute_yaml(config.get("files_dir"),"files")
+DEFAULT_BASE_URI = _check_attribute_yaml(config.get("base_uri"),"https://localhost/myontology#")
+
+   
+class CreateOnto:
+    """
+    Ontology Management Class
+    
+    This class provides a structured approach to manage the ontology.
     """
     
-    def __init__(self, base_uri: str = "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#"):
+    def __init__(self, base_uri: str = DEFAULT_BASE_URI):
         """
         Initialize the ExaAToW ontology manager
         
@@ -25,28 +53,25 @@ class ExaAToWOnto:
             base_uri (str): Base URI for the ExaAToW ontology namespace
         """
         self.base_uri = base_uri.rstrip() + ("#" if not base_uri.endswith("#") else "")
-        self.EXAATOW = Namespace(self.base_uri)
+        self.ONTO = Namespace(self.base_uri)
         self.graph = Graph()
-
         self.json_file_mapping = {}
+        self.FILES_DIR = FILES_DIR
+        self.DEFAULT_LANG = LANG
+
+        # Determine JSON directory
+        self.json_dir = self.FILES_DIR if os.path.exists(self.FILES_DIR) else ""
+        if self.json_dir:
+            print(f"Using '{self.json_dir}' directory for JSON files")
         
-        # if we aren't running in the `files` directory, add it as a prefix
-        if os.path.exists("files"):
-            print("Prefixing file load with 'files' directory")
-            self.json_dir = "files"
-        else:
-            self.json_dir = ""
-        
-        # Bind standard namespaces
+        # Initialize ontology structure
         self._bind_namespaces()
-        
-        # Initialize basic structure
         self._init_basic_structure()
-    
+
     def _bind_namespaces(self):
         """Bind all necessary namespaces to the graph"""
         namespaces = {
-            "exa-atow": self.EXAATOW,
+            "exa-atow": self.ONTO,
             "skos": SKOS,
             "owl": OWL,
             "rdf": RDF,
@@ -59,44 +84,91 @@ class ExaAToWOnto:
         for prefix, namespace in namespaces.items():
             self.graph.bind(prefix, namespace)
 
+    @property
+    def namespaces(self) -> Dict[str, Namespace]:
+        """Get all bound namespaces as a dictionary"""
+        return {prefix: ns for prefix, ns in self.graph.namespaces()}
+
     def _resolve_uri(self, uri_or_name: Union[URIRef, str], namespace: Optional[Namespace] = None) -> URIRef:
         """
         Resolve a URI or name to a proper URIRef using a global namespace lookup
         
         Args:
             uri_or_name: URI string or local name
-            namespace: Namespace to use for local names (defaults to EXAATOW)
+            namespace: Namespace to use for local names (defaults to ONTO)
             
         Returns:
             URIRef: Resolved URI reference
         """
         if isinstance(uri_or_name, URIRef):
             return uri_or_name
-        
-        if isinstance(uri_or_name, str):
-            # Handle full URIs
-            if uri_or_name.startswith('http'):
-                return URIRef(uri_or_name)
+
+        if not isinstance(uri_or_name, str):
+            raise ValueError(f"Cannot resolve URI: {uri_or_name}")
             
-            # Handle prefixed names like "xsd:string", "rdfs:label"
-            if ':' in uri_or_name:
-                prefix, local = uri_or_name.split(':', 1)
-                prefix_lower = prefix.lower()
+        # Handle full URIs
+        if uri_or_name.startswith(('http://', 'https://')):
+            return URIRef(uri_or_name)
+
+        #Handle prefixed names like "xsd:string", "rdfs:label"
+        if ':' in uri_or_name:
+            prefix, local = uri_or_name.split(':', 1)
+            prefix_lower = prefix.lower()##
+
+            # Get the namespace URI for this prefix
+            for ns_prefix, ns_uri in self.graph.namespaces():
+                if ns_prefix == prefix_lower:
+                    # Create a Namespace object and use it to append the local part
+                    return Namespace(ns_uri)[local]
                 
-                # Look up namespace globally
-                if prefix_lower in self.namespaces:
-                    return self.namespaces[prefix_lower][local]
-                else:
-                    logger.warning(f"Unknown namespace prefix: {prefix}. Using EXAATOW namespace.")
-                    return self.EXAATOW[uri_or_name]
-            
-            # Handle local names - use provided namespace or default to EXAATOW
-            ns = namespace or self.EXAATOW
-            return ns[uri_or_name]
+            # If prefix not found, warn and use ONTO
+            print(f"Warning: Unknown namespace prefix '{prefix}'. Using ONTO namespace.")
+            return self.ONTO[uri_or_name]
+
+        # Handle local names
+        ns = namespace or self.ONTO
+        return ns[uri_or_name]
+
+    
+    # ==========================================
+    # File I/O Utilities
+    # ==========================================
+
+    def _load_json(self, filename: str) -> Any:
+        """
+        Load JSON file from the configured directory
         
-        raise ValueError(f"Cannot resolve URI: {uri_or_name}")
+        Args:
+            filename: Name of the JSON file
+            
+        Returns:
+            Parsed JSON data
+        """
+        filepath = os.path.join(self.json_dir, filename) if self.json_dir else filename
+        print(filepath)
+        
+        with open(filepath, "r", encoding="utf-8") as f:
+            f_json = json.load(f)
+            return f_json
 
+        
+    def _handle_json_path(self, identifier: str, json_path: Optional[str]) -> None:
+        """
+        Register JSON file mapping for an identifier
+        
+        Args:
+            identifier: Class or instance identifier
+            json_path: Path to JSON file
+        """
+        if json_path:
+            if self.json_dir and self.json_dir not in json_path:
+                json_path = os.path.join(self.json_dir, json_path)
+            self.json_file_mapping[identifier] = json_path
+            
 
+    # ==========================================
+    # Triple
+    # ==========================================
     def add_triple(self, subject: Union[URIRef, str], 
                    predicate: Union[URIRef, str], 
                    obj: Union[URIRef, Literal, str]):
@@ -110,21 +182,27 @@ class ExaAToWOnto:
         """
         # Convert strings to URIRef if needed
         if isinstance(subject, str):
-            subject = URIRef(subject) if subject.startswith('http') else self.EXAATOW[subject]
+            subject = self._resolve_uri(subject) 
+            
         if isinstance(predicate, str):
-            predicate = URIRef(predicate) if predicate.startswith('http') else self.EXAATOW[predicate]
-        if isinstance(obj, str) and not obj.startswith('http'):
-            obj = self.EXAATOW[obj]
-        elif isinstance(obj, str):
-            obj = URIRef(obj)
+            predicate = self._resolve_uri(predicate)
+            
+        if isinstance(obj, str):
+            obj = self._resolve_uri(obj)
             
         self.graph.add((subject, predicate, obj))
-    
+
+        
+    # ==========================================
+    # Class Management
+    # ==========================================
+        
     def add_class(self, class_name: str, 
               parent_class: Optional[Union[URIRef, str]] = None,
               pref_label: Optional[Union[str, dict]] = None,
               comment: Optional[Union[str, dict]] = None,
-              equivalent=None,
+              equivalent: Optional[Union[URIRef, str]]=None,
+              link_html: Optional[str] = None,
               json_path: Optional[str] = None,
               ):
         """
@@ -136,14 +214,11 @@ class ExaAToWOnto:
             pref_label: Preferred label for the class. Can be a string (default "en") or dict with lang keys.
             comment: Comment describing the class. Can be a string (default "en") or dict with lang keys.
             equivalent: Optional equivalent class
-            json_path: Optional path to the JSON file in which this class should be dumped
+            link_html: Optional external link
+            json_path: Optional path to JSON file in which this class should be dumped
         """
 
-        if json_path is not None:
-            if self.json_dir not in json_path:
-                json_path =  os.path.join(self.json_dir, json_path)
-            self.json_file_mapping[class_name] = json_path
-
+        self._handle_json_path(class_name, json_path)
         class_uri = self._resolve_uri(class_name)
         
         # Add class declaration
@@ -159,17 +234,50 @@ class ExaAToWOnto:
             equivalent_uri = self._resolve_uri(equivalent)
             self.graph.add((class_uri, OWL.equivalentClass, equivalent_uri))
 
-        # Add prefLabel(s)
+        # Add external link
+        if link_html:
+            self.graph.add((class_uri, RDFS.seeAlso, URIRef(link_html)))
+    
+        # Add labels and comments
         if pref_label:
-            self._add_dict_property(class_uri, SKOS.prefLabel, pref_label)
+            self._add_multilingual_property(class_uri, SKOS.prefLabel, pref_label)
 
-        # Add comment(s)
         if comment:
-            self._add_dict_property(class_uri, RDFS.comment, comment)
+            self._add_multilingual_property(class_uri, RDFS.comment, comment)
+            
                 
+    def load_and_add_classes(self, json_file: str, default_parent_class: Optional[str]) -> None:
+        """
+        Load classes from JSON file and add them with fallback parent class.
 
-    def _add_dict_property(self, subject: URIRef, predicate: URIRef, 
-                                   value: Union[str, Dict[str, str]], default_lang: str = "en"):
+        Args:
+            json_file: Path to JSON file containing class definitions
+            default_parent_class: Fallback parent class if not specified in JSON
+        """
+        print(json_file)
+        with open(json_file, "r", encoding="utf-8") as f:
+            classes_data = json.load(f)
+    
+        for class_info in classes_data:
+            self.add_class(
+                class_name = class_info["id"],
+                pref_label = class_info["pref_label"],
+                parent_class = class_info.get("parent_class", default_parent_class),
+                equivalent = class_info.get("equivalent"),
+                link_html = class_info.get("link_html"),
+                json_path = class_info.get("json_path"),
+                comment = class_info["comment"]
+             )            
+            self.json_file_mapping[class_info["id"]] = json_file
+
+            
+    # ==========================================
+    # Property Management
+    # ==========================================
+    
+    def _add_multilingual_property(self, subject: URIRef, predicate: URIRef, 
+                           value: Union[str, Dict[str, str]],
+                           default_lang: str = None)-> None:
         """
         Add a property that can have multiple language variants
         
@@ -179,19 +287,23 @@ class ExaAToWOnto:
             value: String or dictionary of language->value mappings
             default_lang: Default language if value is a string
         """
+        if default_lang is None:
+            default_lang = self.DEFAULT_LANG
+        
         if isinstance(value, dict):
             for lang, text in value.items():
                 self.graph.add((subject, predicate, Literal(text, lang=lang)))
         else:
             self.graph.add((subject, predicate, Literal(value, lang=default_lang)))
-    
-    
+
+
     def add_property(self, property_name: str, 
                      property_type: str = "ObjectProperty",
                      domain: Optional[Union[URIRef, str, List[Union[URIRef, str]]]] = None,
                      range_: Optional[Union[URIRef, str]] = None,
                      comment: Optional[Union[str,dict]] = None,
                      pref_label: Optional[Union[str,dict]] = None,
+                     json_path: Optional[str] = None,
                      lang: str = "en"):
         """
         Add an OWL property to the ontology
@@ -204,23 +316,10 @@ class ExaAToWOnto:
             comment: Comment describing the property
             lang: Language tag for comments
 
-        Properties that can be added to the call.
-        - **OWL.ObjectProperty** vs **OWL.DatatypeProperty**: whether the property points to another class (object) or to a literal value (data).
-        - **OWL.AnnotationProperty**: used only for annotations (metadata).
-        - **OWL.inverseOf**: links a property to its inverse (e.g., hasPart inverse of isPartOf).
-        - **OWL.FunctionalProperty**: means a subject can have at most one value for this property.
-        - **OWL.TransitiveProperty**: if A relates to B and B relates to C, then A relates to C.
-        - **OWL.SymmetricProperty**: if A relates to B, then B relates to A.
-        - **OWL.AsymmetricProperty**: if A relates to B, B cannot relate to A.
-        - **OWL.ReflexiveProperty**: everything is related to itself.
-        - **OWL.IrreflexiveProperty**: nothing is related to itself.
-
-        # Define property type and features
-           g.add((p, RDF.type, OWL.ObjectProperty))
-           g.add((p, RDF.type, OWL.FunctionalProperty))
-           g.add((p, RDF.type, OWL.TransitiveProperty))
-
         """
+
+        self._handle_json_path(property_name, json_path)
+        
         property_uri = self._resolve_uri(property_name)
         
         # Add property declaration
@@ -231,8 +330,10 @@ class ExaAToWOnto:
         }
         
         if property_type not in property_types:
-            raise ValueError(f"Invalid property type: {property_type}")
-            
+            raise ValueError(f"Invalid property type: {property_type}. "
+                           f"Must be one of {list(property_types.keys())}")
+
+        # Add property declaration
         self.graph.add((property_uri, RDF.type, property_types[property_type]))
         
         # Add domain(s)
@@ -244,23 +345,44 @@ class ExaAToWOnto:
         
         # Add range
         if range_:
-            if isinstance(range_, str):
-                range_ =  self.EXAATOW[range_] if not range_.startswith('http') else URIRef(range_)
-            self.graph.add((property_uri, RDFS.range, range_))
-
+            range_uri = self._resolve_uri(range_) if isinstance(range_, str) else range_
+            self.graph.add((property_uri, RDFS.range, range_uri))
             
         # Add prefLabel(s)
         if pref_label:
-            self._add_dict_property(property_uri, SKOS.prefLabel, pref_label)
+            self._add_multilingual_property(property_uri, SKOS.prefLabel, pref_label)
 
         # Add comment(s)
         if comment:
-            self._add_dict_property(property_uri, RDFS.comment, comment)
+            self._add_multilingual_property(property_uri, RDFS.comment, comment)
 
 
-###############################
+    def load_and_add_properties(self, json_file: str) -> None:
+        """
+        Load properties from JSON file and add them to the ontology
+        
+        Args:
+            json_file: Path to JSON file containing property definitions
+        """
+        with open(json_file, "r", encoding="utf-8") as f:
+            properties = json.load(f)
 
-#Testing
+        for prop in properties:
+                self.add_property(
+                    property_name=prop.get("id"),
+                    property_type=prop.get("property_type", "ObjectProperty"),
+                    domain=prop.get("domain"),
+                    range_=prop.get("range"),
+                    comment=prop.get("comment"),
+                    pref_label=prop.get("pref_label")
+#                    inverse_of=prop.get("inverse_of")
+                    )           
+
+
+    # ==========================================
+    # Restriction Management
+    # ==========================================
+
     def add_restriction_to_class(self,
                                  class_name: str,
                                  property_name: str,
@@ -268,26 +390,27 @@ class ExaAToWOnto:
                                  enumeration: Optional[list] = None,
                                  comment: Optional[Union[str, dict]] = None):
         """
-        Adds an OWL Restriction to an existing class without redefining it.
+        Add an OWL Restriction to an existing class without redefining it.
 
         Args:
             class_name: Name of the existing class
             property_name: Property to restrict
             all_values_from: Datatype or class for allValuesFrom
             enumeration: List of values for owl:oneOf (only used if provided)
-            comment: Comment specifically for this restriction
+            comment: Comment describing this restriction
         """
+
         class_uri = self._resolve_uri(class_name)
         restriction_bnode = BNode()
 
-        # Restriction type
+        # Create restriction
         self.graph.add((restriction_bnode, RDF.type, OWL.Restriction))
 
-        # Property to restrict
+        # Specify the property being restricted
         property_uri = self._resolve_uri(property_name)
         self.graph.add((restriction_bnode, OWL.onProperty, property_uri))
 
-        # Enumeration (e.g., GB, TB, ...)
+        # Add enumeration constraint(e.g., GB, TB, ...)
         if enumeration:
             datatype_bnode = BNode()
             enum_list = self._create_list(enumeration, datatype=True)
@@ -295,38 +418,75 @@ class ExaAToWOnto:
             self.graph.add((datatype_bnode, OWL.oneOf, enum_list))
             self.graph.add((restriction_bnode, OWL.allValuesFrom, datatype_bnode))
 
-        # Standard allValuesFrom
+        # Add allValuesFrom constraint
         elif all_values_from:
             range_uri = self._resolve_uri(all_values_from) if isinstance(all_values_from, str) else all_values_from
             self.graph.add((restriction_bnode, OWL.allValuesFrom, range_uri))
 
         # Add comment specific to restriction
         if comment:
-            self._add_dict_property(restriction_bnode, RDFS.comment, comment)
+            self._add_multilingual_property(restriction_bnode, RDFS.comment, comment)
 
         # Link restriction to class
         self.graph.add((class_uri, RDFS.subClassOf, restriction_bnode))
 
 
-    def _create_list(self, values, datatype=False):
+    def _create_list(self, values, datatype=False) -> BNode:
         """
         Helper to create RDF collections (rdf:List) for enumerations.
         """
         first_node = BNode()
         current_node = first_node
+        
         for i, val in enumerate(values):
             lit = Literal(val) if not datatype else Literal(val, datatype=XSD.string)
             self.graph.add((current_node, RDF.first, lit))
+            
             if i == len(values) - 1:
                 self.graph.add((current_node, RDF.rest, RDF.nil))
             else:
                 next_node = BNode()
                 self.graph.add((current_node, RDF.rest, next_node))
                 current_node = next_node
+                
         return first_node
 
+    def load_restrictions(self, json_file: str) -> None:
+        """
+        Load restrictions from JSON file and apply them
+        
+        Args:
+            json_file: Path to JSON file containing restriction definitions
+        """
+        try:
+            restrictions_data = self._load_json(json_file)
+        except FileNotFoundError:
+            print(f"Warning: Restrictions file '{json_file}' not found. Skipping.")
+            return
+        
+        for entry in restrictions_data:
+            class_name = entry["class_name"]
+            
+            for restriction in entry["restrictions"]:
+                kwargs = {
+                    "class_name": class_name,
+                    "property_name": restriction["property_name"],
+                    "comment": restriction.get("comment")
+                }
+                
+                if "enumeration" in restriction:
+                    kwargs["enumeration"] = restriction["enumeration"]
+                
+                if "all_values_from" in restriction:
+                    xsd_type = restriction["all_values_from"].split(":")[-1]
+                    kwargs["all_values_from"] = getattr(XSD, xsd_type)
+                
+                self.add_restriction_to_class(**kwargs)
 
-################################
+
+    # ==========================================
+    # Instance Management
+    # ==========================================
     def add_instance(self, instance_name: str, 
                      class_type: Union[URIRef, str, List[Union[URIRef, str]]],
                      properties: Optional[dict] = None,
@@ -340,37 +500,30 @@ class ExaAToWOnto:
             instance_name: Name of the instance
             class_type: Class(es) that this instance belongs to - can be single class or list
             properties: Dictionary of properties and their values
-            pref_label: Preferred label for the instance. Can be a string (default "en") or dict with lang keys.
-            comment: Comment describing the instance. Can be a string (default "en") or dict with lang keys.
-            json_path: Optional path to the JSON file in which this instance should be dumped
+            pref_label: Preferred label (string - default "en"- or dict with lang keys).
+            comment: Comment describing the instance (string - default "en"-  or dict with lang keys.
+            json_path: Optional path to  JSON file for export
         """
         # Handle JSON file mapping (consistent with add_class)
-        if json_path is not None:
-            if self.json_dir not in json_path:
-                json_path = os.path.join(self.json_dir, json_path)
-            self.json_file_mapping[instance_name] = json_path
+        self._handle_json_path(instance_name, json_path)
 
         # Use _resolve_uri for consistency
         instance_uri = self._resolve_uri(instance_name)
 
         # Handle multiple class types
         class_types = class_type if isinstance(class_type, list) else [class_type]
-
         for cls in class_types:
             cls_uri = self._resolve_uri(cls)
             # Use add_triple method for consistency (if available), otherwise use graph.add
-            if hasattr(self, 'add_triple'):
-                self.add_triple(instance_uri, RDF.type, cls_uri)
-            else:
-                self.graph.add((instance_uri, RDF.type, cls_uri))
+            self.add_triple(instance_uri, RDF.type, cls_uri)
 
         # Add prefLabel(s)
         if pref_label:
-            self._add_dict_property(instance_uri, SKOS.prefLabel, pref_label)
+            self._add_multilingual_property(instance_uri, SKOS.prefLabel, pref_label)
 
         # Add comment(s)
         if comment:
-            self._add_dict_property(instance_uri, RDFS.comment, comment)
+            self._add_multilingual_property(instance_uri, RDFS.comment, comment)
 
         # Add properties if provided
         if properties:
@@ -409,92 +562,48 @@ class ExaAToWOnto:
                         # Default to string literal
                         rdf_value = Literal(str(value))
 
-                    if hasattr(self, 'add_triple'):
-                        self.add_triple(instance_uri, prop_uri, rdf_value)
-                    else:
-                        self.graph.add((instance_uri, prop_uri, rdf_value))
+                    self.add_triple(instance_uri, prop_uri, rdf_value)
 
-########################## 
-
-
-    def load_and_add_classes(self, json_file, default_parent_class):
-        """Load classes from JSON file and add them with fallback parent class."""
+    def load_instances(self, json_file: str) -> None:
+        """
+        Load instances from JSON file and add them
         
-        with open(json_file, "r", encoding="utf-8") as f:
-            s_classes = json.load(f)
-    
-        for s_class in s_classes:
-            self.add_class(
-                s_class["id"],
-                pref_label=s_class["pref_label"],
-                parent_class=s_class.get("parent_class", default_parent_class),
-                comment=s_class["comment"]
-             )            
-            self.json_file_mapping[s_class["id"]] = json_file
+        Args:
+            json_file: Path to JSON file containing instance definitions
+        """
+        try:
+            instances_data = self._load_json(json_file)
+        except FileNotFoundError:
+            print(f"Warning: Instances file '{json_file}' not found. Skipping.")
+            return
+        
+        for inst in instances_data:
+            self.add_instance(
+                instance_name = inst["id"],
+                class_type = inst["class_type"],
+                pref_label = inst.get("pref_label"),
+                comment = inst.get("comment"),
+                properties = inst.get("properties"),
+                json_path = inst.get("json_path")
+            )
 
 
-    def load_and_add_properties(self, json_file):
-        """Load properties from JSON file and add them to the ontology."""
-        with open(json_file, "r", encoding="utf-8") as f:
-            properties = json.load(f)
-
-        for prop in properties:
-                self.add_property(
-                    property_name=prop.get("id"),
-                    property_type=prop.get("property_type", "ObjectProperty"),
-                    domain=prop.get("domain"),
-                    range_=prop.get("range"),
-                    comment=prop.get("comment"),
-                    pref_label=prop.get("pref_label")
-#                    inverse_of=prop.get("inverse_of")
-                    )
+    # ==========================================
+    # Ontology Initialization
+    # ==========================================
 
     def _init_basic_structure(self):
-        """Initialize the basic structure of the ExaAToW ontology"""
+        """Initialize the basic structure of the ontology"""
 
-        #--------------
-        # Core Classes
-        #--------------
+        # Load main classes
+        self.load_and_add_classes(
+            os.path.join(self.json_dir, "main_classes.json"),
+            None
+        )
 
-        # Read JSON file with main classes
-        self.load_and_add_classes(os.path.join(self.json_dir, "main_classes.json"), None)
-
-        #--------------------
-        # Adding subclasses
-        #--------------------
-
-        # dictionary of subclasses and their default parent class
-        subclasses = {
-            "sub_HPC_classes.json": "HPCResource",
-            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
-            "sub_PhysChar_classes.json": "PhysicalCharacteristic",
-            "sub_Job_classes.json": "Job",
-            "sub_Workflow_classes.json": "Workflow"
-        }
-        
-        # add all subclasses
-        for sub_file, parent in subclasses.items():
-            self.load_and_add_classes(os.path.join(self.json_dir, sub_file), parent)
-
-        #--------------------------------------------------
-        # Adding individual properties
-        #----------------------------------------------
-        
-        # List of properties linking subclasses
-        list_properties=[
-            "properties_workflow.json",
-            "properties_HPC.json"
-            ]
-        
-        # Adding all properties
-        for props in list_properties:
-            self.load_and_add_properties(props)
-
-        #---------------------------------------------
-        #
-
-        # Add 2 main properties: hasUnit and hasValue
+        # #############################################    
         # Global statement of "hasUnit" and "hasValue"
+        # #############################################
         self.add_property(
                     property_name="hasValue",
                     property_type="DatatypeProperty",
@@ -504,106 +613,14 @@ class ExaAToWOnto:
         
         self.add_property(
                     property_name="hasUnit",
-                    property_type="ObjectProperty",
+                    property_type="DatatypeProperty",
                     range_="XSD:string",
                     comment={"en": "Unit of measurement.","fr": "Unité de mesure"},
                     pref_label={"en": "has unit","fr": "a unité"})#
-
+        ################################################
         
-##########################################################################
 
-        with open("add_restrictions_hasValues_hasUnit.json", "r", encoding="utf-8") as f:
-            restrictions_data = json.load(f)
-#            print(restrictions_data)
-
-        for entry in restrictions_data:
-            class_name = entry["class_name"]
-            for restriction in entry["restrictions"]:
-                kwargs = {
-                    "class_name": class_name,
-                    "property_name": restriction["property_name"],
-                    "comment": restriction["comment"]
-                }
-                if "enumeration" in restriction:
-                    kwargs["enumeration"] = restriction["enumeration"]
-                if "all_values_from" in restriction:
-                    kwargs["all_values_from"] = getattr(XSD, restriction["all_values_from"].split(":")[-1])
-
-                self.add_restriction_to_class(**kwargs)
-
-
-#        # Restrict hasUnit to specific string values
-#        self.add_restriction_to_class(
-#            class_name="MemoryCapacity",
-#            property_name="hasUnit",
-#            enumeration=["GB", "TB", "PB", "MB", "KB"],
-#            comment={"en": "Allowed units for memory capacity"}
-#        )
-
-#        # Restrict hasValue to decimals
-#        self.add_restriction_to_class(
-#            class_name="MemoryCapacity",
-#            property_name="hasValue",
-#            all_values_from=XSD.decimal,
-#            comment={"en": "Memory size numeric value"}
-#        )
-
-        #+++++++++++++++++++++++++++++++++++++++++++++++++++
-        # Add instances
-        #-----------------------------------------------
-        # Create fixed instances
-
-        with open("instances_workflow.json", "r", encoding="utf-8") as f:
-            instances_w = json.load(f)
-    
-        for inst in instances_w:
-            self.add_instance(
-                instance_name = inst["instance_name"],
-                class_type = inst["class_type"],
-                pref_label = inst["pref_label"],
-                comment = inst["comment"]
-             )
-
-        #=+++++++++++++++++++++++++++++++++++++++++++++++++++
-
-
-# Missing: link between subclasses.
-# CPU and GPU has specufucations, i.,e. DieSize (property), Workload, 
-# Supercomputer has name, etc.
-
-#Instances:
-#ex:cpu1 a ex:CPU ;
-#        ex:hasDieSize ex:diesize1 .
-
-#ex:diesize1 a ex:DieSize ;
-#        ex:dieSizeValue "42.5"^^xsd:decimal ;
-#        ex:unit "mm²" .
-
-#properties:
-#CPU hasFeature DieSize
-#GPU hasFeature DieSize
-#CPU hasFeature Workload
-#GPU hasFeature Workload
-#XXX hasFeature lifetime
-
-        # Energy and Digital Twin Classes#
-#        self.add_class("EnergyConsumption", 
-#                      pref_label="Energy Consumption",
-#                      comment="Represents a measurement of energy usage.")
-        
-#        self.add_class("SimulationResult",
-#                      parent_class = "DigitalTwin",
-#                      pref_label="Simulation Result",
-#                      comment="Represents the outcome of a simulation performed by a Digital Twin.")
-        
-        # Object Properties
-#        self.add_property("authenticates", 
-#                         property_type="ObjectProperty",
-#                         domain="User",
-#                         range_="Authentication",
-#                         comment="Relates a User to an Authentication event.")
-
-    
+            
     def serialize(self, format: str = "turtle", destination: Optional[str] = None):
         """
         Serialize the ontology to a file or return as string
@@ -719,8 +736,8 @@ class ExaAToWOnto:
         return self.graph
     
     def get_namespace(self):
-        """Return the ExaAToW namespace"""
-        return self.EXAATOW
+        """Return the ONTO namespace"""
+        return self.ONTO
     
     def create_json_mapping(self) -> Dict[str, Dict[str, Union[str, Dict[str, str]]]]:
         """Create a dictionary mapping JSON files to their corresponding entries"""
@@ -849,13 +866,52 @@ class ExaAToWOnto:
             for id in file_grouping[None]:
                 print(f"  {id}")
 
+#_______________________________________________________________________________
+# Exa-AToW use case
 
-# Example usage
 if __name__ == "__main__":
     # Create an instance of the ontology
-    onto = ExaAToWOnto()
+    onto_exaatow = CreateOnto("https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#")
+
+    # Load subclasses
+    # dictionary of subclasses and their default parent class
+    subclasses = {
+            "sub_HPC_classes.json": "HPCResource",
+#            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
+            "sub_PhysChar_classes.json": "PhysicalCharacteristic",
+            "sub_Job_classes.json": "Job",
+            "sub_Workflow_classes.json": "Workflow"
+    }
+        
+    for sub_file, parent in subclasses.items():
+        onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, sub_file), parent)
+
+    # Load properties
+    list_properties=[
+            "properties_workflow.json",
+            "properties_HPC.json"
+    ]
+        
+    for props in list_properties:
+        onto_exaatow.load_and_add_properties(os.path.join(onto_exaatow.json_dir, props))
+
+    # Load and add restrictions
+    onto_exaatow.load_restrictions("add_restrictions_hasValue_hasUnit.json")
+
+    # Load and add instances
+    list_instances=[
+            "instances_workflow.json"
+            ]
+    for instances in list_instances:
+        onto_exaatow.load_instances(instances)
+
+    # Print the ontology in Turtle format
+    onto_exaatow.serialize(destination="exaatow_ontology.ttl",format="turtle")
+
+
     
-    # Add a custom class
+#################################################################################################    
+# Add a custom class
 #    onto.add_class("CustomResource", 
 #                   parent_class="HPCResource",
 #                   pref_label="Custom Resource",
@@ -873,5 +929,39 @@ if __name__ == "__main__":
 #                      "CustomResource",
 #                      properties={"hasCustomProperty": "example_value"})
     
-    # Print the ontology in Turtle format
-    print(onto.serialize(destination="exaatow_ontology.ttl",format="turtle"))
+
+        #=+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+#Instances:
+#ex:cpu1 a ex:CPU ;
+#        ex:hasDieSize ex:diesize1 .
+
+#ex:diesize1 a ex:DieSize ;
+#        ex:dieSizeValue "42.5"^^xsd:decimal ;
+#        ex:unit "mm²" .
+
+#properties:
+#CPU hasFeature DieSize
+#GPU hasFeature DieSize
+#CPU hasFeature Workload
+#GPU hasFeature Workload
+#XXX hasFeature lifetime
+
+        # Energy and Digital Twin Classes#
+#        self.add_class("EnergyConsumption", 
+#                      pref_label="Energy Consumption",
+#                      comment="Represents a measurement of energy usage.")
+        
+#        self.add_class("SimulationResult",
+#                      parent_class = "DigitalTwin",
+#                      pref_label="Simulation Result",
+#                      comment="Represents the outcome of a simulation performed by a Digital Twin.")
+        
+        # Object Properties
+#        self.add_property("authenticates", 
+#                         property_type="ObjectProperty",
+#                         domain="User",
+#                         range_="Authentication",
+#                         comment="Relates a User to an Authentication event.")
+
+    

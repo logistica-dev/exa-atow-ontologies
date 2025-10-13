@@ -1,7 +1,7 @@
 [
     {
     "id": "hasDieSize",
-    "property_type": "DatatypeProperty",
+    "property_type": "ObjectProperty",
     "domain": "Processor",
     "range": "DieSize",
     "pref_label": {
@@ -15,7 +15,7 @@
   },
   {
     "id": "hasWorkload",
-    "property_type": "DatatypeProperty",
+    "property_type": "ObjectProperty",
     "domain": "Processor",
     "range": "Workload",
     "pref_label": {
@@ -29,7 +29,7 @@
   },
   {
     "id": "hasLifetime",
-    "property_type": "DatatypeProperty",
+    "property_type": "ObjectProperty",
     "domain": ["Processor", "Server"],
     "range": "Lifetime",
     "pref_label": {
@@ -43,7 +43,7 @@
   },
   {
     "id": "hasMemoryCapacity",
-    "property_type": "DatatypeProperty",
+    "property_type": "ObjectProperty",
     "domain": ["RAM", "SSD", "HDD"],
     "range": "MemoryCapacity",
     "pref_label": {
