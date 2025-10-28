@@ -1,0 +1,4969 @@
+{
+  "_comment" : "Created with OWL2VOWL (version 0.3.5), http://vowl.visualdataweb.org",
+  "header" : {
+    "languages" : [ "en", "fr", "undefined" ],
+    "baseIris" : [ "http://www.w3.org/1999/02/22-rdf-syntax-ns", "http://purl.org/pav", "http://www.w3.org/2000/01/rdf-schema", "http://www.w3.org/ns/prov", "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl", "http://purl.org/wf4ever/wfdesc", "http://www.w3.org/2001/XMLSchema", "http://purl.org/wf4ever/wfprov" ],
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#",
+    "version" : "0.1",
+    "labels" : {
+      "en" : "Exa-AToW Workflow Ontology"
+    },
+    "comments" : {
+      "en" : "Ontology for describing workflows, engines, steps, data, provenance, \n    execution environment and design properties for heterogeneous WMS interoperability.\n    \n    This ontology extends and aligns with:\n    - PROV-O: for provenance tracking (prov:used, prov:wasGeneratedBy, prov:wasAssociatedWith)\n    - wfdesc: for workflow structure (wfdesc:hasInput, wfdesc:hasOutput, wfdesc:hasDataLink)\n    - wfprov: for workflow execution provenance\n    - PAV: for versioning and attribution\n    \n    Exa-AToW adds domain-specific classes for workflow properties, execution environments,\n    and cross-WMS interoperability while maintaining full compatibility with W3C standards."
+    },
+    "other" : {
+      "versionInfo" : [ {
+        "identifier" : "versionInfo",
+        "language" : "undefined",
+        "value" : "0.1",
+        "type" : "label"
+      } ]
+    }
+  },
+  "namespace" : [ ],
+  "class" : [ {
+    "id" : "3",
+    "type" : "owl:Class"
+  }, {
+    "id" : "5",
+    "type" : "owl:Class"
+  }, {
+    "id" : "11",
+    "type" : "owl:Class"
+  }, {
+    "id" : "22",
+    "type" : "owl:Class"
+  }, {
+    "id" : "8",
+    "type" : "owl:Class"
+  }, {
+    "id" : "39",
+    "type" : "owl:Class"
+  }, {
+    "id" : "42",
+    "type" : "owl:Class"
+  }, {
+    "id" : "13",
+    "type" : "owl:Class"
+  }, {
+    "id" : "58",
+    "type" : "owl:Class"
+  }, {
+    "id" : "63",
+    "type" : "owl:Class"
+  }, {
+    "id" : "44",
+    "type" : "owl:Class"
+  }, {
+    "id" : "76",
+    "type" : "owl:Class"
+  }, {
+    "id" : "66",
+    "type" : "owl:Class"
+  }, {
+    "id" : "83",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "50",
+    "type" : "owl:Class"
+  }, {
+    "id" : "41",
+    "type" : "owl:Class"
+  }, {
+    "id" : "85",
+    "type" : "owl:Class"
+  }, {
+    "id" : "4",
+    "type" : "owl:Class"
+  }, {
+    "id" : "40",
+    "type" : "owl:Class"
+  }, {
+    "id" : "6",
+    "type" : "owl:Class"
+  }, {
+    "id" : "91",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "92",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "93",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "57",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "96",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "99",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "100",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "101",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "106",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "105",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "49",
+    "type" : "owl:Class"
+  }, {
+    "id" : "110",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "2",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "32",
+    "type" : "owl:Class"
+  }, {
+    "id" : "21",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "73",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "61",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "71",
+    "type" : "owl:Class"
+  }, {
+    "id" : "78",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "112",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "55",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "64",
+    "type" : "owl:Class"
+  }, {
+    "id" : "103",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "113",
+    "type" : "owl:Class"
+  }, {
+    "id" : "48",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "1",
+    "type" : "owl:Class"
+  }, {
+    "id" : "118",
+    "type" : "owl:Class"
+  }, {
+    "id" : "89",
+    "type" : "owl:Class"
+  }, {
+    "id" : "98",
+    "type" : "owl:Class"
+  }, {
+    "id" : "90",
+    "type" : "owl:Class"
+  }, {
+    "id" : "18",
+    "type" : "owl:Class"
+  }, {
+    "id" : "35",
+    "type" : "owl:Thing"
+  }, {
+    "id" : "53",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "84",
+    "type" : "owl:Class"
+  }, {
+    "id" : "27",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "143",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "123",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "38",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "36",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "95",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "68",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "25",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "33",
+    "type" : "owl:Class"
+  }, {
+    "id" : "136",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "80",
+    "type" : "owl:Class"
+  }, {
+    "id" : "152",
+    "type" : "owl:Class"
+  }, {
+    "id" : "24",
+    "type" : "owl:Class"
+  }, {
+    "id" : "51",
+    "type" : "owl:Class"
+  }, {
+    "id" : "16",
+    "type" : "owl:Class"
+  }, {
+    "id" : "9",
+    "type" : "owl:Class"
+  }, {
+    "id" : "154",
+    "type" : "owl:Class"
+  }, {
+    "id" : "186",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "189",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "14",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "147",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "75",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "160",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "139",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "45",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "120",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "70",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "126",
+    "type" : "owl:Class"
+  }, {
+    "id" : "88",
+    "type" : "owl:Class"
+  }, {
+    "id" : "87",
+    "type" : "owl:Class"
+  }, {
+    "id" : "111",
+    "type" : "owl:Class"
+  }, {
+    "id" : "20",
+    "type" : "owl:Class"
+  } ],
+  "classAttribute" : [ {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DomainSpecificity",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Spécificité du domaine",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Domain Specificity",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "DomainSpecificity"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DomainSpecificWorkflow",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Spécifique au domaine",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Domain-specific",
+          "type" : "label"
+        } ]
+      },
+      "labels" : {
+        "IRI-based" : "DomainSpecificWorkflow"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#GenericWorkflow",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Generic",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Générique",
+          "type" : "label"
+        } ]
+      },
+      "labels" : {
+        "IRI-based" : "GenericWorkflow"
+      }
+    } ],
+    "comment" : {
+      "en" : "Describes whether the workflow is designed for a specific scientific or industrial domain, or is domain-agnostic and reusable.",
+      "fr" : "Indique si le flux de travail est conçu pour un domaine scientifique ou industriel spécifique, ou s’il est agnostique et réutilisable."
+    },
+    "id" : "3",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataArtifact",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Data Artifact",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "DataArtifact"
+    },
+    "comment" : {
+      "en" : "A data artifact (file, dataset, object) produced or consumed by workflow steps."
+    },
+    "id" : "5",
+    "superClasses" : [ "6" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#AbstractionLevel",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Niveau d'abstraction",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Abstraction Level",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "AbstractionLevel"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Concrete",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Concret",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Concrete",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Fully specified execution plans.",
+        "fr" : "Plans d'exécution entièrement spécifiés."
+      },
+      "labels" : {
+        "IRI-based" : "Concrete"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Astract",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "labels" : {
+        "IRI-based" : "Astract"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Implicit",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Implicite",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Implicit",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflow defined at code level.",
+        "fr" : "Flux de travail défini au niveau du code."
+      },
+      "labels" : {
+        "IRI-based" : "Implicit"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Abstract",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Abstrait",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Abstract level",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflow defined as logical steps.",
+        "fr" : "Flux de travail défini comme étapes logiques."
+      },
+      "labels" : {
+        "IRI-based" : "Abstract"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Intermediate",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Intermédiaire",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Intermediate",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflow defined with a balance between logical steps and initial execution constraints, often including platform-agnostic configuration or data flow specifications.",
+        "fr" : "Le flux de travail est défini avec un équilibre entre les étapes logiques et les contraintes d'exécution initiales, incluant souvent une configuration agnostique de la plateforme ou des spécifications de flux de données."
+      },
+      "labels" : {
+        "IRI-based" : "Intermediate"
+      }
+    } ],
+    "comment" : {
+      "en" : "The conceptual level at which the workflow is defined. Ranges from implicit (code-level), abstract (logical steps), intermediate, to concrete (fully specified execution plans).",
+      "fr" : "Le niveau conceptuel auquel le flux de travail est défini. Va de implicite (niveau code), à abstrait (étapes logiques), intermédiaire, ou concret (plans d'exécution entièrement spécifiés)."
+    },
+    "id" : "11",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#Agent",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Agent"
+    },
+    "attributes" : [ "external" ],
+    "id" : "22"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Workflow",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Workflow",
+      "en" : "Workflow",
+      "fr" : "Flux de travail"
+    },
+    "comment" : {
+      "en" : "A discrete unit within a workflow representing a task, command, or function that contributes to the overall workflow goal. It may execute computations, data manipulations, or invoke external services. Dependencies and scheduling are defined between steps to control execution order.",
+      "fr" : "Une unité discrète au sein d'un flux de travail représentant une tâche, une commande ou une fonction contribuant à l'objectif global du workflow. Elle peut executer des calculs, manipulation des donnes ou appel aux services externes."
+    },
+    "id" : "8",
+    "superClasses" : [ "33" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Parameter",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Parametre",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Parameter",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Parameter"
+    },
+    "subClasses" : [ "41", "42" ],
+    "comment" : {
+      "en" : "A variable representing an input or output data element within a workflow or step."
+    },
+    "id" : "39",
+    "superClasses" : [ "40" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OutputParameter",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Output Parameter",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Paramètre de sortie",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "OutputParameter"
+    },
+    "comment" : {
+      "en" : "A result produced by a workflow step after execution. It may be a file, dataset, metric, or computation result used by other steps or stored for future processing.",
+      "fr" : "Un résultat produit par une étape de flux de travail après exécution. Il peut s'agir d'un fichier, d'un jeu de données, d'une métrique ou d'un résultat de calcul utilisé par d'autres étapes ou stocké pour un traitement ultérieur."
+    },
+    "id" : "42",
+    "superClasses" : [ "39", "49" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Execution",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Execution",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Exécution",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Execution"
+    },
+    "comment" : {
+      "en" : "Represents an execution (run) instance of a workflow.",
+      "fr" : "Représente une instance d'exécution (run) d'un flux de travail."
+    },
+    "id" : "13",
+    "superClasses" : [ "50", "51" ]
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfprov#WorkflowEngine",
+    "baseIri" : "http://purl.org/wf4ever/wfprov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "WorkflowEngine"
+    },
+    "subClasses" : [ "1" ],
+    "attributes" : [ "external" ],
+    "id" : "58"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#SoftwareTool",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Software Tool",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "SoftwareTool"
+    },
+    "comment" : {
+      "en" : "A specific scientific software application, script, or command-line utility executed within a workflow step."
+    },
+    "id" : "63",
+    "superClasses" : [ "64" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Container",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Conteneur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Container",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Container"
+    },
+    "comment" : {
+      "en" : "A portable, encapsulated execution environment containing all software dependencies required by a workflow step. Common formats include Docker and Singularity.",
+      "fr" : "Un environnement d'exécution portable et encapsulé contenant toutes les dépendances logicielles requises par une étape de flux de travail. Les formats courants incluent Docker et Singularity."
+    },
+    "id" : "44",
+    "superClasses" : [ "20" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CloudEnvironment",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Environnement Cloud",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Cloud Environment",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "CloudEnvironment"
+    },
+    "comment" : {
+      "en" : "Cloud execution context (managed services, VMs, serverless platforms).",
+      "fr" : "Contexte d'exécution cloud (services managés, VM, plateformes serverless)."
+    },
+    "id" : "76",
+    "superClasses" : [ "20" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementGranularity",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Data Management Granularity",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Granularité de la gestion des données",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "DataManagementGranularity"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Partitioned",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Partitionné",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Partitioned",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Data divided into groups of records.",
+        "fr" : "Données divisées en groupes d'enregistrements."
+      },
+      "labels" : {
+        "IRI-based" : "Partitioned"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Batch",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Batch",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Batch",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Full sets of data consumed/produced.",
+        "fr" : "Jeux de données complets consommés/produits."
+      },
+      "labels" : {
+        "IRI-based" : "Batch"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Pipelined",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Pipelined",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Pipeline",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Data streamed record by record.",
+        "fr" : "Flux de données enregistrements par enregistrements."
+      },
+      "labels" : {
+        "IRI-based" : "Pipelined"
+      }
+    } ],
+    "comment" : {
+      "en" : "Granularity at which the WMS handles data operations. Possible values: Batch (data consumed and produced in full sets), Pipelined (data streamed record by record), Partitioned (data divided into groups of records).",
+      "fr" : "Granularité à laquelle le système de gestion de workflow traite les opérations sur les données. Valeurs possibles : Batch (consommation et production en ensembles complets), Pipeline (flux enregistrements individuels), Partitionné (groupes d'enregistrements)."
+    },
+    "id" : "66",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "83",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#Activity",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Activity"
+    },
+    "subClasses" : [ "13", "24" ],
+    "attributes" : [ "external" ],
+    "id" : "50"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#InputParameter",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Input Parameter",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Paramètre d’entrée",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "InputParameter"
+    },
+    "comment" : {
+      "en" : "A data value or configuration setting required by a workflow step or command-line tool to begin execution. Inputs may include file paths, memory limits, container images, or dataset identifiers.",
+      "fr" : "Une valeur de donnée ou un paramètre de configuration requis par une étape ou un outil en ligne de commande pour démarrer l'exécution. Les entrées peuvent inclure des chemins de fichiers, des limites de mémoire, des images de conteneurs ou des identifiants de jeux de données."
+    },
+    "id" : "41",
+    "superClasses" : [ "39", "84" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ComputationalResource",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Computational Resource",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Resource computationnelle",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ComputationalResource"
+    },
+    "comment" : {
+      "en" : "A hardware or virtual resource required by an execution environment, such as HPC nodes, CPUs, GPUs, or memory.",
+      "fr" : "Une ressource matérielle ou virtuelle requise par un environnement d'exécution, comme des nœuds HPC, des CPU, GPU ou mémoire."
+    },
+    "id" : "85"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#WorkflowProperty",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Propriété du flux de travail",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Workflow Property",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "WorkflowProperty"
+    },
+    "subClasses" : [ "16", "11", "9", "3", "88", "89", "32", "66", "80", "87", "90", "18" ],
+    "comment" : {
+      "en" : "Attributes describing structural, execution, or data management characteristic of a workflow.",
+      "fr" : "Attributs décrivant les caractéristiques structurelles, d'exécution ou de gestion des données d'un flux de travail."
+    },
+    "id" : "4"
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#Parameter",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Parameter"
+    },
+    "subClasses" : [ "39" ],
+    "attributes" : [ "external" ],
+    "id" : "40"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#Entity",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Entity"
+    },
+    "subClasses" : [ "5" ],
+    "attributes" : [ "external" ],
+    "id" : "6"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "91",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#dateTime",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "92",
+    "label" : {
+      "IRI-based" : "dateTime"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "93",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "57",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#decimal",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "96",
+    "label" : {
+      "IRI-based" : "decimal"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "99",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "100",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "101",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "106",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "105",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#Output",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Output"
+    },
+    "subClasses" : [ "42" ],
+    "attributes" : [ "external" ],
+    "id" : "49"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "110",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "2",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Granularity",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Granularity",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Granularité",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Granularity"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FineGrained",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Finesse granulaire",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Fine-grained",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflow is composed of small, atomic tasks or functions.",
+        "fr" : "Le flux est composé de petites tâches atomiques ou fonctions."
+      },
+      "labels" : {
+        "IRI-based" : "FineGrained"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CoarsedGrained",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "labels" : {
+        "IRI-based" : "CoarsedGrained"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CoarseGrained",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Coarse-grained",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Gros grain",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflow is built with larger components such as sub-workflows or complete applications.",
+        "fr" : "Le flux est construit avec des composants plus larges comme des sous-flux ou des applications complètes."
+      },
+      "labels" : {
+        "IRI-based" : "CoarseGrained"
+      }
+    } ],
+    "comment" : {
+      "en" : "Level of decomposition of a workflow: from fine-grained functions to coarse-grained sub-workflows or standalone executables.",
+      "fr" : "Niveau de décomposition d’un flux de travail : des fonctions de bas niveau aux sous-flux de travail ou exécutables autonomes de haut niveau."
+    },
+    "id" : "32",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "21",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "73",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "61",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataProvenance",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Data Provenance",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Provenance des données",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "DataProvenance"
+    },
+    "comment" : {
+      "en" : "\n    Describes the lineage and transformation history of data artifacts \n    within workflows. It links data inputs, intermediate results, and outputs \n    to workflow steps, capturing how data was produced and used to enable \n    traceability and reproducibility.\n    "
+    },
+    "id" : "71",
+    "superClasses" : [ "111" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "78",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "112",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "55",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#SoftwareAgent",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "SoftwareAgent"
+    },
+    "subClasses" : [ "1", "63" ],
+    "attributes" : [ "external" ],
+    "id" : "64"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "103",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#Process",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Process"
+    },
+    "subClasses" : [ "24" ],
+    "attributes" : [ "external" ],
+    "id" : "113"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#dateTime",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "48",
+    "label" : {
+      "IRI-based" : "dateTime"
+    }
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#WorkflowEngine",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Workflow Engine",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Moteur de flux de travail",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "WorkflowEngine"
+    },
+    "comment" : {
+      "en" : "A software system responsible for interpreting, orchestrating, scheduling, and managing the execution of a workflow, including its steps and underlying computational tools. Examples include CWL runner, Apache NiFi, Snakemake, and Airflow.",
+      "fr" : "Un système logiciel responsable de l'**interprétation, de l'orchestration, de la planification et de la gestion de l'exécution** d'un flux de travail, y compris ses étapes et les outils de calcul sous-jacents (par exemple, CWL runner, Airflow, Nextflow)."
+    },
+    "id" : "1",
+    "superClasses" : [ "58", "64" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CondaEnvironment",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Environnement Conda",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Conda Environment",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "CondaEnvironment"
+    },
+    "comment" : {
+      "en" : "A software environment managed by Conda containing packages and dependencies needed for a workflow.",
+      "fr" : "Un environnement logiciel géré par Conda contenant les packages et dépendances nécessaires pour un flux de travail."
+    },
+    "id" : "118",
+    "superClasses" : [ "20" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CompositionMethod",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Composition Method",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Méthode de composition",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "CompositionMethod"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#APIDriven",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "API-driven",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Pilotée par API",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflows expressed via a programming API or template engine, enabling control structures such as loops and conditionals.",
+        "fr" : "Workflows exprimés via une API de programmation ou un moteur de gabarit, permettant des structures de contrôle comme des boucles et des conditions."
+      },
+      "labels" : {
+        "IRI-based" : "APIDriven"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#GUIBased",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "GUI-based",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Basée sur une interface graphique",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflows built visually through a GUI.",
+        "fr" : "Workflows construits visuellement via une interface graphique."
+      },
+      "labels" : {
+        "IRI-based" : "GUIBased"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#SchemaBased",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Basée sur un schéma",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Schema-based",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflows defined in structured text files  (XML, JSON, YAML, DSL) with either ad-hoc syntax specific to a single WMS or a standardized format shared across multiple WMSs (e.g., CWL, IWIR, Wf-format).",
+        "fr" : "Workflows définis dans des fichiers texte structurés  (XML, JSON, YAML, DSL) avec une syntaxe ad hoc spécifique à un WMS ou un format standard partagé par plusieurs WMS (par ex. CWL, IWIR, Wf-Format) ."
+      },
+      "labels" : {
+        "IRI-based" : "SchemaBased"
+      }
+    } ],
+    "comment" : {
+      "en" : "The approach used to describe and assemble a workflow within a workflow management system (WMS). Composition can be: (1) schema-based, where workflows are defined in structured text files (XML, JSON, YAML, DSL) with either ad-hoc syntax specific to a single WMS or a standardized format shared across multiple WMSs (e.g., CWL, IWIR, Wf-Format); (2) API-driven, where workflows are expressed through a programming API or template engine, enabling control structures such as loops and conditionals; or (3) GUI-based, where workflows are constructed visually via a graphical interface.",
+      "fr" : "L’approche utilisée pour décrire et assembler un flux de travail dans un système de gestion de flux de travail (WMS). La composition peut être : (1) basée sur un schéma, où les workflows sont définis dans des fichiers texte structurés (XML, JSON, YAML, DSL) avec une syntaxe ad hoc spécifique à un WMS ou un format standard partagé par plusieurs WMS (par ex. CWL, IWIR, Wf-Format) ; (2) pilotée par API, où les workflows sont exprimés via une API de programmation ou un moteur de gabarit, permettant des structures de contrôle comme des boucles et des conditions ; ou (3) basée sur une interface graphique, où les workflows sont construits visuellement."
+    },
+    "id" : "89",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FAIRCompliance",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Conformité aux principes FAIR",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "FAIR Compliance",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "FAIRCompliance"
+    },
+    "comment" : {
+      "en" : "Indicates the extent to which the workflow, its components, and outputs adhere to the FAIR principles (Findable, Accessible, Interoperable, Reusable). Used to capture FAIRness evaluations or certifications",
+      "fr" : "Indique dans quelle mesure le flux de travail, ses composants et ses sorties respectent les principes FAIR (Faciles à trouver, Accessibles, Interopérables, Réutilisables)."
+    },
+    "id" : "98",
+    "superClasses" : [ "111" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementStorage",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Data Management Storage",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Stockage de la gestion des données",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "DataManagementStorage"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#SharedFileSystem",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Système de fichiers partagé",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Shared File System",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Accessible by multiple nodes.",
+        "fr" : "Accessible par plusieurs nœuds."
+      },
+      "labels" : {
+        "IRI-based" : "SharedFileSystem"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#InMemory",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "In-Memory",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "En mémoire",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Data held in RAM.",
+        "fr" : "Données conservées en RAM."
+      },
+      "labels" : {
+        "IRI-based" : "InMemory"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ReplicatedStorage",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Stockage répliqué",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Replicated Storage",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Copies of data stored in multiple locations.",
+        "fr" : "Copies de données dans plusieurs emplacements."
+      },
+      "labels" : {
+        "IRI-based" : "ReplicatedStorage"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#TransferTasks",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Tâches de transfert",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Transfer Tasks",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Intermediate tasks move data.",
+        "fr" : "Tâches intermédiaires déplacent les données."
+      },
+      "labels" : {
+        "IRI-based" : "TransferTasks"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DistributedStorage",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Distributed Storage",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Stockage distribué",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Data spread across several machines.",
+        "fr" : "Données réparties sur plusieurs machines."
+      },
+      "labels" : {
+        "IRI-based" : "DistributedStorage"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#LocalFileSystem",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Local File System",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Système de fichiers local",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Data stored locally on one machine.",
+        "fr" : "Données stockées localement sur une machine."
+      },
+      "labels" : {
+        "IRI-based" : "LocalFileSystem"
+      }
+    } ],
+    "comment" : {
+      "en" : "Storage model used for intermediate data. Possible values: LocalFileSystem, SharedFileSystem, DistributedStorage, ReplicatedStorage, TransferTasks, InMemory.",
+      "fr" : "Modèle de stockage utilisé pour les données intermédiaires. Valeurs possibles : Système de fichiers local, Système de fichiers partagé, Stockage distribué, Stockage répliqué, Tâches de transfert, En mémoire."
+    },
+    "id" : "90",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementTransport",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Transport de la gestion des données",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Data Management Transport",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "DataManagementTransport"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#StreamBased",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Basé sur flux",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Stream-based",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Streaming via memory or network.",
+        "fr" : "Streaming via mémoire ou réseau."
+      },
+      "labels" : {
+        "IRI-based" : "StreamBased"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FileBased",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "File-based",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Basé sur fichiers",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Transfer via file writing/reading.",
+        "fr" : "Transfert via fichiers."
+      },
+      "labels" : {
+        "IRI-based" : "FileBased"
+      }
+    } ],
+    "comment" : {
+      "en" : "Mechanism to transfer intermediate data between workflow components. Possible values: FileBased (written/read from files), StreamBased (direct streaming via memory or network).",
+      "fr" : "Mécanisme de transfert des données intermédiaires entre composants. Valeurs possibles : Basé sur fichiers (écriture/lecture depuis des fichiers), Basé sur flux (streaming direct via mémoire ou réseau)."
+    },
+    "id" : "18",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "http://www.w3.org/2002/07/owl#Thing",
+    "baseIri" : "http://owl2vowl.de",
+    "id" : "35",
+    "label" : {
+      "undefined" : "Thing"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "53",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#Input",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Input"
+    },
+    "subClasses" : [ "41" ],
+    "attributes" : [ "external" ],
+    "id" : "84"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "27",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "143",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "123",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "38",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "36",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "95",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "68",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "25",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#Workflow",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Workflow"
+    },
+    "subClasses" : [ "8" ],
+    "attributes" : [ "external" ],
+    "id" : "33"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "136",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionControl",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Execution Control",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Contrôle d'exécution",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ExecutionControl"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Serverless",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Sans serveur",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Serverless",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Infrastructure handled by the provider.",
+        "fr" : "Infrastructure gérée par le fournisseur."
+      },
+      "labels" : {
+        "IRI-based" : "Serverless"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ResourceManager",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Gestionnaire de ressources",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Resource Manager",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Delegates to external resource managers.",
+        "fr" : "Délègue à un gestionnaire de ressources externe."
+      },
+      "labels" : {
+        "IRI-based" : "ResourceManager"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Runner",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Runner",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Exécuteur",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Manages task execution and resources.",
+        "fr" : "Gère l'exécution des tâches et les ressources."
+      },
+      "labels" : {
+        "IRI-based" : "Runner"
+      }
+    } ],
+    "comment" : {
+      "en" : "Specifies the method used to execute tasks within a workflow. Possible values include: Runner (workflow system fully manages resources and task execution), Resource Manager (delegates resource allocation to an external manager such as a batch scheduler), and Serverless (cloud-based model where infrastructure management is handled by the provider).",
+      "fr" : "Spécifie la méthode utilisée pour exécuter les tâches dans un workflow. Les valeurs possibles incluent : Exécuteur (le système gère entièrement les ressources et l'exécution), Gestionnaire de ressources (délègue l'allocation des ressources à un gestionnaire externe comme un ordonnanceur), et Sans serveur (modèle basé sur le cloud où la gestion de l'infrastructure est assurée par le fournisseur)."
+    },
+    "id" : "80",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#HPCEnvironment",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "HPC Environment",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Environnement HPC",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "HPCEnvironment"
+    },
+    "comment" : {
+      "en" : "A high-performance computing cluster providing compute nodes, memory, and scheduling capabilities for workflow execution.",
+      "fr" : "Un cluster de calcul haute performance fournissant des nœuds de calcul, de la mémoire et des capacités d'ordonnancement pour l'exécution de workflows."
+    },
+    "id" : "152",
+    "superClasses" : [ "20" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#WorkflowStep",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Étape du flux de travail",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Workflow Step",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "WorkflowStep"
+    },
+    "comment" : {
+      "en" : "A discrete unit within a workflow representing a task, command, or function that contributes to the overall workflow goal. It may execute computations, data manipulations, or invoke external services. Dependencies and scheduling are defined between steps to control execution order.",
+      "fr" : "Une unité discrète au sein d'un flux de travail représentant une tâche, une commande ou une fonction contribuant à l'objectif global du workflow. Elle peut exécuter des calculs, manipuler des données ou appeler des services externes. Les dépendances et la planification entre les étapes contrôlent l'ordre d'exécution."
+    },
+    "id" : "24",
+    "superClasses" : [ "50", "113" ]
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfprov#WorkflowRun",
+    "baseIri" : "http://purl.org/wf4ever/wfprov",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "WorkflowRun"
+    },
+    "subClasses" : [ "13" ],
+    "attributes" : [ "external" ],
+    "id" : "51"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Coupling",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Coupling",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Couplage",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Coupling"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#LooseCoupling",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Couplage faible",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Loose Coupling",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Modular and flexible interaction between workflow components.",
+        "fr" : "Interaction modulaire et flexible entre les composants du flux de travail."
+      },
+      "labels" : {
+        "IRI-based" : "LooseCoupling"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#TightCoupling",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Couplage fort",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Tight Coupling",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Strong interdependence and synchronous execution between components.",
+        "fr" : "Forte interdépendance et exécution synchrone entre les composants."
+      },
+      "labels" : {
+        "IRI-based" : "TightCoupling"
+      }
+    } ],
+    "comment" : {
+      "en" : "Degree of dependency between workflow components. Tight coupling implies strong interdependence and synchronous execution; loose coupling implies modularity and flexibility.",
+      "fr" : "Degré de dépendance entre les composants du flux de travail. Le couplage fort implique une interdépendance importante et une exécution synchrone ; le couplage faible favorise la modularité et la flexibilité."
+    },
+    "id" : "16",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FlowType",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Type de flux",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Flow Type",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "FlowType"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataDriven",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Orienté données",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Data-driven",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflow execution is triggered by data availability.",
+        "fr" : "L'exécution du flux est déclenchée par la disponibilité des données."
+      },
+      "labels" : {
+        "IRI-based" : "DataDriven"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Iterative",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Iterative",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Itératif",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflow loops over conditions or data until a criterion is met.",
+        "fr" : "Le flux de travail boucle sur des conditions ou des données jusqu’à ce qu’un critère soit satisfait."
+      },
+      "labels" : {
+        "IRI-based" : "Iterative"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#TaskBased",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Basé sur les tâches",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Task-based",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Workflow progresses through a defined sequence of tasks.",
+        "fr" : "Le flux de travail progresse à travers une séquence définie de tâches."
+      },
+      "labels" : {
+        "IRI-based" : "TaskBased"
+      }
+    } ],
+    "comment" : {
+      "en" : "The structural nature of the workflow: task-based (sequential steps), data-driven (triggered by data availability), or iterative (looping over conditions or data).",
+      "fr" : "La nature structurelle du flux de travail : basé sur les tâches (étapes séquentielles), orienté données (déclenché par la disponibilité des données) ou itératif (boucles sur des conditions ou des données)."
+    },
+    "id" : "9",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#LocalMachine",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Local Machine",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Machine locale",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "LocalMachine"
+    },
+    "comment" : {
+      "en" : "Environment of the local workstation or laptop.",
+      "fr" : "Environnement local (poste de travail, portable)."
+    },
+    "id" : "154",
+    "superClasses" : [ "20" ]
+  }, {
+    "instances" : 0,
+    "union" : [ "8", "24" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "186"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#dateTime",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "189",
+    "label" : {
+      "IRI-based" : "dateTime"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#dateTime",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "14",
+    "label" : {
+      "IRI-based" : "dateTime"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#dateTime",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "147",
+    "label" : {
+      "IRI-based" : "dateTime"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#anyURI",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "75",
+    "label" : {
+      "IRI-based" : "anyURI"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "160",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "139",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "45",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "8", "24" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "120"
+  }, {
+    "instances" : 0,
+    "union" : [ "8", "5" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "70"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionStatus",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Execution Status",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Status d'exécution",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ExecutionStatus"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FailedStatus",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Failed",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Échoué",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "The workflow or task terminated due to an error.",
+        "fr" : "Le flux de travail ou la tâche s'est terminé en raison d'une erreur."
+      },
+      "labels" : {
+        "IRI-based" : "FailedStatus"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CancelledStatus",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Cancelled",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Annulé",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "The workflow or task was explicitly stopped by a user or system prior to completion.",
+        "fr" : "Le flux de travail ou la tâche a été explicitement arrêté par un utilisateur ou le système avant son achèvement."
+      },
+      "labels" : {
+        "IRI-based" : "CancelledStatus"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#RunningStatus",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "En cours",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Running",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "The workflow or task is currently being executed.",
+        "fr" : "Le flux de travail ou la tâche est en cours d'exécution."
+      },
+      "labels" : {
+        "IRI-based" : "RunningStatus"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CompletedStatus",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Completed",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Terminé",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "The workflow or task finished successfully.",
+        "fr" : "Le flux de travail ou la tâche s'est terminé avec succès."
+      },
+      "labels" : {
+        "IRI-based" : "CompletedStatus"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#QueuedStatus",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Queued",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "En attente",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "The workflow or task has been submitted and is waiting for resources to become available for execution.",
+        "fr" : "Le flux de travail ou la tâche a été soumis et est en attente que les ressources deviennent disponibles pour l'exécution."
+      },
+      "labels" : {
+        "IRI-based" : "QueuedStatus"
+      }
+    } ],
+    "comment" : {
+      "en" : "Enumerated states for runtime (Queued, Running, Completed, Failed, Cancelled).",
+      "fr" : "États énumérés pour l'exécution (En attente, En cours, Terminé, Échoué, Annulé)."
+    },
+    "id" : "126"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Modularity",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Modularité",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Modularity",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Modularity"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Flat",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Plate",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Flat",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Single-level composition with no nesting.",
+        "fr" : "Composition à un seul niveau sans sous-workflows imbriqués."
+      },
+      "labels" : {
+        "IRI-based" : "Flat"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Hierarchical",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Hiérarchique",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Hierarchical",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Nested sub-workflows for modular design. Use exa-atow:isPartOfWorkflow to link parent steps to child workflows.",
+        "fr" : "Sous-workflows imbriqués pour une conception modulaire."
+      },
+      "labels" : {
+        "IRI-based" : "Hierarchical"
+      }
+    } ],
+    "comment" : {
+      "en" : "Describes how workflows are structured in terms of their components. Possible values include: Flat (single-level composition with no nested sub-workflows) and Hierarchical (nested sub-workflows enabling modular and scalable design).",
+      "fr" : "Décrit la façon dont les workflows sont structurés en termes de composants. Les valeurs possibles sont : Plate (composition à un seul niveau sans sous-workflows imbriqués) et Hiérarchique (sous-workflows imbriqués permettant une conception modulaire et évolutive)."
+    },
+    "id" : "88",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OrchestrationPlanning",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Orchestration Planning",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Planification de l'orchestration",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "OrchestrationPlanning"
+    },
+    "individuals" : [ {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DynamicPlanning",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Dynamic",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Dynamique",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Adapted during execution.",
+        "fr" : "Adapté pendant l'exécution."
+      },
+      "labels" : {
+        "IRI-based" : "DynamicPlanning"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#EventDriven",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Event-driven",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Piloté par événements",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Execution reacts to runtime triggers.",
+        "fr" : "Réagit à des déclencheurs en temps réel."
+      },
+      "labels" : {
+        "IRI-based" : "EventDriven"
+      }
+    }, {
+      "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#StaticPlanning",
+      "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Static",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Statique",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Decisions made before execution.",
+        "fr" : "Décisions prises avant l'exécution."
+      },
+      "labels" : {
+        "IRI-based" : "StaticPlanning"
+      }
+    } ],
+    "comment" : {
+      "en" : "Defines how a workflow system plans its execution. Possible values include: Static (all scheduling and resource allocation decisions made before execution starts), Dynamic (decisions are adapted during execution), and Event-driven (execution reacts to triggers or conditions at runtime).",
+      "fr" : "Définit la manière dont un système de workflow planifie son exécution. Les valeurs possibles incluent : Statique (toutes les décisions prises avant l'exécution), Dynamique (les décisions sont adaptées pendant l'exécution) et Piloté par événements (l'exécution réagit à des déclencheurs ou conditions en temps réel)."
+    },
+    "id" : "87",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#WorkflowMetadata",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Workflow Metadata",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Métadonnées du flux de travail",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "WorkflowMetadata"
+    },
+    "subClasses" : [ "98", "71" ],
+    "comment" : {
+      "en" : "\n    Metadata entities describing contextual, provenance, or evaluative aspects \n    of workflows, their components, and results. Includes provenance records, \n    FAIR compliance assessments, and other metadata used for curation, \n    traceability, or certification.\n    "
+    },
+    "id" : "111"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionEnvironment",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Execution Environment",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Environnement d'exécution",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ExecutionEnvironment"
+    },
+    "subClasses" : [ "154", "118", "44", "152", "76" ],
+    "comment" : {
+      "en" : "The environment in which a workflow or step executes, including software, containers, or computational resources.",
+      "fr" : "L'environnement dans lequel un flux de travail ou une étape s'exécute, incluant le logiciel, les conteneurs ou les ressources computationnelles."
+    },
+    "id" : "20"
+  } ],
+  "property" : [ {
+    "id" : "0",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "7",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "10",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "12",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "15",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "17",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "19",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "23",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "26",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "28",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "29",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "30",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "31",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "34",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "37",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "43",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "46",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "47",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "52",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "54",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "56",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "59",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "60",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "62",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "65",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "67",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "69",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "72",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "74",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "77",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "79",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "81",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "86",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "94",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "97",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "102",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "104",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "107",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "109",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "114",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "108",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "115",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "116",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "117",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "119",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "122",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "82",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "124",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "125",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "127",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "128",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "129",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "130",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "131",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "132",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "133",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "134",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "135",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "137",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "138",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "140",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "141",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "144",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "145",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "146",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "148",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "149",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "150",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "151",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "153",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "155",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "156",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "158",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "159",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "161",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "162",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "163",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "164",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "165",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "166",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "167",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "168",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "169",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "170",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "171",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "172",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "173",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "174",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "175",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "176",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "142",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "177",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "178",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "179",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "180",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "181",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "182",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "183",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "184",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "185",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "187",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "188",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "157",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "190",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "191",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "192",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "121",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "193",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "194",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "195",
+    "type" : "owl:datatypeProperty"
+  } ],
+  "propertyAttribute" : [ {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#engineName",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "2",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "engine name",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom du moteur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "engineName"
+    },
+    "domain" : "1",
+    "comment" : {
+      "en" : "Name of the workflow engine used (e.g., CWL, Nextflow, Snakemake).",
+      "fr" : "Nom du moteur de flux de travail utilisé (par ex., CWL, Nextflow, Snakemake)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "0"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasFlowType",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "9",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has flow type",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un type de flux",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasFlowType"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Links a workflow to its flow type (task-based, iterative, or data-driven).",
+      "fr" : "Relie un flux de travail à son type de flux (basé sur des tâches, itératif ou orienté données)."
+    },
+    "attributes" : [ "object" ],
+    "id" : "7"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasAbstractionLevel",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "11",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has abstraction level",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un niveau d'abstraction",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasAbstractionLevel"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its abstraction level, indicating the conceptual level at which it is defined.",
+      "fr" : "Associe un flux de travail avec son niveau d'abstraction, indiquant le niveau conceptuel auquel il est défini."
+    },
+    "attributes" : [ "object" ],
+    "id" : "10"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#endedAtTime",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "14",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une heure de fin",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has end time",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "endedAtTime"
+    },
+    "domain" : "13",
+    "comment" : {
+      "en" : "End time of the workflow or step execution.",
+      "fr" : "Heure de fin de l'exécution du flux de travail ou de l'étape."
+    },
+    "attributes" : [ "external", "datatype" ],
+    "id" : "12"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasCoupling",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "16",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un type de couplage",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has coupling type",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasCoupling"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Links a workflow to its coupling type (tight or loose).",
+      "fr" : "Relie un flux de travail à son type de couplage (serré ou lâche)."
+    },
+    "attributes" : [ "object" ],
+    "id" : "15"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasDataManagementTransport",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "18",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has data management transport",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un transport de gestion des données",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasDataManagementTransport"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its data management transport mechanism for transferring intermediate data.",
+      "fr" : "Associe un flux de travail avec son mécanisme de transport de données intermédiaires."
+    },
+    "attributes" : [ "object" ],
+    "id" : "17"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#environmentDescription",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "21",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "description de l'environnement",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "environment description",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "environmentDescription"
+    },
+    "domain" : "20",
+    "comment" : {
+      "en" : "Description of the computational environment, including hardware and software context.",
+      "fr" : "Description de l'environnement de calcul, incluant le contexte matériel et logiciel."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "19"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#stepName",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "25",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "step name",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom de l'étape",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "stepName"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Human-readable name of the workflow step.",
+      "fr" : "Nom lisible de l'étape du flux de travail."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "23"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#workflowName",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "27",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom du flux de travail",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "workflow name",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "workflowName"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Human-readable name of the workflow.",
+      "fr" : "Nom lisible du flux de travail."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "26"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasProperty",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "4",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has property",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une propriété",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasProperty"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its descriptive properties.",
+      "fr" : "Associe un flux de travail avec ses propriétés descriptives."
+    },
+    "attributes" : [ "object" ],
+    "id" : "28"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#dependsOn",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "24",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "depends on",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "dépend de",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "dependsOn"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Indicates that one workflow step depends on the completion of another.",
+      "fr" : "Indique qu’une étape du flux de travail dépend de l’exécution d’une autre."
+    },
+    "attributes" : [ "object", "transitive" ],
+    "id" : "29"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasDomainSpecificity",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "3",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une spécificité de domaine",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has domain specificity",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasDomainSpecificity"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Links a workflow to its domain specificity classification (domain-specific or domain-agnostic).",
+      "fr" : "Relie un flux de travail à sa classification de spécificité de domaine (spécifique ou agnostique)."
+    },
+    "attributes" : [ "object" ],
+    "id" : "30"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasGranularity",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "32",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has granularity type",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un type de granularité",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasGranularity"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Links a workflow to its granularity level (functions, standalone executables, sub-workflows).",
+      "fr" : "Relie un flux de travail à son niveau de granularité (fonctions, exécutables autonomes, sous-flux)."
+    },
+    "attributes" : [ "object" ],
+    "id" : "31"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#version",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "36",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "version",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "version",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "version"
+    },
+    "domain" : "35",
+    "comment" : {
+      "en" : "Generic version identifier applicable to any entity.",
+      "fr" : "Identifiant de version générique applicable à toute entité."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "34"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#workflowDescription",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "38",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "workflow description",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "description du flux de travail",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "workflowDescription"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Textual description of the workflow purpose and logic.",
+      "fr" : "Description textuelle de l'objectif et de la logique du flux de travail."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "37"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#containerImage",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "45",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "container image",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "image de conteneur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "containerImage"
+    },
+    "domain" : "44",
+    "comment" : {
+      "en" : "Container image identifier (e.g., Docker or Singularity image URI).",
+      "fr" : "Identifiant de l'image de conteneur (par ex., URI d'une image Docker ou Singularity)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "43"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#wasDerivedFrom",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "5",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "was derived from",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a été dérivé de",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://www.w3.org/TR/prov-o/",
+        "type" : "iri"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasDerivedFrom"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Indicates that one data artifact was derived from another.",
+      "fr" : "Indique qu’un artefact de données a été dérivé d’un autre."
+    },
+    "attributes" : [ "object" ],
+    "id" : "46"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#creationDate",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "48",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "date de création",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "creation date",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "creationDate"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Date and time when the data artifact was created.",
+      "fr" : "Date et heure de création de l'artéfact de données."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "47"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#workflowVersion",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "53",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "workflow version",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "version du flux de travail",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "workflowVersion"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Version identifier of the workflow.",
+      "fr" : "Identifiant de version du flux de travail."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "52"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#containerTag",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "55",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "container tag",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "étiquette du conteneur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "containerTag"
+    },
+    "domain" : "44",
+    "comment" : {
+      "en" : "Tag or version of the container image.",
+      "fr" : "Étiquette ou version de l'image de conteneur."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "54"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#fileFormat",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "57",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "format du fichier",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "file format",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "fileFormat"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Format or MIME type of the data artifact (e.g., CSV, JSON, NetCDF).",
+      "fr" : "Format ou type MIME de l'artéfact de données (par ex., CSV, JSON, NetCDF)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "56"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasExecutionEnvironment",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "20",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has execution environment",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un environnement d’exécution",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasExecutionEnvironment"
+    },
+    "domain" : "13",
+    "comment" : {
+      "en" : "Links an execution to its computational environment.",
+      "fr" : "Relie une exécution à son environnement de calcul."
+    },
+    "attributes" : [ "object" ],
+    "id" : "59"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#description",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "61",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "description",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "description",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "description"
+    },
+    "domain" : "35",
+    "comment" : {
+      "en" : "Generic description applicable to any entity.",
+      "fr" : "Description générique applicable à toute entité."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "60"
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#hasOutput",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "range" : "42",
+    "label" : {
+      "IRI-based" : "hasOutput"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Connects a workflow step to its output parameters.",
+      "fr" : "Connecte une étape de workflow à ses paramètres de sortie."
+    },
+    "attributes" : [ "external", "object" ],
+    "id" : "62"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasDataManagementGranularity",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "66",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has data management granularity",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une granularité de gestion des données",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasDataManagementGranularity"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its data management granularity, indicating how the WMS handles data operations.",
+      "fr" : "Associe un flux de travail avec sa granularité de gestion des données, indiquant comment le WMS traite les opérations sur les données."
+    },
+    "attributes" : [ "object" ],
+    "id" : "65"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#parameterName",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "68",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "parameter name",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom du paramètre",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "parameterName"
+    },
+    "domain" : "39",
+    "comment" : {
+      "en" : "Name of the parameter as defined in the workflow system.",
+      "fr" : "Nom du paramètre tel que défini dans le système de flux de travail."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "67"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasProvenanceRecord",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "71",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has provenance record",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un enregistrement de provenance",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasProvenanceRecord"
+    },
+    "domain" : "70",
+    "comment" : {
+      "en" : "Links a data artifact or workflow to its provenance record.",
+      "fr" : "Relie un artefact de données ou un flux de travail à son enregistrement de provenance."
+    },
+    "attributes" : [ "object" ],
+    "id" : "69"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#doi",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "73",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "DOI",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "DOI",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "doi"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Digital Object Identifier (DOI) associated with the data artifact, if available.",
+      "fr" : "Identifiant d'objet numérique (DOI) associé à l'artéfact de données, le cas échéant."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "72"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#accessURL",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "75",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "URL d'accès",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "access URL",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "accessURL"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Resolvable URL to access or download the data artifact.",
+      "fr" : "URL résoluble pour accéder ou télécharger l'artéfact de données."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "74"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#engineDescription",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "78",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "description du moteur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "engine description",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "engineDescription"
+    },
+    "domain" : "1",
+    "comment" : {
+      "en" : "Description of the workflow engine’s purpose or key features.",
+      "fr" : "Description du moteur de flux de travail et de ses fonctionnalités clés."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "77"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasExecutionControl",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "80",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un contrôle d'exécution",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has execution control",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasExecutionControl"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its execution control method, specifying how tasks are executed.",
+      "fr" : "Associe un flux de travail avec sa méthode de contrôle d'exécution, spécifiant comment les tâches sont exécutées."
+    },
+    "attributes" : [ "object" ],
+    "id" : "79"
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#hasDataLink",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "range" : "35",
+    "label" : {
+      "IRI-based" : "hasDataLink"
+    },
+    "domain" : "35",
+    "subproperty" : [ "82" ],
+    "attributes" : [ "external", "object" ],
+    "id" : "81"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasOrchestrationPlanning",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "87",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une planification d'orchestration",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has orchestration planning",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasOrchestrationPlanning"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its orchestration planning approach, defining how the system plans execution.",
+      "fr" : "Associe un flux de travail avec son approche de planification d'orchestration, définissant comment le système planifie l'exécution."
+    },
+    "attributes" : [ "object" ],
+    "id" : "86"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#parameterType",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "95",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "parameter type",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "type de paramètre",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "parameterType"
+    },
+    "domain" : "39",
+    "comment" : {
+      "en" : "Type of the parameter (e.g., string, integer, file, URI).",
+      "fr" : "Type du paramètre (par ex., chaîne, entier, fichier, URI)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "94"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasFAIRCompliance",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "98",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une conformité FAIR",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has FAIR compliance",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasFAIRCompliance"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with a FAIR compliance record or evaluation.",
+      "fr" : "Associe un flux de travail à un enregistrement ou une évaluation de conformité FAIR."
+    },
+    "attributes" : [ "object" ],
+    "id" : "97"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#defaultValue",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "103",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "valeur par défaut",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "default value",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "defaultValue"
+    },
+    "domain" : "39",
+    "comment" : {
+      "en" : "Default value assigned to the parameter if not specified.",
+      "fr" : "Valeur par défaut attribuée au paramètre si elle n'est pas spécifiée."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "102"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#environmentName",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "105",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom de l'environnement",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "environment name",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "environmentName"
+    },
+    "domain" : "20",
+    "comment" : {
+      "en" : "Name of the computational environment (e.g., cluster, HPC node).",
+      "fr" : "Nom de l'environnement de calcul (par ex., cluster, nœud HPC)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "104"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasStep",
+    "inverse" : "108",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "24",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une étape",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has step",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasStep"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Indicates that a workflow includes a given workflow step.",
+      "fr" : "Indique qu’un flux de travail comprend une étape donnée."
+    },
+    "attributes" : [ "object" ],
+    "id" : "107"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#usesContainer",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "44",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "utilise un conteneur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "uses container",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "usesContainer"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Indicates that a workflow step uses a container for execution.",
+      "fr" : "Indique qu’une étape du flux de travail utilise un conteneur pour l’exécution."
+    },
+    "attributes" : [ "object" ],
+    "id" : "109"
+  }, {
+    "range" : "4",
+    "domain" : "32",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "114"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#isPartOfWorkflow",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "8",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "is part of workflow",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "fait partie du flux de travail",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "isPartOfWorkflow"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Indicates that a workflow step is part of a workflow.",
+      "fr" : "Indique qu’une étape fait partie d’un flux de travail."
+    },
+    "attributes" : [ "object", "transitive" ],
+    "id" : "108"
+  }, {
+    "range" : "4",
+    "domain" : "80",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "115"
+  }, {
+    "range" : "4",
+    "domain" : "66",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "116"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#usesTool",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "63",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "utilise outil",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "uses tool",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "usesTool"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Indicates the specific software application or tool executed by a workflow step.",
+      "fr" : "Indique l'application logicielle ou l'outil spécifique exécuté par une étape du flux de travail."
+    },
+    "attributes" : [ "object" ],
+    "id" : "117"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasExecution",
+    "inverse" : "121",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "13",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une exécution",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has execution",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasExecution"
+    },
+    "domain" : "120",
+    "comment" : {
+      "en" : "Links a workflow or step to its execution instance.",
+      "fr" : "Relie un flux de travail ou une étape à son instance d'exécution."
+    },
+    "attributes" : [ "object" ],
+    "id" : "119"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#toolName",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "123",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "tool name",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom de l'outil",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "toolName"
+    },
+    "domain" : "63",
+    "comment" : {
+      "en" : "The formal, full name of the software application or computational tool.",
+      "fr" : "Le nom formel et complet de l'application logicielle ou de l'outil de calcul."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "122"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#connectsTo",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "41",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "connects to",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "se connecte à",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "connectsTo"
+    },
+    "superproperty" : [ "81" ],
+    "domain" : "42",
+    "comment" : {
+      "en" : "Indicates that an output parameter connects to an input parameter of another step.",
+      "fr" : "Indique qu’un paramètre de sortie est connecté à un paramètre d’entrée d’une autre étape."
+    },
+    "attributes" : [ "object" ],
+    "id" : "82"
+  }, {
+    "range" : "4",
+    "domain" : "3",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "124"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasStatus",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "126",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has status",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a statut",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasStatus"
+    },
+    "domain" : "13",
+    "comment" : {
+      "en" : "Links an execution instance to its current or final status, selecting from a controlled vocabulary of exa-atow:ExecutionStatus individuals.",
+      "fr" : "Lie l'instance d'exécution à son statut actuel ou final, sélectionné à partir d'un vocabulaire contrôlé d'individus exa-atow:ExecutionStatus."
+    },
+    "attributes" : [ "object" ],
+    "id" : "125"
+  }, {
+    "range" : "4",
+    "domain" : "9",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "127"
+  }, {
+    "range" : "4",
+    "domain" : "89",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "128"
+  }, {
+    "range" : "4",
+    "domain" : "88",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "129"
+  }, {
+    "iri" : "http://purl.org/pav/authoredBy",
+    "baseIri" : "http://purl.org/pav",
+    "range" : "22",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "authored by",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "authoredBy"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "The creator or author of the workflow definition."
+    },
+    "attributes" : [ "external", "object" ],
+    "id" : "130"
+  }, {
+    "range" : "50",
+    "domain" : "24",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "131"
+  }, {
+    "range" : "50",
+    "domain" : "13",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "132"
+  }, {
+    "range" : "4",
+    "domain" : "11",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "133"
+  }, {
+    "range" : "4",
+    "domain" : "16",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "134"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#stepDescription",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "136",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "step description",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "description de l'étape",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "stepDescription"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Description of what the workflow step does.",
+      "fr" : "Description de la fonction de l'étape du flux de travail."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "135"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#fileSize",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "96",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "file size",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "taille du fichier",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "fileSize"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Size of the data artifact file, in bytes.",
+      "fr" : "Taille du fichier d'artéfact de données, en octets."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "137"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#commandLine",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "139",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "ligne de commande",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "command line",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "commandLine"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Command or script executed by the workflow step.",
+      "fr" : "Commande ou script exécuté par l'étape du flux de travail."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "138"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#domainLabel",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "112",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "domain label",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "étiquette de domaine",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "domainLabel"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Specifies the domain name(s) to which the workflow applies, e.g., 'materials science', 'genomics'.",
+      "fr" : "Spécifie le ou les domaines auxquels s'applique le flux de travail, par exemple 'science des matériaux', 'génomique'."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "140"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#produces",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "5",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "produit",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "produces",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "produces"
+    },
+    "superproperty" : [ "142" ],
+    "domain" : "24",
+    "comment" : {
+      "en" : "Indicates that a workflow step produces a data artifact.",
+      "fr" : "Indique qu’une étape du flux de travail produit un artefact de données."
+    },
+    "attributes" : [ "object" ],
+    "id" : "141"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#engineVersion",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "110",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "engine version",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "version du moteur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "engineVersion"
+    },
+    "domain" : "1",
+    "comment" : {
+      "en" : "Version of the workflow engine.",
+      "fr" : "Version du moteur de flux de travail."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "144"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasDataManagementStorage",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "90",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un stockage de gestion des données",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has data management storage",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasDataManagementStorage"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its data management storage model for intermediate data.",
+      "fr" : "Associe un flux de travail avec son modèle de stockage pour les données intermédiaires."
+    },
+    "attributes" : [ "object" ],
+    "id" : "145"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#startedAtTime",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "147",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has start time",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une heure de début",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "startedAtTime"
+    },
+    "domain" : "13",
+    "comment" : {
+      "en" : "Start time of the workflow or step execution.",
+      "fr" : "Heure de début de l'exécution du flux de travail ou de l'étape."
+    },
+    "attributes" : [ "external", "datatype" ],
+    "id" : "146"
+  }, {
+    "range" : "20",
+    "domain" : "44",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "148"
+  }, {
+    "range" : "20",
+    "domain" : "118",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "149"
+  }, {
+    "range" : "20",
+    "domain" : "76",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "150"
+  }, {
+    "range" : "20",
+    "domain" : "152",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "151"
+  }, {
+    "range" : "20",
+    "domain" : "154",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "153"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#usesEngine",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "1",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "uses engine",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "utilise un moteur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "usesEngine"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Specifies the primary workflow management system (WMS) used to define, orchestrate, and execute the overall workflow structure.",
+      "fr" : "Spécifie le système principal de gestion des flux de travail (WMS) utilisé pour définir, orchestrer et exécuter la structure globale du flux de travail."
+    },
+    "attributes" : [ "object" ],
+    "id" : "155"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#used",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "35",
+    "label" : {
+      "IRI-based" : "used"
+    },
+    "domain" : "35",
+    "subproperty" : [ "157" ],
+    "attributes" : [ "external", "object" ],
+    "id" : "156"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#requiresResource",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "85",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nécessite une ressource",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "requires resource",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "requiresResource"
+    },
+    "domain" : "20",
+    "comment" : {
+      "en" : "Indicates that an execution environment requires a computational resource.",
+      "fr" : "Indique qu’un environnement d’exécution nécessite une ressource informatique."
+    },
+    "attributes" : [ "object" ],
+    "id" : "158"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#checksum",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "160",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "checksum",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "somme de contrôle",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "checksum"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Checksum or hash value (e.g., MD5, SHA256) to verify data integrity.",
+      "fr" : "Somme de contrôle ou valeur de hachage (par ex., MD5, SHA256) pour vérifier l'intégrité des données."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "159"
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#hasInput",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "range" : "41",
+    "label" : {
+      "IRI-based" : "hasInput"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Connects a workflow step to its input parameters.",
+      "fr" : "Connecte une étape de workflow à ses paramètres d'entrée."
+    },
+    "attributes" : [ "external", "object" ],
+    "id" : "161"
+  }, {
+    "range" : "111",
+    "domain" : "71",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "162"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasModularity",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "88",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has modularity",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une modularité",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasModularity"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its modularity characteristic, describing how it is structured in terms of components.",
+      "fr" : "Associe un flux de travail avec sa modularité, décrivant comment il est structuré en termes de composants."
+    },
+    "attributes" : [ "object" ],
+    "id" : "163"
+  }, {
+    "range" : "111",
+    "domain" : "98",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "164"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#environmentVersion",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "106",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "environment version",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "version de l'environnement",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "environmentVersion"
+    },
+    "domain" : "20",
+    "comment" : {
+      "en" : "Version or identifier of the environment configuration.",
+      "fr" : "Version ou identifiant de la configuration de l'environnement."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "165"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#environmentHash",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "100",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "hachage de l'environnement",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "environment hash",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "environmentHash"
+    },
+    "domain" : "118",
+    "comment" : {
+      "en" : "Checksum or hash identifier of the Conda environment file for verification.",
+      "fr" : "Somme de contrôle ou identifiant de hachage du fichier d'environnement Conda pour vérification."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "166"
+  }, {
+    "range" : "39",
+    "domain" : "42",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "167"
+  }, {
+    "range" : "39",
+    "domain" : "41",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "168"
+  }, {
+    "range" : "58",
+    "domain" : "1",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "169"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#filePath",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "99",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "chemin du fichier",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "file path",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "filePath"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Local or remote path/URI where the data artifact is stored.",
+      "fr" : "Chemin local ou URI distant où l'artéfact de données est stocké."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "170"
+  }, {
+    "range" : "51",
+    "domain" : "13",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "171"
+  }, {
+    "range" : "113",
+    "domain" : "24",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "172"
+  }, {
+    "range" : "64",
+    "domain" : "63",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "173"
+  }, {
+    "range" : "33",
+    "domain" : "8",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "174"
+  }, {
+    "range" : "84",
+    "domain" : "41",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "175"
+  }, {
+    "iri" : "http://purl.org/wf4ever/wfdesc#hasSubProcess",
+    "baseIri" : "http://purl.org/wf4ever/wfdesc",
+    "range" : "8",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has sub-process",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a un sous-processus",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasSubProcess"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Links a workflow step to a nested sub-workflow, enabling hierarchical workflow composition. Use this property when a step encapsulates an entire workflow as a reusable component. This specializes wfdesc:hasSubProcess for Exa-AToW's cross-WMS interoperability requirements.",
+      "fr" : "Relie une étape de workflow à un sous-workflow imbriqué, permettant la composition hiérarchique de workflows. Utilisez cette propriété lorsqu'une étape encapsule un workflow entier comme composant réutilisable."
+    },
+    "attributes" : [ "external", "object" ],
+    "id" : "176"
+  }, {
+    "iri" : "http://www.w3.org/ns/prov#generated",
+    "baseIri" : "http://www.w3.org/ns/prov",
+    "range" : "35",
+    "label" : {
+      "IRI-based" : "generated"
+    },
+    "domain" : "35",
+    "subproperty" : [ "141" ],
+    "attributes" : [ "external", "object" ],
+    "id" : "142"
+  }, {
+    "range" : "49",
+    "domain" : "42",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "177"
+  }, {
+    "range" : "6",
+    "domain" : "5",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "178"
+  }, {
+    "range" : "64",
+    "domain" : "1",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "179"
+  }, {
+    "range" : "4",
+    "domain" : "90",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "180"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#usedInStep",
+    "inverse" : "157",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "24",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "used in step",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "utilisé dans l'étape",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://www.w3.org/TR/prov-o/",
+        "type" : "iri"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "usedInStep"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Indicates that a data artifact was consumed by a workflow step.",
+      "fr" : "Indique qu’un artefact de données a été consommé par une étape du flux de travail."
+    },
+    "attributes" : [ "object" ],
+    "id" : "181"
+  }, {
+    "range" : "4",
+    "domain" : "87",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "182"
+  }, {
+    "range" : "40",
+    "domain" : "39",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "183"
+  }, {
+    "range" : "4",
+    "domain" : "18",
+    "attributes" : [ "object", "anonymous" ],
+    "id" : "184"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#parameterFormat",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "83",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "format du paramètre",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "parameter format",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "parameterFormat"
+    },
+    "domain" : "39",
+    "comment" : {
+      "en" : "Expected format or encoding of the parameter value (e.g., JSON, CSV).",
+      "fr" : "Format ou encodage attendu de la valeur du paramètre (par ex., JSON, CSV)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "185"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#toolVersion",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "143",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "version de l'outil",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "tool version",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "toolVersion"
+    },
+    "domain" : "63",
+    "comment" : {
+      "en" : "The specific version identifier of the software application, which is crucial for reproducibility.",
+      "fr" : "L'identifiant de version spécifique de l'application logicielle, crucial pour la reproductibilité."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "187"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#license",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "91",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "license",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "licence",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "license"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "License or usage terms associated with the data artifact.",
+      "fr" : "Licence ou conditions d'utilisation associées à l'artéfact de données."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "188"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#consumes",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "5",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "consomme",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "consumes",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "consumes"
+    },
+    "superproperty" : [ "156" ],
+    "domain" : "24",
+    "comment" : {
+      "en" : "Workflow-specific: indicates data consumption during step execution.",
+      "fr" : "Indique qu’une étape du flux de travail consomme un artefact de données."
+    },
+    "attributes" : [ "object" ],
+    "id" : "157"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#wasGeneratedBy",
+    "inverse" : "141",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "24",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a été généré par",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "was generated by",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://www.w3.org/TR/prov-o/#wasGeneratedBy",
+        "type" : "iri"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "wasGeneratedBy"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Indicates the workflow step that produced this data artifact.",
+      "fr" : "Indique l'étape du flux de travail qui a produit cet artefact de données."
+    },
+    "attributes" : [ "object" ],
+    "id" : "190"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#lastModified",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "92",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "dernière modification",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "last modified",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "lastModified"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Date and time when the data artifact was last modified.",
+      "fr" : "Date et heure de la dernière modification de l'artéfact de données."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "191"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#hasCompositionMethod",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "89",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a une méthode de composition",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has composition method",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasCompositionMethod"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "Associates a workflow with its composition method, indicating how it is assembled within a WMS.",
+      "fr" : "Associe un flux de travail avec sa méthode de composition, indiquant comment il est assemblé dans un WMS."
+    },
+    "attributes" : [ "object" ],
+    "id" : "192"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#isExecutionOf",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "186",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "is execution of",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "est l'exécution de",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "isExecutionOf"
+    },
+    "domain" : "13",
+    "comment" : {
+      "en" : "Indicates that an execution instance corresponds to a workflow or a workflow step.",
+      "fr" : "Indique qu’une instance d’exécution correspond à un flux de travail ou à une étape du flux de travail."
+    },
+    "attributes" : [ "object" ],
+    "id" : "121"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#environmentFile",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "101",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "environment file",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "fichier d'environnement",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "environmentFile"
+    },
+    "domain" : "118",
+    "comment" : {
+      "en" : "Path or URI of the Conda environment file (e.g., environment.yml).",
+      "fr" : "Chemin ou URI du fichier d'environnement Conda (par ex., environment.yml)."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "193"
+  }, {
+    "iri" : "http://purl.org/pav/createdOn",
+    "baseIri" : "http://purl.org/pav",
+    "range" : "189",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "created on",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "créé le",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "createdOn"
+    },
+    "domain" : "8",
+    "comment" : {
+      "en" : "The date and time when the workflow was initially created or defined (creation timestamp)."
+    },
+    "attributes" : [ "external", "datatype" ],
+    "id" : "194"
+  }, {
+    "iri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#fileName",
+    "baseIri" : "https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl",
+    "range" : "93",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom du fichier",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "file name",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "fileName"
+    },
+    "domain" : "5",
+    "comment" : {
+      "en" : "Name of the data artifact file or object.",
+      "fr" : "Nom du fichier ou de l'objet de l'artéfact de données."
+    },
+    "attributes" : [ "datatype" ],
+    "id" : "195"
+  } ]
+}

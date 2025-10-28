@@ -1,7 +1,6 @@
 [
        {
         "id": "Workflow",
-        "parent_class": "Workflow",
         "pref_label": {
             "en": "Workflow",
             "fr": "Flux de travail"
@@ -10,11 +9,15 @@
             "en": "A discrete unit within a workflow representing a task, command, or function that contributes to the overall workflow goal. It may execute computations, data manipulations, or invoke external services. Dependencies and scheduling are defined between steps to control execution order.",
             "fr": "Une unité discrète au sein d'un flux de travail représentant une tâche, une commande ou une fonction contribuant à l'objectif global du workflow. Elle peut exécuter des calculs, manipuler des données ou appeler des services externes. Les dépendances et la planification entre les étapes contrôlent l'ordre d'exécution."
         },
+	   "cardinality": {
+               "property": "hasStep",
+                "min": 1,
+                "on_class": "WorkflowStep"
+	   },
         "equivalentTo": "prov:Activity"
     }, 
     {
         "id": "WorkflowStep",
-        "parent_class": "Workflow",
         "pref_label": {
             "en": "Workflow Step",
             "fr": "Étape du flux de travail"
@@ -27,7 +30,6 @@
     },
     {
         "id": "WorkflowEngine",
-        "parent_class": "Workflow",
         "pref_label": {
             "en": "Workflow Engine",
             "fr": "Moteur de flux de travail"
@@ -35,11 +37,22 @@
         "comment": {
             "en": "A software framework or environment that interprets, schedules, and executes workflow definitions. Examples include CWL, Apache NiFi, Snakemake, and Airflow. Workflow engines support execution tracking and data lineage.",
             "fr": "Un cadre logiciel qui interprète, planifie et exécute les définitions de flux de travail. Exemples : CWL, Apache NiFi, Snakemake et Airflow. Les moteurs de flux de travail prennent en charge le suivi d'exécution et la traçabilité des données."
-        }
+        },
+	"equivalent" :"prov:SoftwareAgent"
+    },
+    {
+	"id": "Parameter",
+        "pref_label": {
+            "en": "Parameter",
+            "fr": "Parametre"
+        },
+        "comment": {
+            "en": "A variable representing an input or output data element within a workflow or step."
+	}
     },
     {
         "id": "InputParameter",
-        "parent_class": "Workflow",
+        "parent_class": "Parameter",
         "pref_label": {
             "en": "Input Parameter",
             "fr": "Paramètre d’entrée"
@@ -47,12 +60,11 @@
         "comment": {
             "en": "A data value or configuration setting required by a workflow step or command-line tool to begin execution. Inputs may include file paths, memory limits, container images, or dataset identifiers.",
             "fr": "Une valeur de donnée ou un paramètre de configuration requis par une étape ou un outil en ligne de commande pour démarrer l'exécution. Les entrées peuvent inclure des chemins de fichiers, des limites de mémoire, des images de conteneurs ou des identifiants de jeux de données."
-        },
-        "equivalentTo": "prov:Entity"
+        }
     },
     {
         "id": "OutputParameter",
-        "parent_class": "Workflow",
+        "parent_class": "Parameter",
         "pref_label": {
             "en": "Output Parameter",
             "fr": "Paramètre de sortie"
@@ -60,25 +72,58 @@
         "comment": {
             "en": "A result produced by a workflow step after execution. It may be a file, dataset, metric, or computation result used by other steps or stored for future processing.",
             "fr": "Un résultat produit par une étape de flux de travail après exécution. Il peut s'agir d'un fichier, d'un jeu de données, d'une métrique ou d'un résultat de calcul utilisé par d'autres étapes ou stocké pour un traitement ultérieur."
-        },
-        "equivalentTo": "prov:Entity"
-    },
+        }
+    },   
     {
-        "id": "WorkflowDependency",
-        "parent_class": "Workflow",
+	"id": "Execution",
         "pref_label": {
-            "en": "Workflow Dependency",
-            "fr": "Dépendance de flux de travail"
+            "en": "Execution",
+            "fr": "Exécution"
         },
         "comment": {
-            "en": "An explicit link that defines the execution order or data dependency between two workflow steps. Dependencies control the flow of data and ensure correct sequencing of actions.",
-            "fr": "Un lien explicite qui définit l'ordre d'exécution ou la dépendance de données entre deux étapes de flux de travail. Les dépendances contrôlent le flux de données et garantissent le bon enchaînement des actions."
+            "en": "Represents an execution (run) instance of a workflow.",
+            "fr": "Représente une instance d'exécution (run) d'un flux de travail."
         },
-        "equivalentTo": "prov:wasInformedBy"
+	"equivalent":"prov:Activity"
+    },
+    {
+	"id": "ExecutionStatus",
+        "pref_label": {
+            "en": "Execution Status",
+            "fr": "Status d'exécution"
+        },
+        "comment": {
+            "en": "Enumerated states for runtime (Queued, Running, Completed, Failed, Cancelled).",
+	    "fr": "États énumérés pour l'exécution (En attente, En cours, Terminé, Échoué, Annulé)."
+	},
+	"restriction" : ["Queued","Running","Completed","Failed","Cancelled"],
+	"equivalent":"prov:Activity"
+    },
+    {
+	"id":"ExecutionEnvironment",
+	"pref_label": {
+            "en": "Execution Environment",
+            "fr": "Environnement d'exécution"
+        },
+        "comment": {
+            "en": "The environment in which a workflow or step executes, including software, containers, or computational resources.",
+            "fr": "L'environnement dans lequel un flux de travail ou une étape s'exécute, incluant le logiciel, les conteneurs ou les ressources computationnelles."
+        }
+    },
+    {
+	"id":"ComputationalResource",
+	"pref_label": {
+            "en": "Computational Resource",
+            "fr": "Resource computationnelle"
+        },
+        "comment": {
+            "en": "A hardware or virtual resource required by an execution environment, such as HPC nodes, CPUs, GPUs, or memory.",
+            "fr": "Une ressource matérielle ou virtuelle requise par un environnement d'exécution, comme des nœuds HPC, des CPU, GPU ou mémoire."
+        }
     },
     {
         "id": "Container",
-        "parent_class": "Workflow",
+        "parent_class": "ExecutionEnvironment",
         "pref_label": {
             "en": "Container",
             "fr": "Conteneur"
@@ -87,6 +132,54 @@
             "en": "A portable, encapsulated execution environment containing all software dependencies required by a workflow step. Common formats include Docker and Singularity.",
             "fr": "Un environnement d'exécution portable et encapsulé contenant toutes les dépendances logicielles requises par une étape de flux de travail. Les formats courants incluent Docker et Singularity."
         }
+    },
+    {
+	"id":"CondaEnvironment",
+	"parent_class": "ExecutionEnvironment",
+	"pref_label": {
+            "en": "Conda Environment",
+            "fr": "Environnement Conda"
+        },
+        "comment": {
+            "en":"A software environment managed by Conda containing packages and dependencies needed for a workflow.",
+	    "fr": "Un environnement logiciel géré par Conda contenant les packages et dépendances nécessaires pour un flux de travail."
+	}
+    },
+    {
+	"id":"HPCEnvironment",
+	"parent_class": "ExecutionEnvironment",
+	"pref_label": {
+            "en": "HPC Environment",
+            "fr": "Environnement HPC"
+        },
+        "comment": {
+            "en": "A high-performance computing cluster providing compute nodes, memory, and scheduling capabilities for workflow execution.",
+	    "fr": "Un cluster de calcul haute performance fournissant des nœuds de calcul, de la mémoire et des capacités d'ordonnancement pour l'exécution de workflows."
+	}
+    },
+    {
+	"id":"CloudEnvironment",
+	"parent_class": "ExecutionEnvironment",
+	"pref_label": {
+            "en": "Cloud Environment",
+            "fr": "Environnement Cloud"
+        },
+        "comment": {
+            "en": "Cloud execution context (managed services, VMs, serverless platforms).",
+	    "fr": "Contexte d'exécution cloud (services managés, VM, plateformes serverless)."
+	}
+    },
+    {
+	"id":"LocalMachine",
+	"parent_class": "ExecutionEnvironment",
+	"pref_label": {
+            "en": "Local Machine",
+            "fr": "Machine locale"
+        },
+        "comment": {
+            "en": "Environment of the local workstation or laptop.",
+	    "fr": "Environnement local (poste de travail, portable)."
+	}
     },
     {
         "id": "DataProvenance",
@@ -112,6 +205,17 @@
             "en": "Indicates the extent to which the workflow, its components, and outputs adhere to the FAIR principles (Findable, Accessible, Interoperable, Reusable).",
             "fr": "Indique dans quelle mesure le flux de travail, ses composants et ses sorties respectent les principes FAIR (Faciles à trouver, Accessibles, Interopérables, Réutilisables)."
         }
+    },
+    {
+	"id": "WorkflowProperty",
+	"pref_label": {
+	    "en": "Workflow Property",
+	    "fr": "Propriété du flux de travail"
+	},
+	"comment": {
+	    "en": "Attributes describing structural, execution, or data management characteristic of a workflow.",
+	    "fr": "Attributs décrivant les caractéristiques structurelles, d'exécution ou de gestion des données d'un flux de travail."
+	}
     },
     {
         "id": "FlowType",

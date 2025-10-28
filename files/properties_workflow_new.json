@@ -1,0 +1,231 @@
+[
+    
+    {
+      "id": "hasStep",
+      "property_type": "ObjectProperty",
+      "domain": "Workflow",
+      "range": "WorkflowStep",
+        "pref_label":{"en":"has Step", "fr":"a une étape"},
+      "comment": {
+        "en": "Relates a Workflow to its constituent steps."
+      }
+    },
+    {
+      "id": "hasInput",
+      "property_type": "ObjectProperty",
+      "domain": ["Workflow","WorkflowStep"],
+      "range": "InputParameter",
+        "pref_label":{"en":"has input", "fr":"a pour entrée"},
+      "comment": {
+        "en":"Input parameter required by step." 
+      }
+    },
+    {
+      "id": "hasOutput",
+      "property_type": "ObjectProperty",
+      "domain": ["Workflow", "WorkflowStep"],
+      "range": "OutputParameter",
+        "pref_label":{"en":"has Output", "fr":"a pour sortie"},
+      "comment": {
+        "en": "Output produced by a step." 
+      }
+    },
+    {
+      "id": "hasProperty",
+      "property_type": "ObjectProperty",
+      "domain": "Workflow",
+      "range": "WorkflowProperty",
+	"pref_label":{"en":"has Property", "fr":"a propriété"},
+      "comment": {
+        "en": "Associates a workflow with its descriptive properties.",
+        "fr": "Associe un flux de travail avec ses propriétés descriptives."
+      }
+    },
+    {
+      "id": "hasFAIRCompliance",
+      "property_type": "ObjectProperty",
+      "domain": "Workflow",
+      "range": "FAIRCompliance",
+        "pref_label":{"en":"has FAIR compliance", "fr":"."},
+      "comment": {
+        "en": "Indicates FAIRness metadata for workflow outputs.",
+        "fr": "."
+      }
+    },
+
+
+
+
+
+
+
+  {
+    "id": "hasFlowType",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "FlowType",
+    "pref_label": {
+      "en": "has flow type",
+      "fr": "a pour type de flux"
+    },
+    "comment": {
+      "en": "Links a workflow to its flow type (task-based, iterative, or data-driven).",
+      "fr": "Relie un flux de travail à son type de flux (basé sur des tâches, itératif ou orienté données)."
+    }
+  },
+  {
+    "id": "hasCoupling",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "Coupling",
+    "pref_label": {
+      "en": "has coupling type",
+      "fr": "a un couplage de type"
+    },
+    "comment": {
+      "en": "Links a workflow to its coupling type (tight or loose).",
+      "fr": "Relie un flux de travail à son type de couplage (serré ou lâche)."
+    }
+  },
+  {
+    "id": "hasGranularity",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "Granularity",
+    "pref_label": {
+      "en": "has granularity type",
+      "fr": "a une granularité de type"
+    },
+    "comment": {
+      "en": "Links a workflow to its granularity level (functions, standalone executables, sub-workflows).",
+      "fr": "Relie un flux de travail à son niveau de granularité (fonctions, exécutables autonomes, sous-flux)."
+    }
+  },
+  {
+    "id": "hasDomain",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "DomainSpecificity",
+    "pref_label": {
+      "en": "has domain specificity",
+      "fr": "a une spécificité du domaine"
+    },
+    "comment": {
+      "en": "Links a workflow to its domain specificity (domain-specific or agnostic).",
+      "fr": "Relie un flux de travail à sa spécificité de domaine (spécifique ou agnostique)."
+    }
+  },
+  {
+    "id": "hasCompositionMethod",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "CompositionMethod",
+    "pref_label": {
+      "en": "has composition method",
+      "fr": "a une méthode de composition"
+    },
+    "comment": {
+      "en": "Associates a workflow with its composition method, indicating how the workflow is described and assembled within a WMS.",
+      "fr": "Associe un flux de travail avec sa méthode de composition, indiquant comment le flux de travail est décrit et assemblé dans un WMS."
+    }
+  },
+  {
+    "id": "hasAbstractionLevel",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "AbstractionLevel",
+    "pref_label": {
+      "en": "has abstraction level",
+      "fr": "a un niveau d'abstraction"
+    },
+    "comment": {
+      "en": "Associates a workflow with its abstraction level, indicating the conceptual level at which it is defined.",
+      "fr": "Associe un flux de travail avec son niveau d'abstraction, indiquant le niveau conceptuel auquel il est défini."
+    }
+  },
+  {
+    "id": "hasModularity",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "Modularity",
+    "pref_label": {
+      "en": "has modularity",
+      "fr": "a une modularité"
+    },
+    "comment": {
+      "en": "Associates a workflow with its modularity characteristic, describing how it is structured in terms of components.",
+      "fr": "Associe un flux de travail avec sa caractéristique de modularité, décrivant comment il est structuré en termes de composants."
+    }
+  },
+  {
+    "id": "hasOrchestrationPlanning",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "OrchestrationPlanning",
+    "pref_label": {
+      "en": "has orchestration planning",
+      "fr": "a une planification d'orchestration"
+    },
+    "comment": {
+      "en": "Associates a workflow with its orchestration planning approach, defining how the system plans execution.",
+      "fr": "Associe un flux de travail avec son approche de planification d'orchestration, définissant comment le système planifie l'exécution."
+    }
+  },
+  {
+    "id": "hasExecutionControl",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "ExecutionControl",
+    "pref_label": {
+      "en": "has execution control",
+      "fr": "a un contrôle d'exécution"
+    },
+    "comment": {
+      "en": "Associates a workflow with its execution control method, specifying how tasks are executed within the workflow.",
+      "fr": "Associe un flux de travail avec sa méthode de contrôle d'exécution, spécifiant comment les tâches sont exécutées dans le flux de travail."
+    }
+  },
+  {
+    "id": "hasDataManagementGranularity",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "DataManagementGranularity",
+    "pref_label": {
+      "en": "has data management granularity",
+      "fr": "a une granularité de gestion des données"
+    },
+    "comment": {
+      "en": "Associates a workflow with its data management granularity, indicating how the WMS handles data operations.",
+      "fr": "Associe un flux de travail avec sa granularité de gestion des données, indiquant comment le WMS traite les opérations sur les données."
+    }
+  },
+  {
+    "id": "hasDataManagementTransport",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "DataManagementTransport",
+    "pref_label": {
+      "en": "has data management transport",
+      "fr": "a un transport de gestion des données"
+    },
+    "comment": {
+      "en": "Associates a workflow with its data management transport mechanism for transferring intermediate data.",
+      "fr": "Associe un flux de travail avec son mécanisme de transport de gestion des données pour transférer les données intermédiaires."
+    }
+  },
+  {
+    "id": "hasDataManagementStorage",
+    "property_type": "ObjectProperty",
+    "domain": "Workflow",
+    "range": "DataManagementStorage",
+    "pref_label": {
+      "en": "has data management storage",
+      "fr": "a un stockage de gestion des données"
+    },
+    "comment": {
+      "en": "Associates a workflow with its data management storage model for intermediate data.",
+      "fr": "Associe un flux de travail avec son modèle de stockage de gestion des données pour les données intermédiaires."
+    }
+  }
+]
+
