@@ -203,6 +203,9 @@ class CreateOnto:
               comment: Optional[Union[str, dict]] = None,
               equivalent: Optional[Union[URIRef, str]]=None,
               link_html: Optional[str] = None,
+              one_of : Optional[str] = None,
+              cardinality: Optional[dict]=None,
+              restrictions: Optional[List[dict]]=None,    
               json_path: Optional[str] = None,
               ):
         """
@@ -215,6 +218,9 @@ class CreateOnto:
             comment: Comment describing the class. Can be a string (default "en") or dict with lang keys.
             equivalent: Optional equivalent class
             link_html: Optional external link
+            one_of: Optional list of individuals that constitute the enumerated class
+            restrictions: Optional[List[dict]] = None,
+            cardinality: Optional[dict] = None,
             json_path: Optional path to JSON file in which this class should be dumped
         """
 
@@ -234,6 +240,33 @@ class CreateOnto:
             equivalent_uri = self._resolve_uri(equivalent)
             self.graph.add((class_uri, OWL.equivalentClass, equivalent_uri))
 
+        # Add OneOf enumeration
+        if one_of:
+            # Convert all items to URIRefs
+            individual_uris = [self._resolve_uri(item) for item in one_of]
+        
+            # Create the RDF Collection (list) for OneOf
+            collection = BNode()
+            self.graph.add((class_uri, OWL.equivalentClass, collection))
+        
+            # Add the restriction that says this class is exactly these individuals
+            restriction = BNode()
+            self.graph.add((collection, RDF.type, OWL.Class))
+            self.graph.add((collection, OWL.oneOf, restriction))
+        
+            # Add the individuals to the collection
+            from rdflib.collection import Collection
+            Collection(self.graph, restriction, individual_uris)
+
+        # Property restrictions
+        if restrictions:
+            for restriction in restrictions:
+                self._add_restriction(class_uri, restriction)
+
+        # Cardinality restrictions
+        if cardinality:
+            self._add_cardinality(class_uri, cardinality)
+
         # Add external link
         if link_html:
             self.graph.add((class_uri, RDFS.seeAlso, URIRef(link_html)))
@@ -244,9 +277,98 @@ class CreateOnto:
 
         if comment:
             self._add_multilingual_property(class_uri, RDFS.comment, comment)
+
+
+    def _add_restriction(self, class_uri, restriction_config):
+        """Add property restrictions to a class"""
+        restriction = BNode()
+        self.graph.add((class_uri, RDFS.subClassOf, restriction))
+        self.graph.add((restriction, RDF.type, OWL.Restriction))
+    
+        prop_uri = self._resolve_uri(restriction_config["property"])
+        self.graph.add((restriction, OWL.onProperty, prop_uri))
+    
+        if "some_values_from" in restriction_config:
+            value_class = self._resolve_uri(restriction_config["some_values_from"])
+            self.graph.add((restriction, OWL.someValuesFrom, value_class))
+    
+        elif "all_values_from" in restriction_config:
+            value_class = self._resolve_uri(restriction_config["all_values_from"])
+            self.graph.add((restriction, OWL.allValuesFrom, value_class))
+    
+        elif "has_value" in restriction_config:
+            value = self._resolve_uri(restriction_config["has_value"])
+            self.graph.add((restriction, OWL.hasValue, value))
+
             
+    def _add_cardinality(self, class_uri, cardinality_config):
+        """
+        Add cardinality restrictions to a class using equivalentClass with intersection
+    
+        Args:
+            cardinality_config: Dictionary with keys:
+                - property: The property to restrict (required)
+                - on_class: Target class for qualified cardinality (optional)
+                - exactly: Exact cardinality (mutually exclusive with min/max)
+                - min: Minimum cardinality
+                - max: Maximum cardinality
+        """
+        # Create blank nodes for the intersection structure
+        equiv_class = BNode()
+        restriction = BNode()
+    
+        # The class is equivalent to an intersection
+        self.graph.add((class_uri, OWL.equivalentClass, equiv_class))
+        self.graph.add((equiv_class, RDF.type, OWL.Class))
+    
+        # Create the intersection list: (OriginalClass AND Restriction)
+        intersection_node = BNode()
+        self.graph.add((equiv_class, OWL.intersectionOf, intersection_node))
+    
+        # Build the list: [class_uri, restriction]
+        from rdflib.collection import Collection
+        Collection(self.graph, intersection_node, [class_uri, restriction])
+    
+        # Define the restriction
+        self.graph.add((restriction, RDF.type, OWL.Restriction))
+    
+        prop_uri = self._resolve_uri(cardinality_config["property"])
+        self.graph.add((restriction, OWL.onProperty, prop_uri))
+    
+        # Check if it's a qualified cardinality (with on_class)
+        on_class = cardinality_config.get("on_class")
+    
+        if "exactly" in cardinality_config:
+            cardinality_value = Literal(cardinality_config["exactly"], 
+                                   datatype=XSD.nonNegativeInteger)
+            if on_class:
+                self.graph.add((restriction, OWL.qualifiedCardinality, cardinality_value))
+                self.graph.add((restriction, OWL.onClass, self._resolve_uri(on_class)))
+            else:
+                self.graph.add((restriction, OWL.cardinality, cardinality_value))
+        else:
+            if "min" in cardinality_config:
+                min_value = Literal(cardinality_config["min"], 
+                               datatype=XSD.nonNegativeInteger)
+                if on_class:
+                    self.graph.add((restriction, OWL.minQualifiedCardinality, min_value))
+                    self.graph.add((restriction, OWL.onClass, self._resolve_uri(on_class)))
+                else:
+                    self.graph.add((restriction, OWL.minCardinality, min_value))
+        
+            if "max" in cardinality_config:
+                max_value = Literal(cardinality_config["max"], 
+                               datatype=XSD.nonNegativeInteger)
+                if on_class:
+                    self.graph.add((restriction, OWL.maxQualifiedCardinality, max_value))
+                    # Only add onClass if not already added by min
+                    if "min" not in cardinality_config:
+                        self.graph.add((restriction, OWL.onClass, self._resolve_uri(on_class)))
+                else:
+                    self.graph.add((restriction, OWL.maxCardinality, max_value))
                 
-    def load_and_add_classes(self, json_file: str, default_parent_class: Optional[str]) -> None:
+               
+    def load_and_add_classes(self, json_file: str, default_parent_class: Optional[str] = None) -> None:
         """
         Load classes from JSON file and add them with fallback parent class.
 
@@ -266,6 +388,9 @@ class CreateOnto:
                 equivalent = class_info.get("equivalent"),
                 link_html = class_info.get("link_html"),
                 json_path = class_info.get("json_path"),
+                restrictions = class_info.get("restrictions"),
+                cardinality = class_info.get("cardinality"),
+                one_of = class_info.get("one_of"),    
                 comment = class_info["comment"]
              )            
             self.json_file_mapping[class_info["id"]] = json_file
@@ -596,10 +721,10 @@ class CreateOnto:
         """Initialize the basic structure of the ontology"""
 
         # Load main classes
-        self.load_and_add_classes(
-            os.path.join(self.json_dir, "main_classes.json"),
-            None
-        )
+#        self.load_and_add_classes(
+#            os.path.join(self.json_dir, "main_classes.json"),
+#            None
+#        )
 
         # #############################################    
         # Global statement of "hasUnit" and "hasValue"
@@ -874,29 +999,30 @@ if __name__ == "__main__":
     onto_exaatow = CreateOnto("https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#")
 
     # Load subclasses
-    # dictionary of subclasses and their default parent class
-    subclasses = {
-            "sub_HPC_classes.json": "HPCResource",
+    # dictionary of subclasses and their default parent class#
+#    subclasses = {
+#            "sub_HPC_classes.json": "HPCResource",
 #            "sub_PIE_classes.json": "ProcessorIndicatorEstimator",
-            "sub_PhysChar_classes.json": "PhysicalCharacteristic",
-            "sub_Job_classes.json": "Job",
-            "sub_Workflow_classes.json": "Workflow"
-    }
-        
-    for sub_file, parent in subclasses.items():
-        onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, sub_file), parent)
+#            "sub_PhysChar_classes.json": "PhysicalCharacteristic",
+#            "sub_Job_classes.json": "Job",
+#            "sub_Workflow_classes.json": "Workflow"
+#    }
+#        
+#    for sub_file, parent in subclasses.items():
+#        onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, sub_file), parent)
+    onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, "sub_Workflow_classes_new.json"))
 
     # Load properties
     list_properties=[
-            "properties_workflow.json",
-            "properties_HPC.json"
+            "properties_workflow.json"#,
+#            "properties_HPC.json"
     ]
         
     for props in list_properties:
         onto_exaatow.load_and_add_properties(os.path.join(onto_exaatow.json_dir, props))
 
     # Load and add restrictions
-    onto_exaatow.load_restrictions("add_restrictions_hasValue_hasUnit.json")
+#    onto_exaatow.load_restrictions("add_restrictions_hasValue_hasUnit.json")
 
     # Load and add instances
     list_instances=[
@@ -906,7 +1032,7 @@ if __name__ == "__main__":
         onto_exaatow.load_instances(instances)
 
     # Print the ontology in Turtle format
-    onto_exaatow.serialize(destination="exaatow_ontology.ttl",format="turtle")
+    onto_exaatow.serialize(destination="exaatow_workflow_ontology.ttl",format="turtle")
 
 
     

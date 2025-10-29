@@ -22,14 +22,13 @@
     }
   },
   {
-    "id": "Workflow",
+    "id": "WorkflowOntology",
     "pref_label": {
-      "en": "Workflow",
-      "fr": "Flux de travail"
+      "en": "Workflow Ontology",
+      "fr": "Ontology de flux de travail"
     },
     "comment": {
-      "en": "A workflow defines a set of interconnected steps or actions that process data, allocate resources, and produce outputs. It encompasses definitions from workflow engines (e.g., CWL, NiFi, Python), manages input/output parameters, orchestrates execution order, and interacts with HPC environments. Workflows facilitate reproducibility and enable provenance tracking for FAIR research practices.",
-      "fr": "Un flux de travail définit un ensemble d'étapes ou d'actions interconnectées qui traitent des données, allouent des ressources et produisent des résultats. Il inclut les définitions des moteurs de flux de travail (par exemple, CWL, NiFi, Python), gère les paramètres d'entrée/sortie, orchestre l'ordre d'exécution et interagit avec les environnements HPC. Les workflows favorisent la reproductibilité et permettent le suivi de la provenance pour une recherche conforme aux principes FAIR."
+      "en": "The Workflow Ontology provides a unified, semantically rich model to describe computational workflows, workflow management systems (WMS), and workflow execution semantics.   It bridges diverse workflow ecosystems such as CWL, WDL, Apache Airflow, Apache NiFi and Python pased workflows, ensuring interoperability, and FAIR compliance. A workflow defines a set of interconnected steps or actions that process data, allocate resources, and produce outputs. It encompasses definitions from workflow engines (e.g., CWL, NiFi, Python), manages input/output parameters, orchestrates execution order, and interacts with HPC environments. Workflows facilitate reproducibility and enable provenance tracking for FAIR research practices."
     }
   },
   {
