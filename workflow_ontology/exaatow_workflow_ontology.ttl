@@ -552,6 +552,7 @@ exa-atow:CancelledStatus rdf:type owl:NamedIndividual , exa-atow:ExecutionStatus
 
 ## prov:wasGeneratedBy
 exa-atow:wasGeneratedBy rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:wasGeneratedBy ;
     rdfs:domain exa-atow:DataArtifact ;
     rdfs:range exa-atow:WorkflowStep ;
     owl:inverseOf exa-atow:produces ;
@@ -612,12 +613,14 @@ exa-atow:hasFAIRCompliance rdf:type owl:ObjectProperty ;
 
 # ===== Data Flow and Step Relations =====
 
-wfdesc:hasInput rdfs:domain exa-atow:WorkflowStep ;
+exa-atow:hasInputParameter rdfs:subPropertyOf wfdesc:hasInput ;
+    rdfs:domain exa-atow:WorkflowStep ;
     rdfs:range exa-atow:InputParameter ;
     rdfs:comment "Connects a workflow step to its input parameters."@en ;
     rdfs:comment "Connecte une étape de workflow à ses paramètres d'entrée."@fr .
 
-wfdesc:hasOutput rdfs:domain exa-atow:WorkflowStep ;
+exa-atow:hasOutputParameter rdfs:subPropertyOf wfdesc:hasOutput ;
+    rdfs:domain exa-atow:WorkflowStep ;
     rdfs:range exa-atow:OutputParameter ;
     rdfs:comment "Connects a workflow step to its output parameters."@en ;
     rdfs:comment "Connecte une étape de workflow à ses paramètres de sortie."@fr .
@@ -921,8 +924,20 @@ exa-atow:domainLabel rdf:type owl:DatatypeProperty ;
     skos:prefLabel "domain label"@en ,
                    "étiquette de domaine"@fr .
 
+pav:authoredBy rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:Workflow ; # The workflow itself
+    rdfs:range prov:Agent ; # An author or group (e.g., person, organization)
+    rdfs:comment "The creator or author of the workflow definition."@en ;
+    skos:prefLabel "authored by"@en .
+
+pav:createdOn rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Workflow ;
+    rdfs:range xsd:dateTime ;
+    rdfs:comment "The date and time when the workflow was initially created or defined (creation timestamp)."@en ;
+    skos:prefLabel "created on"@en ,
+                   "créé le"@fr .
+
 # pav:hasVersion
-#pav:authoredBy 
 
 
 # ===== WorkflowStep =====
