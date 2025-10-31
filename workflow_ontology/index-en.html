@@ -70,11 +70,11 @@ $(function(){
 
 <dl>
 <dt>Latest version:</dt>
-<dd><a href="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/workflow_ontology/exaatow_workflow_ontology.ttl">https://raw.github">https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/workflow_ontology/exaatow_workflow_ontology.ttl</a></dd>
+<dd><a href="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/workflow_ontology/exaatow_workflow_ontology.ttl">https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/workflow_ontology/exaatow_workflow_ontology.ttl</a></dd>
 <dt>Revision:</dt>
 <dd>0.1</dd>
 <dt>Authors:</dt>
-<dd>exaatow members</dd>
+<dd>Exa-AToW members: C. Herrera, G. Richet, ...</dd>
 
 <dt>Download serialization:</dt><dd><span><a href="ontology.jsonld" target="_blank"><img src="https://img.shields.io/badge/Format-JSON_LD-blue.svg" alt="JSON-LD" /></a> </span><span><a href="ontology.owl" target="_blank"><img src="https://img.shields.io/badge/Format-RDF/XML-blue.svg" alt="RDF/XML" /></a> </span><span><a href="ontology.nt" target="_blank"><img src="https://img.shields.io/badge/Format-N_Triples-blue.svg" alt="N-Triples" /></a> </span><span><a href="ontology.ttl" target="_blank"><img src="https://img.shields.io/badge/Format-TTL-blue.svg" alt="TTL" /></a> </span></dd><dt>License:</dt><dd><a href="http://insertlicenseURIhere.example.org" target="_blank"><img src="https://img.shields.io/badge/License-license%20name%20goes%20here-blue.svg" alt="http://insertlicenseURIhere.example.org" /></a>
 </dd><dt>Visualization:</dt><dd><a href="webvowl/index.html#" target="_blank"><img src="https://img.shields.io/badge/Visualize_with-WebVowl-blue.svg" alt="Visualize with WebVowl" /></a></dd>
@@ -89,13 +89,27 @@ $(function(){
 <span>Ontology Specification Draft</span>
 </div>
 </div>     <div id="abstract"><h2>Abstract</h2><span class="markdown">
-abstract</span>
+    The Exa-AToW Workflow Ontology provides a semantic framework for describing, integrating, and deploying heterogeneous workflows across scientific computing facilities. It extends and aligns with established W3C standards—PROV-O, wfdesc, wfprov, and PAV—while introducing domain-specific concepts for workflow engines, execution environments, and cross-system interoperability. Designed for the Exa-AToW project under PEPR Numpex, this ontology enables transparent workflow translation between systems such as CWL, NiFi, and Python, and facilitates structured communication between workflow components and external services. By unifying structural, provenance, and deployment semantics, Exa-AToW supports reproducible, portable, and interoperable workflows for exascale scientific applications.
+  </span>
 </div>
 <div id="toc"></div> 
 
 <!--INTRODUCTION SECTION-->
     <div id="introduction"><h2 id="intro" class="list">Introduction <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
-<span class="markdown">the intro</span>
+      <span class="markdown">
+
+	Scientific workflows are increasingly executed across distributed and heterogeneous computing environments, often involving multiple workflow management systems (WMS) such as CWL, NiFi, and Python-based orchestrators. However, the lack of semantic interoperability between these systems hinders the portability, reproducibility, and integration of workflows at scale. The Exa-AToW Workflow Ontology addresses this challenge by providing a unifying semantic model that describes <br>workflows</br>, their <br>execution environments</br>, <br>data exchanges</br>, and <br>provenance<be> across diverse WMS implementations. Built upon established standards—PROV-O for provenance, wf4ever (wfdesc/wfprov) for workflow descriptions and executions, and PAV for versioning—the ontology introduces additional constructs to represent workflow engines, deployment contexts, and cross-system links. This integration enables seamless translation between workflow systems and facilitates communication with external services and data management components, supporting automated, cross-facility workflow deployment in exascale scientific computing contexts.
+
+This ontology extends and aligns with:
+    - PROV-O: for provenance tracking of workflow components and executions.
+    - wfdesc: for workflow structure elements
+    - wfprov: for workflow execution provenance
+    - PAV: for versioning and attribution
+	
+Workflow Properties are based on:
+- Suter, F., et al. (2026). A terminology for scientific workflow systems. FGCS 174, 107974. <a href="https://doi.org/10.1016/j.future.2025.107974">https://doi.org/10.1016/j.future.2025.107974</a>
+
+      </span>
 <div id="namespacedeclarations">
 <h3 id="ns" class="list">Namespace declarations</h3>
 <div id="ns" align="center">
@@ -261,7 +275,61 @@ This ontology has the following classes and properties.</span>
       <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#WorkflowStep"
          title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#WorkflowStep">Workflow Step</a>
    </li>
-</ul><h4>Object Properties</h4><ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+</ul>
+
+<h3>Classes (WorkFlowProperties)</h3>
+<ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#AbstractionLevel"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#AbstractionLevel">Abstraction Level</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CompositionMethod"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CompositionMethod">Composition Method</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Coupling"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Coupling">Coupling</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementGranularity"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementGranularity">Data Management Granularity</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementStorage"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementStorage">Data Management Storage</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementTransport"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementTransport">Data Management Transport</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DomainSpecificity"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DomainSpecificity">Domain Specificity</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionControl"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionControl">Execution Control</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FlowType"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FlowType">Flow Type</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Modularity"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Modularity">Modularity</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OrchestrationPlanning"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OrchestrationPlanning">Orchestration Planning</a>
+   </li>
+</ul>
+
+
+
+<h4>Object Properties</h4><ul xmlns:widoco="https://w3id.org/widoco/vocab#"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     class="hlist">
    <li>
