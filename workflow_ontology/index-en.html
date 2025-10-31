@@ -88,7 +88,8 @@ $(function(){
 <div>
 <span>Ontology Specification Draft</span>
 </div>
-</div>     <div id="abstract"><h2>Abstract</h2><span class="markdown">
+</div>
+<div id="abstract"><h2>Abstract</h2><span class="markdown">
     The Exa-AToW Workflow Ontology provides a semantic framework for describing, integrating, and deploying heterogeneous workflows across scientific computing facilities. It extends and aligns with established W3C standards—PROV-O, wfdesc, wfprov, and PAV—while introducing domain-specific concepts for workflow engines, execution environments, and cross-system interoperability. Designed for the Exa-AToW project under PEPR Numpex, this ontology enables transparent workflow translation between systems such as CWL, NiFi, and Python, and facilitates structured communication between workflow components and external services. By unifying structural, provenance, and deployment semantics, Exa-AToW supports reproducible, portable, and interoperable workflows for exascale scientific applications.
   </span>
 </div>
@@ -98,7 +99,7 @@ $(function(){
     <div id="introduction"><h2 id="intro" class="list">Introduction <span class="backlink"> back to <a href="#toc">ToC</a></span></h2>
       <span class="markdown">
 
-	Scientific workflows are increasingly executed across distributed and heterogeneous computing environments, often involving multiple workflow management systems (WMS) such as CWL, NiFi, and Python-based orchestrators. However, the lack of semantic interoperability between these systems hinders the portability, reproducibility, and integration of workflows at scale. The Exa-AToW Workflow Ontology addresses this challenge by providing a unifying semantic model that describes <br>workflows</br>, their <br>execution environments</br>, <br>data exchanges</br>, and <br>provenance<be> across diverse WMS implementations. Built upon established standards—PROV-O for provenance, wf4ever (wfdesc/wfprov) for workflow descriptions and executions, and PAV for versioning—the ontology introduces additional constructs to represent workflow engines, deployment contexts, and cross-system links. This integration enables seamless translation between workflow systems and facilitates communication with external services and data management components, supporting automated, cross-facility workflow deployment in exascale scientific computing contexts.
+	Scientific workflows are increasingly executed across distributed and heterogeneous computing environments, often involving multiple workflow management systems (WMS) such as CWL, NiFi, and Python-based orchestrators. However, the lack of semantic interoperability between these systems hinders the portability, reproducibility, and integration of workflows at scale. The Exa-AToW Workflow Ontology addresses this challenge by providing a unifying semantic model that describes <br>workflows</br>, their <br>execution environments</br>, <br>data exchanges</br>, and <br>provenance<br> across diverse WMS implementations. Built upon established standards—PROV-O for provenance, wf4ever (wfdesc/wfprov) for workflow descriptions and executions, and PAV for versioning—the ontology introduces additional constructs to represent workflow engines, deployment contexts, and cross-system links. This integration enables seamless translation between workflow systems and facilitates communication with external services and data management components, supporting automated, cross-facility workflow deployment in exascale scientific computing contexts.
 
 This ontology extends and aligns with:
     - PROV-O: for provenance tracking of workflow components and executions.
@@ -144,64 +145,16 @@ This ontology has the following classes and properties.</span>
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     class="hlist">
    <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#AbstractionLevel"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#AbstractionLevel">Abstraction Level</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CloudEnvironment"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CloudEnvironment">Cloud Environment</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CompositionMethod"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CompositionMethod">Composition Method</a>
-   </li>
-   <li>
       <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ComputationalResource"
          title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ComputationalResource">Computational Resource</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CondaEnvironment"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CondaEnvironment">Conda Environment</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Container"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Container">Container</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Coupling"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Coupling">Coupling</a>
    </li>
    <li>
       <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataArtifact"
          title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataArtifact">Data Artifact</a>
    </li>
    <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementGranularity"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementGranularity">Data Management Granularity</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementStorage"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementStorage">Data Management Storage</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementTransport"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataManagementTransport">Data Management Transport</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataProvenance"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataProvenance">Data Provenance</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DomainSpecificity"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DomainSpecificity">Domain Specificity</a>
-   </li>
-   <li>
       <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Execution"
          title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Execution">Execution</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionControl"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionControl">Execution Control</a>
    </li>
    <li>
       <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionEnvironment"
@@ -210,42 +163,6 @@ This ontology has the following classes and properties.</span>
    <li>
       <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionStatus"
          title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#ExecutionStatus">Execution Status</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FAIRCompliance"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FAIRCompliance">FAIR Compliance</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FlowType"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FlowType">Flow Type</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Granularity"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Granularity">Granularity</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#HPCEnvironment"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#HPCEnvironment">HPC Environment</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#InputParameter"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#InputParameter">Input Parameter</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#LocalMachine"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#LocalMachine">Local Machine</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Modularity"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Modularity">Modularity</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OrchestrationPlanning"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OrchestrationPlanning">Orchestration Planning</a>
-   </li>
-   <li>
-      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OutputParameter"
-         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OutputParameter">Output Parameter</a>
    </li>
    <li>
       <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Parameter"
@@ -276,6 +193,64 @@ This ontology has the following classes and properties.</span>
          title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#WorkflowStep">Workflow Step</a>
    </li>
 </ul>
+
+
+<h3>Classes (WorkFlowMetadata)</h3>
+<ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+     <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataProvenance"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#DataProvenance">Data Provenance</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FAIRCompliance"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#FAIRCompliance">FAIR Compliance</a>
+   </li>
+</ul>
+
+<h3>Classes (Parameter)</h3>
+<ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+     <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#InputParameter"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#InputParameter">Input Parameter</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OutputParameter"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#OutputParameter">Output Parameter</a>
+   </li>
+</ul>
+
+
+<h3>Classes (ExecutionEnvironment)</h3>
+<ul xmlns:widoco="https://w3id.org/widoco/vocab#"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    class="hlist">
+     <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CloudEnvironment"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CloudEnvironment">Cloud Environment</a>
+     </li>
+        <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CondaEnvironment"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#CondaEnvironment">Conda Environment</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Container"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#Container">Container</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#HPCEnvironment"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#HPCEnvironment">HPC Environment</a>
+   </li>
+   <li>
+      <a href="#https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#LocalMachine"
+         title="https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#LocalMachine">Local Machine</a>
+   </li>
+</ul>
+
+
 
 <h3>Classes (WorkFlowProperties)</h3>
 <ul xmlns:widoco="https://w3id.org/widoco/vocab#"
