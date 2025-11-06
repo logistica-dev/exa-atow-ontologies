@@ -1,0 +1,310 @@
+digraph ExaAToW_Workflow_Ontology {
+    // Graph configuration
+    rankdir=TB;
+    splines=true;
+    overlap=false;
+    bgcolor="#ffffff";
+    
+    // Default node style
+    node [
+        shape=box,
+        style="filled",
+        fillcolor="#ECECEC",
+        fontname="Helvetica",
+        fontsize=12,
+        margin=0.3,
+        width=2,
+        height=0.5,
+        fixedsize=false
+    ];
+    // Default edge style
+    edge [fontname="Helvetica", fontsize=10];
+
+  
+    // --- Define Main Classes (Boxes) ---
+    
+    // --- Workflow classes + execution ---
+    subgraph cluster_Workflow {
+        label = "Workflow & Execution Classes";
+        
+        Workflow  [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+                <TR><TD><FONT POINT-SIZE="14"><B>Workflow</B></FONT></TD></TR>
+                <TR><TD><I>Subclass: wfdesc:Workflow</I></TD></TR>
+                <TR><TD>workflowName [str]</TD></TR>
+                <TR><TD>workflowVersion [str]</TD></TR>
+                <TR><TD>workflowDescription [str]</TD></TR>
+                <TR><TD>domainLabel [str]</TD></TR></TABLE>>];
+
+        WorkflowStep [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+	        <TR><TD><FONT POINT-SIZE="14"><B>WorkflowStep</B></FONT></TD></TR>
+                <TR><TD><I>wfdesc:Process, prov:Activity</I></TD></TR>
+                <TR><TD>stepName [str]</TD></TR>
+                <TR><TD>stepDescription [str]</TD></TR>
+                <TR><TD>commandLine [str]</TD></TR></TABLE>>];
+	    
+        WorkflowEngine [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+	        <TR><TD><FONT POINT-SIZE="14"><B>WorkflowEngine</B></FONT></TD></TR>
+                <TR><TD><I>wfprov:WorkflowEngine, prov:SoftwareAgent</I></TD></TR>
+                <TR><TD>engineName [str]</TD></TR>
+                <TR><TD>engineVersion [str]</TD></TR>
+		<TR><TD>engineDescription [str]</TD></TR></TABLE>>];
+
+        SoftwareTool [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0"> 
+   	        <TR><TD><B>SoftwareAgent</B></TD></TR>
+                <TR><TD><I>prov:SoftwareAgent</I></TD></TR>
+                <TR><TD>toolName [str]</TD></TR>
+                <TR><TD>toolVersion [str]</TD></TR></TABLE>>];
+
+        Execution [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+		<TR><TD><B>Execution</B></TD></TR>
+                <TR><TD><I>wfprov:WorkflowRun, prov:Activity</I></TD></TR>
+                <TR><TD>prov:startedAtTime [dateTime]</TD></TR>
+                <TR><TD>prov:endedAtTime [dateTime]</TD></TR></TABLE>>];
+
+        ExecutionStatus [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+	        <TR><TD><B>ExecutionStatus</B></TD></TR>
+                <TR><TD><I>ExecutionStatus</I></TD></TR>
+                <TR><TD>description [str]</TD></TR></TABLE>>];
+                
+                
+    
+ nodesep=.05;
+ rankdir=LR;
+ 
+ node [shape=record,width=.1,height=.01, style="filled, rounded",fillcolor="peachpuff", margin=0.1];
+
+exc_s [label="{QueuedStatus|RunningStatus|CompletedStatus|FailedStatus|CancelledStatusd}"];
+
+    }
+    
+    exc_s -> ExecutionStatus 
+    
+    // --- Parameter/data classes ---
+    subgraph cluster_Parameter {
+ 
+        label =
+	<
+             <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+             <TR><TD><B>Parameter</B></TD></TR>
+             <TR><TD><I>SubclassOf: wfdesc:Parameter</I></TD></TR>
+	     <TR><TD>parameterName [str]</TD></TR>
+	     <TR><TD>parameterType [str]</TD></TR>
+	     <TR><TD>defaultValue [str]</TD></TR>
+	     <TR><TD>parameterFormat [str]</TD></TR>
+             </TABLE>
+            >
+        bgcolor="#FFFDE7";
+        
+        InputParameter [label=<
+             <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+             <TR><TD><B>InputParameter</B></TD></TR>
+             <TR><TD><I>SubclassOf: wfdesc:Input</I></TD></TR></TABLE>>];
+ 
+        OutputParameter [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+             <TR><TD><B>OutputParameter</B></TD></TR>
+             <TR><TD><I>SubclassOf: wfdesc:Output</I></TD></TR></TABLE>>];
+
+        invisible_Parameter [style=invis, width=0, height=0]
+}
+        DataArtifact [label=<
+             <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+             <TR><TD><B>DataArtifact</B></TD></TR>
+             <TR><TD><I>SubclassOf: provEntity</I></TD></TR>
+	     <TR><TD>fileName [str]</TD></TR>
+	     <TR><TD>filePath [str]</TD></TR>
+	     <TR><TD>fileFormat [str]</TD></TR>
+	     <TR><TD>fileSize [decimal]</TD></TR>
+	     <TR><TD>checksum [str]</TD></TR>
+	     <TR><TD>creationDate [dateTime]</TD></TR>
+	     <TR><TD>lastModified [dateTime]</TD></TR>
+	     <TR><TD>license [str]</TD></TR>
+	     <TR><TD>accessURL [URI]</TD></TR>
+	     <TR><TD>doi [str]</TD></TR></TABLE>>];
+
+    // --- Metadata classes ---
+    subgraph cluster_WorkflowMetadata {
+        label =<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+             <TR><TD><B>WorkflowMetadata</B></TD></TR>
+     	     <TR><TD>description [str]</TD></TR></TABLE>>
+        bgcolor="#F3E5F5";
+	rankdir=TB;
+	nodesep=0.05;
+	ranksep=0.1;
+	invisible_WorkflowMetadata [style=invis, width=0, height=0]
+        DataProvenance  [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+             <TR><TD><B>DataProvenance</B></TD></TR></TABLE>>];
+        FAIRCompliance  [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+             <TR><TD><B>FAIRCompliance</B></TD></TR></TABLE>>];
+	
+	DataProvenance -> FAIRCompliance [style=invis,minlen=1];
+    }
+
+    {rank=same; invisible_Parameter; invisible_WorkflowMetadata;}
+    invisible_Parameter -> invisible_WorkflowMetadata [style=invis]
+ 
+ComputationalResource  [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+             <TR><TD><B>ComputationalResource</B></TD></TR>
+	     <TR><TD>description [str]</TD></TR>
+	     <TR><TD>version [str]</TD></TR></TABLE>>];
+
+
+
+// --- Environment classes ---
+    subgraph cluster_Environment {
+	    
+        bgcolor="#E8F5E9";
+	rankdir=TB;
+
+	ExecutionEnvironment [shape=none, margin=0, label=< 
+	 <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" BGCOLOR="#E8F5E9">
+             <TR><TD><B>ExecutionEnvironment</B></TD></TR>
+	     <TR><TD>environmentName [str]</TD></TR>
+	     <TR><TD>environmentVersion [str]</TD></TR>
+	     <TR><TD>environmentDescription [str]</TD></TR>
+             </TABLE>>];
+        
+        LocalMachine [label=< <TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+            <TR><TD><B>LocalMachine</B></TD></TR></TABLE>>];
+	HPCEnvironment [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+            <TR><TD><B>HPCEnvironment</B></TD></TR></TABLE>>];
+	CloudEnvironment [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+            <TR><TD><B>CloudEnvironment</B></TD></TR></TABLE>>];
+	CondaEnvironment [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+            <TR><TD><B>CondaEnvironment</B></TD></TR>
+            <TR><TD>environmentFile [str]</TD></TR>
+            <TR><TD>environmentHash [str]</TD></TR></TABLE>>];
+	Container [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0">
+            <TR><TD><B>Container</B></TD></TR>
+            <TR><TD>containerImage [str]</TD></TR>
+            <TR><TD>containerTag [str]</TD></TR></TABLE>>];
+	ranksep=0.3;
+
+        ExecutionEnvironment -> {LocalMachine ; HPCEnvironment} [style=invis];
+	LocalMachine -> CloudEnvironment [style=invis,minlen=1];
+	HPCEnvironment -> CondaEnvironment [style=invis,minlen=1];
+	Container -> {CondaEnvironment ; CloudEnvironment} [dir=back,style=invis,minlen=1];
+
+    }
+
+
+ 
+Execution -> Container [style=invis]
+
+
+ nodesep=.05;
+ rankdir=LR;
+ 
+ node [shape=record,width=.1,height=.01, style="filled, rounded",fillcolor="peachpuff", margin=0.1];
+
+ node [width = 0.5];
+
+instances_op  [label= "{ StaticPlanning | DynamicPlanning | EventDriven}"];
+instances_ds  [label= "{GenericWorkflow|DomainSpecificWorkflow}"];
+instances_dms [label = "{InMemory | LocalFileSystem | ReplicatedStorage | TransferTasks | SharedFileSystem | DistributedStorage}"];
+instances_dmt [label= "{StreamBased | FileBased}"];
+instances_dmg [label= "{Batch | Pipelined | Partitioned}"];
+instances_cm [label="{SchemaBased|APIDriven|GUIBased}"];
+instances_al [label="{Abstract|Concrete|Implicit|Intermediate}"];
+instances_c [label="{TightCoupling|LooseCoupling}"];
+instances_ec [label="{ResourceManager|Runner|Serverless}"];
+instances_ft [label="{TaskBased|DataDriven|Iterative}"];
+instances_g [label="{FineGrained|CoarseGrained}"];
+instances_m [label="{Flat|Hierarchical}"];
+
+
+subgraph cluster_WorkflowProperty{     
+            bgcolor="lavender";
+            
+	rankdir=TB;
+	
+
+node [shape=record,width=.1,height=.1, fillcolor="lavender"];
+ WP [shape=none, label= 
+    <<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="20">
+    <TR><TD PORT="wp" BORDER="0"><FONT POINT-SIZE="14"><B>WorkflowProperty</B></FONT></TD></TR>
+        <TR><TD PORT="al" BGCOLOR="#ECECEC"><B>AbstractionLevel</B></TD></TR>
+        <TR><TD PORT="cm" BGCOLOR="#ECECEC"><B>CompositionMethod</B></TD></TR>
+        <TR><TD PORT="c" BGCOLOR="#ECECEC"><B>Coupling</B></TD></TR>
+        <TR><TD PORT="ft" BGCOLOR="#ECECEC"><B>FlowType</B></TD></TR>
+        <TR><TD PORT="g" BGCOLOR="#ECECEC"><B>Granularity</B></TD></TR>
+        <TR><TD PORT="m" BGCOLOR="#ECECEC"><B>Modularity</B></TD></TR>
+        <TR><TD PORT="ec" BGCOLOR="#ECECEC"><B>ExecutionControl</B></TD></TR>
+        <TR><TD PORT="op" BGCOLOR="#ECECEC"><B>OrchestrationPlanning</B></TD></TR>
+        <TR><TD PORT="ds" BGCOLOR="#ECECEC"><B>DomainSpecificity</B></TD></TR>
+        <TR><TD PORT="dmg" BGCOLOR="#ECECEC"><B>DataManagementGranularity</B></TD></TR>
+        <TR><TD PORT="dms" BGCOLOR="#ECECEC"><B>DataManagementStorage</B></TD></TR>
+        <TR><TD PORT="dmt" BGCOLOR="#ECECEC"><B>DataManagementTransport</B></TD></TR>
+    </TABLE>>, width=1.0, height=1];
+    
+    
+}
+
+
+WP:al -> instances_al[dir=back]
+WP:cm -> instances_cm[dir=back]
+WP:c -> instances_c[dir=back]
+WP:ft -> instances_ft[dir=back]
+WP:g -> instances_g[dir=back]
+WP:m -> instances_m[dir=back]
+WP:ec -> instances_ec[dir=back]
+WP:op -> instances_op[dir=back]
+WP:ds -> instances_ds[dir=back]
+WP:dmg -> instances_dmg[dir=back]
+WP:dms -> instances_dms[dir=back]
+WP:dmt -> instances_dmt[dir=back]
+
+    // Workflow Properties
+    Workflow -> WP:al [label="hasAbstractionLevel"];
+    Workflow -> WP:cm [label="hasCompositionMethod"];
+    Workflow -> WP:c [label="hasCoupling"];
+    Workflow -> WP:dmg [label="hasDataManagementGranularity"];
+    Workflow -> WP:dms [label="hasDataManagementStorage"];
+    Workflow -> WP:dmt [label="hasDataManagementTransport"];
+    Workflow -> WP:ds [label="hasDomainSpecificity"];
+    Workflow -> WP:ec [label="hasExecutionControl"];
+    Workflow -> WP:ft [label="hasFlowType"];
+    Workflow -> WP:g [label="hasGranularity"];
+    Workflow -> WP:m [label="hasModularity"];
+    Workflow -> WP:op [label="hasOrchestrationPlanning"];
+    // Generic
+//    Workflow -> cluster_Properties [label="hasProperty"];
+
+
+    // Workflow Structure
+    Workflow -> WorkflowStep [label="hasStep"];
+    WorkflowStep -> Workflow [label="isPartOfWorkflow"];
+    WorkflowStep -> Workflow [label="wfdesc:hasSubProcess"];
+
+    // Data Flow
+    WorkflowStep -> InputParameter [label="hasInputParameter"];
+    WorkflowStep -> OutputParameter [label="hasOutputParameter"];
+    OutputParameter -> InputParameter [label="connectsTo"];
+    
+    // Provenance & Data Lineage
+    WorkflowStep -> DataArtifact [label="produces (prov:generated)"];
+    WorkflowStep -> DataArtifact [label="consumes (prov:used)"];
+    DataArtifact -> WorkflowStep [label="wasGeneratedBy"];
+    DataArtifact -> WorkflowStep [label="usedInStep"];
+    DataArtifact -> DataArtifact [label="wasDerivedFrom"];
+    
+    // Execution
+    Workflow -> Execution [label="hasExecution"];
+    WorkflowStep -> Execution [label="hasExecution"];
+    Execution -> Workflow [label="isExecutionOf"];
+    Execution -> ExecutionStatus [label="hasStatus"];
+    Execution -> ExecutionEnvironment [label="hasExecutionEnvironment"];
+    
+    // Execution Environment & Tools
+    ExecutionEnvironment -> ComputationalResource [label="requiresResource"];
+    WorkflowStep -> Container [label="usesContainer"];
+    Workflow -> WorkflowEngine [label="usesEngine"];
+    WorkflowStep -> SoftwareTool [label="usesTool"];
+
+    // Dependencies
+    WorkflowStep -> WorkflowStep [label="dependsOn"];
+    
+    // Metadata
+    Workflow -> FAIRCompliance [label="hasFAIRCompliance"];
+    DataArtifact -> DataProvenance [label="hasProvenanceRecord"];
+    Workflow -> DataProvenance [label="hasProvenanceRecord"];
+}
