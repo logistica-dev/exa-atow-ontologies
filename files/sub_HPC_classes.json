@@ -1,4 +1,14 @@
 [
+      {
+    "id": "HPCResource",
+    "pref_label": {
+      "en": "HPC Resource",
+      "fr": "Ressource HPC"
+    },
+    "comment": {
+      "en": "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components.",
+      "fr": "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."
+    }},
     {
         "id": "Supercomputer",
         "parent_class": "HPCResource",

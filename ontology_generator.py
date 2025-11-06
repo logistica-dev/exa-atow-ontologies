@@ -378,9 +378,11 @@ class CreateOnto:
         """
         print(json_file)
         with open(json_file, "r", encoding="utf-8") as f:
+            print("chao")
             classes_data = json.load(f)
-    
+        print("hola")
         for class_info in classes_data:
+            print(class_info)
             self.add_class(
                 class_name = class_info["id"],
                 pref_label = class_info["pref_label"],
@@ -1010,12 +1012,12 @@ if __name__ == "__main__":
 #        
 #    for sub_file, parent in subclasses.items():
 #        onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, sub_file), parent)
-    onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, "sub_Workflow_classes_new.json"))
-
+    onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, "sub_HPC_classes.json"))
+    onto_exaatow.load_and_add_classes(os.path.join(onto_exaatow.json_dir, "sub_PhysChar_classes.json"))
     # Load properties
     list_properties=[
-            "properties_workflow.json"#,
-#            "properties_HPC.json"
+#            "properties_workflow.json"#,
+            "properties_HPC.json"
     ]
         
     for props in list_properties:
@@ -1024,15 +1026,15 @@ if __name__ == "__main__":
     # Load and add restrictions
 #    onto_exaatow.load_restrictions("add_restrictions_hasValue_hasUnit.json")
 
-    # Load and add instances
-    list_instances=[
-            "instances_workflow.json"
-            ]
-    for instances in list_instances:
-        onto_exaatow.load_instances(instances)
+    # Load and add instances#
+#    list_instances=[
+#            "instances_workflow.json"
+#            ]
+#    for instances in list_instances:
+#        onto_exaatow.load_instances(instances)
 
     # Print the ontology in Turtle format
-    onto_exaatow.serialize(destination="exaatow_workflow_ontology.ttl",format="turtle")
+    onto_exaatow.serialize(destination="exaatow_hpc_ontology.ttl",format="turtle")
 
 
     

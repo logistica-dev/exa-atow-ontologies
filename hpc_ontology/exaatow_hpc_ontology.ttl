@@ -1,0 +1,204 @@
+@prefix exa-atow: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+exa-atow:AcceleratedNode a owl:Class ;
+    rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en,
+        "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."@fr ;
+    rdfs:subClassOf exa-atow:ComputeNode ;
+    skos:prefLabel "Accelerated Node"@en,
+        "Nœud accéléré"@fr .
+
+exa-atow:CPU a owl:Class ;
+    rdfs:comment "The central processing unit responsible for executing general-purpose instructions."@en,
+        "L'unité centrale de traitement responsable de l'exécution des instructions générales."@fr ;
+    rdfs:subClassOf exa-atow:Processor ;
+    skos:prefLabel "CPU"@en,
+        "CPU"@fr .
+
+exa-atow:CoolingSystem a owl:Class ;
+    rdfs:comment "The system responsible for maintaining temperature conditions of HPC components to ensure stable operation."@en,
+        "Le système responsable du maintien de la température des composants HPC afin de garantir un fonctionnement stable."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Cooling System"@en,
+        "Système de refroidissement"@fr .
+
+exa-atow:Core a owl:Class ;
+    rdfs:comment "A processing unit within a CPU or GPU capable of executing tasks concurrently."@en,
+        "Une unité de traitement au sein d’un CPU ou GPU capable d’exécuter des tâches simultanément."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Core"@en,
+        "Cœur"@fr .
+
+exa-atow:EnergyManagement a owl:Class ;
+    rdfs:comment "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment."@en,
+        "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d’énergie dans l’environnement HPC."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Energy Management System"@en,
+        "Système de gestion de l’énergie"@fr .
+
+exa-atow:FileSystem a owl:Class ;
+    rdfs:comment "The shared storage infrastructure used for input/output and checkpoint data in HPC environments."@en,
+        "L’infrastructure de stockage partagée utilisée pour les données d’entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "File System"@en,
+        "Système de fichiers"@fr .
+
+exa-atow:GPU a owl:Class ;
+    rdfs:comment "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en,
+        "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."@fr ;
+    rdfs:subClassOf exa-atow:Processor ;
+    skos:prefLabel "GPU"@en,
+        "GPU"@fr .
+
+exa-atow:Interconnect a owl:Class ;
+    rdfs:comment "High-speed network infrastructure enabling communication between compute nodes and system components."@en,
+        "Infrastructure réseau à haute vitesse permettant la communication entre les nœuds de calcul et les composants du système."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Interconnect"@en,
+        "Interconnexion"@fr .
+
+exa-atow:Partition a owl:Class ;
+    rdfs:comment "A logical grouping of compute nodes within a supercomputer that shares hardware characteristics or workload type, often mapped to SLURM partitions."@en,
+        "Un regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, souvent associé à des partitions SLURM."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Partition"@en,
+        "Partition"@fr .
+
+exa-atow:Rack a owl:Class ;
+    rdfs:comment "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter."@en,
+        "Un châssis physique abritant plusieurs nœuds de calcul et éléments d’infrastructure dans un centre de données."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Rack"@en,
+        "Baie"@fr .
+
+exa-atow:ScalarNode a owl:Class ;
+    rdfs:comment "A compute node equipped with general-purpose CPUs only."@en,
+        "Un nœud de calcul équipé uniquement de processeurs généraux (CPU)."@fr ;
+    rdfs:subClassOf exa-atow:ComputeNode ;
+    skos:prefLabel "Scalar Node"@en,
+        "Nœud scalaire"@fr .
+
+exa-atow:Supercomputer a owl:Class ;
+    rdfs:comment "A high-performance computing system composed of multiple interconnected compute and storage components."@en,
+        "Un système de calcul haute performance composé de plusieurs composants de calcul et de stockage interconnectés."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Supercomputer"@en,
+        "Superordinateur"@fr .
+
+exa-atow:hasDieSize a owl:ObjectProperty ;
+    rdfs:comment "Processor has a die size, including a numeric value and a unit (e.g., mm2)."@en,
+        "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."@fr ;
+    rdfs:domain exa-atow:Processor ;
+    rdfs:range exa-atow:DieSize ;
+    skos:prefLabel "has die size"@en,
+        "a taille de puce"@fr .
+
+exa-atow:hasLifetime a owl:ObjectProperty ;
+    rdfs:comment "The processor or server has an operational lifetime, including numeric value and unit (e.g. years, hours)."@en,
+        "Le processeur ou le serveur a une durée de vie opérationnelle avec valeur numérique et unité (ex : années ou heures)."@fr ;
+    rdfs:domain exa-atow:Processor,
+        exa-atow:Server ;
+    rdfs:range exa-atow:Lifetime ;
+    skos:prefLabel "has lifetime"@en,
+        "a durée de vie"@fr .
+
+exa-atow:hasMemoryCapacity a owl:ObjectProperty ;
+    rdfs:comment "The memory device has a certain memory capacity, including numeric value and unit (e.g., GB, TB)."@en,
+        "Le dispositif de mémoire a une certaine capacité mémoire incluant valeur numérique et unité (ex : Go, To)."@fr ;
+    rdfs:domain exa-atow:HDD,
+        exa-atow:RAM,
+        exa-atow:SSD ;
+    rdfs:range exa-atow:MemoryCapacity ;
+    skos:prefLabel "has memory capacity"@en,
+        "a capacité mémoire"@fr .
+
+exa-atow:hasUnit a owl:DatatypeProperty ;
+    rdfs:comment "Unit of measurement."@en,
+        "Unité de mesure"@fr ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "has unit"@en,
+        "a unité"@fr .
+
+exa-atow:hasValue a owl:DatatypeProperty ;
+    rdfs:comment "Numeric value."@en,
+        "Valeur numérique"@fr ;
+    rdfs:range xsd:decimal ;
+    skos:prefLabel "has numeric value"@en,
+        "a valeur numérique"@fr .
+
+exa-atow:hasWorkload a owl:ObjectProperty ;
+    rdfs:comment "The numerical workload of a processor, which affects its energy consumption and performance. Includes a value and a unit (e.g., % utilization)."@en,
+        "La charge numérique d’un processeur, qui affecte sa consommation d’énergie et ses performances. Comprend une valeur et une unité (ex. : % d’utilisation)."@fr ;
+    rdfs:domain exa-atow:Processor ;
+    rdfs:range exa-atow:Workload ;
+    skos:prefLabel "has workload"@en,
+        "a charge"@fr .
+
+exa-atow:DieSize a owl:Class ;
+    rdfs:comment "The physical area of the CPU or GPU die. Used in impact estimation. Includes a value and a unit."@en,
+        "La surface physique de la puce du CPU ou du GPU. Utilisée pour l'estimation d'impact. Comprend une valeur et une unité."@fr ;
+    skos:prefLabel "Die Size"@en,
+        "Taille de puce"@fr .
+
+exa-atow:HDD a owl:Class ;
+    rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en,
+        "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d’E/S inférieure à celle des SSD."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "HDD"@en,
+        "Disque dur (HDD)"@fr .
+
+exa-atow:Lifetime a owl:Class ;
+    rdfs:comment "Operational lifespan of an electronic component, such as a server or processor."@en,
+        "Durée de vie d’un composant électronique, tel qu’un serveur ou un processeur."@fr ;
+    skos:prefLabel "Lifetime"@en,
+        "Durée de vie"@fr .
+
+exa-atow:MemoryCapacity a owl:Class ;
+    rdfs:comment "Amount of data that can be stored in a memory device like RAM, SSD, or HDD."@en,
+        "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."@fr ;
+    skos:prefLabel "Memory Capacity"@en,
+        "Capacité mémoire"@fr .
+
+exa-atow:RAM a owl:Class ;
+    rdfs:comment "Volatile memory used by compute nodes for temporary data access during job execution."@en,
+        "Mémoire volatile utilisée par les nœuds de calcul pour accéder temporairement aux données pendant l'exécution d'une tâche."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "RAM"@en,
+        "Mémoire vive (RAM)"@fr .
+
+exa-atow:SSD a owl:Class ;
+    rdfs:comment "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O."@en,
+        "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "SSD"@en,
+        "SSD"@fr .
+
+exa-atow:Workload a owl:Class ;
+    rdfs:comment "The processing load handled by a CPU or GPU. It affects energy consumption and performance."@en,
+        "La charge de traitement gérée par un CPU ou un GPU. Elle influence la consommation d'énergie et les performances."@fr ;
+    skos:prefLabel "Workload"@en,
+        "Charge"@fr .
+
+exa-atow:ComputeNode a owl:Class ;
+    rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en,
+        "Une machine physique ou virtuelle dans un système HPC qui exécute des tâches de calcul."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Compute Node"@en,
+        "Nœud de calcul"@fr .
+
+exa-atow:Processor a owl:Class ;
+    rdfs:comment "A general category for processing units, including CPUs and GPUs."@en,
+        "Catégorie générale pour les unités de traitement, y compris les CPU et les GPU."@fr ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    skos:prefLabel "Processor"@en,
+        "Processeur"@fr .
+
+exa-atow:HPCResource a owl:Class ;
+    rdfs:comment "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components."@en,
+        "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."@fr ;
+    skos:prefLabel "HPC Resource"@en,
+        "Ressource HPC"@fr .
+
