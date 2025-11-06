@@ -1,6 +1,6 @@
 # Exa-AToW Workflow Ontology
 
-## Namespace:
+## Turtle file:
 https://raw.githubusercontent.com/logistica-dev/exa-atow-ontologies/refs/heads/main/workflow_ontology/exaatow_workflow_ontology.ttl
 
 
