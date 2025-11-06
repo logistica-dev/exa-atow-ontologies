@@ -8,9 +8,8 @@ Namespace: https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/
 
 
 ## Namespace:
-https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#
+https://raw.githubusercontent.com/logistica-dev/exa-atow-ontologies/refs/heads/main/workflow_ontology/exaatow_workflow_ontology.ttl
 
-Prefix: XXX:
 
 ## Key Features
 
@@ -23,3 +22,11 @@ Prefix: XXX:
 
 
 https://logistica-dev.github.io/exa-atow-ontologies/index-en.html
+
+
+## Alignement to existing ontologies
+![Exa-AToW Workflow Ontology](alignment_exaatow_workflow_onto.png)
+
+
+## Description of the ontology
+![Exa-AToW Workflow Ontology Flowchart](flowok.png)
