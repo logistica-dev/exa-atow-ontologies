@@ -1,0 +1,15 @@
+exa-atow:Workload a owl:Class ;
+    rdfs:comment "The processing load handled by a CPU or GPU. It affects energy consumption and performance."@en,
+        "La charge de traitement gérée par un CPU ou un GPU. Elle influence la consommation d'énergie et les performances."@fr ;
+    skos:prefLabel "Workload"@en,
+        "Charge"@fr .
+
+
+
+exa-atow:hasWorkload a owl:ObjectProperty ;
+    rdfs:comment "The numerical workload of a processor, which affects its energy consumption and performance. Includes a value and a unit (e.g., % utilization)."@en,
+        "La charge numérique d’un processeur, qui affecte sa consommation d’énergie et ses performances. Comprend une valeur et une unité (ex. : % d’utilisation)."@fr ;
+    rdfs:domain exa-atow:Processor ;
+    rdfs:range exa-atow:Workload ;
+    skos:prefLabel "has workload"@en,
+        "a charge"@fr .
