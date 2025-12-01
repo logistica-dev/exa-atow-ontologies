@@ -1,28 +1,40 @@
-# Exa-AToW Ontology
+# Exa-AToW Ontologies
 
-This ontology models the core entities and relationships involved in the **Exa-AToW**  project (part of the NumPEX PEPR initiative), focusing on high-performance computing (HPC) workflows, resources, and user interactions.
+The **[Exa-AToW](https://numpex.org/exaatow-architectures-and-tools-for-large-scale-workflows/)** (Architectures and Tools for Large-Scale Workflows) project, part of the [NumPEx](https://numpex.org/) PEPR, aims at providing solutions for the efficient management of large-scale workflows composed of HPDA, AI, and HPC tasks that are distributed over a continuum of resources ranging from the Exascale, HPC, and Data infrastructures. 
 
-The ontology is serialized in **Turtle (TTL)** format and can be used in **Semantic Web** applications and **Linked Open Data (LOD)** environments.
+This repository houses the formal ontologies developed for the project, providing a structured, semantic representation of key concepts, relationships, and constraints within our system. 
+
 
 https://cnherrera.github.io/Exa-AToW_onto/index-en.html
 
 
-## 🔍 Ontology Concepts
+## 🔍 Structure
 
-The ontology defines key concepts for the ExA-AToW ecosystem:
-(*Bold items indicate concepts that are under review*)
-- **Job**: Represents computational tasks, job descriptions, submission metadata, scheduling attributes, and runtime behavior in HPC environments.
-- **HPCResource**: Covers physical and virtual resources in HPC, including compute nodes, storage, interconnects, and infrastructure.
-- **ProcessorIndicatorEstimator**: Groups estimation tools, metrics, and models used to assess processor indicators such as power consumption, thermal footprint, and die size.
-- **PhysicalCharacteristic**: Captures physical and structural properties of HPC components like memory capacity, die size, material lifetime, and energy efficiency.
-- **Workflow**: Encompasses workflow-related entities such as execution steps, workflow engines, orchestration strategies, and dependencies. Based on:  
+Our project encompasses several complex domains - key concepts for the Exa-AToW ecosystem, and we've designed a modular set of ontologies to capture the specific knowledge in each area:
+
+
+
+1. [HPC](https://github.com/logistica-dev/exa-atow-ontologies/tree/main/workflow_ontology) (High-Performance Computing) Environment Ontology: Covers physical and virtual resources in HPC, including compute nodes, storage, interconnects, and infrastructure.
+
+2. Job Submission Ontology: This component focuses on the semantics of submitting computational jobs to various execution environments. It covers concepts like job parameters, resource requirements (e.g., CPU, memory, time), submission protocols, and execution targets.
+
+3. Processor Indicator Estimator: Groups estimation tools, metrics, and models used to assess processor indicators such as power consumption, thermal footprint, and die size.
+
+4. Workflow Ontology:
+
+        This ontology formally defines the concepts and relationships related to scientific and computational workflows. It models the structure, dependencies, execution logic, and state transitions of complex multi-step processes. Workflow Properties are  based on:  
   > Suter, F., et al. (2026). *A terminology for scientific workflow systems*. FGCS 174, 107974. [DOI](https://doi.org/10.1016/j.future.2025.107974)
+
+
+
+
+
 - User: (TBD) Describes individuals or agents interacting with HPC systems, including identity attributes, roles, and behaviors.
 - Authentication: (TBD) Models authentication concepts including credentials, identity validation, access protocols, and login activities.
 - Digital Twins: (TBD)
 
 
-# Ontology Construction: For Exa-AToW partners!
+## Ontology Construction: For Exa-AToW partners!
 
 **`Exa-AtoW ontology visual guide`**:
 
