@@ -1,0 +1,744 @@
+@prefix : <https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix pie: <https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#> .
+
+<https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#> rdf:type owl:Ontology ;
+                                                                            rdfs:comment "Ontology for the ImpactHPC library."@en ;
+                                                                            rdfs:label "ImpactHPC ontology" .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#dateRange
+:dateRange rdf:type rdfs:Datatype ;
+           rdfs:comment "A range of dates"@en ;
+           rdfs:label "date range" .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#impact
+:impact rdf:type rdfs:Datatype ;
+        rdfs:comment "A datatype representing the environmental impacts of an object."@en ;
+        rdfs:label "impact"@en .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#executes
+:executes rdf:type owl:ObjectProperty ;
+          owl:inverseOf :isExecutedOn ;
+          rdfs:domain :cluster ;
+          rdfs:range :job ;
+          rdfs:comment "A cluster executes a job."@en ;
+          rdfs:label "executes"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#hasAllocationMethod
+:hasAllocationMethod rdf:type owl:ObjectProperty ;
+                     owl:inverseOf :isAllocationMethodChosenFor ;
+                     rdfs:domain :job ;
+                     rdfs:range :allocationMethod ;
+                     rdfs:comment "Les impacts intégrés d'un job sont calculés grâce à une méthode d'attribution."@fr ,
+                                  "The embedded impacts of a job are computed thanks to an attribution method."@en ;
+                     rdfs:label "a une méthode d'allocation"@fr ,
+                                "has allocation method"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#hasCategory
+:hasCategory rdf:type owl:ObjectProperty ;
+             owl:inverseOf :isCategoryOf ;
+             rdfs:domain :impactEstimation ;
+             rdfs:range :environmentalImpactCategory ;
+             rdfs:comment "An environmental impact estimation has a category (ADPE, GWP or PEC)."@en ;
+             rdfs:label "has category"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#hasEstimatedImpact
+:hasEstimatedImpact rdf:type owl:ObjectProperty ;
+                    owl:inverseOf :isImpactEstimationOf ;
+                    rdfs:domain :impactAssessedObject ;
+                    rdfs:range :impactEstimation ;
+                    rdfs:comment "An object has an estimated environmental impact."@en ;
+                    rdfs:label "has estimated impact"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#isAllocationMethodChosenFor
+:isAllocationMethodChosenFor rdf:type owl:ObjectProperty ;
+                             rdfs:domain :allocationMethod ;
+                             rdfs:range :job ;
+                             rdfs:comment "An allocation method is chosen to compute the impacts of a job."@en ;
+                             rdfs:label "is allocation method chosen for"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#isCategoryOf
+:isCategoryOf rdf:type owl:ObjectProperty ;
+              rdfs:domain :environmentalImpactCategory ;
+              rdfs:range :impactEstimation ;
+              rdfs:comment "ADPE, GWP or PEC is the category of an impact estimation."@en ;
+              rdfs:label "is the category of"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#isComputedUsingMethod
+:isComputedUsingMethod rdf:type owl:ObjectProperty ;
+                       owl:inverseOf :isMethodUsedToCompute ;
+                       rdfs:domain :embeddedImpact ;
+                       rdfs:range :allocationMethod ;
+                       rdfs:comment "Embedded impacts are computed using a given allocation method."@en ;
+                       rdfs:label "is computed using method"@en ,
+                                  "sont calculés grâce à la méthode"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#isExecutedOn
+:isExecutedOn rdf:type owl:ObjectProperty ;
+              rdfs:domain :job ;
+              rdfs:range :cluster ;
+              rdfs:comment "A job is executed on a given cluster." ;
+              rdfs:label "is executed on"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#isImpactEstimationOf
+:isImpactEstimationOf rdf:type owl:ObjectProperty ;
+                      rdfs:domain :impactEstimation ;
+                      rdfs:range :impactAssessedObject ;
+                      rdfs:comment "An estimation corresponds to the object producing the impact."@en ;
+                      rdfs:label "is the impact estimation of"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#isMethodUsedToCompute
+:isMethodUsedToCompute rdf:type owl:ObjectProperty ;
+                       rdfs:domain :allocationMethod ;
+                       rdfs:range :embeddedImpact ;
+                       rdfs:comment "An allocation method is used to compute embedded impacts"@en ;
+                       rdfs:label "is method used to compute" .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#isPartOfImpactComputationOf
+:isPartOfImpactComputationOf rdf:type owl:ObjectProperty ;
+                             rdfs:domain :impactAssessedObject ;
+                             rdfs:range :impactAssessedObject ;
+                             rdfs:comment "An object's impacts are needed to compute another object's impacts."@en ;
+                             rdfs:label "is part of impact computation of"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#batteryCapacity
+:batteryCapacity rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :battery ;
+                 rdfs:range xsd:positiveInteger ;
+                 rdfs:comment "The battery capacity. If unknown, it will be estimated from the server consumption and battery duration."@en ;
+                 rdfs:label "battery capacity"@en ,
+                            "capacité de la batterie"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#batteryDensity
+:batteryDensity rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :batteryType ;
+                rdfs:domain :battery ;
+                rdfs:range xsd:float ;
+                rdfs:comment "The energy that can be contained in 1 kilogram of this type of battery."@en ;
+                rdfs:label "battery density"@en ,
+                           "densité de la batterie"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#batteryDuration
+:batteryDuration rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :battery ;
+                 rdfs:range xsd:float ;
+                 rdfs:comment "The battery's expected duration given the server's energy consumption."@en ;
+                 rdfs:label "battery duration"@en ,
+                            "durée de la batterie"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#batteryImpactPerKilo
+:batteryImpactPerKilo rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf :batteryType ;
+                      rdfs:domain :battery ;
+                      rdfs:range :impact ;
+                      rdfs:comment "The embodied impacts of 1 kilogram of this type of battery."@en ;
+                      rdfs:label "battery impact per kilogram"@en ,
+                                 "impacts par kilo de batterie"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#batteryType
+:batteryType rdf:type owl:DatatypeProperty ;
+             rdfs:domain :battery ;
+             rdfs:range xsd:string ;
+             rdfs:comment "The type of the battery, which can be VRLA, LFP, LTO, LMO, NCM, NCA, NaNiCl, or VRFB."@en ;
+             rdfs:label "battery type"@en ,
+                        "type de batterie"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#batteryWeight
+:batteryWeight rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :batteryType ;
+               rdfs:domain :battery ;
+               rdfs:range xsd:float ;
+               rdfs:comment "The weight of the battery. It is computed using its capacity and density."@en ;
+               rdfs:label "battery weight"@en ,
+                          "poids de la batterie"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#casingType
+:casingType rdf:type owl:DatatypeProperty ;
+            rdfs:domain :chassis ;
+            rdfs:range xsd:string ;
+            rdfs:comment "Either rack or blade."@en ;
+            rdfs:label "casing type"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#clusterName
+:clusterName rdf:type owl:DatatypeProperty ;
+             rdfs:domain :job ;
+             rdfs:range xsd:string ;
+             rdfs:comment "The name of the cluster the job is executed on."@en ;
+             rdfs:label "cluster name"@en ,
+                        "nom de la partition"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#coolingPower
+:coolingPower rdf:type owl:DatatypeProperty ;
+              rdfs:domain :cooling ;
+              rdfs:range xsd:float ;
+              rdfs:comment "The cooling power of the cooling system, in Watts."@en ;
+              rdfs:label "capacité de refroidissement"@fr ,
+                         "cooling power"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#coresNumber
+:coresNumber rdf:type owl:DatatypeProperty ;
+             rdfs:domain :cpu ;
+             rdfs:range xsd:unsignedInt ;
+             rdfs:comment "The number of physical cores of the processor."@en ;
+             rdfs:label "cores number"@en ,
+                        "nombre de coeurs"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#dieSize
+:dieSize rdf:type owl:DatatypeProperty ;
+         rdfs:domain :processor ;
+         rdfs:range xsd:float ;
+         rdfs:comment "The surface area of the processor's die, in mm². Used to determine the embodied impacts of the processor."@en ;
+         rdfs:label "die size"@en ,
+                    "taille du die"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#dieSizeImpactFactor
+:dieSizeImpactFactor rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :processor ;
+                     rdfs:range :impact ;
+                     rdfs:comment "Corresponds to the embodied impacts of 1 mm² of die."@en ;
+                     rdfs:label "die size impact factor"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#duration
+:duration rdf:type owl:DatatypeProperty ;
+          rdfs:domain :job ;
+          rdfs:range xsd:float ;
+          rdfs:comment "The duration of the job."@en ;
+          rdfs:label "duration"@en ,
+                     "durée"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#electricalImpacts
+:electricalImpacts rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :park ;
+                   rdfs:range :impact ;
+                   rdfs:comment "Environmental impacts of the electrical mix of the region where the park is running. This represents the impacts of producing 1 kWh of electricity."@en ;
+                   rdfs:label "electrical impacts"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#energyConsumptionMeasures
+:energyConsumptionMeasures rdf:type owl:DatatypeProperty ;
+                           rdfs:domain :impactAssessedObject ;
+                           rdfs:range xsd:float ;
+                           rdfs:comment "Measures of a device's energy consumption."@en ;
+                           rdfs:label "energy consumption measures"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#engravingProcessThickness
+:engravingProcessThickness rdf:type owl:DatatypeProperty ;
+                           rdfs:domain :ram ;
+                           rdfs:range xsd:float ;
+                           rdfs:comment "The thickness of the engraving process for manufacturing this RAM stick."@en ;
+                           rdfs:label "engraving process thickness"@en ,
+                                      "épaisseur de gravure"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#gpuRamCapacity
+:gpuRamCapacity rdf:type owl:DatatypeProperty ;
+                rdfs:domain :gpu ;
+                rdfs:range xsd:unsignedInt ;
+                rdfs:comment "Capacity of the GPU's embedded RAM in gigabyes."@en ;
+                rdfs:label "GPU RAM capacity"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#idleEnergyConsumption
+:idleEnergyConsumption rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf :energyConsumptionMeasures ;
+                       rdfs:domain :impactAssessedObject ;
+                       rdfs:range xsd:float ;
+                       owl:propertyDisjointWith :instantEnergyConsumption ,
+                                                :peakEnergyConsumption ;
+                       rdfs:comment "The energy consumption of an idle device."@en ;
+                       rdfs:label "idle energy consumption"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#instantEnergyConsumption
+:instantEnergyConsumption rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf :energyConsumptionMeasures ;
+                          rdfs:domain :impactAssessedObject ;
+                          rdfs:range xsd:float ;
+                          owl:propertyDisjointWith :peakEnergyConsumption ;
+                          rdfs:comment "The nergy consumption of a device at a given moment."@en ;
+                          rdfs:label "instant energy consumption" .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#manufacturer
+:manufacturer rdf:type owl:DatatypeProperty ;
+              rdfs:domain :memoryStick ;
+              rdfs:range xsd:string ;
+              rdfs:comment "The company that manufactured the memory stick."@en ;
+              rdfs:label "fabricant"@fr ,
+                         "manufacturer"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#memoryBaseImpact
+:memoryBaseImpact rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :memoryStick ;
+                  rdfs:range :impact ;
+                  rdfs:comment "A constant impact of every memory (RAM or SSD) stick, which includes packaging, transport, etc."@en ;
+                  rdfs:label "memory base impact"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#memoryCapacity
+:memoryCapacity rdf:type owl:DatatypeProperty ;
+                rdfs:domain :memoryStick ;
+                rdfs:range xsd:unsignedInt ;
+                rdfs:comment "The memory's capacity, in gigabytes."@en ;
+                rdfs:label "capacité de la mémoire"@fr ,
+                           "memory capacity"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#memoryDensity
+:memoryDensity rdf:type owl:DatatypeProperty ;
+               rdfs:domain :memoryStick ;
+               rdfs:range xsd:float ;
+               rdfs:comment "The quantity of data (in gigabytes) that a cm² of memory (RAM or SSD) contains. This value is expressed in GB/cm²."@en ;
+               rdfs:label "densité de mémoire"@fr ,
+                          "memory density"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#modelName
+:modelName rdf:type owl:DatatypeProperty ;
+           rdfs:domain :processor ;
+           rdfs:range xsd:string ;
+           rdfs:comment "The name of a processor model. Can be an exact name or the result of a fuzzy matching function." ;
+           rdfs:label "model name"@en ,
+                      "nom du modèle"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#modelRange
+:modelRange rdf:type owl:DatatypeProperty ;
+            rdfs:domain :cpu ;
+            rdfs:range xsd:string ;
+            rdfs:comment "The model range of the processor, for example ``EPYC``, ``Athlon X4``, ``Core i5``, ``Xeon Gold``..."@en ;
+            rdfs:label "model range"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#nodesCount
+:nodesCount rdf:type owl:DatatypeProperty ;
+            rdfs:domain :job ;
+            rdfs:range xsd:unsignedInt ;
+            rdfs:comment "The number of the cluster's nodes used by the job."@en ;
+            rdfs:label "nodes count"@en ,
+                       "nombre de noeuds"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#peakEnergyConsumption
+:peakEnergyConsumption rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf :energyConsumptionMeasures ;
+                       rdfs:domain :impactAssessedObject ;
+                       rdfs:range xsd:float ;
+                       rdfs:comment "The energy consumption of a device used at its maximum."@en ;
+                       rdfs:label "peak energy consumption" .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#powerSupplyImpactFactor
+:powerSupplyImpactFactor rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :powerSupply ;
+                         rdfs:range :impact ;
+                         rdfs:comment "The impacts of 1 kg of power supply."@en ;
+                         rdfs:label "facteur d'impact de l'alimentation"@fr ,
+                                    "power supply impact factor"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#powerSupplyWeight
+:powerSupplyWeight rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :powerSupply ;
+                   rdfs:range xsd:float ;
+                   rdfs:comment "The weight of the power supply."@en ;
+                   rdfs:label "poids de l'alimentation"@fr ,
+                              "power supply weight"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#powerUsageEffectiveness
+:powerUsageEffectiveness rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :park ;
+                         rdfs:range xsd:float ;
+                         rdfs:comment "The Power Usage Effectiveness (PUE https://en.wikipedia.org/wiki/Power_usage_effectiveness) of a park or cluster."@en ;
+                         rdfs:label "Power Usage Effectiveness"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#processorFamily
+:processorFamily rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :processor ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "The family of the processor. Ignored if model name and die size are known."@en ;
+                 rdfs:label "famille du processeur"@fr ,
+                            "processor family"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#releaseDateRange
+:releaseDateRange rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :processor ;
+                  rdfs:range :dateRange ;
+                  rdfs:comment "The date range in which the processor was released. Used in computations when the exact model of the processor isn't known and estimations are done with average values."@en ;
+                  rdfs:label "plage de la date de sortie"@fr ,
+                             "release date range" .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#serverConsumption
+:serverConsumption rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :server ;
+                   rdfs:range xsd:float ;
+                   rdfs:comment "The energy consumption of the server."@en ;
+                   rdfs:label "consommation du serveur"@fr ,
+                              "server consumption"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#surface
+:surface rdf:type owl:DatatypeProperty ;
+         rdfs:domain :memoryStick ;
+         rdfs:range xsd:float ;
+         rdfs:comment "Surface of the memory stick, estimated using its capacity and density."@en ;
+         rdfs:label "surface"@en ,
+                    "surface"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#surfaceImpactFactor
+:surfaceImpactFactor rdf:type owl:DatatypeProperty ;
+                     rdfs:domain :memoryStick ;
+                     rdfs:range :impact ;
+                     rdfs:comment "The impacts of 1 cm² of a memory stick."@en ;
+                     rdfs:label "facteur d'impact de la surface"@fr ,
+                                "surface impact factor"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#thermalDesignPower
+:thermalDesignPower rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :processor ;
+                    rdfs:range xsd:float ;
+                    rdfs:comment "The Thermal Design Power (https://en.wikipedia.org/wiki/Thermal_design_power) of the processor, used to determine its instant power."@en ;
+                    rdfs:label "thermal design power"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#workload
+:workload rdf:type owl:DatatypeProperty ;
+          rdfs:domain :cpu ;
+          rdfs:range [ rdf:type rdfs:Datatype ;
+                       owl:onDatatype xsd:float ;
+                       owl:withRestrictions ( [ xsd:minInclusive "0.0"^^xsd:float
+                                              ]
+                                              [ xsd:maxInclusive "100.0"^^xsd:float
+                                              ]
+                                            )
+                     ] ;
+          rdfs:comment "Percentage indicating how much of a processor is being used. A processor is considered idle when its workload is 0%, and its peak consumption happens when its workload is 100%."@en ;
+          rdfs:label "charge de travail"@fr ,
+                     "workload"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#adpe
+:adpe rdf:type owl:Class ;
+      rdfs:subClassOf :environmentalImpactCategory ;
+      owl:disjointWith :gwp ,
+                       :pec ;
+      rdfs:comment "Abiotic resources depletion, in gSebq"@en ,
+                   "Déplétion des ressources abiotiques, en gSbeq"@fr ;
+      rdfs:label "ADPE"@en ,
+                 "ADPE"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#allocationMethod
+:allocationMethod rdf:type owl:Class ;
+                  rdfs:comment "Fonction used to associate a job with its embedded impacts"@en ,
+                               "Fonction utilisée pour attribuer ses impacts intégrés à une tâche en particulier"@fr ;
+                  rdfs:label "attribution method"@en ,
+                             "méthode d'attribution"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#battery
+:battery rdf:type owl:Class ;
+         rdfs:subClassOf :impactAssessedObject ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :isPartOfImpactComputationOf ;
+                           owl:someValuesFrom :park
+                         ] ;
+         owl:disjointWith :powerSupply ;
+         rdfs:comment "Batteries de secours"@fr ,
+                      "Emergency batteries"@en ;
+         rdfs:label "batterie"@fr ,
+                    "battery"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#chassis
+:chassis rdf:type owl:Class ;
+         rdfs:subClassOf :component ;
+         rdfs:comment "Armature ou boîtier principal qui loge et protège les composants internes d'un serveur."@fr ,
+                      "The casing containing and protecting servers."@en ;
+         rdfs:label "chassis"@en ,
+                    "châssis"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#cluster
+:cluster rdf:type owl:Class ;
+         rdfs:subClassOf :impactAssessedObject ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :isPartOfImpactComputationOf ;
+                           owl:someValuesFrom :park
+                         ] ;
+         owl:disjointWith :park ,
+                          :server ;
+         rdfs:comment "Ensemble de nœuds de calcul ayant les mêmes caractéristiques"@fr ,
+                      "Set of computing nodes with similar characteristics"@en ;
+         rdfs:label "cluster"@en ,
+                    "partition"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#component
+:component rdf:type owl:Class ;
+           rdfs:subClassOf :impactAssessedObject ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :isPartOfImpactComputationOf ;
+                             owl:someValuesFrom :server
+                           ] ;
+           rdfs:comment "Elements part of a server"@en ,
+                        "Éléments composants un serveur"@fr ;
+           rdfs:label "component"@en ,
+                      "composant"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#cooling
+:cooling rdf:type owl:Class ;
+         rdfs:subClassOf :impactAssessedObject ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :isPartOfImpactComputationOf ;
+                           owl:someValuesFrom :park
+                         ] ;
+         rdfs:comment "Cooling system of a park. The embodied impacts of the cooling system are reduced to the impacts of the refrigeration unit."@en ,
+                      "Système de refroidissement d'un parc. Les impacts du système de refroidissement sont réduits à ceux de l'unité de réfrigération."@fr ;
+         rdfs:label "cooling system"@en ,
+                    "système de refroidissement"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#cpu
+:cpu rdf:type owl:Class ;
+     rdfs:subClassOf :processor ;
+     owl:disjointWith :gpu ;
+     rdfs:comment "A type of processor."@en ,
+                  "Un type de processeur."@fr ;
+     rdfs:label "CPU"@en ,
+                "CPU"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#embeddedImpact
+:embeddedImpact rdf:type owl:Class ;
+                rdfs:subClassOf :impactEstimation ;
+                owl:disjointWith :embodiedImpact ,
+                                 :usageImpact ;
+                rdfs:comment "La partie des impacts embarqués attribués à une tâche, via une méthode d'attribution"@fr ,
+                             "Part of the embodied impacts attributed to a job using an attribution method"@en ;
+                rdfs:label "embedded impact"@en ,
+                           "impact intégré"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#embodiedImpact
+:embodiedImpact rdf:type owl:Class ;
+                rdfs:subClassOf :impactEstimation ;
+                owl:disjointWith :usageImpact ;
+                rdfs:comment "Estimated impacts of the extraction, production, distribution and end-of-life phases of an object"@en ,
+                             "Les impacts estimés des phases d'extraction, de production, de distribution et de fin de vie d'un objet. Parfois appelés impacts gris"@fr ;
+                rdfs:label "embodied impact"@en ,
+                           "impact embarqué"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#environmentalImpactCategory
+:environmentalImpactCategory rdf:type owl:Class ;
+                             rdfs:comment "Catégorie d'impact environnemental, parmi : déplétion des ressources abiotiques, consommation d'énergie primaire, potentiel de réchauffement climatique"@fr ,
+                                          "Environmental impact category, among ADPE, PEC or GWP"@en ;
+                             rdfs:label "catégorie d'impact environnemental"@fr ,
+                                        "environmental impact category"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#gpu
+:gpu rdf:type owl:Class ;
+     rdfs:subClassOf :processor ;
+     rdfs:comment "A type of processor."@en ,
+                  "Un type de processeur."@fr ;
+     rdfs:label "GPU"@en ,
+                "GPU"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#gwp
+:gwp rdf:type owl:Class ;
+     rdfs:subClassOf :environmentalImpactCategory ;
+     owl:disjointWith :pec ;
+     rdfs:comment "Global Warming Potential, in kgCO2eq"@en ,
+                  "Potentiel de réchauffement climatique, en kgCO2eq"@fr ;
+     rdfs:label "GWP"@en ,
+                "GWP"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#hdd
+:hdd rdf:type owl:Class ;
+     rdfs:subClassOf :component ;
+     owl:disjointWith :ssd ;
+     rdfs:comment "A type of memory."@en ,
+                  "Disque dur"@fr ;
+     rdfs:label "HDD"@en ,
+                "HDD"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#impactAssessedObject
+:impactAssessedObject rdf:type owl:Class ;
+                      rdfs:comment "Object whose ecological impact is estimated"@en ,
+                                   "Objet pour lequel on estime les impacts écologiques"@fr ;
+                      rdfs:label "impact assessed object"@en ,
+                                 "objet à impact évalué"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#impactEstimation
+:impactEstimation rdf:type owl:Class ;
+                  rdfs:comment "Computed estimation of an object's environmental impact"@en ,
+                               "Estimation calculée de l'impact environnemental d'un objet"@fr ;
+                  rdfs:label "estimation de l'impact"@fr ,
+                             "impact estimation"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#job
+:job rdf:type owl:Class ;
+     rdfs:subClassOf :impactAssessedObject ;
+     rdfs:comment "Task, computation executed on a server park, on a given number of processors, with a given RAM use"@en ,
+                  "Tâche, calcul effectué dans un parc de serveur, sur un certain nombre de CPU/GPU, avec une certaine utilisation de la RAM"@fr ;
+     rdfs:label "job"@en ,
+                "tâche"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#memoryStick
+:memoryStick rdf:type owl:Class ;
+             rdfs:subClassOf :component ;
+             rdfs:comment "Either a RAM stick or a SSD stick."@en ;
+             rdfs:label "memory stick"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#motherboard
+:motherboard rdf:type owl:Class ;
+             rdfs:subClassOf :component ;
+             rdfs:comment "Main printed circuit board of a computer."@en ;
+             rdfs:label "carte-mère"@fr ,
+                        "motherboard"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#park
+:park rdf:type owl:Class ;
+      rdfs:subClassOf :impactAssessedObject ;
+      owl:disjointWith :server ;
+      rdfs:comment "Parc de serveurs, datacenter"@fr ,
+                   "Server park, datacenter"@en ;
+      rdfs:label "parc"@fr ,
+                 "park"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#pec
+:pec rdf:type owl:Class ;
+     rdfs:subClassOf :environmentalImpactCategory ;
+     rdfs:comment "Consommation d'énergie primaire, en Joules"@fr ,
+                  "Primary Energy Consumption, in Joules"@en ;
+     rdfs:label "PEC"@en ,
+                "PEC"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#powerSupply
+:powerSupply rdf:type owl:Class ;
+             rdfs:subClassOf :component ,
+                             [ rdf:type owl:Restriction ;
+                               owl:onProperty :isPartOfImpactComputationOf ;
+                               owl:allValuesFrom :job
+                             ] ;
+             rdfs:comment "Alimentation électrique d'un objet"@fr ,
+                          "An object's power supply"@en ;
+             rdfs:label "alimentation"@fr ,
+                        "power supply"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#processor
+:processor rdf:type owl:Class ;
+           rdfs:subClassOf :component ;
+           rdfs:comment "Either GPU or CPU"@en ;
+           rdfs:label "processor"@en .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#ram
+:ram rdf:type owl:Class ;
+     rdfs:subClassOf :memoryStick ;
+     rdfs:comment "Mémoire vive"@fr ,
+                  "Random Access Memory"@en ;
+     rdfs:label "RAM"@en ,
+                "RAM"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#server
+:server rdf:type owl:Class ;
+        rdfs:subClassOf :impactAssessedObject ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty :isPartOfImpactComputationOf ;
+                          owl:someValuesFrom :cluster
+                        ] ;
+        rdfs:comment "Computer providing information to other computers."@en ;
+        rdfs:label "server"@en ,
+                   "serveur"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#ssd
+:ssd rdf:type owl:Class ;
+     rdfs:subClassOf :memoryStick ;
+     rdfs:comment "Solid State Drive"@en ,
+                  "Solid State Drive"@fr ;
+     rdfs:label "SSD"@en ,
+                "SSD"@fr .
+
+
+###  https://gitlab.aqmo.org/grichet/impacts-hpc/-/raw/main/ontology/PIE.ttl#usageImpact
+:usageImpact rdf:type owl:Class ;
+             rdfs:subClassOf :impactEstimation ;
+             rdfs:comment "Estimated impacts of an object's usage phase"@en ,
+                          "Impacts estimés de la phase d'usage d'un objet"@fr ;
+             rdfs:label "impact de la phase d'usage"@fr ,
+                        "usage impact"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

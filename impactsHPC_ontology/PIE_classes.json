@@ -1,0 +1,326 @@
+[
+    {
+        "id": "hdd",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "HDD",
+            "fr": "HDD"
+        },
+        "comment": {
+            "en": "A type of memory.",
+            "fr": "Disque dur"
+        }
+    },
+    {
+        "id": "impactEstimation",
+        "parent_class": null,
+        "pref_label": {
+            "en": "impact estimation",
+            "fr": "estimation de l'impact"
+        },
+        "comment": {
+            "en": "Computed estimation of an object's environmental impact",
+            "fr": "Estimation calculée de l'impact environnemental d'un objet"
+        }
+    },
+    {
+        "id": "embeddedImpact",
+        "parent_class": "impactEstimation",
+        "pref_label": {
+            "en": "embedded impact",
+            "fr": "impact intégré"
+        },
+        "comment": {
+            "en": "Part of the embodied impacts attributed to a job using an attribution method",
+            "fr": "La partie des impacts embarqués attribués à une tâche, via une méthode d'attribution"
+        }
+    },
+    {
+        "id": "ram",
+        "parent_class": "memoryStick",
+        "pref_label": {
+            "en": "RAM",
+            "fr": "RAM"
+        },
+        "comment": {
+            "en": "Random Access Memory",
+            "fr": "Mémoire vive"
+        }
+    },
+    {
+        "id": "gwp",
+        "parent_class": "environmentalImpactCategory",
+        "pref_label": {
+            "en": "GWP",
+            "fr": "GWP"
+        },
+        "comment": {
+            "en": "Global Warming Potential, in kgCO2eq",
+            "fr": "Potentiel de réchauffement climatique, en kgCO2eq"
+        }
+    },
+    {
+        "id": "component",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "component",
+            "fr": "composant"
+        },
+        "comment": {
+            "en": "Elements part of a server",
+            "fr": "Éléments composants un serveur"
+        }
+    },
+    {
+        "id": "cpu",
+        "parent_class": "processor",
+        "pref_label": {
+            "en": "CPU",
+            "fr": "CPU"
+        },
+        "comment": {
+            "en": "A type of processor.",
+            "fr": "Un type de processeur."
+        }
+    },
+    {
+        "id": "server",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "server",
+            "fr": "serveur"
+        },
+        "comment": {
+            "en": "Computer providing information to other computers.",
+            "fr": null
+        }
+    },
+    {
+        "id": "environmentalImpactCategory",
+        "parent_class": null,
+        "pref_label": {
+            "en": "environmental impact category",
+            "fr": "catégorie d'impact environnemental"
+        },
+        "comment": {
+            "en": "Environmental impact category, among ADPE, PEC or GWP",
+            "fr": "Catégorie d'impact environnemental, parmi : déplétion des ressources abiotiques, consommation d'énergie primaire, potentiel de réchauffement climatique"
+        }
+    },
+    {
+        "id": "pec",
+        "parent_class": "environmentalImpactCategory",
+        "pref_label": {
+            "en": "PEC",
+            "fr": "PEC"
+        },
+        "comment": {
+            "en": "Primary Energy Consumption, in Joules",
+            "fr": "Consommation d'énergie primaire, en Joules"
+        }
+    },
+    {
+        "id": "cluster",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "cluster",
+            "fr": "partition"
+        },
+        "comment": {
+            "en": "Set of computing nodes with similar characteristics",
+            "fr": "Ensemble de nœuds de calcul ayant les mêmes caractéristiques"
+        }
+    },
+    {
+        "id": "gpu",
+        "parent_class": "processor",
+        "pref_label": {
+            "en": "GPU",
+            "fr": "GPU"
+        },
+        "comment": {
+            "en": "A type of processor.",
+            "fr": "Un type de processeur."
+        }
+    },
+    {
+        "id": "usageImpact",
+        "parent_class": "impactEstimation",
+        "pref_label": {
+            "en": "usage impact",
+            "fr": "impact de la phase d'usage"
+        },
+        "comment": {
+            "en": "Estimated impacts of an object's usage phase",
+            "fr": "Impacts estimés de la phase d'usage d'un objet"
+        }
+    },
+    {
+        "id": "park",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "park",
+            "fr": "parc"
+        },
+        "comment": {
+            "en": "Server park, datacenter",
+            "fr": "Parc de serveurs, datacenter"
+        }
+    },
+    {
+        "id": "embodiedImpact",
+        "parent_class": "impactEstimation",
+        "pref_label": {
+            "en": "embodied impact",
+            "fr": "impact embarqué"
+        },
+        "comment": {
+            "en": "Estimated impacts of the extraction, production, distribution and end-of-life phases of an object",
+            "fr": "Les impacts estimés des phases d'extraction, de production, de distribution et de fin de vie d'un objet. Parfois appelés impacts gris"
+        }
+    },
+    {
+        "id": "allocationMethod",
+        "parent_class": null,
+        "pref_label": {
+            "en": "attribution method",
+            "fr": "méthode d'attribution"
+        },
+        "comment": {
+            "en": "Fonction used to associate a job with its embedded impacts",
+            "fr": "Fonction utilisée pour attribuer ses impacts intégrés à une tâche en particulier"
+        }
+    },
+    {
+        "id": "impactAssessedObject",
+        "parent_class": null,
+        "pref_label": {
+            "en": "impact assessed object",
+            "fr": "objet à impact évalué"
+        },
+        "comment": {
+            "en": "Object whose ecological impact is estimated",
+            "fr": "Objet pour lequel on estime les impacts écologiques"
+        }
+    },
+    {
+        "id": "chassis",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "chassis",
+            "fr": "châssis"
+        },
+        "comment": {
+            "en": "The casing containing and protecting servers.",
+            "fr": "Armature ou boîtier principal qui loge et protège les composants internes d'un serveur."
+        }
+    },
+    {
+        "id": "processor",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "processor",
+            "fr": null
+        },
+        "comment": {
+            "en": "Either GPU or CPU",
+            "fr": null
+        }
+    },
+    {
+        "id": "ssd",
+        "parent_class": "memoryStick",
+        "pref_label": {
+            "en": "SSD",
+            "fr": "SSD"
+        },
+        "comment": {
+            "en": "Solid State Drive",
+            "fr": "Solid State Drive"
+        }
+    },
+    {
+        "id": "cooling",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "cooling system",
+            "fr": "système de refroidissement"
+        },
+        "comment": {
+            "en": "Cooling system of a park. The embodied impacts of the cooling system are reduced to the impacts of the refrigeration unit.",
+            "fr": "Système de refroidissement d'un parc. Les impacts du système de refroidissement sont réduits à ceux de l'unité de réfrigération."
+        }
+    },
+    {
+        "id": "memoryStick",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "memory stick",
+            "fr": null
+        },
+        "comment": {
+            "en": "Either a RAM stick or a SSD stick.",
+            "fr": null
+        }
+    },
+    {
+        "id": "job",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "job",
+            "fr": "tâche"
+        },
+        "comment": {
+            "en": "Task, computation executed on a server park, on a given number of processors, with a given RAM use",
+            "fr": "Tâche, calcul effectué dans un parc de serveur, sur un certain nombre de CPU/GPU, avec une certaine utilisation de la RAM"
+        }
+    },
+    {
+        "id": "battery",
+        "parent_class": "impactAssessedObject",
+        "pref_label": {
+            "en": "battery",
+            "fr": "batterie"
+        },
+        "comment": {
+            "en": "Emergency batteries",
+            "fr": "Batteries de secours"
+        }
+    },
+    {
+        "id": "adpe",
+        "parent_class": "environmentalImpactCategory",
+        "pref_label": {
+            "en": "ADPE",
+            "fr": "ADPE"
+        },
+        "comment": {
+            "en": "Abiotic resources depletion, in gSebq",
+            "fr": "Déplétion des ressources abiotiques, en gSbeq"
+        }
+    },
+    {
+        "id": "powerSupply",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "power supply",
+            "fr": "alimentation"
+        },
+        "comment": {
+            "en": "An object's power supply",
+            "fr": "Alimentation électrique d'un objet"
+        }
+    },
+    {
+        "id": "motherboard",
+        "parent_class": "component",
+        "pref_label": {
+            "en": "motherboard",
+            "fr": "carte-mère"
+        },
+        "comment": {
+            "en": "Main printed circuit board of a computer.",
+            "fr": null
+        }
+    }
+]
