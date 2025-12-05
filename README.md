@@ -4,21 +4,26 @@ The **[Exa-AToW](https://numpex.org/exaatow-architectures-and-tools-for-large-sc
 
 This repository houses the formal ontologies developed for the project, providing a structured, semantic representation of key concepts, relationships, and constraints within our system. 
 
+The integration of all Exa-AToW domain ontologies can be found here:
+
+https://cnherrera.github.io/Exa-AToW_onto/index-en.html
+
 
 ## 🔍 Structure
 
 Our project encompasses several complex domains - key concepts for the Exa-AToW ecosystem, and we've designed a modular set of ontologies to capture the specific knowledge in each area. Each ontology is described in specific folders:
 
 
-1. [HPC](https://github.com/logistica-dev/exa-atow-ontologies/tree/main/hpc_ontology) (High-Performance Computing) Environment Ontology: Covers physical and virtual resources in HPC, including compute nodes, storage, interconnects, and infrastructure.
+1. [HPC Resource Ontology](https://github.com/logistica-dev/exa-atow-ontologies/tree/main/hpc_ontology) (High-Performance Computing) Environment Ontology: Covers physical and virtual resources in HPC, including compute nodes, storage, interconnects, and infrastructure.
 
 2. Job Submission Ontology: This component focuses on the semantics of submitting computational jobs to various execution environments. It covers concepts like job parameters, resource requirements (e.g., CPU, memory, time), submission protocols, and execution targets.
 
-3. [Processor Indicator Estimator](https://github.com/logistica-dev/exa-atow-ontologies/tree/main/impactsHPC_ontologyhttps://github.com/logistica-dev/exa-atow-ontologies/tree/main/impactsHPC_ontology): Groups estimation tools, metrics, and models used to assess processor indicators such as power consumption, thermal footprint, and die size.
+3. [Processor Indicator Estimator Ontology](https://github.com/logistica-dev/exa-atow-ontologies/tree/main/impactsHPC_ontologyhttps://github.com/logistica-dev/exa-atow-ontologies/tree/main/impactsHPC_ontology): Groups estimation tools, metrics, and models used to assess processor indicators such as power consumption, thermal footprint, and die size.
 
 4. [Workflow Ontology](https://github.com/logistica-dev/exa-atow-ontologies/tree/main/workflow_ontology): This ontology formally defines the concepts and relationships related to scientific and computational workflows. It models the structure, dependencies, execution logic, and state transitions of complex multi-step processes. Workflow Properties are  based on:  
   > Suter, F., et al. (2026). *A terminology for scientific workflow systems*. FGCS 174, 107974. [DOI](https://doi.org/10.1016/j.future.2025.107974)
 
+5. Open Research Knowledge Infrastructure Ontology: It provides a unified semantic framework for representing the core entities, relationships, and processes that make up the modern research ecosystem. Its goal is to integrate and harmonize persistent identifier (PID) systems—such as ORCID (people), ROR (organizations), DOI (publications), SWHID (software), and RAiD (projects)—with structured descriptions of research infrastructures, workflows, data flows, and digital services. By doing so, ORKI-O enables interoperable knowledge graphs that connect researchers, institutions, scholarly outputs, software, computational environments, and data-producing activities in a coherent, machine-actionable way.
 
 
 ## Ontology Construction: For Exa-AToW partners!
