@@ -63,7 +63,115 @@ Restrictions add constraints to properties, especially for measurements.
 
 ## 🔨 Step-by-Step: Building Your Ontology
 
-### Example Domain: Authentication & Security
+We are creating individual ontologies for each area. These files will be created once you provide the content for classes and properties.
+
+
+# Updating the Ontology
+
+![Ontology construction description](resources/ontology_collaboration_description.png)
+
+When modifying the ontology, update the appropriate JSON file(s) based on what you're changing:
+
+## Adding New Classes
+
+Each project area should have its own JSON file using the same structure.
+
+### Entry Example
+The `parent_class` field can be omitted if the entry directly belongs (subClassOf) to the class designated in the name of the JSON file.
+```json
+{
+    "id": "ComputeNode",
+    "parent_class": "HPCResource",
+    "pref_label": {"en": "Node", "fr": "Noeud"},
+    "comment": {
+       "en": "A physical or virtual server that executes computational jobs within a partition.",
+       "fr": "Un serveur physique ou virtuel qui exécute des tâches de calcul au sein d'une partition."
+    },
+    "link_html": "https://wiki.external.link" 
+    "equivalent": "https://link.to.ontology#Concept"
+}
+
+```
+
+### Steps:
+- Edit the relevant `main_classes.json` or `sub_*_classes.json` file
+- Add your class definition following the structure above
+- Validate the JSON syntax before committing
+
+## Adding Properties
+
+The goal is to define relationships between existing classes using JSON property definitions. For example, connect a `Processor` class to a `DieSize` class using a `hasDieSize` property.
+
+### Property Example
+The `parent_class` field can be omitted if the entry directly belongs (subClassOf) to the class designated in the name of the JSON file.
+```json
+{
+    "id": "hasDieSize",
+    "property_type": "ObjectProperty",    
+    "domain": "Processor",
+    "range": "DieSize",
+    "pref_label": {
+        "en": "has die size",
+        "fr": "a taille de puce"
+    },
+    "comment": {
+        "en": "Processor has a die size, including a numeric value and a unit (e.g., mm²).",
+        "fr": "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm²)."  
+    }
+}
+```
+### Steps:
+*Option 1* : Add to existing file
+- Add your property to an existing properties_*.json file if it fits that domain
+
+*Option 2* : Create new file
+- Create a new file: `properties_<your_field>.json` (in files folder)
+- Add your properties as an array
+- Register the file in `list_properties` in the ontology_generator.py file (`main`)
+
+
+## Adding Instances
+
+Only fixed instances will be included in the ontology.
+To create instances for your area, create a JSON file with each instance defined as follows (see `files/instances_workflow.json` for reference):
+
+### Instance Example
+```json
+
+{
+    "instance_name": "InMemory",
+    "class_type": "DataManagementStorage",
+    "pref_label": {"en": "In-Memory", "fr": "En mémoire"},
+    "comment": {
+        "en": "Data held in RAM.",
+        "fr": "Données conservées en RAM."
+    }
+}
+```
+### Steps:
+- Modify `instances_workflow.json` or create a new instances file
+- Add your instance definitions following the structure above
+- Validate the JSON syntax before committing
+
+
+## Visualization
+To visualize the ontology:
+
+- Use WebVOWL (through the ontology webpage generated with Widoco: XXXX)
+- Open the `exaatow-ontology.ttl` with the open-source software Protege.
+- visualization tool in the Python file. After loading the ontology:
+```
+onto.visualize_graph(
+    output_file="my_ontology_visualization.html",
+    height="600px",
+    physics=False  # Disable physics for static layout
+```
+and open the html file with a browser.
+
+
+
+
+# Example Domain: Authentication & Security
 
 Let's say you're responsible for **Authentication** in ExA-AToW. Here's how to build it:
 
@@ -204,8 +312,6 @@ Create or edit `files/properties_authentication.json`:
 - **DatatypeProperty**: Connects a class to a data value
 - `range` for datatypes uses XML Schema types: `xsd:string`, `xsd:integer`, `xsd:dateTime`, etc.
 
-**Don't forget:** Register this file in `ontology_generator.py` in the `list_properties` array!
-
 ---
 
 ### **Step 3: Add Instances (Optional but Helpful)**
@@ -259,7 +365,7 @@ Create or edit `files/instances_authentication.json`:
 
 For properties that represent measurements, you need both a value and a unit.
 
-Edit `files/add_restrictions_hasValue_hasUnit.json`:
+Edit or create `files/add_restrictions_authentication_hasValue_hasUnit.json`:
 
 ```json
 [
@@ -352,7 +458,7 @@ Let's see a complete example from HPC:
 ]
 ```
 
-### Restrictions (in `add_restrictions_hasValue_hasUnit.json`):
+### Restrictions (in `add_restrictions_HPC_hasValue_hasUnit.json`):
 
 ```json
 [
@@ -393,28 +499,13 @@ When creating your ontology section:
   - Are there standard, fixed examples everyone should know?
   
 - [ ] **Use bilingual labels** (EN/FR)
-  - Always provide both languages
+  - Provide both languages when possible
   
 - [ ] **Write clear comments**
   - Explain what each concept means
   
-- [ ] **Validate JSON syntax**
-  - Use a JSON validator before committing
+
   
-- [ ] **Register new files**
-  - Add your files to `ontology_generator.py` if you created new ones
-
----
-
-## 🔄 Workflow Summary
-
-1. **Create/Edit JSON files** in `files/` folder
-2. **Run generator**: `python ontology_generator.py`
-3. **Check output**: Review `exaatow-ontology.ttl`
-4. **Visualize**: Open with Protégé or use visualization tool
-5. **Commit changes**: Push to GitHub
-
----
 
 ## ❓ Common Questions
 
@@ -441,13 +532,3 @@ When creating your ontology section:
 - For multiple inheritance, discuss with the ontology coordinator
 
 ---
-
-## 📞 Need Help?
-
-If you're unsure about how to model something:
-1. Check existing JSON files for similar examples
-2. Look at the [ontology documentation](https://cnherrera.github.io/Exa-AToW_onto/index-en.html)
-3. Ask the ontology coordinator
-4. Open an issue on GitHub
-
-**Remember**: It's better to ask before creating than to have to fix it later! 🙂
