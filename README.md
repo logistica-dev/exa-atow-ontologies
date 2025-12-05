@@ -5,9 +5,6 @@ The **[Exa-AToW](https://numpex.org/exaatow-architectures-and-tools-for-large-sc
 This repository houses the formal ontologies developed for the project, providing a structured, semantic representation of key concepts, relationships, and constraints within our system. 
 
 
-https://cnherrera.github.io/Exa-AToW_onto/index-en.html
-
-
 ## 🔍 Structure
 
 Our project encompasses several complex domains - key concepts for the Exa-AToW ecosystem, and we've designed a modular set of ontologies to capture the specific knowledge in each area. Each ontology is described in specific folders:
@@ -17,7 +14,7 @@ Our project encompasses several complex domains - key concepts for the Exa-AToW 
 
 2. Job Submission Ontology: This component focuses on the semantics of submitting computational jobs to various execution environments. It covers concepts like job parameters, resource requirements (e.g., CPU, memory, time), submission protocols, and execution targets.
 
-3. Processor Indicator Estimator: Groups estimation tools, metrics, and models used to assess processor indicators such as power consumption, thermal footprint, and die size.
+3. [Processor Indicator Estimator](https://github.com/logistica-dev/exa-atow-ontologies/tree/main/impactsHPC_ontologyhttps://github.com/logistica-dev/exa-atow-ontologies/tree/main/impactsHPC_ontology): Groups estimation tools, metrics, and models used to assess processor indicators such as power consumption, thermal footprint, and die size.
 
 4. [Workflow Ontology](https://github.com/logistica-dev/exa-atow-ontologies/tree/main/workflow_ontology): This ontology formally defines the concepts and relationships related to scientific and computational workflows. It models the structure, dependencies, execution logic, and state transitions of complex multi-step processes. Workflow Properties are  based on:  
   > Suter, F., et al. (2026). *A terminology for scientific workflow systems*. FGCS 174, 107974. [DOI](https://doi.org/10.1016/j.future.2025.107974)
@@ -26,8 +23,11 @@ Our project encompasses several complex domains - key concepts for the Exa-AToW 
 
 ## Ontology Construction: For Exa-AToW partners!
 
-**`Exa-AtoW ontology visual guide`**:
+### Steps are described in:
+https://github.com/logistica-dev/exa-atow-ontologies/blob/main/Steps_generate_ontology.md
 
+
+**`Easy Exa-AtoW ontology visual guide`**:
 https://cnherrera.github.io/Exa-AToW_onto/help_to_generate_onto_fromIA.html
 
 
@@ -69,114 +69,6 @@ This `files` folder in this repository contains JSON files that define the ontol
 - ....
 
 #### Restrictions and Constraints
-- `add_restrictions_hasValue_hasUnit.json` - Value restrictions and unit assignments for properties
+- `add_restrictions_XXX_hasValue_hasUnit.json` - Value restrictions and unit assignments for properties
 
 ---
-
-# Updating the Ontology
-
-![Ontology construction description](resources/ontology_collaboration_description.png)
-
-When modifying the ontology, update the appropriate JSON file(s) based on what you're changing:
-
-## Adding New Classes
-
-Each project area should have its own JSON file using the same structure.
-
-### Entry Example
-The `parent_class` field can be omitted if the entry directly belongs (subClassOf) to the class designated in the name of the JSON file.
-```json
-{
-    "id": "ComputeNode",
-    "parent_class": "HPCResource",
-    "pref_label": {"en": "Node", "fr": "Noeud"},
-    "comment": {
-       "en": "A physical or virtual server that executes computational jobs within a partition.",
-       "fr": "Un serveur physique ou virtuel qui exécute des tâches de calcul au sein d'une partition."
-    },
-    "link_html": "https://wiki.external.link" 
-    "equivalent": "https://link.to.ontology#Concept"
-}
-
-```
-
-### Steps:
-- Edit the relevant `main_classes.json` or `sub_*_classes.json` file
-- Add your class definition following the structure above
-- Validate the JSON syntax before committing
-
-## Adding Properties
-
-The goal is to define relationships between existing classes using JSON property definitions. For example, connect a `Processor` class to a `DieSize` class using a `hasDieSize` property.
-
-### Property Example
-The `parent_class` field can be omitted if the entry directly belongs (subClassOf) to the class designated in the name of the JSON file.
-```json
-{
-    "id": "hasDieSize",
-    "property_type": "ObjectProperty",    
-    "domain": "Processor",
-    "range": "DieSize",
-    "pref_label": {
-        "en": "has die size",
-        "fr": "a taille de puce"
-    },
-    "comment": {
-        "en": "Processor has a die size, including a numeric value and a unit (e.g., mm²).",
-        "fr": "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm²)."  
-    }
-}
-```
-### Steps:
-*Option 1* : Add to existing file
-- Add your property to an existing properties_*.json file if it fits that domain
-
-*Option 2* : Create new file
-- Create a new file: `properties_<your_field>.json` (in files folder)
-- Add your properties as an array
-- Register the file in `list_properties` in the ontology_generator.py file (`main`)
-
-
-## Adding Instances
-
-Only fixed instances will be included in the ontology.
-To create instances for your area, create a JSON file with each instance defined as follows (see `files/instances_workflow.json` for reference):
-
-### Instance Example
-```json
-
-{
-    "instance_name": "InMemory",
-    "class_type": "DataManagementStorage",
-    "pref_label": {"en": "In-Memory", "fr": "En mémoire"},
-    "comment": {
-        "en": "Data held in RAM.",
-        "fr": "Données conservées en RAM."
-    }
-}
-```
-### Steps:
-- Modify `instances_workflow.json` or create a new instances file
-- Add your instance definitions following the structure above
-- Validate the JSON syntax before committing
-
-
-## Visualization
-To visualize the ontology:
-
-- Use WebVOWL (through the ontology webpage generated with Widoco: XXXX)
-- Open the `exaatow-ontology.ttl` with the open-source software Protege.
-- visualization tool in the Python file. After loading the ontology:
-```
-onto.visualize_graph(
-    output_file="my_ontology_visualization.html",
-    height="600px",
-    physics=False  # Disable physics for static layout
-```
-and open the html file with a browser.
-
-
-
-
-
-
