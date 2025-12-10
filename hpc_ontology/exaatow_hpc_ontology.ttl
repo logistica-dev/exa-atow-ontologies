@@ -1,620 +1,495 @@
-@prefix exa-atow: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/test_ontology_exaatow.ttl#> .
+@prefix exa-atow: <https://raw.githubusercontent.com/logistica-dev/exa-atow-ontologies/refs/heads/main/hpc_ontology/exaatow_hpc_ontology.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 
-#  Describes what exists (infrastructure, topology, capabilities)
-
-<https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_hpc_ontology.ttl> 
-    a owl:Ontology ;
+<https://raw.githubusercontent.com/logistica-dev/exa-atow-ontologies/refs/heads/main/hpc_ontology/exaatow_hpc_ontology.ttl> 
+    rdf:type owl:Ontology ;
+    rdfs:label "Exa-AToW HPC Resource Ontology"@en ;
+    rdfs:comment """Ontology for modeling high-performance computing resources, infrastructure, 
+    and physical characteristics within the Exa-AToW project.
+    
+    This ontology describes the physical and logical components that constitute HPC systems,
+    including compute nodes, processors, storage, interconnects, and their relationships.
+    It supports the modeling of supercomputer architectures, partitions, and execution environments."""@en ;
     dc:title "Exa-AToW HPC Resource Ontology"@en ;
     dc:description "Ontology for modeling high-performance computing resources, infrastructure, and physical characteristics within the Exa-AToW project."@en ;
-    dcterms:created "2024-01-15"^^xsd:date ;
-    dcterms:modified "2025-11-07"^^xsd:date ;
+    dcterms:created "2025-12-05"^^xsd:date ;
+    dcterms:modified "2025-12-10"^^xsd:date ;
     dc:creator "Your Name" ;
     owl:versionInfo "0.2" .
 
 
 #################################################################
-# TOP LEVEL:: HPC Resource 
+#    Annotation properties
 #################################################################
 
-exa-atow:HPCResource a owl:Class ;
-    rdfs:comment "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components."@en,
+skos:prefLabel rdf:type owl:AnnotationProperty .
+skos:definition rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+# Top-level HPC Resource Classes
+#################################################################
+
+exa-atow:HPCResource rdf:type owl:Class ;
+    rdfs:comment "Conceptual class encompassing physical and virtual resources involved in high-performance computing, including compute nodes, storage, interconnects, and infrastructure components."@en ,
         "Classe conceptuelle englobant les ressources physiques et virtuelles utilisées dans le calcul haute performance, comme les nœuds de calcul, le stockage, les interconnexions et les composants d'infrastructure."@fr ;
-    skos:prefLabel "HPC Resource"@en,
+    skos:prefLabel "HPC Resource"@en ,
         "Ressource HPC"@fr .
 
 
-exa-atow:PhysicalResource a owl:Class ;
-    rdfs:comment "physical resource."@en,
-        "en fr."@fr ;
+#################################################################
+# Physical Resources
+#################################################################
+
+exa-atow:PhysicalResource rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "Physical Resource"@en,
-        " "@fr .
+    rdfs:comment "Physical hardware components of HPC systems."@en ,
+        "Composants matériels physiques des systèmes HPC."@fr ;
+    skos:prefLabel "Physical Resource"@en ,
+        "Ressource physique"@fr .
 
-exa-atow:Processor a owl:Class ;
-    rdfs:comment "A general category for processing units, including CPUs and GPUs."@en,
-        "Catégorie générale pour les unités de traitement, y compris les CPU et les GPU."@fr ;
+# --- Compute Node ---
+
+exa-atow:ComputeNode rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:PhysicalResource ;
-    skos:prefLabel "Processor"@en,
-        "Processeur"@fr .
-
-exa-atow:ComputeNode a owl:Class ;
-    rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en,
+    rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en ,
         "Une machine physique ou virtuelle dans un système HPC qui exécute des tâches de calcul."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalResource ;
-    skos:prefLabel "Compute Node"@en,
+    skos:prefLabel "Compute Node"@en ,
         "Nœud de calcul"@fr .
 
-exa-atow:Storage a owl:Class ;
-    rdfs:comment "Storage."@en,
-        "Storage"@fr ;
-    rdfs:subClassOf exa-atow:PhysicalResource ;
-    skos:prefLabel "Storage"@en,
-        "Storage"@fr .
-
-exa-atow:Core a owl:Class ;
-    rdfs:comment "A processing unit within a CPU or GPU capable of executing tasks concurrently."@en,
-        "Une unité de traitement au sein d’un CPU ou GPU capable d’exécuter des tâches simultanément."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalResource ;
-    skos:prefLabel "Core"@en,
-        "Cœur"@fr .
-
-exa-atow:Rack a owl:Class ;
-    rdfs:comment "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter."@en,
-        "Un châssis physique abritant plusieurs nœuds de calcul et éléments d’infrastructure dans un centre de données."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalResource ;
-    skos:prefLabel "Rack"@en,
-        "Baie"@fr .
-
-exa-atow:Server a owl:Class ;
-    rdfs:comment "A physical server housing processors, memory, and storage."@en,
-        "Un serveur physique contenant des processeurs, de la mémoire et du stockage."@fr ;
-    rdfs:subClassOf exa-atow:PhysicalResource ;
-    skos:prefLabel "Server"@en, "Serveur"@fr .
-
-
-###################################################################################
-##  >>>--- PhysicalResource ---<<<
-
-# >>--ComputerNode--<<
-
-exa-atow:ScalarNode a owl:Class ;
+exa-atow:ScalarNode rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:ComputeNode ;
     rdfs:subClassOf [
-        a owl:Restriction ;
+        rdf:type owl:Restriction ;
         owl:onProperty exa-atow:equippedWith ;
         owl:someValuesFrom exa-atow:CPU
     ] ;
     rdfs:subClassOf [
-        a owl:Restriction ;
+        rdf:type owl:Restriction ;
         owl:onProperty exa-atow:equippedWith ;
-        owl:allValuesFrom exa-atow:CPU  # Only CPUs, no GPUs
-    ]  ;
-    rdfs:comment "A compute node equipped with general-purpose CPUs only."@en,
-        "Un nœud de calcul équipé uniquement de processeurs généraux (CPU)."@fr ;
-    skos:prefLabel "Scalar Node"@en, "Nœud scalaire"@fr .
-
-exa-atow:AcceleratedNode a owl:Class ;
-    rdfs:subClassOf exa-atow:ComputeNode ;
-    rdfs:subClassOf [ a owl:Restriction ;
-        owl:onProperty exa-atow:equippedWith ;
-        owl:someValuesFrom exa-atow:GPU  # Must have at least one GPU
+        owl:allValuesFrom exa-atow:CPU
     ] ;
-    rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en,
-        "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."@fr ;
-    skos:prefLabel "Accelerated Node"@en, "Nœud accéléré"@fr .
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty exa-atow:equippedWith ;
+        owl:minCardinality 1  # Optional: explicitly require at least 1 equipped item
+    ] ;
+    rdfs:comment "A compute node equipped with general-purpose CPUs only."@en ,
+        "Un nœud de calcul équipé uniquement de processeurs généraux (CPU)."@fr ;
+    skos:prefLabel "Scalar Node"@en ,
+        "Nœud scalaire"@fr .
 
-# >>--Processor--<<
-exa-atow:CPU a owl:Class ;
-    rdfs:comment "The central processing unit responsible for executing general-purpose instructions."@en,
+exa-atow:AcceleratedNode rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:ComputeNode ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty exa-atow:equippedWith ;
+        owl:someValuesFrom exa-atow:GPU
+    ] ;
+    rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en ,
+        "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."@fr ;
+    skos:prefLabel "Accelerated Node"@en ,
+        "Nœud accéléré"@fr .
+
+exa-atow:FrontendNode rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:ComputeNode ;
+    rdfs:comment "Login/frontend node for user access, job submission, and compilation."@en ,
+        "Nœud frontal pour l'accès utilisateur, la soumission de tâches et la compilation."@fr ;
+    skos:prefLabel "Frontend Node"@en ,
+        "Nœud frontal"@fr .
+
+# --- Processors ---
+
+exa-atow:Processor rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PhysicalResource ;
+    rdfs:comment "A general category for processing units, including CPUs and GPUs."@en ,
+        "Catégorie générale pour les unités de traitement, y compris les CPU et les GPU."@fr ;
+    skos:prefLabel "Processor"@en ,
+        "Processeur"@fr .
+
+exa-atow:CPU rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:Processor ;
+    rdfs:comment "The central processing unit responsible for executing general-purpose instructions."@en ,
         "L'unité centrale de traitement responsable de l'exécution des instructions générales."@fr ;
-    rdfs:subClassOf exa-atow:Processor ;
-    skos:prefLabel "CPU"@en,
+    skos:prefLabel "CPU"@en ,
         "CPU"@fr .
-	
-exa-atow:GPU a owl:Class ;
-    rdfs:comment "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en,
-        "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."@fr ;
+
+exa-atow:GPU rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:Processor ;
-    skos:prefLabel "GPU"@en,
+    rdfs:comment "A graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en ,
+        "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."@fr ;
+    skos:prefLabel "GPU"@en ,
         "GPU"@fr .
 
+exa-atow:Core rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PhysicalResource ;
+    rdfs:comment "A processing unit within a CPU or GPU capable of executing tasks concurrently."@en ,
+        "Une unité de traitement au sein d'un CPU ou GPU capable d'exécuter des tâches simultanément."@fr ;
+    skos:prefLabel "Core"@en ,
+        "Cœur"@fr .
 
-# >>--Storage--<<
+# --- Storage ---
 
-exa-atow:RAM a owl:Class ;
-    rdfs:comment "Volatile memory used by compute nodes for temporary data access during job execution."@en,
-        "Mémoire volatile utilisée par les nœuds de calcul pour accéder temporairement aux données pendant l'exécution d'une tâche."@fr ;
+exa-atow:Storage rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PhysicalResource ;
+    rdfs:comment "Storage devices and systems for data persistence."@en ,
+        "Dispositifs et systèmes de stockage pour la persistance des données."@fr ;
+    skos:prefLabel "Storage"@en ,
+        "Stockage"@fr .
+
+exa-atow:RAM rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:Storage ;
-    skos:prefLabel "RAM"@en,
+    rdfs:comment "Volatile memory used by compute nodes for temporary data access during job execution."@en ,
+        "Mémoire volatile utilisée par les nœuds de calcul pour accéder temporairement aux données pendant l'exécution d'une tâche."@fr ;
+    skos:prefLabel "RAM"@en ,
         "Mémoire vive (RAM)"@fr .
 
-exa-atow:SSD a owl:Class ;
-    rdfs:comment "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O."@en,
-        "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."@fr ;
+exa-atow:SSD rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:Storage ;
-    skos:prefLabel "SSD"@en,
+    rdfs:comment "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O."@en ,
+        "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."@fr ;
+    skos:prefLabel "SSD"@en ,
         "SSD"@fr .
 
-
-exa-atow:HDD a owl:Class ;
-    rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en,
-        "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d’E/S inférieure à celle des SSD."@fr ;
+exa-atow:HDD rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:Storage ;
-    skos:prefLabel "HDD"@en,
+    rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en ,
+        "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d'E/S inférieure à celle des SSD."@fr ;
+    skos:prefLabel "HDD"@en ,
         "Disque dur (HDD)"@fr .
 
-# >>--Interconnect?--<<
+# --- Physical Infrastructure ---
 
+exa-atow:Rack rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PhysicalResource ;
+    rdfs:comment "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter."@en ,
+        "Un châssis physique abritant plusieurs nœuds de calcul et éléments d'infrastructure dans un centre de données."@fr ;
+    skos:prefLabel "Rack"@en ,
+        "Baie"@fr .
 
-###########################################################################################
-# LogicalResource
-#############################################################################################
-exa-atow:LogicalResource a owl:Class ;
-    rdfs:comment "comment."@en,
-        "Comment."@fr ;
-    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "Logical Resource"@en,
-        "Resource logicielle"@fr .
+exa-atow:Server rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PhysicalResource ;
+    rdfs:comment "A physical server housing processors, memory, and storage."@en ,
+        "Un serveur physique contenant des processeurs, de la mémoire et du stockage."@fr ;
+    skos:prefLabel "Server"@en ,
+        "Serveur"@fr .
 
+# --- Interconnect ---
 
-exa-atow:Partition a owl:Class ;
-    rdfs:comment "A logical grouping of compute nodes within a supercomputer that shares hardware characteristics or workload type, often mapped to SLURM partitions."@en,
-        "Un regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, souvent associé à des partitions SLURM."@fr ;
-#    rdfs:subClassOf exa-atow:LogicalResource ;
-    skos:prefLabel "Partition"@en,
-        "Partition"@fr .
+exa-atow:Interconnect rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PhysicalResource ;
+    rdfs:comment "High-speed network infrastructure enabling communication between compute nodes and system components."@en ,
+        "Infrastructure réseau à haute vitesse permettant la communication entre les nœuds de calcul et les composants du système."@fr ;
+    skos:prefLabel "Interconnect"@en ,
+        "Interconnexion"@fr .
 
-
-exa-atow:FileSystem a owl:Class ;
-    rdfs:comment "The shared storage infrastructure used for input/output and checkpoint data in HPC environments."@en,
-        "L’infrastructure de stockage partagée utilisée pour les données d’entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ;
-    rdfs:subClassOf exa-atow:LogicalResource ;
-    skos:prefLabel "File System"@en,
-        "Système de fichiers"@fr .
-
-
-###########################################################################################
-# System
-#############################################################################################
-exa-atow:System a owl:Class ;
-    rdfs:comment "comment."@en,
-        "Comment."@fr ;
-    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "System"@en,
-        "Systeme"@fr .
-
-exa-atow:Supercomputer a owl:Class ;
-    rdfs:comment "A high-performance computing system composed of multiple interconnected compute and storage components."@en,
-        "Un système de calcul haute performance composé de plusieurs composants de calcul et de stockage interconnectés."@fr ;
-    rdfs:subClassOf exa-atow:System ;
-    skos:prefLabel "Supercomputer"@en, "Superordinateur"@fr .
-
-exa-atow:HPCCenter a owl:Class ;
-    rdfs:subClassOf exa-atow:System ;
-    rdfs:comment "A facility housing one or more supercomputers with associated infrastructure."@en,
-        "Un centre abritant un ou plusieurs superordinateurs avec l'infrastructure associée."@fr ;
-    skos:prefLabel "HPC Center"@en, "Centre HPC"@fr .
-
-
-###########################################################################################
-# Infrastructure (facilities/support systems) --->> check!!!!
-#############################################################################################
-exa-atow:Infrastructure a owl:Class ;
-    rdfs:comment "comment."@en,
-        "Comment."@fr ;
-    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "Infrastructure"@en,
-        "Infrastructure"@fr .
-
-exa-atow:CoolingSystem a owl:Class ;
-    rdfs:comment "The system responsible for maintaining temperature conditions of HPC components to ensure stable operation."@en,
-        "Le système responsable du maintien de la température des composants HPC afin de garantir un fonctionnement stable."@fr ;
-    rdfs:subClassOf exa-atow:Infrastructure ;
-    skos:prefLabel "Cooling System"@en,
-        "Système de refroidissement"@fr .
-
-exa-atow:EnergyManagement a owl:Class ;
-    rdfs:comment "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment."@en,
-        "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d’énergie dans l’environnement HPC."@fr ;
-    rdfs:subClassOf exa-atow:Infrastructure ;
-    skos:prefLabel "Energy Management System"@en,
-        "Système de gestion de l’énergie"@fr .
-
-##############################################################################
-
-
-
-
-###############################################
-# QuantitativeValue
-###############################################
-
-exa-atow:DieSize a owl:Class ;
-    rdfs:subClassOf exa-atow:QuantitativeValue
-    rdfs:comment "The physical area of the CPU or GPU die. Used in impact estimation. Includes a value and a unit."@en,
-        "La surface physique de la puce du CPU ou du GPU. Utilisée pour l'estimation d'impact. Comprend une valeur et une unité."@fr ;
-    skos:prefLabel "Die Size"@en,
-        "Taille de puce"@fr .
-
-exa-atow:Lifetime a owl:Class ;
-    rdfs:subClassOf exa-atow:QuantitativeValue
-    rdfs:comment "Operational lifespan of an electronic component, such as a server or processor."@en,
-        "Durée de vie d’un composant électronique, tel qu’un serveur ou un processeur."@fr ;
-    skos:prefLabel "Lifetime"@en,
-        "Durée de vie"@fr .
-
-exa-atow:MemoryCapacity a owl:Class ;
-    rdfs:subClassOf exa-atow:QuantitativeValue
-    rdfs:comment "Amount of data that can be stored in a memory device like RAM, SSD, or HDD."@en,
-        "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."@fr ;
-    skos:prefLabel "Memory Capacity"@en,
-        "Capacité mémoire"@fr .
-
-
-##################
-# PartitionType
-#################
-
-
-####
-
-exa-atow:Organization a owl:Class ;
-    rdfs:comment "Institution operating, owning, or funding HPC resources (e.g., IDRIS, CEA, CNRS, GENCI)."@en ;
-    skos:prefLabel "Organization"@en, "Organisation"@fr .
-
-
-
-
-#######################################################################3
-exa-atow:operatedBy a owl:ObjectProperty ;
-    rdfs:domain exa-atow:HPCCenter ;
-    rdfs:range exa-atow:Organization ;
-    skos:prefLabel "operated by"@en, "exploité par"@fr .
-
-exa-atow:hosts a owl:ObjectProperty ;
-    rdfs:domain exa-atow:HPCCenter ;
-    rdfs:range exa-atow:Supercomputer ;
-    skos:prefLabel "hosts"@en, "héberge"@fr .
-
-exa-atow:location a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:HPCCenter ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Geographic location of the HPC center (e.g., 'Orsay, France')."@en ;
-    skos:prefLabel "location"@en, "localisation"@fr .
-    
-
-
-#### Canonical Instances
-exa-atow:ResourceManager a owl:Class ;
-    rdfs:comment "Software system for job scheduling and resource allocation (e.g., SLURM, PBS, LSF)."@en,
-        "Système logiciel pour la planification des tâches et l'allocation des ressources."@fr ;
-    skos:prefLabel "Resource Manager"@en, "Gestionnaire de ressources"@fr .
-
-exa-atow:SLURM a owl:Class ;
-    rdfs:subClassOf exa-atow:ResourceManager ;
-    rdfs:comment "Simple Linux Utility for Resource Management - workload manager."@en ;
-    skos:prefLabel "SLURM"@en .
-
-exa-atow:PBS a owl:Class ;
-    rdfs:subClassOf exa-atow:ResourceManager ;
-    rdfs:comment "Portable Batch System - job scheduler."@en ;
-    skos:prefLabel "PBS"@en .
-
-exa-atow:LSF a owl:Class ;
-    rdfs:subClassOf exa-atow:ResourceManager ;
-    rdfs:comment "IBM Load Sharing Facility - workload management platform."@en ;
-    skos:prefLabel "LSF"@en .
-
-exa-atow:usesResourceManager a owl:ObjectProperty ;
-    rdfs:domain exa-atow:Supercomputer ;
-    rdfs:range exa-atow:ResourceManager ;
-    skos:prefLabel "uses resource manager"@en, "utilise gestionnaire de ressources"@fr .
-
-exa-atow:PartitionType a owl:Class ;
-    rdfs:comment "Category of partition based on purpose (compute, preprocessing, visualization, etc.)."@en ;
-    skos:prefLabel "Partition Type"@en, "Type de partition"@fr .
-
-exa-atow:ComputePartition a owl:Class ;
-    rdfs:subClassOf exa-atow:PartitionType ;
-    rdfs:comment "Partition for production computational jobs."@en ;
-    skos:prefLabel "Compute Partition"@en, "Partition de calcul"@fr .
-
-exa-atow:PrePostPartition a owl:Class ;
-    rdfs:subClassOf exa-atow:PartitionType ;
-    rdfs:comment "Partition for pre/post-processing tasks with large memory."@en ;
-    skos:prefLabel "Pre/Post-processing Partition"@en, "Partition pré/post-traitement"@fr .
-
-exa-atow:VisualizationPartition a owl:Class ;
-    rdfs:subClassOf exa-atow:PartitionType ;
-    rdfs:comment "Partition with GPU for visualization tasks."@en ;
-    skos:prefLabel "Visualization Partition"@en, "Partition visualisation"@fr .
-
-exa-atow:CompilationPartition a owl:Class ;
-    rdfs:subClassOf exa-atow:PartitionType ;
-    rdfs:comment "Partition dedicated to code compilation."@en ;
-    skos:prefLabel "Compilation Partition"@en, "Partition compilation"@fr .
-
-exa-atow:ArchivePartition a owl:Class ;
-    rdfs:subClassOf exa-atow:PartitionType ;
-    rdfs:comment "Partition for archiving operations."@en ;
-    skos:prefLabel "Archive Partition"@en, "Partition archivage"@fr .
-
-exa-atow:hasPartitionType a owl:ObjectProperty ;
-    rdfs:domain exa-atow:Partition ;
-    rdfs:range exa-atow:PartitionType ;
-    skos:prefLabel "has partition type"@en, "a type de partition"@fr .
-
-exa-atow:partitionName a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Partition ;
-    rdfs:range xsd:string ;
-    rdfs:comment "SLURM partition identifier (e.g., 'cpu_p1', 'gpu_p5', 'prepost')."@en ;
-    skos:prefLabel "partition name"@en, "nom de partition"@fr .
-
-
-# Operating System
-exa-atow:OperatingSystem a owl:Class ;
-    rdfs:comment "Operating system running on HPC nodes."@en,
-        "Système d'exploitation exécuté sur les nœuds HPC."@fr ;
-    skos:prefLabel "Operating System"@en, "Système d'exploitation"@fr .
-
-exa-atow:Linux a owl:Class ;
-    rdfs:subClassOf exa-atow:OperatingSystem ;
-    skos:prefLabel "Linux"@en .
-
-exa-atow:runsOS a owl:ObjectProperty ;
-    rdfs:domain [ owl:unionOf (exa-atow:ComputeNode exa-atow:Supercomputer) ] ;
-    rdfs:range exa-atow:OperatingSystem ;
-    skos:prefLabel "runs OS"@en, "exécute SE"@fr .
-
-exa-atow:osVersion a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:OperatingSystem ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Version of the operating system (e.g., 'Red Hat 8.5', 'Ubuntu 20.04')."@en ;
-    skos:prefLabel "OS version"@en, "version SE"@fr .
-##### Compilar
-
-
-exa-atow:Compiler a owl:Class ;
-    rdfs:comment "Software tool for compiling source code (e.g., GCC, Intel, NVCC)."@en,
-        "Outil logiciel pour compiler le code source."@fr ;
-    skos:prefLabel "Compiler"@en, "Compilateur"@fr .
-
-exa-atow:GCC a owl:Class ;
-    rdfs:subClassOf exa-atow:Compiler ;
-    rdfs:comment "GNU Compiler Collection."@en ;
-    skos:prefLabel "GCC"@en .
-
-exa-atow:IntelCompiler a owl:Class ;
-    rdfs:subClassOf exa-atow:Compiler ;
-    rdfs:comment "Intel oneAPI compilers."@en ;
-    skos:prefLabel "Intel Compiler"@en, "Compilateur Intel"@fr .
-
-exa-atow:NVCC a owl:Class ;
-    rdfs:subClassOf exa-atow:Compiler ;
-    rdfs:comment "NVIDIA CUDA Compiler."@en ;
-    skos:prefLabel "NVCC"@en .
-
-exa-atow:supportsCompiler a owl:ObjectProperty ;
-    rdfs:domain [ owl:unionOf (exa-atow:Partition exa-atow:Supercomputer) ] ;
-    rdfs:range exa-atow:Compiler ;
-    skos:prefLabel "supports compiler"@en, "supporte compilateur"@fr .
-
-####Interconnect Specific
-exa-atow:IntelOmniPath a owl:Class ;
+exa-atow:IntelOmniPath rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:Interconnect ;
     rdfs:comment "Intel's high-performance interconnect technology."@en ;
     skos:prefLabel "Intel Omni-Path"@en .
 
-exa-atow:InfiniBand a owl:Class ;
+exa-atow:InfiniBand rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:Interconnect ;
     rdfs:comment "InfiniBand high-speed network fabric."@en ;
     skos:prefLabel "InfiniBand"@en .
 
-exa-atow:InfiniBandNDR a owl:Class ;
+exa-atow:InfiniBandNDR rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:InfiniBand ;
     rdfs:comment "InfiniBand NDR (Next Data Rate) - 400 Gb/s per port."@en ;
     skos:prefLabel "InfiniBand NDR"@en .
 
-exa-atow:hasBandwidth a owl:ObjectProperty ;
-    rdfs:domain exa-atow:Interconnect ;
-    rdfs:range exa-atow:Bandwidth ;
-    skos:prefLabel "has bandwidth"@en, "a bande passante"@fr .
 
-exa-atow:linkCount a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:ComputeNode ;
-    rdfs:range xsd:integer ;
-    rdfs:comment "Number of interconnect links per node (e.g., 1 for scalar, 4 for accelerated)."@en ;
-    skos:prefLabel "link count"@en, "nombre de liens"@fr .
+#################################################################
+# Logical Resources
+#################################################################
 
+exa-atow:LogicalResource rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    rdfs:comment "Logical or software-defined resources and abstractions in HPC systems."@en ,
+        "Ressources logiques ou définies par logiciel et abstractions dans les systèmes HPC."@fr ;
+    skos:prefLabel "Logical Resource"@en ,
+        "Ressource logicielle"@fr .
 
-##### Storage System Specific
-exa-atow:ParallelFileSystem a owl:Class ;
+exa-atow:Partition rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:LogicalResource
+    rdfs:comment "A logical grouping of compute nodes within a supercomputer that shares hardware characteristics or workload type, often mapped to SLURM partitions."@en ,
+        "Un regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, souvent associé à des partitions SLURM."@fr ;
+    skos:prefLabel "Partition"@en ,
+        "Partition"@fr .
+
+exa-atow:FileSystem rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:LogicalResource ;
+    rdfs:comment "The shared storage infrastructure used for input/output and checkpoint data in HPC environments."@en ,
+        "L'infrastructure de stockage partagée utilisée pour les données d'entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ;
+    skos:prefLabel "File System"@en ,
+        "Système de fichiers"@fr .
+
+exa-atow:ParallelFileSystem rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:FileSystem ;
     rdfs:comment "Distributed file system for parallel I/O operations."@en ;
-    skos:prefLabel "Parallel File System"@en, "Système de fichiers parallèle"@fr .
+    skos:prefLabel "Parallel File System"@en ,
+        "Système de fichiers parallèle"@fr .
 
-exa-atow:Lustre a owl:Class ;
+exa-atow:Lustre rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:ParallelFileSystem ;
     rdfs:comment "Open-source parallel distributed file system."@en ;
     skos:prefLabel "Lustre"@en .
 
-exa-atow:GPFS a owl:Class ;
+exa-atow:GPFS rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:ParallelFileSystem ;
     rdfs:comment "IBM General Parallel File System (Spectrum Scale)."@en ;
     skos:prefLabel "GPFS"@en .
 
-exa-atow:StorageCapacity a owl:Class ;
+#################
+# Disjoint Axioms
+
+# Top-level separation
+exa-atow:PhysicalResource owl:disjointWith exa-atow:LogicalResource .
+    # Physical hardware components (servers, CPUs, disks) cannot simultaneously be
+    # logical abstractions (partitions, file systems). This ensures clear separation
+    # between tangible infrastructure and software-defined resources.
+    
+# Processor types
+exa-atow:CPU owl:disjointWith exa-atow:GPU .
+    # A processor is either a general-purpose CPU or a specialized GPU for parallel
+    # computation, but cannot be both simultaneously. This reflects the fundamental
+    # architectural differences between these processor types.
+
+# Storage types (pairwise disjoint)
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( exa-atow:RAM exa-atow:SSD exa-atow:HDD exa-atow:Cache ) .
+    # Storage devices have mutually exclusive implementations:
+    # - RAM: volatile memory using DRAM/SRAM technology
+    # - SSD: non-volatile solid-state storage using flash memory
+    # - HDD: non-volatile magnetic disk storage
+    # A single storage device cannot be multiple types simultaneously.
+
+
+# Node types
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( exa-atow:ScalarNode exa-atow:AcceleratedNode exa-atow:FrontendNode ) .
+    # Compute nodes are categorized by their role and equipment:
+    # - ScalarNode: CPU-only compute nodes for general parallel computing
+    # - AcceleratedNode: nodes with GPUs for accelerated workloads
+    # - FrontendNode: login/compilation nodes, not for production computation
+    # A single node instance cannot serve multiple roles simultaneously, though
+    # a physical server might be reconfigured over time.
+
+
+#################################################################
+# System-level Classes
+#################################################################
+
+exa-atow:System rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    rdfs:comment "High-level systems composed of multiple HPC resources."@en ,
+        "Systèmes de haut niveau composés de plusieurs ressources HPC."@fr ;
+    skos:prefLabel "System"@en ,
+        "Système"@fr .
+
+exa-atow:Supercomputer rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:System ;
+    rdfs:comment "A high-performance computing system composed of multiple interconnected compute and storage components."@en ,
+        "Un système de calcul haute performance composé de plusieurs composants de calcul et de stockage interconnectés."@fr ;
+    skos:prefLabel "Supercomputer"@en ,
+        "Superordinateur"@fr .
+
+exa-atow:HPCCenter rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:System ;
+    rdfs:comment "A facility housing one or more supercomputers with associated infrastructure."@en ,
+        "Un centre abritant un ou plusieurs superordinateurs avec l'infrastructure associée."@fr ;
+    skos:prefLabel "HPC Center"@en ,
+        "Centre HPC"@fr .
+
+
+#################################################################
+# Infrastructure (Facilities/Support Systems)
+#################################################################
+
+exa-atow:Infrastructure rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:HPCResource ;
+    rdfs:comment "Support infrastructure for HPC operations."@en ,
+        "Infrastructure de support pour les opérations HPC."@fr ;
+    skos:prefLabel "Infrastructure"@en ,
+        "Infrastructure"@fr .
+
+exa-atow:CoolingSystem rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:Infrastructure ;
+    rdfs:comment "The system responsible for maintaining temperature conditions of HPC components to ensure stable operation."@en ,
+        "Le système responsable du maintien de la température des composants HPC afin de garantir un fonctionnement stable."@fr ;
+    skos:prefLabel "Cooling System"@en ,
+        "Système de refroidissement"@fr .
+
+exa-atow:EnergyManagement rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:Infrastructure ;
+    rdfs:comment "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment."@en ,
+        "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d'énergie dans l'environnement HPC."@fr ;
+    skos:prefLabel "Energy Management System"@en ,
+        "Système de gestion de l'énergie"@fr .
+
+
+#################################################################
+# Software Infrastructure
+#################################################################
+
+exa-atow:Software rdf:type owl:Class ;
+    rdfs:comment "General class for software used in HPC environments."@en ;
+    skos:prefLabel "Software"@en ,
+        "Logiciel"@fr .
+
+exa-atow:ResourceManager rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:Software ;
+    rdfs:comment "Software system for job scheduling and resource allocation (e.g., SLURM, PBS, LSF)."@en ,
+        "Système logiciel pour la planification des tâches et l'allocation des ressources."@fr ;
+    skos:prefLabel "Resource Manager"@en ,
+        "Gestionnaire de ressources"@fr .
+
+exa-atow:Compiler rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:Software ;
+    rdfs:comment "Software tool for compiling source code (e.g., GCC, Intel, NVCC)."@en ,
+        "Outil logiciel pour compiler le code source."@fr ;
+    skos:prefLabel "Compiler"@en ,
+        "Compilateur"@fr .
+
+exa-atow:OperatingSystem rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:Software ;
+    rdfs:comment "Operating system running on HPC nodes."@en ,
+        "Système d'exploitation exécuté sur les nœuds HPC."@fr ;
+    skos:prefLabel "Operating System"@en ,
+        "Système d'exploitation"@fr .
+
+exa-atow:SoftwareVersion rdf:type owl:Class ;
+    rdfs:comment "A specific version/installation of software on a system."@en ;
+    skos:prefLabel "Software Version"@en ,
+        "Version logicielle"@fr .
+
+
+#################################################################
+# Partition Types
+#################################################################
+
+exa-atow:PartitionType rdf:type owl:Class ;
+    rdfs:comment "Category of partition based on purpose (compute, preprocessing, visualization, etc.)."@en ;
+    skos:prefLabel "Partition Type"@en ,
+        "Type de partition"@fr .
+
+exa-atow:ComputePartition rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PartitionType ;
+    rdfs:comment "Partition for production computational jobs."@en ;
+    skos:prefLabel "Compute Partition"@en ,
+        "Partition de calcul"@fr .
+
+exa-atow:PrePostPartition rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PartitionType ;
+    rdfs:comment "Partition for pre/post-processing tasks with large memory."@en ;
+    skos:prefLabel "Pre/Post-processing Partition"@en ,
+        "Partition pré/post-traitement"@fr .
+
+exa-atow:VisualizationPartition rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PartitionType ;
+    rdfs:comment "Partition with GPU for visualization tasks."@en ;
+    skos:prefLabel "Visualization Partition"@en ,
+        "Partition visualisation"@fr .
+
+exa-atow:CompilationPartition rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PartitionType ;
+    rdfs:comment "Partition dedicated to code compilation."@en ;
+    skos:prefLabel "Compilation Partition"@en ,
+        "Partition compilation"@fr .
+
+exa-atow:ArchivePartition rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:PartitionType ;
+    rdfs:comment "Partition for archiving operations."@en ;
+    skos:prefLabel "Archive Partition"@en ,
+        "Partition archivage"@fr .
+
+
+#################################################################
+# Quantitative Value Classes
+#################################################################
+
+exa-atow:QuantitativeValue rdf:type owl:Class ;
+    rdfs:comment "A value with an associated unit of measurement."@en ;
+    skos:prefLabel "Quantitative Value"@en ,
+        "Valeur quantitative"@fr .
+
+exa-atow:DieSize rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:QuantitativeValue ;
+    rdfs:comment "The physical area of the CPU or GPU die. Used in impact estimation. Includes a value and a unit."@en ,
+        "La surface physique de la puce du CPU ou du GPU. Utilisée pour l'estimation d'impact. Comprend une valeur et une unité."@fr ;
+    skos:prefLabel "Die Size"@en ,
+        "Taille de puce"@fr .
+
+exa-atow:Lifetime rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:QuantitativeValue ;
+    rdfs:comment "Operational lifespan of an electronic component, such as a server or processor."@en ,
+        "Durée de vie d'un composant électronique, tel qu'un serveur ou un processeur."@fr ;
+    skos:prefLabel "Lifetime"@en ,
+        "Durée de vie"@fr .
+
+exa-atow:MemoryCapacity rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:QuantitativeValue ;
+    rdfs:comment "Amount of data that can be stored in a memory device like RAM, SSD, or HDD."@en ,
+        "Quantité de données pouvant être stockée dans une mémoire comme la RAM, un SSD ou un HDD."@fr ;
+    skos:prefLabel "Memory Capacity"@en ,
+        "Capacité mémoire"@fr .
+
+exa-atow:StorageCapacity rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:QuantitativeValue ;
     rdfs:comment "Total storage capacity, including value and unit (e.g., PB)."@en ;
-    skos:prefLabel "Storage Capacity"@en, "Capacité de stockage"@fr .
+    skos:prefLabel "Storage Capacity"@en ,
+        "Capacité de stockage"@fr .
 
-exa-atow:hasStorageCapacity a owl:ObjectProperty ;
-    rdfs:domain exa-atow:FileSystem ;
-    rdfs:range exa-atow:StorageCapacity ;
-    skos:prefLabel "has storage capacity"@en, "a capacité de stockage"@fr .
+exa-atow:Frequency rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:QuantitativeValue ;
+    rdfs:comment "Clock speed of a processor, including value and unit (e.g., GHz)."@en ;
+    skos:prefLabel "Frequency"@en ,
+        "Fréquence"@fr .
 
-exa-atow:hasThroughput a owl:ObjectProperty ;
-    rdfs:domain exa-atow:FileSystem ;
-    rdfs:range exa-atow:Throughput ;
-    skos:prefLabel "has throughput"@en, "a débit"@fr .
+exa-atow:Bandwidth rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:QuantitativeValue ;
+    rdfs:comment "Data transfer rate of interconnect, including value and unit (e.g., Gb/s)."@en ;
+    skos:prefLabel "Bandwidth"@en ,
+        "Bande passante"@fr .
+exa-atow:Throughput rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:QuantitativeValue ;
+    rdfs:comment "I/O performance of storage system, including value and unit (e.g., TB/s)."@en ;
+    skos:prefLabel "Throughput"@en ,
+        "Débit"@fr .
 
-exa-atow:usesFileSystem a owl:ObjectProperty ;
-    rdfs:domain exa-atow:Supercomputer ;
-    rdfs:range exa-atow:FileSystem ;
-    skos:prefLabel "uses file system"@en, "utilise système de fichiers"@fr .
-
-### Frontend/login nodes
-exa-atow:FrontendNode a owl:Class ;
-    rdfs:subClassOf exa-atow:ComputeNode ;
-    rdfs:comment "Login/frontend node for user access, job submission, and compilation."@en,
-        "Nœud frontal pour l'accès utilisateur, la soumission de tâches et la compilation."@fr ;
-    skos:prefLabel "Frontend Node"@en, "Nœud frontal"@fr .
-
-exa-atow:hasFrontendNodes a owl:ObjectProperty ;
-    rdfs:domain exa-atow:Supercomputer ;
-    rdfs:range exa-atow:FrontendNode ;
-    skos:prefLabel "has frontend nodes"@en, "a nœuds frontaux"@fr .
-
-exa-atow:frontendNodeCount a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Supercomputer ;
-    rdfs:range xsd:integer ;
-    skos:prefLabel "frontend node count"@en, "nombre de nœuds frontaux"@fr .
-
-### Performance Metrics
-exa-atow:PerformanceMetric a owl:Class ;
+exa-atow:PerformanceMetric rdf:type owl:Class ;
     rdfs:comment "Measure of computational performance."@en ;
-    skos:prefLabel "Performance Metric"@en, "Métrique de performance"@fr .
+    skos:prefLabel "Performance Metric"@en ,
+        "Métrique de performance"@fr .
 
-exa-atow:PeakPerformance a owl:Class ;
+exa-atow:PeakPerformance rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:PerformanceMetric ;
     rdfs:comment "Theoretical peak performance (Rpeak) in FLOPS."@en ;
-    skos:prefLabel "Peak Performance"@en, "Performance crête"@fr .
-
-exa-atow:hasPeakPerformance a owl:ObjectProperty ;
-    rdfs:domain exa-atow:Supercomputer ;
-    rdfs:range exa-atow:PeakPerformance ;
-    skos:prefLabel "has peak performance"@en, "a performance crête"@fr .
-
-exa-atow:commissioningDate a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Supercomputer ;
-    rdfs:range xsd:date ;
-    rdfs:comment "Date when the system became operational."@en ;
-    skos:prefLabel "commissioning date"@en, "date de mise en service"@fr .
-
-exa-atow:decommissioningDate a owl:DatatypeProperty ;
-    rdfs:domain [ owl:unionOf (exa-atow:Supercomputer exa-atow:Partition exa-atow:ComputeNode) ] ;
-    rdfs:range xsd:date ;
-    rdfs:comment "Date when the system/partition was retired."@en ;
-    skos:prefLabel "decommissioning date"@en, "date de décommissionnement"@fr .
-
-### GPU specific properties
-exa-atow:gpuMemory a owl:ObjectProperty ;
-    rdfs:domain exa-atow:GPU ;
-    rdfs:range exa-atow:MemoryCapacity ;
-    rdfs:comment "Memory capacity of GPU (e.g., 16 GB, 32 GB, 80 GB)."@en ;
-    skos:prefLabel "GPU memory"@en, "mémoire GPU"@fr .
-
-exa-atow:gpuCount a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:ComputeNode ;
-    rdfs:range xsd:integer ;
-    rdfs:comment "Number of GPUs per node (e.g., 4 for quad-GPU, 8 for octo-GPU)."@en ;
-    skos:prefLabel "GPU count"@en, "nombre de GPU"@fr .
-
-exa-atow:interconnectType a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:GPU ;
-    rdfs:range xsd:string ;
-    rdfs:comment "GPU interconnect technology (e.g., 'SXM2', 'SXM4', 'SXM5', 'PCIe')."@en ;
-    skos:prefLabel "interconnect type"@en, "type d'interconnexion"@fr .
-
-
-
-
-################
-
-
-exa-atow:Frequency a owl:Class ;
-    rdfs:comment "Clock speed of a processor, including value and unit (e.g., GHz)."@en ;
-    skos:prefLabel "Frequency"@en, "Fréquence"@fr .
-
-exa-atow:Bandwidth a owl:Class ;
-    rdfs:comment "Data transfer rate of interconnect, including value and unit (e.g., Gb/s)."@en ;
-    skos:prefLabel "Bandwidth"@en, "Bande passante"@fr .
-
-exa-atow:Throughput a owl:Class ;
-    rdfs:comment "I/O performance of storage system, including value and unit (e.g., TB/s)."@en ;
-    skos:prefLabel "Throughput"@en, "Débit"@fr .
-
-
-# Identification
-exa-atow:identifier a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:HPCResource ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Unique identifier (e.g., hostname, serial number)."@en ;
-    skos:prefLabel "identifier"@en, "identifiant"@fr .
-
-# Quantitative properties
-exa-atow:coreCount a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Processor ;
-    rdfs:range xsd:integer ;
-    skos:prefLabel "core count"@en, "nombre de cœurs"@fr .
-
-exa-atow:nodeCount a owl:DatatypeProperty ;
-    rdfs:domain [ owl:unionOf (exa-atow:Supercomputer exa-atow:Partition) ] ;
-    rdfs:range xsd:integer ;
-    skos:prefLabel "node count"@en, "nombre de nœuds"@fr .
-
-# Model identification
-exa-atow:model a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Processor ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Processor model name (e.g., 'Intel Xeon Platinum 8268')."@en ;
-    skos:prefLabel "model"@en, "modèle"@fr .
-
-exa-atow:vendor a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Processor ;
-    rdfs:range xsd:string ;
-    skos:prefLabel "vendor"@en, "fabricant"@fr .
-
-
+    skos:prefLabel "Peak Performance"@en ,
+        "Performance crête"@fr .
 
 
 #################################################################
-# Software Infrastructure Classes
+# Organizational Classes
 #################################################################
 
-exa-atow:Software a owl:Class ;
-    rdfs:comment "General class for software used in HPC environments."@en ;
-    skos:prefLabel "Software"@en, "Logiciel"@fr .
+exa-atow:Organization rdf:type owl:Class ;
+    rdfs:comment "Institution operating, owning, or funding HPC resources (e.g., IDRIS, CEA, CNRS, GENCI)."@en ;
+    skos:prefLabel "Organization"@en ,
+        "Organisation"@fr .
 
-exa-atow:ResourceManager a owl:Class ;
-    rdfs:subClassOf exa-atow:Software ;
-    rdfs:comment "Job scheduling and resource allocation software."@en ;
-    skos:prefLabel "Resource Manager"@en, "Gestionnaire de ressources"@fr .
-
-exa-atow:Compiler a owl:Class ;
-    rdfs:subClassOf exa-atow:Software ;
-    rdfs:comment "Software for compiling source code."@en ;
-    skos:prefLabel "Compiler"@en, "Compilateur"@fr .
-
-exa-atow:OperatingSystem a owl:Class ;
-    rdfs:subClassOf exa-atow:Software ;
-    rdfs:comment "Operating system software."@en ;
-    skos:prefLabel "Operating System"@en, "Système d'exploitation"@fr .
-
-exa-atow:SoftwareVersion a owl:Class ;
-    rdfs:comment "A specific version/installation of software on a system."@en ;
-    skos:prefLabel "Software Version"@en, "Version logicielle"@fr .
 
 #################################################################
-# Resource Manager Instances
+# Canonical Instances - Resource Managers
 #################################################################
 
-exa-atow:SLURM a exa-atow:ResourceManager ;
+exa-atow:SLURM rdf:type exa-atow:ResourceManager ;
     rdfs:label "SLURM" ;
     rdfs:comment "Simple Linux Utility for Resource Management."@en ;
     skos:prefLabel "SLURM"@en ;
@@ -622,237 +497,470 @@ exa-atow:SLURM a exa-atow:ResourceManager ;
     exa-atow:vendor "SchedMD" ;
     exa-atow:website "https://slurm.schedmd.com" .
 
-exa-atow:PBS a exa-atow:ResourceManager ;
+exa-atow:PBS rdf:type exa-atow:ResourceManager ;
     rdfs:label "PBS" ;
     rdfs:comment "Portable Batch System."@en ;
     skos:prefLabel "PBS"@en ;
     exa-atow:softwareName "PBS Professional" ;
     exa-atow:vendor "Altair" .
 
-exa-atow:LSF a exa-atow:ResourceManager ;
+exa-atow:LSF rdf:type exa-atow:ResourceManager ;
     rdfs:label "LSF" ;
     rdfs:comment "Load Sharing Facility."@en ;
     skos:prefLabel "LSF"@en ;
     exa-atow:softwareName "IBM Spectrum LSF" ;
     exa-atow:vendor "IBM" .
 
+
 #################################################################
-# Compiler Instances
+# Canonical Instances - Compilers
 #################################################################
 
-exa-atow:GCC a exa-atow:Compiler ;
+exa-atow:GCC rdf:type exa-atow:Compiler ;
     rdfs:label "GCC" ;
     rdfs:comment "GNU Compiler Collection."@en ;
     skos:prefLabel "GCC"@en ;
     exa-atow:softwareName "GCC" ;
     exa-atow:vendor "GNU Project" ;
-    exa-atow:supportsLanguage "C", "C++", "Fortran" .
+    exa-atow:supportsLanguage "C" , "C++" , "Fortran" .
 
-exa-atow:IntelCompiler a exa-atow:Compiler ;
+exa-atow:IntelCompiler rdf:type exa-atow:Compiler ;
     rdfs:label "Intel Compiler" ;
     rdfs:comment "Intel oneAPI DPC++/C++ and Fortran Compilers."@en ;
-    skos:prefLabel "Intel Compiler"@en, "Compilateur Intel"@fr ;
+    skos:prefLabel "Intel Compiler"@en ,
+        "Compilateur Intel"@fr ;
     exa-atow:softwareName "Intel oneAPI" ;
     exa-atow:vendor "Intel" ;
-    exa-atow:supportsLanguage "C", "C++", "Fortran" .
+    exa-atow:supportsLanguage "C" , "C++" , "Fortran" .
 
-exa-atow:NVCC a exa-atow:Compiler ;
+exa-atow:NVCC rdf:type exa-atow:Compiler ;
     rdfs:label "NVCC" ;
     rdfs:comment "NVIDIA CUDA Compiler."@en ;
     skos:prefLabel "NVCC"@en ;
     exa-atow:softwareName "NVCC" ;
     exa-atow:vendor "NVIDIA" ;
-    exa-atow:supportsLanguage "CUDA", "C++" .
+    exa-atow:supportsLanguage "CUDA" , "C++" .
 
-exa-atow:AOCC a exa-atow:Compiler ;
+exa-atow:AOCC rdf:type exa-atow:Compiler ;
     rdfs:label "AOCC" ;
     rdfs:comment "AMD Optimizing C/C++ and Fortran Compilers."@en ;
     skos:prefLabel "AOCC"@en ;
     exa-atow:softwareName "AOCC" ;
     exa-atow:vendor "AMD" ;
-    exa-atow:supportsLanguage "C", "C++", "Fortran" .
+    exa-atow:supportsLanguage "C" , "C++" , "Fortran" .
+
 
 #################################################################
-# Operating System Instances
+# Canonical Instances - Operating Systems
 #################################################################
 
-exa-atow:Linux a exa-atow:OperatingSystem ;
+exa-atow:Linux rdf:type exa-atow:OperatingSystem ;
     rdfs:label "Linux" ;
     skos:prefLabel "Linux"@en .
 
-exa-atow:RedHat a exa-atow:OperatingSystem ;
+exa-atow:RedHat rdf:type exa-atow:OperatingSystem ;
     rdfs:label "Red Hat Enterprise Linux" ;
     skos:prefLabel "Red Hat"@en ;
     exa-atow:softwareName "Red Hat Enterprise Linux" ;
     exa-atow:vendor "Red Hat" .
 
-exa-atow:Ubuntu a exa-atow:OperatingSystem ;
+exa-atow:Ubuntu rdf:type exa-atow:OperatingSystem ;
     rdfs:label "Ubuntu" ;
     skos:prefLabel "Ubuntu"@en ;
     exa-atow:softwareName "Ubuntu" ;
     exa-atow:vendor "Canonical" .
 
+
 #################################################################
-# Properties for Software
+# Object Properties - System Composition & Hierarchy
 #################################################################
 
-exa-atow:usesResourceManager a owl:ObjectProperty ;
+exa-atow:contains rdf:type owl:ObjectProperty ;
+    rdfs:comment "General containment relationship in HPC hierarchy."@en ;
+    skos:prefLabel "contains"@en ,
+        "contient"@fr .
+
+exa-atow:partOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf exa-atow:contains ;
+    rdfs:comment "Indicates membership in a larger structure."@en ;
+    skos:prefLabel "part of"@en ,
+        "partie de"@fr .
+
+exa-atow:composedOf rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf exa-atow:contains ;
+    rdfs:domain exa-atow:Supercomputer ;
+    rdfs:range [ owl:unionOf ( exa-atow:ComputeNode 
+                               exa-atow:Partition 
+                               exa-atow:Rack ) ] ;
+    skos:prefLabel "composed of"@en ,
+        "composé de"@fr .
+
+exa-atow:equippedWith rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range [ owl:unionOf ( exa-atow:Processor 
+                               exa-atow:RAM 
+                               exa-atow:SSD 
+                               exa-atow:HDD ) ] ;
+    rdfs:comment "Indicates hardware components installed in a node."@en ;
+    skos:prefLabel "equipped with"@en ,
+        "équipé de"@fr .
+
+exa-atow:hasFrequency rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:Processor ;
+    rdfs:range exa-atow:Frequency ;
+    rdfs:comment "Processor has clock speed of the processor, specified as a quantitative value with unit (e.g., 2.9 GHz)."@en ,
+        "La fréquence d'horloge du processeur, spécifiée comme une valeur quantitative avec unité (ex : 2,9 GHz)."@fr ;
+    skos:prefLabel "has frequency"@en ,
+        "a fréquence"@fr .
+
+exa-atow:connectedVia rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range exa-atow:Interconnect ;
+    skos:prefLabel "connected via"@en ,
+        "connecté via"@fr .
+
+exa-atow:belongsToPartition rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range exa-atow:Partition ;
+    skos:prefLabel "belongs to partition"@en ,
+        "appartient à la partition"@fr .
+
+exa-atow:housedInRack rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range exa-atow:Rack ;
+    skos:prefLabel "housed in rack"@en ,
+        "logé dans la baie"@fr .
+
+
+#################################################################
+# Object Properties - System Organization
+#################################################################
+
+exa-atow:operatedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:HPCCenter ;
+    rdfs:range exa-atow:Organization ;
+    skos:prefLabel "operated by"@en ,
+        "exploité par"@fr .
+
+exa-atow:hosts rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:HPCCenter ;
+    rdfs:range exa-atow:Supercomputer ;
+    skos:prefLabel "hosts"@en ,
+        "héberge"@fr .
+
+exa-atow:hasFrontendNodes rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:Supercomputer ;
+    rdfs:range exa-atow:FrontendNode ;
+    skos:prefLabel "has frontend nodes"@en ,
+        "a nœuds frontaux"@fr .
+
+
+#################################################################
+# Object Properties - Software & Resource Management
+#################################################################
+
+exa-atow:usesResourceManager rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Supercomputer ;
     rdfs:range exa-atow:ResourceManager ;
     rdfs:comment "The resource manager/scheduler used by this system."@en ;
-    skos:prefLabel "uses resource manager"@en, "utilise gestionnaire"@fr .
+    skos:prefLabel "uses resource manager"@en ,
+        "utilise gestionnaire de ressources"@fr .
 
-exa-atow:supportsCompiler a owl:ObjectProperty ;
-    rdfs:domain [ owl:unionOf (exa-atow:Supercomputer exa-atow:Partition) ] ;
+exa-atow:supportsCompiler rdf:type owl:ObjectProperty ;
+    rdfs:domain [ owl:unionOf ( exa-atow:Supercomputer exa-atow:Partition ) ] ;
     rdfs:range exa-atow:Compiler ;
     rdfs:comment "Compilers available on this system."@en ;
-    skos:prefLabel "supports compiler"@en, "supporte compilateur"@fr .
+    skos:prefLabel "supports compiler"@en ,
+        "supporte compilateur"@fr .
 
-exa-atow:runsOS a owl:ObjectProperty ;
-    rdfs:domain [ owl:unionOf (exa-atow:ComputeNode exa-atow:Supercomputer) ] ;
+exa-atow:runsOS rdf:type owl:ObjectProperty ;
+    rdfs:domain [ owl:unionOf ( exa-atow:ComputeNode exa-atow:Supercomputer ) ] ;
     rdfs:range exa-atow:OperatingSystem ;
     rdfs:comment "Operating system running on nodes."@en ;
-    skos:prefLabel "runs OS"@en, "exécute SE"@fr .
+    skos:prefLabel "runs OS"@en ,
+        "exécute SE"@fr .
 
-exa-atow:softwareName a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Software ;
-    rdfs:range xsd:string ;
-    skos:prefLabel "software name"@en, "nom du logiciel"@fr .
-
-exa-atow:vendor a owl:DatatypeProperty ;
-    rdfs:domain [ owl:unionOf (exa-atow:Software exa-atow:Processor) ] ;
-    rdfs:range xsd:string ;
-    skos:prefLabel "vendor"@en, "éditeur/fabricant"@fr .
-
-exa-atow:website a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Software ;
-    rdfs:range xsd:anyURI ;
-    skos:prefLabel "website"@en, "site web"@fr .
-
-exa-atow:supportsLanguage a owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Compiler ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Programming language supported (e.g., 'C', 'Fortran', 'CUDA')."@en ;
-    skos:prefLabel "supports language"@en, "supporte langage"@fr .
-
-# For specific installations with version info:
-exa-atow:isSoftware a owl:ObjectProperty ;
+exa-atow:isSoftware rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:SoftwareVersion ;
     rdfs:range exa-atow:Software ;
-    skos:prefLabel "is software"@en, "est logiciel"@fr .
+    skos:prefLabel "is software"@en ,
+        "est logiciel"@fr .
 
-exa-atow:versionNumber a owl:DatatypeProperty ;
+exa-atow:installedOn rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:SoftwareVersion ;
-    rdfs:range xsd:string ;
-    rdfs:comment "Version string (e.g., '23.02.1', '12.2.0')."@en ;
-    skos:prefLabel "version number"@en, "numéro de version"@fr .
-
-exa-atow:installedOn a owl:ObjectProperty ;
-    rdfs:domain exa-atow:SoftwareVersion ;
-    rdfs:range [ owl:unionOf (exa-atow:Supercomputer exa-atow:ComputeNode) ] ;
-    skos:prefLabel "installed on"@en, "installé sur"@fr .
+    rdfs:range [ owl:unionOf ( exa-atow:Supercomputer exa-atow:ComputeNode ) ] ;
+    skos:prefLabel "installed on"@en ,
+        "installé sur"@fr .
 
 
-### ----->>> Processor <<<-----
+#################################################################
+# Object Properties - Partition Management
+#################################################################
+
+exa-atow:hasPartitionType rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:Partition ;
+    rdfs:range exa-atow:PartitionType ;
+    skos:prefLabel "has partition type"@en ,
+        "a type de partition"@fr .
 
 
+#################################################################
+# Object Properties - Storage Systems
+#################################################################
+
+exa-atow:usesFileSystem rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:Supercomputer ;
+    rdfs:range exa-atow:FileSystem ;
+    skos:prefLabel "uses file system"@en ,
+        "utilise système de fichiers"@fr .
+
+exa-atow:hasStorageCapacity rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:FileSystem ;
+    rdfs:range exa-atow:StorageCapacity ;
+    skos:prefLabel "has storage capacity"@en ,
+        "a capacité de stockage"@fr .
+
+exa-atow:hasThroughput rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:FileSystem ;
+    rdfs:range exa-atow:Throughput ;
+    skos:prefLabel "has throughput"@en ,
+        "a débit"@fr .
 
 
-#################################################
-#  ObjectProperties
-#################################################
+#################################################################
+# Object Properties - Physical Characteristics
+#################################################################
 
-exa-atow:hasDieSize a owl:ObjectProperty ;
-    rdfs:comment "Processor has a die size, including a numeric value and a unit (e.g., mm2)."@en,
+exa-atow:hasDieSize rdf:type owl:ObjectProperty ;
+    rdfs:comment "Processor has a die size, including a numeric value and a unit (e.g., mm2)."@en ,
         "Processeur a une taille de puce, incluant une valeur numérique et une unité (ex : mm2)."@fr ;
     rdfs:domain exa-atow:Processor ;
     rdfs:range exa-atow:DieSize ;
-    skos:prefLabel "has die size"@en,
+    skos:prefLabel "has die size"@en ,
         "a taille de puce"@fr .
 
-exa-atow:hasLifetime a owl:ObjectProperty ;
-    rdfs:comment "The processor or server has an operational lifetime, including numeric value and unit (e.g. years, hours)."@en,
+exa-atow:hasLifetime rdf:type owl:ObjectProperty ;
+    rdfs:comment "The processor or server has an operational lifetime, including numeric value and unit (e.g. years, hours)."@en ,
         "Le processeur ou le serveur a une durée de vie opérationnelle avec valeur numérique et unité (ex : années ou heures)."@fr ;
-    rdfs:domain [ owl:unionOf (exa-atow:Processor exa-atow:Server) ] ;
+    rdfs:domain [ owl:unionOf ( exa-atow:Processor exa-atow:Server ) ] ;
     rdfs:range exa-atow:Lifetime ;
-    skos:prefLabel "has lifetime"@en, "a durée de vie"@fr .
+    skos:prefLabel "has lifetime"@en ,
+        "a durée de vie"@fr .
 
-exa-atow:hasMemoryCapacity a owl:ObjectProperty ;
-    rdfs:comment "The memory device has a certain memory capacity, including numeric value and unit (e.g., GB, TB)."@en,
+exa-atow:hasMemoryCapacity rdf:type owl:ObjectProperty ;
+    rdfs:comment "The memory device has a certain memory capacity, including numeric value and unit (e.g., GB, TB)."@en ,
         "Le dispositif de mémoire a une certaine capacité mémoire incluant valeur numérique et unité (ex : Go, To)."@fr ;
-    rdfs:domain exa-atow:HDD,
-        exa-atow:RAM,
-        exa-atow:SSD ;
+    rdfs:domain [ owl:unionOf ( exa-atow:HDD exa-atow:RAM exa-atow:SSD ) ] ;
     rdfs:range exa-atow:MemoryCapacity ;
-    skos:prefLabel "has memory capacity"@en,
+    skos:prefLabel "has memory capacity"@en ,
         "a capacité mémoire"@fr .
 
+exa-atow:hasBandwidth rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:Interconnect ;
+    rdfs:range exa-atow:Bandwidth ;
+    skos:prefLabel "has bandwidth"@en ,
+        "a bande passante"@fr .
 
-exa-atow:contains a owl:ObjectProperty ;
-    rdfs:comment "General containment relationship in HPC hierarchy."@en ;
-    skos:prefLabel "contains"@en, "contient"@fr .
+exa-atow:gpuMemory rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:GPU ;
+    rdfs:range exa-atow:MemoryCapacity ;
+    rdfs:comment "Memory capacity of GPU (e.g., 16 GB, 32 GB, 80 GB)."@en ;
+    skos:prefLabel "GPU memory"@en ,
+        "mémoire GPU"@fr .
 
-exa-atow:partOf a owl:ObjectProperty ;
-    owl:inverseOf exa-atow:contains ;
-    rdfs:comment "Indicates membership in a larger structure."@en ;
-    skos:prefLabel "part of"@en, "partie de"@fr .
-
-exa-atow:composedOf a owl:ObjectProperty ;
-    rdfs:subPropertyOf exa-atow:contains ;
+exa-atow:hasPeakPerformance rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Supercomputer ;
-    rdfs:range [ owl:unionOf (exa-atow:ComputeNode 
-                              exa-atow:Partition 
-                              exa-atow:Rack) ] ;
-    skos:prefLabel "composed of"@en, "composé de"@fr .
-
-exa-atow:equippedWith a owl:ObjectProperty ;
-    rdfs:domain exa-atow:ComputeNode ;
-    rdfs:range [ owl:unionOf (exa-atow:Processor 
-                              exa-atow:RAM 
-                              exa-atow:SSD 
-                              exa-atow:HDD) ] ;
-    rdfs:comment "Indicates hardware components installed in a node."@en ;
-    skos:prefLabel "equipped with"@en, "équipé de"@fr .
-
-exa-atow:connectedVia a owl:ObjectProperty ;
-    rdfs:domain exa-atow:ComputeNode ;
-    rdfs:range exa-atow:Interconnect ;
-    skos:prefLabel "connected via"@en, "connecté via"@fr .
-
-exa-atow:belongsToPartition a owl:ObjectProperty ;
-    rdfs:domain exa-atow:ComputeNode ;
-    rdfs:range exa-atow:Partition ;
-    skos:prefLabel "belongs to partition"@en, "appartient à la partition"@fr .
-
-exa-atow:housedInRack a owl:ObjectProperty ;
-    rdfs:domain exa-atow:ComputeNode ;
-    rdfs:range exa-atow:Rack ;
-    skos:prefLabel "housed in rack"@en, "logé dans la baie"@fr .
+    rdfs:range exa-atow:PeakPerformance ;
+    skos:prefLabel "has peak performance"@en ,
+        "a performance crête"@fr .
 
 
-####################################
-#      Datatype Property
-####################################
+#################################################################
+# Datatype Properties - Quantitative Values
+#################################################################
 
-# need to add a QuantitativeValue class to put everything that has Unit and Value.
-exa-atow:hasUnit a owl:DatatypeProperty ;
-    rdfs:comment "Unit of measurement."@en, "Unité de mesure"@fr ;
-    rdfs:domain [ owl:unionOf (exa-atow:DieSize exa-atow:Lifetime  exa-atow:MemoryCapacity) ] ;
+exa-atow:hasUnit rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Unit of measurement."@en ,
+        "Unité de mesure"@fr ;
+    rdfs:domain exa-atow:QuantitativeValue ;
     rdfs:range xsd:string ;
-    skos:prefLabel "has unit"@en, "a unité"@fr .
+    skos:prefLabel "has unit"@en ,
+        "a unité"@fr .
 
-exa-atow:hasValue a owl:DatatypeProperty ;
-    rdfs:comment "Numeric value."@en, "Valeur numérique"@fr ;
-    rdfs:domain [ owl:unionOf (exa-atow:DieSize exa-atow:Lifetime  exa-atow:MemoryCapacity) ] ;
+exa-atow:hasValue rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Numeric value."@en ,
+        "Valeur numérique"@fr ;
+    rdfs:domain exa-atow:QuantitativeValue ;
     rdfs:range xsd:decimal ;
-    skos:prefLabel "has numeric value"@en,  "a valeur numérique"@fr .
+    skos:prefLabel "has numeric value"@en ,
+        "a valeur numérique"@fr .
 
 
-######################################################
+#################################################################
+# Datatype Properties - Identification & Naming
+#################################################################
 
-exa-atow:Interconnect a owl:Class ;
-    rdfs:comment "High-speed network infrastructure enabling communication between compute nodes and system components."@en,
-        "Infrastructure réseau à haute vitesse permettant la communication entre les nœuds de calcul et les composants du système."@fr ;
-#    rdfs:subClassOf exa-atow:HPCResource ;
-    skos:prefLabel "Interconnect"@en,
-        "Interconnexion"@fr .
+exa-atow:uri rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:HPCResource ;
+    rdfs:range xsd:anyURI ;
+    rdfs:comment "Unique URI for this resource" .
+
+exa-atow:shortName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:HPCResource ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Short name (e.g., 'jean-zay', 'adastra')" .
+
+exa-atow:description rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:HPCResource ;
+    rdfs:range xsd:string .
+
+
+exa-atow:identifier rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:HPCResource ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Unique identifier (e.g., hostname, serial number)."@en ;
+    skos:prefLabel "identifier"@en ,
+        "identifiant"@fr .
+
+exa-atow:model rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Processor ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Processor model name (e.g., 'Intel Xeon Platinum 8268')."@en ;
+    skos:prefLabel "model"@en ,
+        "modèle"@fr .
+
+exa-atow:vendor rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( exa-atow:Software exa-atow:Processor ) ] ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "vendor"@en ,
+        "fabricant"@fr .
+
+exa-atow:softwareName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Software ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "software name"@en ,
+        "nom du logiciel"@fr .
+
+exa-atow:website rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Software ;
+    rdfs:range xsd:anyURI ;
+    skos:prefLabel "website"@en ,
+        "site web"@fr .
+
+
+#################################################################
+# Datatype Properties - HPC Center
+#################################################################
+
+exa-atow:location rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:HPCCenter ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Geographic location of the HPC center (e.g., 'Orsay, France')."@en ;
+    skos:prefLabel "location"@en ,
+        "localisation"@fr .
+
+
+#################################################################
+# Datatype Properties - Partition
+#################################################################
+
+exa-atow:partitionName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Partition ;
+    rdfs:range xsd:string ;
+    rdfs:comment "SLURM partition identifier (e.g., 'cpu_p1', 'gpu_p5', 'prepost')."@en ;
+    skos:prefLabel "partition name"@en ,
+        "nom de partition"@fr .
+
+
+#################################################################
+# Datatype Properties - Operating System
+#################################################################
+
+exa-atow:osVersion rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:OperatingSystem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Version of the operating system (e.g., 'Red Hat 8.5', 'Ubuntu 20.04')."@en ;
+    skos:prefLabel "OS version"@en ,
+        "version SE"@fr .
+
+
+#################################################################
+# Datatype Properties - Compiler
+#################################################################
+
+exa-atow:supportsLanguage rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Compiler ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Programming language supported (e.g., 'C', 'Fortran', 'CUDA')."@en ;
+    skos:prefLabel "supports language"@en ,
+        "supporte langage"@fr .
+
+exa-atow:versionNumber rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:SoftwareVersion ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Version string (e.g., '23.02.1', '12.2.0')."@en ;
+    skos:prefLabel "version number"@en ,
+        "numéro de version"@fr .
+
+
+#################################################################
+# Datatype Properties - Counts & Quantitative Attributes
+#################################################################
+exa-atow:hasCore rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:Processor ;
+    rdfs:range exa-atow:Core ;
+    rdfs:comment "Links a processor (CPU or GPU) to its individual processing cores."@en ,
+        "Relie un processeur (CPU ou GPU) à ses cœurs de traitement individuels."@fr ;
+    skos:prefLabel "has core"@en ,
+        "a cœur"@fr .
+    
+exa-atow:coreCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Processor ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "core count"@en ,
+        "nombre de cœurs"@fr .
+
+exa-atow:nodeCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( exa-atow:Supercomputer exa-atow:Partition ) ] ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "node count"@en ,
+        "nombre de nœuds"@fr .
+
+exa-atow:frontendNodeCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Supercomputer ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "frontend node count"@en ,
+        "nombre de nœuds frontaux"@fr .
+
+exa-atow:gpuCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Number of GPUs per node (e.g., 4 for quad-GPU, 8 for octo-GPU)."@en ;
+    skos:prefLabel "GPU count"@en ,
+        "nombre de GPU"@fr .
+
+exa-atow:linkCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Number of interconnect links per node (e.g., 1 for scalar, 4 for accelerated)."@en ;
+    skos:prefLabel "link count"@en ,
+        "nombre de liens"@fr .
+
+
+#################################################################
+# Datatype Properties - Temporal Information
+#################################################################
+
+exa-atow:commissioningDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:Supercomputer ;
+    rdfs:range xsd:date ;
+    rdfs:comment "Date when the system became operational."@en ;
+    skos:prefLabel "commissioning date"@en ,
+        "date de mise en service"@fr .
+
+exa-atow:decommissioningDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( exa-atow:Supercomputer exa-atow:Partition exa-atow:ComputeNode ) ] ;
+    rdfs:range xsd:date ;
+    rdfs:comment "Date when the system/partition was retired."@en ;
+    skos:prefLabel "decommissioning date"@en ,
+        "date de décommissionnement"@fr .
