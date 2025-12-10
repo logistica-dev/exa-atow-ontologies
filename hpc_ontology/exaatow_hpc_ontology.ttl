@@ -20,7 +20,7 @@
     dc:description "Ontology for modeling high-performance computing resources, infrastructure, and physical characteristics within the Exa-AToW project."@en ;
     dcterms:created "2025-12-05"^^xsd:date ;
     dcterms:modified "2025-12-10"^^xsd:date ;
-    dc:creator "Your Name" ;
+    dc:creator "Exa-AToW team" ;
     owl:versionInfo "0.2" .
 
 
