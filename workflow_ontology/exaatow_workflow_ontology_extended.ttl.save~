@@ -1,0 +1,114 @@
+@prefix exa-atow: <http://example.org/exaatow-workflow#> .
+@prefix wfdesc: <http://purl.org/wf4ever/wfdesc#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix dc:   <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+################################################################################
+# Ontology metadata
+################################################################################
+
+<> a owl:Ontology ;
+   dc:title "Exa-AToW Workflow Ontology – extended" ;
+   dc:description "Extended workflow ontology for Exa-AToW, merging the original ontology with additions enabling explicit data-flow, parameter metadata, step specialization, resource requirements, and alternative workflow representations." ;
+   owl:versionInfo "0.1-extended" .
+
+################################################################################
+# Existing imports / reuse (assumed from original) — keep as is
+################################################################################
+
+# (Keep whatever imports your original ontology had: e.g. wfdesc, prov, computational resource, environment, etc.)
+
+################################################################################
+# Extension: more expressive workflow modeling
+################################################################################
+
+## To represent concrete data-links (edges) between step outputs and step inputs
+exa-atow:DataLink rdf:type owl:Class ;
+    rdfs:label "Data Link"@en ;
+    rdfs:comment "Represents a directed data flow link from an output parameter of a workflow step to an input parameter of another (or same) step."@en .
+
+## Specialized step types
+exa-atow:CommandLineStep rdf:type owl:Class ;
+    rdfs:subClassOf wfdesc:WorkflowStep ;
+    rdfs:label "Command Line Step"@en ;
+    rdfs:comment "A workflow step executing a command-line tool (e.g. as in CWL)."@en .
+
+exa-atow:PythonFunctionStep rdf:type owl:Class ;
+    rdfs:subClassOf wfdesc:WorkflowStep ;
+    rdfs:label "Python Function Step"@en ;
+    rdfs:comment "A workflow step executing a Python function (e.g. as in AiiDA, pyiron, jobflow)."@en .
+
+exa-atow:StreamingStep rdf:type owl:Class ;
+    rdfs:subClassOf wfdesc:WorkflowStep ;
+    rdfs:label "Streaming Step"@en ;
+    rdfs:comment "A step processing data streams or real-time flows (e.g. in NiFi, data-ingestion pipelines)."@en .
+
+## Properties: linking steps ↔ parameters
+exa-atow:hasInputParameter rdf:type owl:ObjectProperty ;
+    rdfs:domain wfdesc:WorkflowStep ;
+    rdfs:range wfdesc:Parameter ;  # or your own Parameter class
+    rdfs:label "has input parameter"@en .
+
+exa-atow:hasOutputParameter rdf:type owl:ObjectProperty ;
+    rdfs:domain wfdesc:WorkflowStep ;
+    rdfs:range wfdesc:Parameter ;
+    rdfs:label "has output parameter"@en .
+
+## DataLink edges
+exa-atow:linksOutputToInput rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:DataLink ;
+    rdfs:range wfdesc:Parameter ;
+    rdfs:label "links output to input"@en .
+
+exa-atow:sourceOutputParameter rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf exa-atow:linksOutputToInput ;
+    rdfs:label "source output parameter"@en .
+
+exa-atow:targetInputParameter rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf exa-atow:linksOutputToInput ;
+    rdfs:label "target input parameter"@en .
+
+## Execution environment / resource requirements per step
+exa-atow:requiresEnvironment rdf:type owl:ObjectProperty ;
+    rdfs:domain wfdesc:WorkflowStep ;
+    rdfs:range exa-atow:ExecutionEnvironment ;
+    rdfs:label "requires execution environment"@en .
+
+exa-atow:requiresResource rdf:type owl:ObjectProperty ;
+    rdfs:domain wfdesc:WorkflowStep ;
+    rdfs:range exa-atow:ComputationalResource ;
+    rdfs:label "requires computational resource"@en .
+
+## Parameter metadata: type, optionality, default value
+exa-atow:parameterType rdf:type owl:DatatypeProperty ;
+    rdfs:domain wfdesc:Parameter ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "parameter type"@en ;
+    rdfs:comment "Type of the parameter (e.g. File, String, Integer, Boolean, List, etc.)"@en .
+
+exa-atow:isOptional rdf:type owl:DatatypeProperty ;
+    rdfs:domain wfdesc:Parameter ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "is optional"@en ;
+    rdfs:comment "Flag indicating if the parameter is optional (true) or required (false)."@en .
+
+exa-atow:defaultValue rdf:type owl:DatatypeProperty ;
+    rdfs:domain wfdesc:Parameter ;
+    rdfs:range rdfs:Literal ;
+    rdfs:label "default value"@en ;
+    rdfs:comment "Default value for optional parameters if none provided."@en .
+
+## Alternative representations / equivalence of workflows
+exa-atow:hasAlternativeRepresentation rdf:type owl:ObjectProperty ;
+    rdfs:domain wfdesc:Workflow ;
+    rdfs:range wfdesc:Workflow ;
+    rdfs:label "has alternative representation"@en ;
+    rdfs:comment "Link to another representation of the same logical workflow (e.g. CWL version, Python version, NiFi version)."@en .
+
+################################################################################
+# (Optional) Add further documentation, versioning, annotations if needed
+################################################################################
+
