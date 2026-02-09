@@ -217,7 +217,7 @@ exa-atow:LogicalResource rdf:type owl:Class ;
         "Ressource logicielle"@fr .
 
 exa-atow:Partition rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:LogicalResource
+    rdfs:subClassOf exa-atow:LogicalResource ;
     rdfs:comment "A logical grouping of compute nodes within a supercomputer that shares hardware characteristics or workload type, often mapped to SLURM partitions."@en ,
         "Un regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, souvent associé à des partitions SLURM."@fr ;
     skos:prefLabel "Partition"@en ,
