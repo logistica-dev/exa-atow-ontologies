@@ -455,7 +455,18 @@ exa-atow:PowerDistributionUnit rdf:type owl:Class ;
                  "Unité matérielle distribuant l'énergie électrique aux baies et nœuds ; sa mesure alimente les calculs de PUE."@fr ;
     skos:prefLabel "Power Distribution Unit (PDU)"@en , "Unité de distribution d'alimentation (PDU)"@fr .
 
+exa-atow:FileSystem rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:LogicalResource ;
+    rdfs:comment "The shared storage infrastructure used for input/output and checkpoint data in HPC environments."@en ,
+        "L'infrastructure de stockage partagée utilisée pour les données d'entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ;
+    skos:prefLabel "File System"@en ,
+        "Système de fichiers"@fr .
 
+exa-atow:ParallelFileSystem rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:FileSystem ;
+    rdfs:comment "Distributed file system for parallel I/O operations."@en ;
+    skos:prefLabel "Parallel File System"@en ,
+        "Système de fichiers parallèle"@fr .
 
 # ===============================================================
 # 6. Quantitative Value Classes
@@ -635,6 +646,10 @@ exa-atow:hosts rdf:type owl:ObjectProperty ;
     rdfs:range exa-atow:Supercomputer ;
     skos:prefLabel "hosts"@en , "héberge"@fr .
 
+exa-atow:QuantitativeValue rdf:type owl:Class ;
+    rdfs:comment "A value with an associated unit of measurement."@en ;
+    skos:prefLabel "Quantitative Value"@en ,
+        "Valeur quantitative"@fr .
 
 # -->> 7.3 Partitions <<--
 
