@@ -1,5 +1,10 @@
 # Exa-AToW HPC Resource Ontology
 
+
+https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl
+
+https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/grafo_full_Exa-AToW_HPC.html
+
 The Exa-AToW HPC Ontology is an OWL 2 DL knowledge representation designed to formally describe the hardware, software, storage infrastructure, and organizational structure of High-Performance Computing (HPC) centers. It was developed within the Exa-AToW project as the semantic backbone for describing and comparing the French national supercomputing ecosystem.
 
 The ontology enables answering structured queries such as:
