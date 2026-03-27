@@ -29,7 +29,7 @@ The ontology is organized around five disjoint top-level branches:
 
 | Branch  | definition  | Key subclasses  |
 |---|---|---|
-| HPC Center  | Institutional entity that operates and hosts one or more supercomputers.  |   |
+| HPC Center  | Institutional entity that operates and hosts one or more supercomputers.  | ![HPC Center](images/HPCCenter.png)  |
 | Organization  | Entité légale qui exploite, possède ou finance des installations HPC.  | Funding Agency    |
 | Quantitative Value  | A value with an associated unit of measurement.  | Die Size, Memory Capacity, Lifetime, ... |
 | HPC Resource  | All resources involved in high-performance computing.  | Infrastracture, Logical Resource (Software, Partition, etc), Physical resource (Supercomputer, ComputeNode, CPU, GPU, ...) |
