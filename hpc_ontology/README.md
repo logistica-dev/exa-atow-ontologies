@@ -35,6 +35,11 @@ The ontology is organized around five disjoint top-level branches:
 | HPC Resource  | All resources involved in high-performance computing.  | Infrastracture, Logical Resource (Software, Partition, etc), Physical resource (Supercomputer, ComputeNode, CPU, GPU, ...) |
 
 
+![HPC Center](images/HPCCenter.png)
+
+
+Example:
+
 HPC Center → *hosts* → Supercomputer → *composed of* → ComputeNode → *equipped with* →  CPUs / GPUs
 
 ---
