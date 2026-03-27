@@ -42,6 +42,7 @@ Example:
 
 HPC Center → *hosts* → Supercomputer → *composed of* → ComputeNode → *equipped with* →  CPUs / GPUs
 
+![HPC Center](images/HPCCenter-chain-CPUGPU.png)
 ---
 ## Validation
 SHACL Shapes to be defined.
