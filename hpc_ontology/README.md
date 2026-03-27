@@ -27,15 +27,13 @@ Link to nice visualization in a Knowledge Graph.
 
 The ontology is organized around five disjoint top-level branches:
 
-| Branch  | definition  | Key subclasses  |
+| Branch  | Information  |   |
 |---|---|---|
-| HPC Center  | Institutional entity that operates and hosts one or more supercomputers.  | ![HPC Center](images/HPCCenter.png)  |
-| Organization  | Entité légale qui exploite, possède ou finance des installations HPC.  | Funding Agency    |
-| Quantitative Value  | A value with an associated unit of measurement.  | Die Size, Memory Capacity, Lifetime, ... |
-| HPC Resource  | All resources involved in high-performance computing.  | Infrastracture, Logical Resource (Software, Partition, etc), Physical resource (Supercomputer, ComputeNode, CPU, GPU, ...) |
+| HPC Center  | *Definition:* Institutional entity that operates and hosts one or more supercomputers. <br> | ![HPC Center](images/HPCCenter.png)  |
+| Organization  | *Definition:* Entité légale qui exploite, possède ou finance des installations HPC. <br> *Key Classes:* Funding Agency    |  ![Organization](images/Organization.png)  |
+| Quantitative Value  | *Definition:* A value with an associated unit of measurement.  <br> *Key Classes:* Die Size, Memory Capacity, Lifetime, ... |  ![Quantitative Value](images/QuantitativeValue.png)  |
+| HPC Resource  | *Definition:* All resources involved in high-performance computing. <br> *Key Classes:* Infrastracture, Logical Resource (Software, Partition, etc), Physical resource (Supercomputer, ComputeNode, CPU, GPU, ...) | ![HPC Resource](images/HPCResource.png)   |
 
-
-![HPC Center](images/HPCCenter.png)
 
 
 Example:
