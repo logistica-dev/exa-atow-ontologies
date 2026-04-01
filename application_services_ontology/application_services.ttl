@@ -1,0 +1,221 @@
+@prefix : <http://www.semanticweb.org/grichet/ontologies/applicationServices/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/grichet/ontologies/applicationServices/> .
+
+<http://www.semanticweb.org/grichet/ontologies/applicationServices> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#correspondsTo
+:correspondsTo rdf:type owl:ObjectProperty ,
+                        owl:TransitiveProperty ;
+               rdfs:domain :applicationServicesElement ;
+               rdfs:range :applicationServicesElement .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#executes
+:executes rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :correspondsTo ;
+          rdfs:domain :runtime ;
+          rdfs:range :job .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#hasMimeType
+:hasMimeType rdf:type owl:ObjectProperty ;
+             rdfs:domain :microservice ;
+             rdfs:range :mimeType .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#hasRole
+:hasRole rdf:type owl:ObjectProperty ;
+         owl:inverseOf :isRoleOf ;
+         rdfs:domain :federationUser ;
+         rdfs:range :role .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#hasRule
+:hasRule rdf:type owl:ObjectProperty ;
+         owl:inverseOf :isRuleFor ;
+         rdfs:domain :applicationServicesElement ;
+         rdfs:range :policy .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#isRoleOf
+:isRoleOf rdf:type owl:ObjectProperty ;
+          rdfs:domain :role ;
+          rdfs:range :federationUser .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#isRuleFor
+:isRuleFor rdf:type owl:ObjectProperty ;
+           rdfs:domain :policy ;
+           rdfs:range :applicationServicesElement .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/declares
+:declares rdf:type owl:ObjectProperty ;
+          owl:inverseOf :isDeclaredBy ;
+          rdfs:domain :role ;
+          rdfs:range :applicationServicesElement .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/isDeclaredBy
+:isDeclaredBy rdf:type owl:ObjectProperty ;
+              rdfs:domain :applicationServicesElement ;
+              rdfs:range :role .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#mimeTypeValue
+:mimeTypeValue rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :mimeType ;
+               rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#eBuffer
+:eBuffer rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#mimeType
+:mimeType rdf:type owl:Class ;
+          rdfs:comment "Le type MIME d'une application permet au maintainer et au développeur de relier des runtimes avec des micro-services"@fr ,
+                       "The application MIME type allows maintainers and developers to link runtimes and microservices"@en ;
+          rdfs:label "MIME type"@en ,
+                     "type MIME"@fr .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices#policy
+:policy rdf:type owl:Class ;
+        rdfs:comment "Les utilisateurs peuvent déclarer des règles restreignant l'accès aux éléments des Applications Services qu'ils controlent"@fr ,
+                     "Users may declare rules restraining access to the Application Services element they own"@en ;
+        rdfs:label "policy"@en ,
+                   "politique"@fr .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/applicationServicesElement
+:applicationServicesElement rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/developer
+:developer rdf:type owl:Class ;
+           rdfs:subClassOf :role ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :declares ;
+                             owl:allValuesFrom :microservice
+                           ] ;
+           rdfs:comment "Le développeur est celui qui déclare un micro-service et qui développe l'application correspondante"@fr ,
+                        "The developer is the one declaring a microservice and developing the corresponding application"@en ;
+           rdfs:label "developer"@en ,
+                      "développeur"@fr .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/federationUser
+:federationUser rdf:type owl:Class ;
+                rdfs:comment "A Federation User is a user identified within the federation. They have access to at least one of the element of the continuum."@en ,
+                             "Un utilisateur est identifié dans la fédération. Il a accès à au moins l'un des éléments du continuum."@fr ;
+                rdfs:label "federation user"@en ,
+                           "utilisateur dans la fédération"@fr .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/job
+:job rdf:type owl:Class ;
+     rdfs:subClassOf :applicationServicesElement ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :isDeclaredBy ;
+                       owl:allValuesFrom :scientist
+                     ] ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :correspondsTo ;
+                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                       owl:onClass :microservice
+                     ] ;
+     rdfs:comment "A job is to be executed on a HPC Center. It has specific parameters and data."@en ,
+                  "Un job est exécuté sur un centre HPC. Il correspond à un ensemble de paramètres et de données"@fr ;
+     rdfs:label "job"@en ,
+                "job"@fr .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/maintainer
+:maintainer rdf:type owl:Class ;
+            rdfs:subClassOf :role ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :declares ;
+                              owl:allValuesFrom :runtime
+                            ] ;
+            rdfs:comment "Le maintainer est celui qui exécute effectivement un job sur un centre HPC"@fr ,
+                         "The maintainer is the one actually executing a job on a HPC center"@en ;
+            rdfs:label "maintainer"@en ,
+                       "maintainer"@fr .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/microservice
+:microservice rdf:type owl:Class ;
+              rdfs:subClassOf :applicationServicesElement ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :correspondsTo ;
+                                owl:someValuesFrom :job
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :isDeclaredBy ;
+                                owl:allValuesFrom :developer
+                              ] ,
+                              [ rdf:type owl:Restriction ;
+                                owl:onProperty :correspondsTo ;
+                                owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                                owl:onClass :runtime
+                              ] ;
+              rdfs:comment "A microservice is an interface contract for jobs."@en ,
+                           "Un micro-service est un contrat d'interface pour des jobs."@fr ;
+              rdfs:label "micro-service"@fr ,
+                         "microservice"@en .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/role
+:role rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/runtime
+:runtime rdf:type owl:Class ;
+         rdfs:subClassOf :applicationServicesElement ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :correspondsTo ;
+                           owl:someValuesFrom :microservice
+                         ] ,
+                         [ rdf:type owl:Restriction ;
+                           owl:onProperty :isDeclaredBy ;
+                           owl:allValuesFrom :maintainer
+                         ] ;
+         rdfs:comment "Le runtime pull des jobs à exécuter, en fonction du contrat d'interface que respecte le job et du mime type correspondant."@fr ,
+                      "The runtime can pull jobs to execute, according to their corresponding interface contract and its mimetype"@en ;
+         rdfs:label "runtime"@en ,
+                    "runtime"@fr .
+
+
+###  http://www.semanticweb.org/grichet/ontologies/applicationServices/scientist
+:scientist rdf:type owl:Class ;
+           rdfs:subClassOf :role ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :declares ;
+                             owl:allValuesFrom :job
+                           ] ;
+           rdfs:comment "The scientist wants to execute a job"@en ,
+                        "Un scientifique veut exécuter un job"@fr ;
+           rdfs:label "scientifique"@fr ,
+                      "scientist"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
