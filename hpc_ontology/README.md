@@ -35,7 +35,7 @@ The ontology is organized around four disjoint top-level branches:
 | Branch | Description | Key classes |
 |---|---|---|
 | **PhysicalResource** | All tangible hardware | `Supercomputer`, `ComputeNode`, `HardwareModel`, `HardwareComponent` and all their subclasses <br> ![PhysicalResource](images/PhysicalResource.png) |
-| **LogicalResource** | Software-defined or scheduler-visible resources | `Partition`, `QoS`, `FileSystem`, `StorageMount`, `Software` and subclasses <br> <img src="images/LogicalResource.png" width="300"> |
+| **LogicalResource** | Software-defined or scheduler-visible resources | `Partition`, `QoS`, `FileSystem`, `StorageMount`, `Software` and subclasses <br> <img src="images/LogicalResource.png" width="600"> |
 | **Infrastructure** | Facility-level support systems | `CoolingSystem`, `EnergyManagement`, `PowerDistributionUnit` <br>![Infrastructure](images/Infrastructure.png) |
 
 
@@ -70,7 +70,7 @@ ComputeNode
 
 Example:
 
-HPC Center → *hosts* → Supercomputer → *composed of* → ComputeNode → *equipped with* →  CPUs / GPUs
+HPC Center → *hosts* → Supercomputer → *composed of* → [Partition, ComputeNode] → *hasComponent* →  *hasCPUComponent*/* hasAcceleratorCardComponent* → CPU Component / Accelerator Card Component → CPUs / Accelerator Card (→ GPU)
 
 ![HPC Center](images/HPCCenter-chain-CPUGPU.png)
 
