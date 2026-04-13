@@ -21,7 +21,7 @@ By encoding these facts as machine-readable RDF triples, the ontology supports i
 
 ## Architecture
 
-The ontology is organized around five disjoint top-level branches:
+The ontology is organized around four disjoint top-level branches:
 
 | Branch  | Information  |   |
 |---|---|---|
@@ -30,13 +30,13 @@ The ontology is organized around five disjoint top-level branches:
 | Quantitative Value  | *Definition:* Typed numeric values with an associated unit of measurement.  <br> *Key Classes:* `Die Size`, `MemoryCapacity`, `TDP`, `Lifetime`, ... |  ![Quantitative Value](images/QuantitativeValue.png)  |
 | HPC Resource  | *Definition:* All resources involved in high-performance computing. <br> *Key Classes:* `Infrastructure`, `LogicalResource`, `PhysicalResource` | ![HPC Resource](images/HPCResource.png)   |
 
-
+### The HPC Resource branch
 
 | Branch | Description | Key classes |
 |---|---|---|
 | **PhysicalResource** | All tangible hardware | `Supercomputer`, `ComputeNode`, `HardwareModel`, `HardwareComponent` and all their subclasses |
 | **LogicalResource** | Software-defined or scheduler-visible resources | `Partition`, `QoS`, `FileSystem`, `StorageMount`, `Software` and subclasses |
-| **Infrastructure** | Facility-level support systems | `CoolingSystem`, `EnergyManagement`, `PowerDistributionUnit` |
+| **Infrastructure** | Facility-level support systems | `CoolingSystem`, `EnergyManagement`, `PowerDistributionUnit` <br>![Infrastructure](images/Infrastructure.png) |
 
 
 ### Core design pattern: HardwareModel vs HardwareComponent
