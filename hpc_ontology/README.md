@@ -35,7 +35,7 @@ The ontology is organized around four disjoint top-level branches:
 | Branch | Description | Key classes |
 |---|---|---|
 | **PhysicalResource** | All tangible hardware | `Supercomputer`, `ComputeNode`, `HardwareModel`, `HardwareComponent` and all their subclasses <br> ![PhysicalResource](images/PhysicalResource.png) |
-| **LogicalResource** | Software-defined or scheduler-visible resources | `Partition`, `QoS`, `FileSystem`, `StorageMount`, `Software` and subclasses <br> <img src="images/LogicalResource.png" width="50"> |
+| **LogicalResource** | Software-defined or scheduler-visible resources | `Partition`, `QoS`, `FileSystem`, `StorageMount`, `Software` and subclasses <br> <img src="images/LogicalResource.png" width="300"> |
 | **Infrastructure** | Facility-level support systems | `CoolingSystem`, `EnergyManagement`, `PowerDistributionUnit` <br>![Infrastructure](images/Infrastructure.png) |
 
 
@@ -47,19 +47,24 @@ A central design decision separates **abstract hardware specifications** (`Hardw
 ComputeNode
   ├─ hasCPUComponent ──────────► CPUComponent
   │                                  ├─ refersToModel ──► CPU (e.g. AMD EPYC 9654)
-  │                                  └─ quantity: 2
+  │                                  └─ model: str  
+  │                                  └─ quantity: int
   ├─ hasAcceleratorCardComponent ► AcceleratorCardComponent
   │                                  ├─ refersToModel ──► AcceleratorCard (e.g. MI250X)
-  │                                  └─ quantity: 4
+  │                                  └─ model: str  
+  │                                  └─ quantity: int
   ├─ hasMemoryComponent ──────────► MemoryComponent
   │                                  ├─ refersToModel ──► RAM / HBMMemory
-  │                                  └─ quantity: 1
+  │                                  └─ model: str  
+  │                                  └─ quantity: int
   ├─ hasInterconnectComponent ────► InterconnectComponent
   │                                  ├─ refersToModel ──► Interconnect (e.g. Slingshot)
-  │                                  └─ linkCount: 1..4
+  │                                  └─ model: str  
+  │                                  └─ linkCount: int
   └─ hasStorageComponent ─────────► StorageComponent
-                                     ├─ refersToModel ──► SSD / HDD
-                                     └─ quantity: 4
+                                     ├─ refersToModel ──► SSD / HD
+                                     └─ model: str  
+                                     └─ quantity: int
 ```
 
 
@@ -83,9 +88,7 @@ Partition
                               └─ refersToModel ──► AcceleratorCard ──► hasTDP ──► TDP  (e.g. 560 W)
 ```
 
-`NominalPower` (on `ComputeNode`) captures the full node power budget including DRAM and board overhead, derived from the Adastra documentation formula:
-> *945 W = 360 W/socket × 2 + 100 W DRAM + 125 W other (scalar node)*  
-> *2670 W = 180 W CPU + 70 W DRAM + 560 W × 4 MI250X + 180 W other (GPU node)*
+`NominalPower` (on `ComputeNode`) captures the full node power budget including DRAM and board overhead.
 
 `TDP` (on `Processor` and `AcceleratorCard`) captures the manufacturer-specified per-component thermal design power.
 
