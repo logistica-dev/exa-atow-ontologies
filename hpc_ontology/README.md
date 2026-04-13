@@ -34,8 +34,8 @@ The ontology is organized around four disjoint top-level branches:
 
 | Branch | Description | Key classes |
 |---|---|---|
-| **PhysicalResource** | All tangible hardware | `Supercomputer`, `ComputeNode`, `HardwareModel`, `HardwareComponent` and all their subclasses |
-| **LogicalResource** | Software-defined or scheduler-visible resources | `Partition`, `QoS`, `FileSystem`, `StorageMount`, `Software` and subclasses |
+| **PhysicalResource** | All tangible hardware | `Supercomputer`, `ComputeNode`, `HardwareModel`, `HardwareComponent` and all their subclasses <br> ![PhysicalResource](images/PhysicalResource.png) |
+| **LogicalResource** | Software-defined or scheduler-visible resources | `Partition`, `QoS`, `FileSystem`, `StorageMount`, `Software` and subclasses <br> <img src="images/LogicalResource.png" width="50"> |
 | **Infrastructure** | Facility-level support systems | `CoolingSystem`, `EnergyManagement`, `PowerDistributionUnit` <br>![Infrastructure](images/Infrastructure.png) |
 
 
