@@ -1,0 +1,235 @@
+# Exa-AToW HPC Resource Ontology
+
+A vocabulary for describing supercomputers — their hardware, software, storage, and the organizations that run them. Built for the Exa-AToW project
+
+
+
+## Widoco
+Link to Widoco
+
+## Visualization
+Link to nice visualization in   Knowledge graph
+
+
+## What is inside?
+Supercomputers  →  composed of  →  Compute Nodes  →  equipped with  →  CPUs / GPUs
+     │                                                                       │
+     ├── Partitions (SLURM/PBS)  →  Quality of Service (QoS) classes        │
+     ├── File Systems  →  Storage Mounts ($HOME, $SCRATCH, $WORK…)          │
+     ├── Software (compilers, MPI libs, resource managers)                   │
+     └── Infrastructure (cooling, power, PDUs)                               │
+                                                                             TDP / Die Size / Process Node
+HPC Centers  →  operated by  →  Organizations  →  funded by  →  Funding Agencies
+
+
+---
+
+## Key Object Properties
+
+| Property | Domain | Range | Notes |
+|----------|--------|-------|-------|
+| `hosts` | HPCCenter | Supercomputer | Center → machine |
+| `operatedBy` | HPCCenter | Organization | |
+| `fundedBy` | HPCCenter / Supercomputer | FundingAgency | e.g. GENCI, France 2030 |
+| `hasPartition` | Supercomputer | Partition | Main partition link |
+| `hasGeneration` | Supercomputer | HardwareGeneration | For multi-phase machines like Jean Zay |
+| `composedOf` | Supercomputer | ComputeNode / Partition / Rack | |
+| `hasPartitionType` | Partition | PartitionType | cpu/gpu/prepost/visu/compil |
+| `hasQoS` | Partition | QoS | SLURM QoS classes |
+| `usesNodeType` | Partition | ComputeNode | What nodes a partition exposes |
+| `requiresModule` | Partition | SoftwareVersion | arch/a100, arch/h100 etc. |
+| `equippedWith` | ComputeNode | Processor / AcceleratorCard / RAM / SSD / HDD | |
+| `hasAcceleratorCard` | AcceleratedNode | AcceleratorCard | Explicit card link |
+| `hostsAccelerator` | AcceleratorCard | Accelerator | Card → GPU chip |
+| `belongsToPartition` | ComputeNode | Partition | Inverse of usesNodeType |
+| `connectedVia` | ComputeNode | Interconnect | OPA or IB |
+| `usesFileSystem` | Supercomputer | FileSystem | Lustre, GPFS |
+| `hasStorageMount` | Supercomputer / HPCCenter | StorageMount | $HOME, $SCRATCH, $STORE |
+| `mountedOn` | StorageMount | FileSystem | Which FS backs this mount |
+| `hasPeakPerformance` | Supercomputer | PeakPerformance | e.g. 125.9 PFlop/s Jean Zay |
+| `hasPowerConsumption` | Supercomputer / ComputeNode / Processor | PowerConsumption | |
+| `gpuMemory` | GPU | MemoryCapacity | 16/32/80 GB |
+| `hasTDP` | Processor | TDP | |
+| `usesResourceManager` | Supercomputer | ResourceManager | |
+
+---
+
+## Key Datatype Properties
+
+| Property | Domain | Range | Example |
+|----------|--------|-------|---------|
+| `shortName` | HPCResource | xsd:string | `"jean-zay"` |
+| `location` | HPCCenter | xsd:string | `"Orsay, France"` |
+| `documentationURL` | HPCCenter / Supercomputer / Partition | xsd:anyURI | IDRIS doc page |
+| `partitionName` | Partition | xsd:string | `"gpu_p5"`, `"cpu_p1"` |
+| `maxWallTime` | Partition | xsd:string | `"100:00:00"` |
+| `defaultWallTime` | Partition | xsd:string | `"00:10:00"` |
+| `allocatedFromQuota` | Partition | xsd:boolean | `false` for prepost/visu |
+| `nodeCount` | Supercomputer / Partition | xsd:integer | `364` (gpu_p6) |
+| `gpuCount` | ComputeNode | xsd:integer | `4`, `8` |
+| `coreCount` | Processor | xsd:integer | `48` (Xeon Platinum 8468) |
+| `socketCount` | ComputeNode | xsd:integer | `2` |
+| `ramPerNode` | ComputeNode | xsd:integer | `512` (GB) |
+| `model` | Processor | xsd:string | `"NVIDIA H100 SXM5"` |
+| `architecture` | Processor | xsd:string | `"Hopper"`, `"Cascade Lake"` |
+| `commissioningDate` | Supercomputer / HardwareGeneration | xsd:date | `"2019-01-01"` |
+| `decommissioningDate` | Supercomputer / Partition … | xsd:date | |
+| `mountPath` | StorageMount | xsd:string | `"$SCRATCH"` |
+| `quota` | StorageMount | xsd:string | `"100 GB"` |
+| `isPurged` | StorageMount | xsd:boolean | `true` for scratch |
+| `hasValue` | QuantitativeValue | xsd:decimal | `125.9` |
+| `hasUnit` | QuantitativeValue | xsd:string | `"PFlop/s"`, `"GB"` |
+
+---
+
+## Canonical Instances in the Ontology
+
+The ontology ships with the following canonical instances ready to reference in your data:
+
+**Resource Managers:** `exa-atow:SLURM`, `exa-atow:PBS`, `exa-atow:LSF`
+
+**Compilers:** `exa-atow:GCC`, `exa-atow:IntelCompiler`, `exa-atow:NVCC`, `exa-atow:AOCC`, `exa-atow:CrayCC`
+
+**Operating Systems:** `exa-atow:Linux`, `exa-atow:RedHat`, `exa-atow:Ubuntu`
+
+---
+
+## Instantiation Guide
+
+Below is a quick sketch of how to create instances for Jean Zay. Full instance files should live in a separate Turtle file importing this ontology.
+
+### HPC Center + Supercomputer
+
+```turtle
+@prefix exa-atow: <...#> .
+@prefix xsd: <...> .
+
+exa-atow:IDRIS rdf:type exa-atow:Organization ;
+    rdfs:label "IDRIS" ;
+    exa-atow:website "https://www.idris.fr"^^xsd:anyURI .
+
+exa-atow:GENCI rdf:type exa-atow:FundingAgency ;
+    rdfs:label "GENCI" .
+
+exa-atow:IDRISCenter rdf:type exa-atow:HPCCenter ;
+    exa-atow:shortName "idris" ;
+    exa-atow:location "Orsay, France" ;
+    exa-atow:operatedBy exa-atow:IDRIS ;
+    exa-atow:hosts exa-atow:JeanZay .
+
+exa-atow:JeanZay rdf:type exa-atow:Supercomputer ;
+    rdfs:label "Jean Zay" ;
+    exa-atow:shortName "jean-zay" ;
+    exa-atow:commissioningDate "2019-06-01"^^xsd:date ;
+    exa-atow:usesResourceManager exa-atow:SLURM ;
+    exa-atow:fundedBy exa-atow:GENCI ;
+    exa-atow:documentationURL "https://www.idris.fr/jean-zay/"^^xsd:anyURI .
+```
+
+### GPU (processor spec)
+
+```turtle
+exa-atow:H100_SXM5_80GB rdf:type exa-atow:GPU ;
+    rdfs:label "NVIDIA H100 SXM5 80GB" ;
+    exa-atow:model "NVIDIA H100 SXM5" ;
+    exa-atow:architecture "Hopper" ;
+    exa-atow:vendor "NVIDIA" ;
+    exa-atow:coreCount 16896 .   # CUDA cores
+
+exa-atow:H100_SXM5_80GB_Memory rdf:type exa-atow:MemoryCapacity ;
+    exa-atow:hasValue "80"^^xsd:decimal ;
+    exa-atow:hasUnit "GB" .
+exa-atow:H100_SXM5_80GB exa-atow:gpuMemory exa-atow:H100_SXM5_80GB_Memory .
+```
+
+### AcceleratorCard
+
+```turtle
+exa-atow:Card_H100_SXM5 rdf:type exa-atow:AcceleratorCard ;
+    rdfs:label "NVIDIA H100 SXM5 80GB card" ;
+    exa-atow:vendor "NVIDIA" ;
+    exa-atow:hostsAccelerator exa-atow:H100_SXM5_80GB .
+```
+
+### Compute Node (AcceleratedNode)
+
+```turtle
+# Template for a Jean Zay gpu_p6 node (quad-H100)
+exa-atow:JeanZay_gpu_p6_NodeType rdf:type exa-atow:AcceleratedNode ;
+    rdfs:label "Jean Zay gpu_p6 node (4x H100)" ;
+    exa-atow:gpuCount 4 ;
+    exa-atow:socketCount 2 ;
+    exa-atow:ramPerNode 512 ;
+    exa-atow:linkCount 4 ;          # 4 NDR InfiniBand links
+    exa-atow:hasAcceleratorCard exa-atow:Card_H100_SXM5 ;
+    exa-atow:connectedVia exa-atow:InfiniBandNDR .
+```
+
+### Partition
+
+```turtle
+exa-atow:Partition_gpu_p6 rdf:type exa-atow:Partition ;
+    rdfs:label "Jean Zay gpu_p6 (H100 partition)" ;
+    exa-atow:partitionName "gpu_p6" ;
+    exa-atow:nodeCount 364 ;
+    exa-atow:maxWallTime "100:00:00" ;
+    exa-atow:defaultWallTime "00:10:00" ;
+    exa-atow:allocatedFromQuota true ;
+    exa-atow:hasPartitionType exa-atow:GPUPartition ;
+    exa-atow:usesNodeType exa-atow:JeanZay_gpu_p6_NodeType ;
+    exa-atow:documentationURL 
+        "https://www.idris.fr/eng/jean-zay/gpu/jean-zay-gpu-exec_partition_slurm-eng.html"^^xsd:anyURI .
+
+exa-atow:JeanZay exa-atow:hasPartition exa-atow:Partition_gpu_p6 .
+```
+
+---
+
+## Changes from v0.2 → v0.3
+
+### Bug Fixes
+
+1. **RAM wrongly placed under `Storage`** — RAM is volatile memory, not persistent storage. Introduced `exa-atow:Memory` as a separate sibling branch under `PhysicalResource`. `RAM` and `HBMMemory` are now under `Memory`; `SSD` and `HDD` remain under `Storage`.
+
+2. **`ScalarNode` used `owl:minCardinality 1` without a property** — removed the malformed bare cardinality restriction (it was missing `owl:onProperty`).
+
+3. **`exa-atow:website` domain was only `Software`** — broadened to also cover `HPCCenter` and `Organization`.
+
+4. **`exa-atow:vendor` domain did not include `AcceleratorCard`** — fixed.
+
+5. **`exa-atow:hasCore` was declared as `owl:ObjectProperty` but embedded in the `## Datatype Properties` section** — moved to the Object Properties block.
+
+6. **`PerformanceMetric` was not connected to the hierarchy** — it was an isolated class; `PeakPerformance` is now properly linked to it.
+
+
+
+## Visualizing the Ontology
+
+The `.dot` file can be rendered with [Graphviz](https://graphviz.org/):
+
+```bash
+# SVG (recommended for zoom)
+dot -Tsvg exaatow_hpc_ontology.dot -o exaatow_hpc_ontology.svg
+
+# PNG
+dot -Tpng -Gdpi=150 exaatow_hpc_ontology.dot -o exaatow_hpc_ontology.png
+
+# PDF
+dot -Tpdf exaatow_hpc_ontology.dot -o exaatow_hpc_ontology.pdf
+```
+
+Or open/paste into an online renderer such as [Graphviz Online](https://dreampuf.github.io/GraphvizOnline/).
+
+
+
+---
+
+## Validation
+Shapes is used as SHACL validator. 
+
+
+---
+
+## License
+
+© Exa-AToW team. See project repository for license details.

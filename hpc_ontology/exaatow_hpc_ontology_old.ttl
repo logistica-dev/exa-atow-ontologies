@@ -96,19 +96,19 @@ exa-atow:HPCCenter rdf:type owl:Class ;
         [
             rdf:type owl:Restriction ;
             owl:onProperty exa-atow:hosts ;
-            owl:minQualifiedCardinality "1"^^xsd:positiveInteger ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
             owl:onClass exa-atow:Supercomputer
         ] ,
         [
             rdf:type owl:Restriction ;
             owl:onProperty exa-atow:operatedBy ;
-            owl:minQualifiedCardinality "1"^^xsd:positiveInteger ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
             owl:onClass exa-atow:Organization
         ] ,
         [
             rdf:type owl:Restriction ;
             owl:onProperty exa-atow:location ;
-            owl:minCardinality "1"^^xsd:positiveInteger
+            owl:minCardinality "1"^^xsd:nonNegativeInteger
         ] .
 
 
@@ -145,35 +145,36 @@ exa-atow:ScalarNode rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:ComputeNode ;
     rdfs:subClassOf [
         rdf:type owl:Restriction ;
-        owl:onProperty exa-atow:hasCPUComponent ;
-        owl:someValuesFrom exa-atow:CPUComponent
+        owl:onProperty exa-atow:equippedWith ;
+        owl:someValuesFrom exa-atow:CPU
     ] ;
     rdfs:subClassOf [
         rdf:type owl:Restriction ;
-        owl:onProperty exa-atow:hasCPUComponent ;
-        owl:allValuesFrom exa-atow:CPUComponent
+        owl:onProperty exa-atow:equippedWith ;
+        owl:allValuesFrom exa-atow:CPU
     ] ;
     rdfs:comment "A compute node equipped with general-purpose CPUs only (no accelerators)."@en ,
         "Un nœud de calcul équipé uniquement de processeurs généraux (CPU), sans accélérateurs."@fr ;
     skos:prefLabel "Scalar Node"@en , "Nœud scalaire"@fr .
 
+# To be checked if I use GPU or AcceleratorCard
 exa-atow:AcceleratedNode rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:ComputeNode ;
     rdfs:subClassOf [
         rdf:type owl:Restriction ;
         owl:onProperty exa-atow:hasAcceleratorCardComponent ;
         owl:someValuesFrom exa-atow:AcceleratorCard
-#        owl:minCardinality "1"^^xsd:nonNegativeInteger
     ] ;
-#    rdfs:subClassOf [
-#        rdf:type owl:Restriction ;
-#        owl:onProperty exa-atow:hasCPUComponent ;
-#        owl:someValuesFrom exa-atow:CPU
-#    ] ;
-    rdfs:comment "A compute node equipped with one or more accelerator cards (GPUs or APUs). May also have a CPU (classic GPU nodes) or integrate CPU and GPU in the same package (APU nodes such as MI300A)."@en ,
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty exa-atow:hasCPUComponent ;
+        owl:someValuesFrom exa-atow:CPU
+    ] ;
+    rdfs:comment "A compute node equipped with both CPUs and accelerators such as GPUs."@en ,
         "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."@fr ;
     skos:prefLabel "Accelerated Node"@en , "Nœud accéléré"@fr .
 
+# Check with Exa-AToW if these are really needed for the Digital Twin.
 exa-atow:FrontendNode rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:ComputeNode ;
     rdfs:comment "Login/frontend node for user access, job submission, and compilation."@en ,
@@ -196,6 +197,31 @@ exa-atow:VisualizationNode rdf:type owl:Class ;
    owl:members ( exa-atow:ScalarNode exa-atow:AcceleratedNode exa-atow:FrontendNode
                  exa-atow:PrePostNode exa-atow:VisualizationNode ) .
 
+exa-atow:NodeRole rdf:type owl:Class ;
+    rdfs:label "Node role"@en , "Rôle du nœud"@fr .
+
+exa-atow:FrontendRole rdf:type exa-atow:NodeRole ;
+    rdfs:label "Frontend role"@en , "Rôle frontal"@fr .
+
+exa-atow:TransferRole rdf:type exa-atow:NodeRole ;
+    rdfs:label "Transfer role"@en , "Rôle de transfert"@fr .
+
+exa-atow:VisualizationRole rdf:type exa-atow:NodeRole ;
+    rdfs:label "Visualization role"@en , "Rôle de visualization"@fr .
+
+exa-atow:GPURole rdf:type exa-atow:NodeRole ;
+    rdfs:label "GPU"@en , "GPU"@fr .
+    
+exa-atow:CPURole rdf:type exa-atow:NodeRole ;
+    rdfs:label "CPU"@en , "CPU"@fr .
+
+exa-atow:APURole rdf:type exa-atow:NodeRole ;
+    rdfs:label "APU"@en , "APU"@fr .
+    
+exa-atow:hasRole rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range exa-atow:NodeRole ;
+    rdfs:label "has role"@en , "a pour rôle"@fr .
 
 # -->> 3.3 Processors <<--
 
@@ -244,7 +270,7 @@ exa-atow:GCD rdf:type owl:Class ;
 exa-atow:CPU owl:disjointWith exa-atow:GPU .
 
 
-#----------------------------------------------------- 
+#----------------------------------------------------- To be included?
 # Physical card that hosts one or more GPU/accelerator dies (e.g. NVIDIA A100 SXM4)
 exa-atow:AcceleratorCard rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:HardwareModel ; #PhysicalResource ;
@@ -252,12 +278,11 @@ exa-atow:AcceleratorCard rdf:type owl:Class ;
         "Carte physique hébergeant un ou plusieurs GPU/accélérateurs (ex : NVIDIA A100 SXM4 80 Go)."@fr ;
     skos:prefLabel "Accelerator Card"@en ,
         "Carte accélératrice"@fr .
-
 #=---------------------------------------------------------------
-### ─── 3.4 Hardware Components ─────────────────────────────────────────────
+### ─── Hardware Components ─────────────────────────────────────────────
 
 exa-atow:CPUComponent rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:ProcessorComponent ,
+    rdfs:subClassOf exa-atow:ProcessorComponent ;
             [
             rdf:type owl:Restriction ;
             owl:onProperty exa-atow:refersToModel ;
@@ -304,7 +329,7 @@ exa-atow:StorageComponent rdf:type owl:Class ;
     skos:prefLabel "Storage Component"@en , "Composant de stockage"@fr .
 
 
-exa-atow:InterconnectComponent rdf:type owl:Class ;
+exa-atow:NetworkComponent rdf:type owl:Class ;
     rdfs:subClassOf 
         exa-atow:HardwareComponent ,
         [
@@ -314,7 +339,7 @@ exa-atow:InterconnectComponent rdf:type owl:Class ;
         ] ;
     rdfs:comment "A component representing network interfaces (NICs) connecting a node to the HPC interconnect."@en ,
                  "Un composant représentant les interfaces réseau (NICs) connectant un nœud à l'interconnexion HPC."@fr ;
-    skos:prefLabel "Interconnect Component"@en , "Composant réseau"@fr .
+    skos:prefLabel "Network Component"@en , "Composant réseau"@fr .
 
 exa-atow:MemoryComponent rdf:type owl:Class ;
     rdfs:subClassOf 
@@ -332,15 +357,15 @@ exa-atow:MemoryComponent rdf:type owl:Class ;
 exa-atow:ProcessorComponent owl:disjointWith 
     exa-atow:MemoryComponent ,
     exa-atow:StorageComponent ,
-    exa-atow:InterconnectComponent ,
+    exa-atow:NetworkComponent ,
     exa-atow:AcceleratorCardComponent .
 
 exa-atow:MemoryComponent owl:disjointWith 
     exa-atow:StorageComponent ,
-    exa-atow:InterconnectComponent .
+    exa-atow:NetworkComponent .
 
 
-# -->> 3.5 Memory <<--
+# -->> 3.4 Memory <<--
 
 exa-atow:Memory rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:HardwareModel ; #PhysicalResource ;
@@ -348,7 +373,6 @@ exa-atow:Memory rdf:type owl:Class ;
         "Composants de mémoire volatile utilisés pendant le calcul (DRAM, HBM, etc.)."@fr ;
     skos:prefLabel "Memory"@en , "Mémoire"@fr .
 
-#should I drop this and only use model?
 exa-atow:memoryModel rdf:type owl:DatatypeProperty ;
     rdfs:domain exa-atow:Memory ;  
     rdfs:range xsd:string ;
@@ -372,7 +396,7 @@ exa-atow:GDDRMemory rdf:type owl:Class ;
     rdfs:comment "Graphics DDR memory used on GPUs (e.g. GDDR6 on NVIDIA L40)."@en ;
     skos:prefLabel "GDDR Memory"@en , "Mémoire GDDR"@fr .
 
-# -->> 3.6 Storage <<--
+# -->> 3.5 Storage <<--
 ##HardwareModel?
 exa-atow:Storage rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:HardwareModel ; #PhysicalResource ;
@@ -410,7 +434,7 @@ exa-atow:SAS_SSD rdf:type owl:Class ;
 #---------------------------------------------------------------
 
 
-# -->> 3.7 Physical Infrastructure <<--
+# -->> 3.6 Physical Infrastructure <<--
 
 exa-atow:Rack rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:PhysicalResource ;
@@ -424,7 +448,7 @@ exa-atow:Server rdf:type owl:Class ;
         "Un serveur physique contenant des processeurs, de la mémoire et du stockage."@fr ;
     skos:prefLabel "Server"@en , "Serveur"@fr .
 
-# -->> 3.8 Interconnect <<--
+# -->> 3.7 Interconnect <<--
 
 # This direcly affect job performance and network tology modeling. Useful for energy calculations.
 # Check with Exa-AToW team if we leave ti as concepts or DataTypeProperties:
@@ -456,7 +480,7 @@ exa-atow:InfiniBandNDR rdf:type owl:Class ;
     rdfs:comment "InfiniBand NDR (Next Data Rate) - 400 Gb/s per port. Used in Jean Zay H100 partition (gpu_p6)."@en ;
     skos:prefLabel "InfiniBand NDR"@en .
 
-exa-atow:Slingshot rdf:type owl:Class ;
+exa-atow:SlingShot rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:Interconnect ;
     rdfs:comment "HPE Cray Slingshot high-speed interconnect (200 Gb/s), used on HPE Cray EX systems."@en ;
     skos:prefLabel "HPE Cray Slingshot"@en .
@@ -579,6 +603,18 @@ exa-atow:PowerDistributionUnit rdf:type owl:Class ;
                  "Unité matérielle distribuant l'énergie électrique aux baies et nœuds ; sa mesure alimente les calculs de PUE."@fr ;
     skos:prefLabel "Power Distribution Unit (PDU)"@en , "Unité de distribution d'alimentation (PDU)"@fr .
 
+exa-atow:FileSystem rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:LogicalResource ;
+    rdfs:comment "The shared storage infrastructure used for input/output and checkpoint data in HPC environments."@en ,
+        "L'infrastructure de stockage partagée utilisée pour les données d'entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ;
+    skos:prefLabel "File System"@en ,
+        "Système de fichiers"@fr .
+
+exa-atow:ParallelFileSystem rdf:type owl:Class ;
+    rdfs:subClassOf exa-atow:FileSystem ;
+    rdfs:comment "Distributed file system for parallel I/O operations."@en ;
+    skos:prefLabel "Parallel File System"@en ,
+        "Système de fichiers parallèle"@fr .
 
 # ===============================================================
 # 6. Quantitative Value Classes
@@ -600,7 +636,6 @@ exa-atow:NominalPower rdf:type owl:Class ;
                  "Puissance nominale de conception d'un nœud ou d'une baie (Watts), typiquement la somme des TDP des composants plus les surcharges carte et mémoire. Spécification statique, non une mesure. Publiée en entrée du microservice PUE."@fr ;
     skos:prefLabel "Nominal Power"@en , "Puissance nominale"@fr .
 
-# Per CPU/GPU -> Processor, AcceleratorCard
 exa-atow:TDP rdf:type owl:Class ;
     rdfs:subClassOf exa-atow:QuantitativeValue ;
     rdfs:comment "Manufacturer-specified Thermal Design Power (Watts): maximum sustained power the processor's cooling system must dissipate under typical HPC workloads."@en ,
@@ -702,7 +737,8 @@ exa-atow:hasGeneration rdf:type owl:ObjectProperty ;
     rdfs:comment "Links a supercomputer to one of its hardware generations or extension phases."@en ;
     skos:prefLabel "has generation"@en , "a génération"@fr .
 
-# --> 7.2 Component <--
+
+### ─── Object properties ──────────────────────────────────────────────
 
 exa-atow:hasComponent rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:ComputeNode ;
@@ -714,23 +750,23 @@ exa-atow:hasComponent rdf:type owl:ObjectProperty ;
 exa-atow:isComponentOf rdf:type owl:ObjectProperty ;
     owl:inverseOf exa-atow:hasComponent ;
     rdfs:domain exa-atow:HardwareComponent ;
-    rdfs:range exa-atow:ComputeNode .
+    rdfs:range exa-atow:Node .
 
 exa-atow:refersToModel rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:HardwareComponent ;
-    rdfs:range exa-atow:HardwareModel ;
-    rdfs:label "refers to hardware model"@en , "réfère au modèle matériel"@fr .
+    rdfs:range exa-atow:PhysicalResource ;
+    rdfs:label "refers to hardware model"@en , "réfère au modèle matériel"@fr 
 
 
 exa-atow:quantity rdf:type owl:DatatypeProperty ;
     rdfs:domain exa-atow:HardwareComponent ;
-    rdfs:range xsd:positiveInteger ;
+    rdfs:range xsd:nonNegativeInteger ;
     rdfs:label "quantity"@en , "quantité"@fr ;
     rdfs:comment "Number of physical instances of the referenced hardware model within the parent node."@en ,
                  "Nombre d'unités physiques de ce composant matériel présentes dans le nœud."@fr .
 
 exa-atow:linkCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:InterconnectComponent ;
+    rdfs:domain exa-atow:Interconnect ;
     rdfs:range xsd:integer ;
     rdfs:label "link count"@en , "nombre de liens"@fr ;
     rdfs:comment "Number of physical interconnect links available on this node."@en ,
@@ -743,7 +779,7 @@ exa-atow:hasProcessorComponent rdf:type owl:ObjectProperty ;
 
 exa-atow:hasCPUComponent rdf:type owl:ObjectProperty ;
     rdfs:subPropertyOf exa-atow:hasComponent ;
-    rdfs:range exa-atow:CPUComponent ;
+    rdfs:range exa-atow:CPU ;
     rdfs:label "has CPU component"@en , "a un composant CPU"@fr ;
     rdfs:comment "Links a compute node to a contextualized CPU component (model + socket count)."@en ,
                  "Lie un nœud de calcul à un composant CPU contextualisé (modèle + quantité)."@fr .
@@ -765,24 +801,23 @@ exa-atow:hasInterconnectComponent rdf:type owl:ObjectProperty ;
 
 exa-atow:hasMemoryComponent rdf:type owl:ObjectProperty ;
     rdfs:subPropertyOf exa-atow:hasComponent ;
-    rdfs:domain [ owl:unionOf ( exa-atow:ComputeNode 
-                                exa-atow:AcceleratorCard ) ] ;   
+    rdfs:domain exa-atow:ComputeNode ;
     rdfs:range exa-atow:MemoryComponent ;
     rdfs:label "has memory component"@en , "a un composant mémoire"@fr ;
     rdfs:comment "Links a compute node to a contextualized memory component (capacity + type)."@en ,
                  "Lie un nœud de calcul à un composant mémoire contextualisé."@fr .
 
-exa-atow:Processor owl:disjointWith exa-atow:RAM , exa-atow:Storage , exa-atow:Interconnect , exa-atow:AcceleratorCard .
-exa-atow:RAM owl:disjointWith exa-atow:Storage , exa-atow:Interconnect .
+exa-atow:Processor owl:disjointWith exa-atow:RAM , exa-atow:StorageDevice , exa-atow:Interconnect .
+exa-atow:RAM owl:disjointWith exa-atow:StorageDevice .
 #----------------------------------------------------------------------------------------------
 
 
-#exa-atow:hasAcceleratorCard rdf:type owl:ObjectProperty ;
-#    rdfs:subPropertyOf exa-atow:hasComponent ;
-#    rdfs:domain exa-atow:AcceleratedNode ;
-#    rdfs:range exa-atow:AcceleratorCard ;
-#    rdfs:comment "Links an accelerated compute node to its accelerator card(s)."@en ;
-#    skos:prefLabel "has accelerator card"@en , "a carte accélératrice"@fr .
+exa-atow:hasAcceleratorCard rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf exa-atow:equippedWith ;
+    rdfs:domain exa-atow:AcceleratedNode ;
+    rdfs:range exa-atow:AcceleratorCard ;
+    rdfs:comment "Links an accelerated compute node to its accelerator card(s)."@en ;
+    skos:prefLabel "has accelerator card"@en , "a carte accélératrice"@fr .
 
 exa-atow:hostsAccelerator rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:AcceleratorCard ;
@@ -802,7 +837,7 @@ exa-atow:housedInRack rdf:type owl:ObjectProperty ;
     rdfs:range exa-atow:Rack ;
     skos:prefLabel "housed in rack"@en , "logé dans la baie"@fr .
 
-# -->> 7.3 Organization <<--
+# -->> 7.2 Organization <<--
 
 exa-atow:operatedBy rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:HPCCenter ;
@@ -820,14 +855,26 @@ exa-atow:hosts rdf:type owl:ObjectProperty ;
     rdfs:range exa-atow:Supercomputer ;
     skos:prefLabel "hosts"@en , "héberge"@fr .
 
+exa-atow:QuantitativeValue rdf:type owl:Class ;
+    rdfs:comment "A value with an associated unit of measurement."@en ;
+    skos:prefLabel "Quantitative Value"@en ,
+        "Valeur quantitative"@fr .
 
-# -->> 7.4 Partitions <<--
+# -->> 7.3 Partitions <<--
 
 exa-atow:hasPartition rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Supercomputer ;
     rdfs:range exa-atow:Partition ;
     rdfs:comment "Links a supercomputer to one of its SLURM/job-scheduler partitions."@en ;
     skos:prefLabel "has partition"@en , "a partition"@fr .
+
+# Remove!!!!!
+exa-atow:hasFrontendNodes rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:Supercomputer ;
+    rdfs:range exa-atow:FrontendNode ;
+    rdfs:comment "Links a supercomputer to its login/frontend nodes used for SSH access, job submission and light compilation. Not counted in compute allocation. Typically 2–5 nodes per system."@en ,
+        "Lie un superordinateur à ses nœuds frontaux utilisés pour l'accès SSH, la soumission de tâches et la compilation légère. Non décomptés de l'allocation de calcul. Typiquement 2 à 5 nœuds par système."@fr ;
+    skos:prefLabel "has frontend nodes"@en , "a nœuds frontaux"@fr .
 
 exa-atow:hasQoS rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Partition ;
@@ -836,7 +883,7 @@ exa-atow:hasQoS rdf:type owl:ObjectProperty ;
         "Lie une partition à ses classes de Qualité de Service, chacune définissant un temps mur, une priorité et une politique de décompte d'allocation."@fr ;
     skos:prefLabel "has QoS"@en , "a QoS"@fr .
 
-#Key navigation path for energy microservice: Partition -> usesNodeType -> ComputeNode -> hasAcceleratorCardComponent -> AcceleratorCardCpmponent -> hostsAccelerator -> GPU -> hasTDP / hasDieSize
+#Key navigation path for energy microservice: Partition -> usesNodeType -> ComputeNode -> hasAcceleratorCard -> AcceleratorCard -> hostsAccelerator -> GPU -> hasTDP / hasDieSize
 exa-atow:usesNodeType rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Partition ;
     rdfs:range exa-atow:ComputeNode ;
@@ -846,7 +893,7 @@ exa-atow:usesNodeType rdf:type owl:ObjectProperty ;
     skos:prefLabel "uses node type"@en , "utilise type de nœud"@fr .
 
 
-# --> 7.5 Storage <<--
+# --> 7.4 Storage <<--
 
 exa-atow:usesFileSystem rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Supercomputer ;
@@ -883,7 +930,7 @@ exa-atow:hasThroughput rdf:type owl:ObjectProperty ;
     skos:prefLabel "has throughput"@en , "a débit"@fr .
 
 
-# -->> 7.6 Software & Resource Management <<--
+# -->> 7.5 Software & Resource Management <<--
 
 exa-atow:usesResourceManager rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Supercomputer ;
@@ -928,7 +975,7 @@ exa-atow:requiresModule rdf:type owl:ObjectProperty ;
     skos:prefLabel "requires module"@en , "nécessite module"@fr .
 
 
-# -->> 7.7 Physical / Energy Characteristics <<--
+# -->> 7.6 Physical / Energy Characteristics <<--
 
 exa-atow:hasFrequency rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Processor ;
@@ -939,7 +986,7 @@ exa-atow:hasFrequency rdf:type owl:ObjectProperty ;
 
 # Critical for node power estimation: TDP_cpu + (TDP_gpu × gpuCount).
 exa-atow:hasTDP rdf:type owl:ObjectProperty ;
-    rdfs:domain  [ owl:unionOf ( exa-atow:Processor exa-atow:AcceleratorCard ) ] ;
+    rdfs:domain exa-atow:Processor ;
     rdfs:range exa-atow:TDP ;
     rdfs:comment "Links processor to its manufacturer-specified TDP (Watts). e.g. NVIDIA A100 SXM4 -> 400W TDP, H100 SXM5 -> 700W TDP."@en ,
          "Relie le processeur à son TDP spécifié par le fabricant (Watts). ex: NVIDIA A100 SXM4->TDP 400W, H100 SXM5->TDP 700W."@fr ;
@@ -992,13 +1039,19 @@ exa-atow:hasPhysicalStorageCapacity rdf:type owl:ObjectProperty ;
     skos:prefLabel "has physical storage capacity"@en .
 
 
+# RAM memory -> node
+exa-atow:hasRAM rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range exa-atow:RAM ;
+    skos:prefLabel "Memory RAM"@en , "mémoire RAM"@fr
+    rdfs:comment "Links the node to its main RAM."@en .
 
 #  HBM Memory -> GPU
-#exa-atow:hasGPUMemory rdf:type owl:ObjectProperty ;
-#    rdfs:domain exa-atow:GPU ;
-#    rdfs:range exa-atow:HBMMemory ;
-##    rdfs:comment "Links GPU to its onboard HBM Memory capacity (e.g., V100 32GB HBM2)."@en , "Relie GPU à sa mémoire HBM embarquée."@fr ;
-#   skos:prefLabel "GPU memory"@en , "mémoire GPU"@fr .
+exa-atow:hasGPUMemory rdf:type owl:ObjectProperty ;
+    rdfs:domain exa-atow:GPU ;
+    rdfs:range exa-atow:HBMMemory ;
+    rdfs:comment "Links GPU to its onboard HBM Memory capacity (e.g., V100 32GB HBM2)."@en , "Relie GPU à sa mémoire HBM embarquée."@fr ;
+    skos:prefLabel "GPU memory"@en , "mémoire GPU"@fr .
 
 exa-atow:hasBandwidth rdf:type owl:ObjectProperty ;
     rdfs:domain exa-atow:Interconnect ;
@@ -1070,7 +1123,7 @@ exa-atow:description rdf:type owl:DatatypeProperty ;
 
 # -->> 8.3 Processor <<-
 exa-atow:model rdf:type owl:DatatypeProperty ;
-    rdfs:domain [ owl:unionOf ( exa-atow:Supercomputer exa-atow:HardwareModel ) ]  ;
+    rdfs:domain [ owl:unionOf ( exa-atow:Supercomputer exa-atow:Processor ) ]  ;
     rdfs:range xsd:string ;
     rdfs:comment "Model name of a supercomputer or a processor."@en ;
     skos:prefLabel "model"@en , "modèle"@fr .
@@ -1081,11 +1134,10 @@ exa-atow:architecture rdf:type owl:DatatypeProperty ;
     rdfs:comment "Processor microarchitecture (e.g., 'Cascade Lake', 'Sapphire Rapids', 'Ampere', 'Hopper')."@en ;
     skos:prefLabel "architecture"@en , "architecture"@fr .
 
-exa-atow:coresCountPerSocket rdf:type owl:DatatypeProperty ;
+exa-atow:coresPerSocket rdf:type owl:DatatypeProperty ;
     rdfs:domain exa-atow:CPU ;
     rdfs:range xsd:integer ;
-    skos:prefLabel "core count in each CPU"@en , "nombre de cœurs per CPU"@fr .
-
+    skos:prefLabel "core count"@en , "nombre de cœurs"@fr .
 
 exa-atow:threadCount rdf:type owl:DatatypeProperty ;
     rdfs:domain exa-atow:CPU ;
@@ -1098,23 +1150,39 @@ exa-atow:vendor rdf:type owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     skos:prefLabel "vendor"@en , "fabricant"@fr .
 
-# cuantas catras de acelerador tiene - gdc -> check if I keep this of the hasGCDCount
 exa-atow:acceleratorUnitsPerCard rdf:type owl:DatatypeProperty ;
     rdfs:domain exa-atow:AcceleratorCard ;
     rdfs:range xsd:integer .    
 
 # -->> 8.4 Computer Node <<--
-
-exa-atow:coresCountPerNode rdf:type owl:DatatypeProperty ;
+exa-atow:socketCount rdf:type owl:DatatypeProperty ;
     rdfs:domain exa-atow:ComputeNode ;
     rdfs:range xsd:integer ;
-    rdfs:comment "CPU cores per node (for CPU, number of CPU socket x cores per CPU => quantity (CPU)*coresCountPerSocket)."@en ;
+    rdfs:comment "Number of CPU sockets per compute node (i.e. number of processors par node)."@en ;
+    skos:prefLabel "socket count"@en ,  "nombre de sockets"@fr .
+
+exa-atow:gpuCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Number of GPUs per node (e.g., 4 for quad-GPU, 8 for octo-GPU)."@en ;
+    skos:prefLabel "GPU count"@en , "nombre de GPU"@fr .
+
+exa-atow:linkCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Number of interconnect links per node (e.g., 1 for scalar, 4 for accelerated)."@en ;
+    skos:prefLabel "link count"@en , "nombre de liens"@fr .
+
+exa-atow:cpuCorePerNode rdf:type owl:DatatypeProperty ;
+    rdfs:domain exa-atow:ComputeNode ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "CPU cores per node (for CPU, number of CPU socket x cores per CPU => socketCount*coresPerSocket)."@en ;
     skos:prefLabel "CPU core per node"@en  .
 
-exa-atow:coresCount rdf:type owl:DatatypeProperty ;
+exa-atow:cpuCoreCount rdf:type owl:DatatypeProperty ;
     rdfs:domain exa-atow:Processor ;
     rdfs:range xsd:integer ;
-    rdfs:comment "CPU cores per processor: useful for APUs, the chip contains not only the GPU but also CPU."@en ;
+    rdfs:comment "CPU cores per processor (useful for APUs, the chip contains not only the GPU but also CPU.)."@en ;
     skos:prefLabel "CPU core per processor"@en  .
 
 # -->> 8.5 Supercomputers / Partition counts <<--
@@ -1129,14 +1197,14 @@ exa-atow:nodeCount rdf:type owl:DatatypeProperty ;
     rdfs:range xsd:integer ;
     skos:prefLabel "node count"@en , "nombre de nœuds"@fr .
 
-exa-atow:totalCoresCount rdf:type owl:DatatypeProperty ;
+exa-atow:coreCount rdf:type owl:DatatypeProperty ;
     rdfs:domain [ owl:unionOf ( exa-atow:Supercomputer exa-atow:Partition ) ] ;
     rdfs:range xsd:integer ;
-    rdfs:comment "Total number of cores at the Partition or Supercomputer level"@en ;
+    rdfs:comment "Total number of cores at the Partition or Supercomputer level"@en
     skos:prefLabel "total number of cores"@en , "nombre total de cœurs"@fr .
 
 exa-atow:acceleratorCount rdf:type owl:DatatypeProperty ;
-    rdfs:domain [ owl:unionOf ( exa-atow:Supercomputer exa-atow:Partition ) ] ;
+    rdfs:domain exa-atow:Supercomputer ;
     rdfs:range xsd:integer ;
     skos:prefLabel "Total accelerator count"@en , "nombre total d'accelerateurs"@fr .
 

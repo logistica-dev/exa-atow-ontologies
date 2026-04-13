@@ -84,9 +84,9 @@
   <input id="search" type="text" placeholder="Search nodes…" oninput="searchNodes(this.value)">
   <div id="mode-selector">
     <span style="font-size:11px;color:#888">Mode:</span>
-    <button class="mode-btn active" data-mode="instances" onclick="setMode(this)">Instances</button>
+    <button class="mode-btn active" data-mode="full" onclick="setMode(this)">Full</button>
+    <button class="mode-btn" data-mode="instances" onclick="setMode(this)">Instances</button>
     <button class="mode-btn" data-mode="classes" onclick="setMode(this)">Classes</button>
-    <button class="mode-btn" data-mode="full" onclick="setMode(this)">Full</button>
   </div>
   <div id="controls">
     <span style="font-size:11px;color:#888">Edges:</span>
