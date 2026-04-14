@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ontology Visualizer - Dynamic TTL Parser</title>
+    
+    <!-- Cytoscape.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.0/cytoscape.min.js"></script>
+    
+    <!-- N3.js para parsear TTL -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/n3/1.16.1/n3.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header h1 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .header h1::before {
+            content: "🔷";
+            font-size: 1.2em;
+        }
+        
+        .control-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .control-group label {
+            font-size: 0.9em;
+            font-weight: 500;
+            opacity: 0.9;
+        }
+        
+        .control-group input,
+        .control-group select {
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+        
+        .control-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .control-group input:focus,
+        .control-group select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        button.primary {
+            background: rgba(76, 175, 80, 0.7);
+            border-color: rgba(76, 175, 80, 1);
+        }
+        
+        button.primary:hover {
+            background: rgba(76, 175, 80, 0.9);
+        }
+        
+        .edge-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .edge-filter {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .edge-filter.active {
+            background: rgba(76, 175, 80, 0.8);
+            border-color: rgba(76, 175, 80, 1);
+        }
+        
+        .edge-filter:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+        
+        .main-container {
+            display: flex;
+            flex: 1;
+            gap: 0;
+            overflow: hidden;
+        }
+        
+        #cy {
+            flex: 1;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .sidebar h2 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sidebar h2::before {
+            content: "📊";
+        }
+        
+        .stats {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95em;
+        }
+        
+        .stat-value {
+            font-weight: bold;
+            color: #4caf50;
+            font-size: 1.2em;
+        }
+        
+        .legend {
+            margin-top: 20px;
+        }
+        
+        .legend h3 {
+            font-size: 1em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend h3::before {
+            content: "🏷️";
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            padding: 6px 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            border-left: 3px solid rgba(76, 175, 80, 0.5);
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .node-inspector {
+            margin-top: 20px;
+        }
+        
+        .node-inspector h3 {
+            font-size: 1em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .node-inspector h3::before {
+            content: "🔍";
+        }
+        
+        .inspector-content {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 0.85em;
+        }
+        
+        .inspector-empty {
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+        }
+        
+        .node-label {
+            word-wrap: break-word;
+            margin-bottom: 8px;
+        }
+        
+        .node-label strong {
+            color: #4caf50;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .loading {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px 50px;
+            border-radius: 10px;
+            color: white;
+            z-index: 1000;
+            text-align: center;
+        }
+        
+        .loading.active {
+            display: block;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #4caf50;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            display: none;
+            background: rgba(244, 67, 54, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        .error-message.active {
+            display: block;
+        }
+        
+        .success-message {
+            display: none;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        .success-message.active {
+            display: block;
+        }
+        
+        @media (max-width: 1024px) {
+            .control-panel {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+        
+        /* Scroll styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(76, 175, 80, 0.5);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(76, 175, 80, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Ontology Visualizer — Dynamic TTL Parser</h1>
+        
+        <div class="control-panel">
+            <div class="control-group">
+                <label for="ttlUrl">🔗 TTL Ontology URL</label>
+                <input 
+                    type="text" 
+                    id="ttlUrl" 
+                    placeholder="https://example.com/ontology.ttl"
+                    value="https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl"
+                >
+            </div>
+            
+            <div class="control-group">
+                <label for="layout">📐 Layout Type</label>
+                <select id="layout">
+                    <option value="cose">Cose (Physics)</option>
+                    <option value="grid">Grid</option>
+                    <option value="concentric">Concentric</option>
+                    <option value="breadthfirst">Breadth First</option>
+                </select>
+            </div>
+            
+            <div class="button-group">
+                <button class="primary" onclick="loadOntology()">⚡ Load Ontology</button>
+                <button onclick="resetLayout()">🔄 Reset Layout</button>
+                <button onclick="exportJSON()">💾 Export JSON</button>
+            </div>
+        </div>
+        
+        <div>
+            <label style="display: block; margin-bottom: 8px;">📋 Show Edge Types</label>
+            <div class="edge-filters" id="edgeFilters"></div>
+        </div>
+        
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+    </div>
+    
+    <div class="main-container">
+        <div id="cy"></div>
+        
+        <div class="sidebar">
+            <h2>Graph Statistics</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <span>Nodes:</span>
+                    <span class="stat-value" id="nodeCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Edges:</span>
+                    <span class="stat-value" id="edgeCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Edge Types:</span>
+                    <span class="stat-value" id="edgeTypeCount">0</span>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <h3>Node Types</h3>
+                <div id="nodeLegend"></div>
+            </div>
+            
+            <div class="node-inspector">
+                <h3>Node Inspector</h3>
+                <p style="font-size: 0.85em; margin-bottom: 10px; color: rgba(255, 255, 255, 0.7);">
+                    Click any node to see its description
+                </p>
+                <div class="inspector-content" id="inspectorContent">
+                    <div class="inspector-empty">No node selected</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <div>Loading ontology...</div>
+    </div>
+    
+    <script>
+        // Variables globales
+        let cy = null;
+        let allNodes = [];
+        let allEdges = [];
+        let allEdgeTypes = new Set();
+        let activeEdgeTypes = new Set();
+        
+        // Color palette para diferentes tipos de nodos
+        const nodeColors = {
+            'Class': '#FF6B6B',
+            'ObjectProperty': '#4ECDC4',
+            'DatatypeProperty': '#45B7D1',
+            'NamedIndividual': '#FFA07A',
+            'default': '#95E1D3'
+        };
+        
+        // Inicializar Cytoscape
+        function initCytoscape() {
+            cy = cytoscape({
+                container: document.getElementById('cy'),
+                elements: [],
+                style: [
+                    {
+                        selector: 'node',
+                        style: {
+                            'content': 'data(label)',
+                            'background-color': 'data(color)',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'font-size': 11,
+                            'font-weight': 'bold',
+                            'color': 'white',
+                            'text-outline-width': 2,
+                            'text-outline-color': 'data(color)',
+                            'width': 'mapData(degree, 0, 100, 20, 60)',
+                            'height': 'mapData(degree, 0, 100, 20, 60)',
+                            'border-width': 2,
+                            'border-color': 'rgba(255, 255, 255, 0.5)',
+                            'shadow-blur': 10,
+                            'shadow-color': 'rgba(0, 0, 0, 0.5)',
+                            'shadow-offset-x': 0,
+                            'shadow-offset-y': 2,
+                            'text-background-shape': 'roundrectangle',
+                            'text-background-padding': '3px',
+                            'text-background-opacity': 0.7,
+                            'text-background-color': '#000',
+                            'text-max-width': 80,
+                            'text-wrap': 'wrap'
+                        }
+                    },
+                    {
+                        selector: 'node:selected',
+                        style: {
+                            'border-width': 3,
+                            'border-color': '#FFD700',
+                            'background-color': 'data(color)',
+                            'box-shadow': '0 0 20px rgba(255, 215, 0, 0.8)'
+                        }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'curve-style': 'bezier',
+                            'target-arrow-shape': 'triangle',
+                            'line-color': 'data(color)',
+                            'target-arrow-color': 'data(color)',
+                            'width': 2,
+                            'opacity': 0.7,
+                            'arrow-scale': 1.5,
+                            'label': 'data(edgeLabel)',
+                            'font-size': 9,
+                            'text-background-shape': 'roundrectangle',
+                            'text-background-padding': '2px',
+                            'text-background-opacity': 0.8,
+                            'text-background-color': '#000',
+                            'color': 'white'
+                        }
+                    },
+                    {
+                        selector: 'edge:selected',
+                        style: {
+                            'width': 4,
+                            'opacity': 1,
+                            'line-color': '#FFD700',
+                            'target-arrow-color': '#FFD700'
+                        }
+                    },
+                    {
+                        selector: 'edge.hidden',
+                        style: {
+                            'display': 'none'
+                        }
+                    }
+                ],
+                layout: {
+                    name: 'cose',
+                    directed: true,
+                    padding: 10,
+                    avoidOverlap: true,
+                    nodeSpacing: 10,
+                    animate: true,
+                    animationDuration: 500
+                }
+            });
+            
+            // Event listeners
+            cy.on('tap', 'node', function(event) {
+                let node = event.target;
+                inspectNode(node);
+            });
+            
+            cy.on('tap', function(event) {
+                if (event.target === cy) {
+                    clearNodeInspector();
+                }
+            });
+        }
+        
+        // Parsear TTL y extraer nodos y aristas
+        async function parseTTL(ttlContent) {
+            return new Promise((resolve) => {
+                const parser = new N3.Parser();
+                const nodes = new Map();
+                const edges = [];
+                const edgeTypeSet = new Set();
+                
+                parser.parse(ttlContent, (error, quad, prefixes) => {
+                    if (error) {
+                        console.error('Error parsing TTL:', error);
+                        return;
+                    }
+                    
+                    if (quad) {
+                        const subject = quad.subject.value;
+                        const predicate = quad.predicate.value;
+                        const object = quad.object.value;
+                        const objectType = quad.object.termType;
+                        
+                        // Agregar sujeto como nodo
+                        if (!nodes.has(subject)) {
+                            const label = extractLabel(subject);
+                            const type = getNodeType(subject, 'Class');
+                            nodes.set(subject, {
+                                id: subject,
+                                label: label,
+                                type: type,
+                                color: nodeColors[type] || nodeColors['default'],
+                                uri: subject
+                            });
+                        }
+                        
+                        // Agregar objeto como nodo si es un recurso
+                        if (objectType === 'NamedNode' && !nodes.has(object)) {
+                            const label = extractLabel(object);
+                            let type = 'Class';
+                            
+                            if (predicate.includes('Property')) {
+                                type = 'ObjectProperty';
+                            } else if (predicate.includes('DatatypeProperty')) {
+                                type = 'DatatypeProperty';
+                            } else if (object.includes('individual') || object.includes('Individual')) {
+                                type = 'NamedIndividual';
+                            }
+                            
+                            nodes.set(object, {
+                                id: object,
+                                label: label,
+                                type: type,
+                                color: nodeColors[type] || nodeColors['default'],
+                                uri: object
+                            });
+                        }
+                        
+                        // Agregar arista (solo para predicados RDF/RDFS/OWL importantes)
+                        const edgeType = extractLabel(predicate);
+                        if (isImportantPredicate(predicate)) {
+                            edgeTypeSet.add(edgeType);
+                            
+                            let targetId = object;
+                            // Solo crear arista si el objeto es un recurso
+                            if (objectType === 'NamedNode') {
+                                edges.push({
+                                    source: subject,
+                                    target: targetId,
+                                    edgeType: edgeType,
+                                    predicate: predicate,
+                                    color: getEdgeColor(edgeType)
+                                });
+                            }
+                        }
+                    } else {
+                        // Fin del parsing
+                        resolve({
+                            nodes: Array.from(nodes.values()),
+                            edges: edges,
+                            edgeTypes: Array.from(edgeTypeSet).sort()
+                        });
+                    }
+                });
+            });
+        }
+        
+        // Extraer label amigable de una URI
+        function extractLabel(uri) {
+            try {
+                // Eliminar URL base
+                let label = uri.split('#').pop();
+                label = label.split('/').pop();
+                
+                // Convertir camelCase a espacios
+                label = label
+                    .replace(/([A-Z])/g, ' $1')
+                    .replace(/([a-z])([A-Z])/g, '$1 $2')
+                    .trim();
+                
+                return label.substring(0, 30); // Limitar longitud
+            } catch (e) {
+                return uri;
+            }
+        }
+        
+        // Determinar tipo de nodo
+        function getNodeType(uri, defaultType) {
+            const uriStr = uri.toLowerCase();
+            if (uriStr.includes('class')) return 'Class';
+            if (uriStr.includes('objectproperty')) return 'ObjectProperty';
+            if (uriStr.includes('datatypeproperty')) return 'DatatypeProperty';
+            if (uriStr.includes('individual')) return 'NamedIndividual';
+            return defaultType;
+        }
+        
+        // Filtrar predicados importantes
+        function isImportantPredicate(predicate) {
+            const important = [
+                'subClassOf',
+                'equivalentClass',
+                'subPropertyOf',
+                'domain',
+                'range',
+                'inverseOf',
+                'type',
+                'comment',
+                'label',
+                'definition',
+                'seeAlso',
+                'isDefinedBy'
+            ];
+            
+            return important.some(pred => predicate.toLowerCase().includes(pred.toLowerCase()));
+        }
+        
+        // Asignar color a arista según tipo
+        function getEdgeColor(edgeType) {
+            const colors = {
+                'subClassOf': '#FF6B6B',
+                'equivalentClass': '#4ECDC4',
+                'subPropertyOf': '#45B7D1',
+                'domain': '#FFA07A',
+                'range': '#FFB347',
+                'inverseOf': '#DDA0DD',
+                'type': '#98D8C8',
+                'comment': '#F7DC6F',
+                'label': '#BB8FCE',
+                'definition': '#85C1E2',
+                'default': '#95E1D3'
+            };
+            
+            for (let key of Object.keys(colors)) {
+                if (edgeType.toLowerCase().includes(key.toLowerCase())) {
+                    return colors[key];
+                }
+            }
+            return colors['default'];
+        }
+        
+        // Cargar ontología desde URL
+        async function loadOntology() {
+            const url = document.getElementById('ttlUrl').value.trim();
+            
+            if (!url) {
+                showError('Please enter a valid TTL URL');
+                return;
+            }
+            
+            showLoading(true);
+            clearMessages();
+            
+            try {
+                // Cargar archivo TTL con CORS
+                const response = await fetch(url, {
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'text/turtle'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const ttlContent = await response.text();
+                
+                // Parsear TTL
+                const result = await parseTTL(ttlContent);
+                
+                allNodes = result.nodes;
+                allEdges = result.edges;
+                allEdgeTypes = new Set(result.edgeTypes);
+                activeEdgeTypes = new Set(result.edgeTypes);
+                
+                // Actualizar UI
+                updateEdgeFilters();
+                updateGraph();
+                updateStats();
+                updateLegend();
+                
+                showSuccess(`Ontology loaded! ${allNodes.length} nodes, ${allEdges.length} edges`);
+                
+            } catch (error) {
+                console.error('Error loading ontology:', error);
+                showError(`Failed to load ontology: ${error.message}`);
+            } finally {
+                showLoading(false);
+            }
+        }
+        
+        // Actualizar gráfico
+        function updateGraph() {
+            const elements = [];
+            
+            // Agregar nodos
+            allNodes.forEach(node => {
+                elements.push({
+                    data: {
+                        id: node.id,
+                        label: node.label,
+                        color: node.color,
+                        degree: allEdges.filter(e => e.source === node.id || e.target === node.id).length
+                    }
+                });
+            });
+            
+            // Agregar aristas activas
+            const visibleEdges = allEdges.filter(edge => activeEdgeTypes.has(edge.edgeType));
+            visibleEdges.forEach(edge => {
+                elements.push({
+                    data: {
+                        id: `${edge.source}-${edge.target}-${edge.edgeType}`,
+                        source: edge.source,
+                        target: edge.target,
+                        edgeLabel: edge.edgeType.substring(0, 15),
+                        color: edge.color,
+                        edgeType: edge.edgeType
+                    }
+                });
+            });
+            
+            cy.elements().remove();
+            cy.add(elements);
+            
+            // Aplicar layout
+            const layoutType = document.getElementById('layout').value;
+            const layout = cy.layout({
+                name: layoutType,
+                directed: true,
+                padding: 10,
+                animate: true,
+                animationDuration: 500
+            });
+            layout.run();
+        }
+        
+        // Actualizar estadísticas
+        function updateStats() {
+            document.getElementById('nodeCount').textContent = allNodes.length;
+            document.getElementById('edgeCount').textContent = allEdges.length;
+            document.getElementById('edgeTypeCount').textContent = allEdgeTypes.size;
+        }
+        
+        // Actualizar filtros de aristas
+        function updateEdgeFilters() {
+            const container = document.getElementById('edgeFilters');
+            container.innerHTML = '';
+            
+            Array.from(allEdgeTypes).sort().forEach(edgeType => {
+                const button = document.createElement('button');
+                button.className = 'edge-filter active';
+                button.textContent = edgeType;
+                button.onclick = (e) => toggleEdgeFilter(edgeType, button);
+                container.appendChild(button);
+            });
+        }
+        
+        // Alternar filtro de arista
+        function toggleEdgeFilter(edgeType, button) {
+            if (activeEdgeTypes.has(edgeType)) {
+                activeEdgeTypes.delete(edgeType);
+                button.classList.remove('active');
+            } else {
+                activeEdgeTypes.add(edgeType);
+                button.classList.add('active');
+            }
+            updateGraph();
+        }
+        
+        // Actualizar leyenda de nodos
+        function updateLegend() {
+            const legend = document.getElementById('nodeLegend');
+            legend.innerHTML = '';
+            
+            const types = {};
+            allNodes.forEach(node => {
+                if (!types[node.type]) types[node.type] = 0;
+                types[node.type]++;
+            });
+            
+            Object.keys(types).sort().forEach(type => {
+                const item = document.createElement('div');
+                item.className = 'legend-item';
+                const color = nodeColors[type] || nodeColors['default'];
+                item.innerHTML = `
+                    <div class="legend-color" style="background-color: ${color}"></div>
+                    <span>${type} (${types[type]})</span>
+                `;
+                legend.appendChild(item);
+            });
+        }
+        
+        // Inspeccionar nodo
+        function inspectNode(node) {
+            const data = node.data();
+            const content = document.getElementById('inspectorContent');
+            
+            let html = `
+                <div class="node-label">
+                    <strong>${data.label}</strong>
+                </div>
+                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.8em; margin-bottom: 10px;">
+                    <strong>URI:</strong><br>${data.id.substring(0, 50)}...
+                </div>
+            `;
+            
+            // Contar conexiones
+            const incoming = allEdges.filter(e => e.target === data.id).length;
+            const outgoing = allEdges.filter(e => e.source === data.id).length;
+            
+            html += `
+                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.8em;">
+                    <strong>Connections:</strong><br>
+                    Incoming: ${incoming}<br>
+                    Outgoing: ${outgoing}
+                </div>
+            `;
+            
+            content.innerHTML = html;
+        }
+        
+        // Limpiar inspector
+        function clearNodeInspector() {
+            const content = document.getElementById('inspectorContent');
+            content.innerHTML = '<div class="inspector-empty">No node selected</div>';
+        }
+        
+        // Reset layout
+        function resetLayout() {
+            if (cy) {
+                const layoutType = document.getElementById('layout').value;
+                const layout = cy.layout({
+                    name: layoutType,
+                    directed: true,
+                    padding: 10,
+                    animate: true,
+                    animationDuration: 500
+                });
+                layout.run();
+            }
+        }
+        
+        // Exportar como JSON
+        function exportJSON() {
+            const data = {
+                nodes: allNodes,
+                edges: allEdges,
+                statistics: {
+                    nodeCount: allNodes.length,
+                    edgeCount: allEdges.length,
+                    edgeTypes: Array.from(allEdgeTypes)
+                }
+            };
+            
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ontology-export.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Funciones auxiliares UI
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('active', show);
+        }
+        
+        function showError(message) {
+            const el = document.getElementById('errorMessage');
+            el.textContent = '❌ ' + message;
+            el.classList.add('active');
+        }
+        
+        function showSuccess(message) {
+            const el = document.getElementById('successMessage');
+            el.textContent = '✅ ' + message;
+            el.classList.add('active');
+        }
+        
+        function clearMessages() {
+            document.getElementById('errorMessage').classList.remove('active');
+            document.getElementById('successMessage').classList.remove('active');
+        }
+        
+        // Inicializar
+        window.addEventListener('load', () => {
+            initCytoscape();
+            // Cargar ontología por defecto
+            loadOntology();
+        });
+        
+        // Cargar ontología al pulsar Enter en el input
+        document.addEventListener('keypress', (e) => {
+            if (e.target.id === 'ttlUrl' && e.key === 'Enter') {
+                loadOntology();
+            }
+        });
+    </script>
+</body>
+</html>
