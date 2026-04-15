@@ -242,10 +242,8 @@ inst:CPU_AMD_EPYC7A53_Trento rdf:type exa-atow:CPU ;
 # processor per node: 2 AMDGenoaEPY9654.
 inst:CPU_AMD_EPYC9654_Genoa rdf:type exa-atow:CPU ;
     rdfs:label "AMD EPYC 9654 (Genoa)"@en ;
-    rdfs:comment "AMD Genoa CPU wiht 96 cores at 2.4 GHz (boost 3.7 GHz). Used in Adastra scalar nodes (768 GB DDR5) and 
-                 visualization/prepost nodes (2048 GiB DDR5), and frontend nodes (512 GiB DDR5)."@en ,
-                 "CPU AMD Genoa 96 cœurs à 2,4 GHz (boost 3,7 GHz). Utilisé dans les nœuds scalaires (768 Gio DDR5-4800), 
-                 visualisation/pré-post (2048 Gio DDR5) et frontaux (512 Gio DDR5) d'Adastra."@fr ;
+    rdfs:comment "AMD Genoa CPU wiht 96 cores at 2.4 GHz (boost 3.7 GHz). Used in Adastra scalar nodes (768 GB DDR5) and visualization/prepost nodes (2048 GiB DDR5), and frontend nodes (512 GiB DDR5)."@en ,
+                 "CPU AMD Genoa 96 cœurs à 2,4 GHz (boost 3,7 GHz). Utilisé dans les nœuds scalaires (768 Gio DDR5-4800),visualisation/pré-post (2048 Gio DDR5) et frontaux (512 Gio DDR5) d'Adastra."@fr ;
     exa-atow:vendor "AMD" ;
     exa-atow:model "AMD EPYC 9654" ;
     exa-atow:architecture "Genoa / Zen 4" ;
@@ -388,7 +386,7 @@ inst:Node_Adastra_Frontend rdf:type exa-atow:FrontendNode ;
         # 4 disks per node; RAID10 gives 3.2 TiB usable
         exa-atow:quantity 4
     ] ;
-    exa-atow:belongsToPartition Part_Adastra_frontend .
+    exa-atow:belongsToPartition inst:Part_Adastra_frontend .
 
 # ──── Visualization / prepost node ───────────────────────────────────────────
 # 12 nodes. 2× AMD EPYC 9654 Genoa (96 cores each) = 192 cores/node.
@@ -422,7 +420,7 @@ inst:Node_Adastra_Visu rdf:type exa-atow:VisualizationNode ;
         exa-atow:refersToModel inst:IC_Slingshot11_200G ;
         exa-atow:linkCount 1
     ] ;
-    exa-atow:belongsToPartition Part_Adastra_visu .
+    exa-atow:belongsToPartition inst:Part_Adastra_visu .
 
 # ──── Scalar node (Genoa) ─────────────────────────────────────────────────────
 # 544 nodes. 2× AMD EPYC 9654 (96 cores each) = 192 cores/node.
@@ -555,7 +553,7 @@ inst:Node_Adastra_APU rdf:type exa-atow:AcceleratedNode ;
         exa-atow:refersToModel inst:IC_Slingshot11_200G ;
         exa-atow:linkCount 4
     ] ;
-    exa-atow:belongsToPartition Part_Adastra_apu .
+    exa-atow:belongsToPartition inst:Part_Adastra_apu .
     # NOTE: no hasCPUComponent — CPU is embedded in MI300A package (see Card_MI300A / GPU_AMDInstinctMI300A).
     # NOTE: no hasMemoryComponent (RAM) — HBM3 is the sole memory, modeled at AcceleratorCard level.
 
@@ -819,7 +817,6 @@ inst:OS_RHEL rdf:type exa-atow:OperatingSystem ;
 ###############################################################################
 
 # ──── CPU RAM (RAM subclass) ──────────────────────────────────────────────────
---->>> voy revisando las memoruas c/r a lo q dijo claude.
 inst:Mem_DDR4_3200_256GiB rdf:type exa-atow:RAM ;
     rdfs:label "256 GiB DDR4-3200 (Adastra GPU node CPU RAM)"@en ;
     rdfs:comment "CPU-side RAM for Adastra MI250X accelerated nodes. 256 GiB DDR4-3200 per node."@en ;
@@ -895,7 +892,7 @@ inst:Storage_SAS_SSD_1_6TiB rdf:type exa-atow:SAS_SSD ;
         exa-atow:hasUnit "TiB"
     ] .
 
------------------------------------------
+#-----------------------------------------
 
 ###############################################################################
 # ══════════════════════════════════════════════════════════════════════════════
