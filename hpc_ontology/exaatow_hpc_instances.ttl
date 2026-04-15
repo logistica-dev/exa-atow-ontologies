@@ -242,7 +242,7 @@ inst:CPU_AMD_EPYC7A53_Trento rdf:type exa-atow:CPU ;
 # processor per node: 2 AMDGenoaEPY9654.
 inst:CPU_AMD_EPYC9654_Genoa rdf:type exa-atow:CPU ;
     rdfs:label "AMD EPYC 9654 (Genoa)"@en ;
-    rdfs:comment "96-core AMD Genoa CPU at 2.4 GHz (boost 3.7 GHz). Used in Adastra scalar nodes (768 GB DDR5) and 
+    rdfs:comment "AMD Genoa CPU wiht 96 cores at 2.4 GHz (boost 3.7 GHz). Used in Adastra scalar nodes (768 GB DDR5) and 
                  visualization/prepost nodes (2048 GiB DDR5), and frontend nodes (512 GiB DDR5)."@en ,
                  "CPU AMD Genoa 96 cœurs à 2,4 GHz (boost 3,7 GHz). Utilisé dans les nœuds scalaires (768 Gio DDR5-4800), 
                  visualisation/pré-post (2048 Gio DDR5) et frontaux (512 Gio DDR5) d'Adastra."@fr ;
