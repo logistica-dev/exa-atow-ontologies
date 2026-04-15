@@ -1,0 +1,37 @@
+Los Tres Centros Nacionales (Tier-1 / Tier-0)
+
+Estos centros albergan los supercomputadores más potentes del país y están interconectados para dar servicio a toda la comunidad científica.
+
+Centro		Ubicación		Supercomputador Principal	Especialización / Notas
+IDRIS (CNRS)	Orsay (París)		Jean Zay			Especializado en Inteligencia Artificial (con miles de GPUs) y simulación numérica.
+TGCC (CEA)	Bruyères-le-Châtel	Joliot-Curie			Orientado a grandes retos científicos y usos industriales. Es el nodo francés de PRACE (Europa).
+CINES		Montpellier		Adastra				Uno de los sistemas más potentes y eficientes energéticamente de Europa, ideal para cálculos masivos de CPU y GPU.
+
+
+
+
+1. IDRIS (CNRS - Orsay)
+
+En el IDRIS, la estrategia actual es la convergencia.
+
+    Jean Zay: Es el sistema principal. Aunque se trata como "uno", ontológicamente es un sistema compuesto por múltiples extensiones (particiones) que han ido llegando entre 2019 y 2025 (incluyendo la masiva extensión H100).
+
+    DALIA: Un supercomputador de nueva generación basado en la arquitectura NVIDIA Blackwell (GB200) que acaba de entrar en operación (fines de 2025/principios de 2026) específicamente para investigación en IA avanzada.
+
+2. TGCC (CEA - Bruyères-le-Châtel)
+
+Es el centro que alberga más máquinas simultáneamente debido a su rol tanto nacional como europeo e industrial:
+
+    Joliot-Curie: El sistema histórico de GENCI en el centro, dividido en varias particiones (SKL, Rome, KNL).
+
+    Topaze: Un supercomputador del CEA (no siempre disponible para investigadores generales a través de GENCI, pero físicamente en el mismo centro).
+
+    Alice Recoque (Exascale): La nueva joya de la corona que se está instalando y desplegando en 2026. Es un sistema masivo de escala exaflópica (1 billón de operaciones por segundo) financiado por la iniciativa europea EuroHPC.
+
+    Sistemas Cuánticos (Orion y Lucy): Máquinas cuánticas conectadas a los supercomputadores clásicos.
+
+3. CINES (Montpellier)
+
+    Adastra: Es el supercomputador principal actual. Es un sistema "híbrido" que utiliza arquitecturas AMD Instinct (MI250X y MI300A).
+
+    Sistemas de Test/Pre-producción: El CINES suele mantener clústeres más pequeños para que los desarrolladores preparen sus códigos antes de enviarlos a la gran máquina Adastra.

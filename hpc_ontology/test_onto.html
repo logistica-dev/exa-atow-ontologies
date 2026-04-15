@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.0/cytoscape.min.js"></script>
     
     <!-- N3.js para parsear TTL -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/n3/1.16.1/n3.min.js"></script>
+    <script src="https://unpkg.com/n3@1.17.2/browser/n3.min.js"></script>
     
     <style>
         * {
@@ -980,6 +980,7 @@
         // Inicializar
         window.addEventListener('load', () => {
             initCytoscape();
+	    console.log("N3 disponible:", typeof N3);
             // Cargar ontología por defecto
             loadOntology();
         });

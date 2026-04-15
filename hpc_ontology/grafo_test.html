@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OWL Ontology Visualizer — Cytoscape</title>
+
+    <!-- N3.js for Turtle parsing -->
+    <script src="https://unpkg.com/n3@1.17.2/browser/n3.min.js"></script>
+    <!-- Dagre layout engine (must load before cytoscape-dagre) -->
+    <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+    <!-- Cytoscape.js -->
+    <script src="https://unpkg.com/cytoscape@3.28.1/dist/cytoscape.min.js"></script>
+    <!-- Cytoscape dagre layout extension -->
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+	    --bg-deep:    #eaf4fb;
+	    --bg-base:    #f3f8fd;
+	    --bg-surface: #ffffff;
+	    --bg-raised:  #dceef9;
+	    --border:     #b9d7ea;
+	    --accent:     #3b82c4;
+	    --accent-2:   #5bb6d6;
+	    --accent-dim: #7aa9c7;
+	    --text-hi:    #10324a;
+	    --text-mid:   #4b6b84;
+	    --text-lo:    #7f97ab;
+	    --gold:       #d89b2b;
+	    --gold-dim:   #b97b12;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-base);
+            color: var(--text-hi);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ── Header ─────────────────────────────────────────── */
+        header {
+            padding: 10px 18px;
+            background: var(--bg-raised);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo svg { flex-shrink: 0; }
+
+        .url-row {
+            flex: 1;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+        }
+
+        .url-label {
+            font-size: 0.75rem;
+            color: var(--text-lo);
+            white-space: nowrap;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 7px 12px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-hi);
+            font-size: 0.82rem;
+            font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
+            outline: none;
+            transition: border-color 0.2s;
+            min-width: 0;
+        }
+
+        .url-input:focus { border-color: var(--accent); }
+        .url-input::placeholder { color: var(--text-lo); }
+
+        .btn {
+            padding: 7px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: background 0.15s, opacity 0.15s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover { background: var(--accent-2); }
+        .btn-primary:disabled { background: var(--accent-dim); opacity: 0.5; cursor: not-allowed; }
+
+        .btn-secondary {
+            background: var(--bg-surface);
+            color: var(--text-mid);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover { background: var(--bg-raised); color: var(--text-hi); }
+
+        /* ── Toolbar ─────────────────────────────────────────── */
+        #toolbar {
+            padding: 7px 18px;
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+            display: none;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0;
+            flex-wrap: wrap;
+        }
+
+        .tb-group {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .tb-label {
+            font-size: 0.75rem;
+            color: var(--text-lo);
+            white-space: nowrap;
+        }
+
+        select {
+            padding: 4px 8px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--text-hi);
+            font-size: 0.78rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .toggle-btn {
+            padding: 4px 10px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--text-lo);
+            cursor: pointer;
+            font-size: 0.78rem;
+            transition: all 0.15s;
+            white-space: nowrap;
+        }
+
+        .toggle-btn.on {
+            background: #1e1b4b;
+            border-color: #4338ca;
+            color: #a5b4fc;
+        }
+
+        .toggle-btn.on-gold {
+            background: #1c1007;
+            border-color: var(--gold-dim);
+            color: var(--gold);
+        }
+
+        .search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 8px;
+            color: var(--text-lo);
+            font-size: 0.8rem;
+            pointer-events: none;
+        }
+
+        .search-input {
+            padding: 4px 10px 4px 26px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--text-hi);
+            font-size: 0.78rem;
+            width: 170px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus { border-color: var(--accent); }
+
+        .icon-btn {
+            padding: 4px 10px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            color: var(--text-mid);
+            cursor: pointer;
+            font-size: 0.78rem;
+            transition: all 0.15s;
+        }
+
+        .icon-btn:hover { background: var(--bg-raised); color: var(--text-hi); }
+
+        .stats-area {
+            margin-left: auto;
+            display: flex;
+            gap: 6px;
+        }
+
+        .chip {
+            padding: 2px 9px;
+            background: var(--bg-base);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 0.73rem;
+            color: var(--text-lo);
+            white-space: nowrap;
+        }
+
+        .chip em {
+            color: #a78bfa;
+            font-style: normal;
+            font-weight: 600;
+        }
+
+        /* ── Main layout ─────────────────────────────────────── */
+        .main {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* ── Graph ───────────────────────────────────────────── */
+        #cy {
+            flex: 1;
+            background: var(--bg-deep);
+            background-image:
+                linear-gradient(rgba(99, 102, 241, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.025) 1px, transparent 1px);
+            background-size: 40px 40px;
+            position: relative;
+        }
+
+        /* ── Info Panel ──────────────────────────────────────── */
+        .info-panel {
+            width: 290px;
+            background: var(--bg-surface);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .info-header {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-lo);
+        }
+
+        .info-body {
+            padding: 14px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .info-empty {
+            color: var(--text-lo);
+            font-size: 0.82rem;
+            text-align: center;
+            padding-top: 50px;
+            line-height: 1.8;
+        }
+
+        .node-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 3px;
+            word-break: break-word;
+        }
+
+        .node-uri {
+            font-size: 0.68rem;
+            color: var(--text-lo);
+            font-family: monospace;
+            word-break: break-all;
+            margin-bottom: 12px;
+        }
+
+        .node-comment {
+            font-size: 0.78rem;
+            color: var(--text-mid);
+            line-height: 1.55;
+            padding: 8px 10px;
+            background: var(--bg-base);
+            border-radius: 6px;
+            border-left: 3px solid var(--accent-dim);
+            margin-bottom: 4px;
+        }
+
+        .section-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--text-lo);
+            margin-top: 13px;
+            margin-bottom: 5px;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 12px;
+            font-size: 0.73rem;
+            margin: 2px;
+            cursor: pointer;
+            transition: opacity 0.15s;
+            border: 1px solid transparent;
+        }
+
+        .pill:hover { opacity: 0.75; }
+
+        .prop-row {
+            display: flex;
+            align-items: baseline;
+            gap: 5px;
+            font-size: 0.76rem;
+            padding: 3px 8px;
+            margin: 2px 0;
+            background: var(--bg-base);
+            border-radius: 4px;
+        }
+
+        .prop-name {
+            color: var(--gold);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .prop-arr { color: var(--text-lo); }
+
+        .prop-target {
+            color: var(--text-mid);
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            transition: color 0.15s, text-decoration-color 0.15s;
+        }
+
+        .prop-target:hover {
+            color: var(--text-hi);
+            text-decoration-color: var(--text-mid);
+        }
+
+        /* ── Status bar ──────────────────────────────────────── */
+        .statusbar {
+            padding: 3px 18px;
+            background: var(--bg-deep);
+            border-top: 1px solid #131520;
+            font-size: 0.72rem;
+            color: var(--text-lo);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+            min-height: 22px;
+        }
+
+        #statusText { flex: 1; }
+
+        .legend {
+            display: none;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .leg-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-lo);
+        }
+
+        .leg-line-solid {
+            width: 22px;
+            height: 2px;
+            background: #475569;
+        }
+
+        .leg-line-dashed {
+            width: 22px;
+            height: 0;
+            border-top: 2px dashed var(--gold);
+        }
+
+        .leg-line-dotted {
+            width: 22px;
+            height: 0;
+            border-top: 2px dotted #059669;
+        }
+
+        /* ── Loading overlay ─────────────────────────────────── */
+        #loadingOverlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(8, 10, 16, 0.88);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+        }
+
+        #loadingOverlay.visible { display: flex; }
+
+        .spinner {
+            width: 38px;
+            height: 38px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-msg {
+            margin-top: 14px;
+            color: var(--text-mid);
+            font-size: 0.88rem;
+        }
+
+        /* ── Toast ───────────────────────────────────────────── */
+        #toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(12px);
+            background: #7f1d1d;
+            border: 1px solid #991b1b;
+            color: #fca5a5;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            opacity: 0;
+            transition: opacity 0.25s, transform 0.25s;
+            pointer-events: none;
+            z-index: 999;
+            max-width: 540px;
+            text-align: center;
+        }
+
+        #toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ── Welcome banner (inside cy before load) ──────────── */
+        #welcome {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .welcome-icon {
+            font-size: 3rem;
+            margin-bottom: 12px;
+            opacity: 0.15;
+        }
+
+        .welcome-text {
+            font-size: 0.9rem;
+            color: var(--text-lo);
+            text-align: center;
+            line-height: 1.8;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ── Header ───────────────────────────────────────────────────── -->
+<header>
+    <div class="logo">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <polygon points="9,1 16,5 16,13 9,17 2,13 2,5" stroke="#7c3aed" stroke-width="1.5" fill="none"/>
+            <polygon points="9,5 13,7 13,11 9,13 5,11 5,7" fill="#7c3aed" opacity="0.3"/>
+        </svg>
+        OWL Visualizer
+    </div>
+
+    <div class="url-row">
+        <span class="url-label">TTL&nbsp;URL&nbsp;:</span>
+        <input
+            type="text"
+            id="ttlUrl"
+            class="url-input"
+	    value="https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl"
+            spellcheck="false"
+            autocomplete="off"
+        />
+        <label class="btn btn-secondary" title="Upload a local file">
+            📂 File
+            <input type="file" id="fileInput" accept=".ttl,.turtle,.rdf,.owl,.n3" style="display:none">
+        </label>
+        <button id="btnLoad" class="btn btn-primary">Upload →</button>
+    </div>
+</header>
+
+<!-- ── Toolbar (hidden until ontology is loaded) ────────────────── -->
+<div id="toolbar">
+    <div class="tb-group">
+        <span class="tb-label">Disposition</span>
+        <select id="layoutSelect">
+            <option value="dagre-tb">Hiérarchique (haut → bas)</option>
+            <option value="dagre-lr">Hiérarchique (gauche → droite)</option>
+            <option value="breadthfirst">Breadth-first</option>
+            <option value="cose">Force-directed</option>
+            <option value="circle">Cercle</option>
+            <option value="grid">Grille</option>
+        </select>
+    </div>
+
+    <div class="tb-group">
+        <span class="tb-label">Afficher</span>
+        <button id="btnSubclass" class="toggle-btn on">subClassOf</button>
+        <button id="btnProps"    class="toggle-btn on-gold">Object Properties</button>
+        <button id="btnDatatypeProps" class="toggle-btn on-gold">Datatype Props</button>
+        <button id="btnInstances"     class="toggle-btn on-gold">Instances</button>
+    </div>
+
+    <div class="tb-group">
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="Filtrer les classes…">
+        </div>
+    </div>
+
+    <div class="tb-group">
+        <button id="btnFit"    class="icon-btn" title="Ajuster à l'écran">⊞ Ajuster</button>
+        <button id="btnCenter" class="icon-btn" title="Réinitialiser la vue">↺ Réinitialiser</button>
+    </div>
+
+    <div class="stats-area" id="statsArea"></div>
+</div>
+
+<!-- ── Main ─────────────────────────────────────────────────────── -->
+<div class="main">
+
+    <div id="cy">
+        <!-- Welcome message -->
+        <div id="welcome">
+            <div class="welcome-icon">⬡</div>
+            <div class="welcome-text">
+                Entrez l'URL d'un fichier TTL (Turtle/OWL)<br>
+                et cliquez sur <strong>Charger</strong> pour visualiser l'ontologie.
+            </div>
+        </div>
+
+        <!-- Loading overlay -->
+        <div id="loadingOverlay">
+            <div class="spinner"></div>
+            <div class="loading-msg" id="loadingMsg">Chargement…</div>
+        </div>
+    </div>
+
+    <!-- Info panel -->
+    <div class="info-panel">
+        <div class="info-header">Détails du nœud</div>
+        <div class="info-body" id="infoBody">
+            <div class="info-empty">Cliquez sur un nœud<br>pour afficher ses détails.</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ── Status bar ───────────────────────────────────────────────── -->
+<div class="statusbar">
+    <span id="statusText">En attente d'une URL…</span>
+    <div class="legend" id="legend">
+        <div class="leg-item">
+            <div class="leg-line-solid"></div>
+            <span>subClassOf</span>
+        </div>
+        <div class="leg-item">
+            <div class="leg-line-dashed"></div>
+            <span>Object Property</span>
+        </div>
+        <div class="leg-item">
+            <div class="leg-line-dotted"></div>
+            <span>Datatype Property</span>
+        </div>
+        <div class="leg-item">
+            <div style="width: 18px; height: 12px; background: #ec4899; opacity: 0.35; border: 1px solid #be185d; border-radius: 2px; display: inline-block; margin-right: 6px;"></div>
+            <span>Instance</span>
+        </div>
+        <div class="leg-item">
+            <div style="width: 12px; height: 12px; background: #a7f3d0; opacity: 0.3; border: 1px solid #059669; transform: rotate(45deg); display: inline-block; margin-right: 6px;"></div>
+            <span>Datatype</span>
+        </div>
+    </div>
+</div>
+
+<!-- ── Toast ────────────────────────────────────────────────────── -->
+<div id="toast"></div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!--                        JAVASCRIPT                            -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<script>
+'use strict';
+
+// ─────────────────────────────────────────────────────────────────
+// RDF constants
+// ─────────────────────────────────────────────────────────────────
+const OWL  = 'http://www.w3.org/2002/07/owl#';
+const RDF  = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
+const RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
+const SKOS = 'http://www.w3.org/2004/02/skos/core#';
+
+// ─────────────────────────────────────────────────────────────────
+// Colour palette (one per top-level branch)
+// ─────────────────────────────────────────────────────────────────
+const PALETTE = [
+    '#818cf8', // indigo
+    '#34d399', // emerald
+    '#f87171', // red-400
+    '#60a5fa', // blue-400
+    '#fbbf24', // amber-400
+    '#a78bfa', // violet-400
+    '#2dd4bf', // teal-400
+    '#fb923c', // orange-400
+    '#f472b6', // pink-400
+    '#4ade80', // green-400
+    '#e879f9', // fuchsia-400
+    '#67e8f9', // cyan-300
+];
+
+// ─────────────────────────────────────────────────────────────────
+// Tiny utilities
+// ─────────────────────────────────────────────────────────────────
+function localName(uri) {
+    const h = uri.lastIndexOf('#');
+    const s = uri.lastIndexOf('/');
+    const i = Math.max(h, s);
+    return i >= 0 ? uri.substring(i + 1) : uri;
+}
+
+function esc(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+function setLoading(on, msg = 'Chargement…') {
+    const el = document.getElementById('loadingOverlay');
+    document.getElementById('loadingMsg').textContent = msg;
+    el.classList.toggle('visible', on);
+}
+
+function setStatus(text) {
+    document.getElementById('statusText').textContent = text;
+}
+
+let toastTimer = null;
+function showToast(msg, ms = 5000) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('visible'), ms);
+}
+
+function linkify(text) {
+    const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+
+    return text.replace(urlRegex, (url) => {
+        let href = url;
+        if (!href.startsWith('http')) {
+            href = 'https://' + href;
+        }
+        return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Parse an RDF list starting at `listNode`
+// ─────────────────────────────────────────────────────────────────
+function extractRDFList(store, listNode) {
+    const members = [];
+    let cur = listNode;
+    const nilURI = RDF + 'nil';
+    const visited = new Set();
+
+    while (cur && cur.termType !== 'DefaultGraph' && !visited.has(cur.value)) {
+        if (cur.value === nilURI) break;
+        visited.add(cur.value);
+
+        const firstQuads = store.getQuads(cur, RDF + 'first', null, null);
+        if (firstQuads.length === 0) break;
+        members.push(firstQuads[0].object);
+
+        const restQuads = store.getQuads(cur, RDF + 'rest', null, null);
+        if (restQuads.length === 0) break;
+        cur = restQuads[0].object;
+    }
+    return members;
+}
+
+// Resolve possible owl:unionOf blank node → list of named URIs
+function resolveClassNode(store, node) {
+    if (node.termType === 'NamedNode') return [node.value];
+    if (node.termType !== 'BlankNode') return [];
+
+    const unionOf = store.getQuads(node, OWL + 'unionOf', null, null);
+    if (unionOf.length > 0) {
+        return extractRDFList(store, unionOf[0].object)
+            .filter(t => t.termType === 'NamedNode')
+            .map(t => t.value);
+    }
+    const intersectionOf = store.getQuads(node, OWL + 'intersectionOf', null, null);
+    if (intersectionOf.length > 0) {
+        return extractRDFList(store, intersectionOf[0].object)
+            .filter(t => t.termType === 'NamedNode')
+            .map(t => t.value);
+    }
+    return [];
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Parse TTL asynchronously using N3.js callback API
+// ─────────────────────────────────────────────────────────────────
+function parseTTL(text) {
+    return new Promise((resolve, reject) => {
+        const parser = new N3.Parser({ format: 'text/turtle' });
+        const quads = [];
+        parser.parse(text, (err, quad) => {
+            if (err)  return reject(new Error('Parsing TTL : ' + err.message));
+            if (quad) quads.push(quad);
+            else      resolve(quads);   // null quad = done
+        });
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Extract ontology data from an N3.Store
+// ─────────────────────────────────────────────────────────────────
+function extractOntology(store) {
+    // ── 1. Collect classes ────────────────────────────────────
+    const classes = new Map(); // uri → { uri, label, comment }
+
+    function registerClass(uri) {
+        if (!uri || uri.startsWith('_:')) return;
+        if (!classes.has(uri)) {
+            classes.set(uri, { uri, label: localName(uri), comment: '' });
+        }
+    }
+
+    for (const ct of [OWL + 'Class', RDFS + 'Class']) {
+        for (const q of store.getQuads(null, RDF + 'type', ct, null)) {
+            if (q.subject.termType !== 'NamedNode') continue;
+            registerClass(q.subject.value);
+        }
+    }
+
+    // Also pick up classes referenced only via rdfs:subClassOf
+    for (const q of store.getQuads(null, RDFS + 'subClassOf', null, null)) {
+        if (q.subject.termType === 'NamedNode') registerClass(q.subject.value);
+        if (q.object.termType  === 'NamedNode') registerClass(q.object.value);
+    }
+
+    // ── 2. Labels ─────────────────────────────────────────────
+    // Priority: skos:prefLabel@en > rdfs:label@en > skos:prefLabel (any) > rdfs:label (any)
+    const labelPriority = new Map(); // uri → priority (lower = better)
+
+    function trySetLabel(uri, val, lang, priority) {
+        const cls = classes.get(uri);
+        if (!cls) return;
+        const cur = labelPriority.get(uri) ?? 99;
+        if (priority < cur) {
+            cls.label = val;
+            labelPriority.set(uri, priority);
+        }
+    }
+
+    for (const q of store.getQuads(null, SKOS + 'prefLabel', null, null)) {
+        const uri = q.subject.value;
+        const lang = q.object.language || '';
+        if (lang === 'en') trySetLabel(uri, q.object.value, lang, 0);
+        else               trySetLabel(uri, q.object.value, lang, 2);
+    }
+    for (const q of store.getQuads(null, RDFS + 'label', null, null)) {
+        const uri = q.subject.value;
+        const lang = q.object.language || '';
+        if (lang === 'en') trySetLabel(uri, q.object.value, lang, 1);
+        else               trySetLabel(uri, q.object.value, lang, 3);
+    }
+
+    // ── 3. Comments ───────────────────────────────────────────
+    for (const cp of [RDFS + 'comment', SKOS + 'definition', SKOS + 'scopeNote']) {
+        for (const q of store.getQuads(null, cp, null, null)) {
+            const cls = classes.get(q.subject.value);
+            if (!cls || cls.comment) continue;
+            if (q.object.language === 'en' || !q.object.language) {
+                cls.comment = q.object.value;
+            }
+        }
+    }
+    // Fallback: FR comments if no EN found
+    for (const cp of [RDFS + 'comment', SKOS + 'definition']) {
+        for (const q of store.getQuads(null, cp, null, null)) {
+            const cls = classes.get(q.subject.value);
+            if (!cls || cls.comment) continue;
+            cls.comment = q.object.value;
+        }
+    }
+
+    // ── 4. subClassOf edges (named classes only) ──────────────
+    const subClassEdges = [];
+
+    for (const q of store.getQuads(null, RDFS + 'subClassOf', null, null)) {
+        if (q.subject.termType !== 'NamedNode') continue;
+        if (q.object.termType  !== 'NamedNode') continue;
+        const from = q.subject.value;
+        const to   = q.object.value;
+        if (classes.has(from) && classes.has(to) && from !== to) {
+            subClassEdges.push({ from, to });
+        }
+    }
+
+    // ── 5. Object properties ──────────────────────────────────
+    const properties = new Map(); // uri → { uri, label, domains:[], ranges:[] }
+
+    for (const q of store.getQuads(null, RDF + 'type', OWL + 'ObjectProperty', null)) {
+        if (q.subject.termType !== 'NamedNode') continue;
+        const uri = q.subject.value;
+        if (!properties.has(uri)) {
+            properties.set(uri, { uri, label: localName(uri), domains: [], ranges: [] });
+        }
+    }
+
+    // Property labels
+    for (const lp of [SKOS + 'prefLabel', RDFS + 'label']) {
+        for (const q of store.getQuads(null, lp, null, null)) {
+            const prop = properties.get(q.subject.value);
+            if (!prop) continue;
+            if (q.object.language === 'en') prop.label = q.object.value;
+        }
+    }
+
+    // Domains & ranges (including owl:unionOf blank nodes)
+    for (const q of store.getQuads(null, RDFS + 'domain', null, null)) {
+        const prop = properties.get(q.subject.value);
+        if (!prop) continue;
+        for (const uri of resolveClassNode(store, q.object)) {
+            if (classes.has(uri) && !prop.domains.includes(uri)) prop.domains.push(uri);
+        }
+    }
+    for (const q of store.getQuads(null, RDFS + 'range', null, null)) {
+        const prop = properties.get(q.subject.value);
+        if (!prop) continue;
+        for (const uri of resolveClassNode(store, q.object)) {
+            if (classes.has(uri) && !prop.ranges.includes(uri)) prop.ranges.push(uri);
+        }
+    }
+
+    // ── 6. Datatype properties ────────────────────────────────────
+    const datatypeProperties = new Map(); // uri → { uri, label, domains:[], datatypes:[] }
+
+    for (const q of store.getQuads(null, RDF + 'type', OWL + 'DatatypeProperty', null)) {
+        if (q.subject.termType !== 'NamedNode') continue;
+        const uri = q.subject.value;
+        if (!datatypeProperties.has(uri)) {
+            datatypeProperties.set(uri, { uri, label: localName(uri), domains: [], datatypes: [] });
+        }
+    }
+
+    // Datatype property labels
+    for (const lp of [SKOS + 'prefLabel', RDFS + 'label']) {
+        for (const q of store.getQuads(null, lp, null, null)) {
+            const prop = datatypeProperties.get(q.subject.value);
+            if (!prop) continue;
+            if (q.object.language === 'en') prop.label = q.object.value;
+        }
+    }
+
+    // Domains for datatype properties
+    for (const q of store.getQuads(null, RDFS + 'domain', null, null)) {
+        const prop = datatypeProperties.get(q.subject.value);
+        if (!prop) continue;
+        for (const uri of resolveClassNode(store, q.object)) {
+            if (classes.has(uri) && !prop.domains.includes(uri)) prop.domains.push(uri);
+        }
+    }
+
+    // Ranges for datatype properties (typically XML Schema types)
+    for (const q of store.getQuads(null, RDFS + 'range', null, null)) {
+        const prop = datatypeProperties.get(q.subject.value);
+        if (!prop) continue;
+        if (q.object.termType === 'NamedNode') {
+            if (!prop.datatypes.includes(q.object.value)) prop.datatypes.push(q.object.value);
+        }
+    }
+
+    // ── 7. Instances (individuos/instancias) ──────────────────────
+    const instances = new Map(); // uri → { uri, label, type, comment }
+
+    for (const q of store.getQuads(null, RDF + 'type', null, null)) {
+        if (q.subject.termType !== 'NamedNode') continue;
+        if (q.object.termType !== 'NamedNode') continue;
+        
+        const instUri = q.subject.value;
+        const typeUri = q.object.value;
+        
+        // Solo consideramos instancias de clases que hemos identificado
+        if (classes.has(typeUri) && !instUri.startsWith('_:')) {
+            if (!instances.has(instUri)) {
+                instances.set(instUri, { uri: instUri, label: localName(instUri), type: typeUri, comment: '' });
+            }
+        }
+    }
+
+    // Instance labels
+    for (const lp of [SKOS + 'prefLabel', RDFS + 'label']) {
+        for (const q of store.getQuads(null, lp, null, null)) {
+            const inst = instances.get(q.subject.value);
+            if (!inst) continue;
+            if (q.object.language === 'en') inst.label = q.object.value;
+        }
+    }
+
+    // Instance comments
+    for (const cp of [RDFS + 'comment', SKOS + 'definition']) {
+        for (const q of store.getQuads(null, cp, null, null)) {
+            const inst = instances.get(q.subject.value);
+            if (!inst || inst.comment) continue;
+            if (q.object.language === 'en' || !q.object.language) {
+                inst.comment = q.object.value;
+            }
+        }
+    }
+
+    return { classes, subClassEdges, properties, datatypeProperties, instances };
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Assign branch colours via BFS from roots
+// ─────────────────────────────────────────────────────────────────
+function assignColors(classes, subClassEdges) {
+    const children  = new Map();  // parent → [child]
+    const hasParent = new Set();
+
+    for (const { from, to } of subClassEdges) {
+        if (!children.has(to)) children.set(to, []);
+        children.get(to).push(from);
+        hasParent.add(from);
+    }
+
+    const roots = [...classes.keys()].filter(u => !hasParent.has(u));
+    const colorMap = new Map();
+    let ci = 0;
+
+    function propagate(uri, color) {
+        colorMap.set(uri, color);
+        for (const child of (children.get(uri) || [])) {
+            propagate(child, color);
+        }
+    }
+
+    for (const root of roots) {
+        propagate(root, PALETTE[ci++ % PALETTE.length]);
+    }
+
+    for (const uri of classes.keys()) {
+        if (!colorMap.has(uri)) colorMap.set(uri, '#94a3b8');
+    }
+
+    return colorMap;
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Build Cytoscape element array
+// ─────────────────────────────────────────────────────────────────
+function buildElements(ontology) {
+    const { classes, subClassEdges, properties, datatypeProperties, instances } = ontology;
+    const colorMap = assignColors(classes, subClassEdges);
+    const elements = [];
+
+    // Nodes - Classes
+    for (const [uri, cls] of classes) {
+        elements.push({
+            data: {
+                id:        uri,
+                label:     cls.label,
+                comment:   cls.comment,
+                uri:       uri,
+                nodeColor: colorMap.get(uri) || '#94a3b8',
+                type:      'class'
+            }
+        });
+    }
+
+    // Nodes - Instances
+    for (const [uri, inst] of instances) {
+        elements.push({
+            data: {
+                id:      uri,
+                label:   inst.label,
+                comment: inst.comment,
+                uri:     uri,
+                type:    'instance',
+                classType: inst.type
+            }
+        });
+    }
+
+    // subClassOf edges
+    let eIdx = 0;
+    const seenSub = new Set();
+    for (const { from, to } of subClassEdges) {
+        const key = from + '|' + to;
+        if (seenSub.has(key)) continue;
+        seenSub.add(key);
+        elements.push({
+            data: {
+                id:       'sub_' + eIdx++,
+                source:   from,
+                target:   to,
+                label:    '',
+                edgeType: 'subClassOf'
+            }
+        });
+    }
+
+    // Object property edges
+    let pIdx = 0;
+    const seenProp = new Set();
+    for (const [uri, prop] of properties) {
+        const doms = prop.domains.filter(d => classes.has(d));
+        const rngs = prop.ranges.filter(r => classes.has(r));
+        if (!doms.length || !rngs.length) continue;
+        for (const d of doms) {
+            for (const r of rngs) {
+                const key = d + '→' + r + '→' + prop.label;
+                if (seenProp.has(key)) continue;
+                seenProp.add(key);
+                elements.push({
+                    data: {
+                        id:       'prop_' + pIdx++,
+                        source:   d,
+                        target:   r,
+                        label:    prop.label,
+                        edgeType: 'objectProperty',
+                        propUri:  uri
+                    }
+                });
+            }
+        }
+    }
+
+    // Datatype property edges
+    let dtIdx = 0;
+    const seenDT = new Set();
+    for (const [uri, dtProp] of datatypeProperties) {
+        const doms = dtProp.domains.filter(d => classes.has(d));
+        if (!doms.length || !dtProp.datatypes.length) continue;
+        for (const d of doms) {
+            for (const dt of dtProp.datatypes) {
+                const key = d + '→' + dt + '→' + dtProp.label;
+                if (seenDT.has(key)) continue;
+                seenDT.add(key);
+                // Crear un pseudo-nodo para el tipo de dato si no existe
+                const dtNodeId = 'datatype_' + localName(dt);
+                if (!elements.some(e => e.data && e.data.id === dtNodeId)) {
+                    elements.push({
+                        data: {
+                            id:   dtNodeId,
+                            label: localName(dt),
+                            type:  'datatype',
+                            uri:   dt
+                        }
+                    });
+                }
+                elements.push({
+                    data: {
+                        id:       'dtprop_' + dtIdx++,
+                        source:   d,
+                        target:   dtNodeId,
+                        label:    dtProp.label,
+                        edgeType: 'datatypeProperty',
+                        propUri:  uri
+                    }
+                });
+            }
+        }
+    }
+
+    // Instance type edges (rdf:type)
+    let instIdx = 0;
+    const seenInst = new Set();
+    for (const [uri, inst] of instances) {
+        const key = uri + '|' + inst.type;
+        if (seenInst.has(key)) continue;
+        seenInst.add(key);
+        elements.push({
+            data: {
+                id:       'inst_' + instIdx++,
+                source:   uri,
+                target:   inst.type,
+                label:    'rdf:type',
+                edgeType: 'instanceOf'
+            }
+        });
+    }
+
+    return { elements, colorMap };
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Cytoscape instance
+// ─────────────────────────────────────────────────────────────────
+let cy         = null;
+let parsedData = null;
+
+let showSubclass      = true;
+let showPropEdges     = true;
+let showDatatypeProps = true;
+let showInstances     = true;
+
+function initCytoscape(elements) {
+    if (cy) { cy.destroy(); cy = null; }
+
+    cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements:  elements,
+
+        style: [
+            // ─ Class node ──────────────────────────────────────
+            {
+                selector: 'node[type="class"]',
+                style: {
+                    'background-color':    'data(nodeColor)',
+                    'background-opacity':  0.22,
+                    'border-color':        'data(nodeColor)',
+                    'border-width':        2,
+                    'border-opacity':      0.95,
+                    'label':               'data(label)',
+                    'color':               '#1f355',
+                    'text-valign':         'center',
+                    'text-halign':         'center',
+                    'font-size':           '11px',
+                    'font-family':         '"Segoe UI", system-ui, sans-serif',
+                    'font-weight':         600,
+                    'width':               'label',
+                    'height':              'label',
+                    'padding':             '9px',
+                    'shape':               'round-rectangle',
+                    'text-wrap':           'wrap',
+                    'text-max-width':      '130px',
+                    'min-zoomed-font-size': 5,
+                    'transition-property': 'background-opacity, border-width, border-opacity',
+                    'transition-duration': '120ms'
+                }
+            },
+            // ─ Highlighted node ─────────────────────────────────
+            {
+                selector: 'node.hl',
+                style: {
+                    'background-opacity': 0.85,
+                    'border-width':       3.5,
+                    'border-opacity':     1,
+                    'font-weight':        700,
+                    'z-index':            20
+                }
+            },
+            // ─ Dimmed node ──────────────────────────────────────
+            {
+                selector: 'node.dim',
+                style: {
+                    'background-opacity': 0.03,
+                    'border-opacity':     0.1,
+                    'color':              '#2d3748',
+                    'z-index':            0
+                }
+            },
+            // ─ Selected (built-in) ──────────────────────────────
+            {
+                selector: 'node:selected',
+                style: {
+                    'border-color':  '#ffffff',
+                    'border-width':  3,
+                    'border-opacity': 1
+                }
+            },
+            // ─ subClassOf edge ───────────────────────────────────
+            {
+                selector: 'edge[edgeType="subClassOf"]',
+                style: {
+                    'line-color':           '#3f4a5e',
+                    'target-arrow-color':   '#4e5f75',
+                    'target-arrow-shape':   'triangle',
+                    'arrow-scale':          0.85,
+                    'curve-style':          'bezier',
+                    'width':                1.5,
+                    'opacity':              0.65,
+                    'min-zoomed-font-size': 8,
+                    'transition-property':  'opacity, width',
+                    'transition-duration':  '120ms'
+                }
+            },
+            // ─ Object property edge ──────────────────────────────
+            {
+                selector: 'edge[edgeType="objectProperty"]',
+                style: {
+                    'line-color':             '#78350f',
+                    'target-arrow-color':     '#d97706',
+                    'target-arrow-shape':     'vee',
+                    'arrow-scale':            0.9,
+                    'curve-style':            'bezier',
+                    'width':                  1.5,
+                    'line-style':             'dashed',
+                    'line-dash-pattern':      [7, 4],
+                    'label':                  'data(label)',
+                    'font-size':              '10px',
+		    //'color': '#1f2937',                  // dark text (gray-800)
+		    'text-background-color': '#ffffff',  // white background
+		    'text-background-opacity': 0.9,
+		    'text-border-color': '#d1d5db',      // subtle border
+		    'text-border-width': 1,
+                    'color':                  '#78350f',
+                    'text-rotation':          'autorotate',
+                    'text-margin-y':          -7,
+                    //'text-background-color':  '#080a10',
+                    //'text-background-opacity': 0.85,
+		    'text-background-shape': 'round-rectangle',
+		    'text-background-padding': '3px',
+                    //'text-background-padding': '2px',
+                    'opacity':                0.75,
+                    'min-zoomed-font-size':   5,
+                    'transition-property':    'opacity, width',
+                    'transition-duration':    '120ms'
+                }
+            },
+            // ─ Instance node ────────────────────────────────────────
+            {
+                selector: 'node[type="instance"]',
+                style: {
+                    'background-color':    '#ec4899',
+                    'background-opacity':  0.35,
+                    'border-color':        '#be185d',
+                    'border-width':        1.5,
+                    'border-opacity':      0.85,
+                    'label':               'data(label)',
+                    'color':               '#6b0551',
+                    'text-valign':         'center',
+                    'text-halign':         'center',
+                    'font-size':           '10px',
+                    'font-family':         '"Segoe UI", system-ui, sans-serif',
+                    'font-weight':         500,
+                    'font-style':          'italic',
+                    'width':               'label',
+                    'height':              'label',
+                    'padding':             '6px',
+                    'shape':               'ellipse',
+                    'text-wrap':           'wrap',
+                    'text-max-width':      '100px',
+                    'min-zoomed-font-size': 4,
+                    'transition-property': 'background-opacity, border-width',
+                    'transition-duration': '120ms'
+                }
+            },
+            // ─ Datatype node ────────────────────────────────────────
+            {
+                selector: 'node[type="datatype"]',
+                style: {
+                    'background-color':    '#a7f3d0',
+                    'background-opacity':  0.3,
+                    'border-color':        '#059669',
+                    'border-width':        1,
+                    'border-opacity':      0.7,
+                    'label':               'data(label)',
+                    'color':               '#065f46',
+                    'text-valign':         'center',
+                    'text-halign':         'center',
+                    'font-size':           '9px',
+                    'font-family':         '"Segoe UI", system-ui, sans-serif',
+                    'font-weight':         400,
+                    'width':               'label',
+                    'height':              'label',
+                    'padding':             '4px',
+                    'shape':               'diamond',
+                    'text-wrap':           'wrap',
+                    'text-max-width':      '80px',
+                    'min-zoomed-font-size': 3,
+                    'transition-property': 'background-opacity, border-width',
+                    'transition-duration': '120ms'
+                }
+            },
+            // ─ Datatype property edge ────────────────────────────────
+            {
+                selector: 'edge[edgeType="datatypeProperty"]',
+                style: {
+                    'line-color':             '#059669',
+                    'target-arrow-color':     '#10b981',
+                    'target-arrow-shape':     'vee',
+                    'arrow-scale':            0.85,
+                    'curve-style':            'bezier',
+                    'width':                  1.2,
+                    'line-style':             'dotted',
+                    'line-dash-pattern':      [3, 3],
+                    'label':                  'data(label)',
+                    'font-size':              '10px',
+                    'color':                  '#059669',
+		    //'color': '#1f2937',
+		    'text-background-color': '#ffffff',
+		    'text-background-opacity': 0.9,
+		    'text-border-color': '#d1d5db',
+		    'text-border-width': 1,
+                    'text-rotation':          'autorotate',
+                    'text-margin-y':          -6,
+                    //'text-background-color':  '#080a10',
+                    //'text-background-opacity': 0.85,
+                    'text-background-padding': '2px',
+                    'opacity':                0.65,
+                    'min-zoomed-font-size':   4,
+                    'transition-property':    'opacity, width',
+                    'transition-duration':    '120ms'
+                }
+            },
+            // ─ Instance-of edge ──────────────────────────────────────
+            {
+                selector: 'edge[edgeType="instanceOf"]',
+                style: {
+                    'line-color':             '#be185d',
+                    'target-arrow-color':     '#ec4899',
+                    'target-arrow-shape':     'triangle',
+                    'arrow-scale':            0.8,
+                    'curve-style':            'bezier',
+                    'width':                  1.2,
+                    'line-style':             'dotted',
+                    'line-dash-pattern':      [4, 4],
+                    'opacity':                0.6,
+                    'min-zoomed-font-size':   4,
+                    'transition-property':    'opacity, width',
+                    'transition-duration':    '120ms'
+                }
+            },
+            // ─ Edge highlighted ──────────────────────────────────
+            {
+                selector: 'edge.hl',
+                style: { opacity: 1, width: 2.5, 'z-index': 10 }
+            },
+            // ─ Edge dimmed ───────────────────────────────────────
+            {
+                selector: 'edge.dim',
+                style: { opacity: 0.06, 'z-index': 0 }
+            }
+        ],
+
+	wheelSensitivity: 0.1,   // 0.1–0.3 suele ir bien
+        //minZoom: 0.1,
+        //maxZoom: 4
+
+        layout: { name: 'preset' }  // layout applied separately after init
+    });
+
+    // ── Node tap ────────────────────────────────────────────────
+    cy.on('tap', 'node', function(evt) {
+        const node = evt.target;
+        highlightNode(node);
+        renderInfoPanel(node);
+    });
+
+    // ── Background tap → reset ───────────────────────────────────
+    cy.on('tap', function(evt) {
+        if (evt.target === cy) {
+            cy.elements().removeClass('hl dim');
+            resetInfoPanel();
+        }
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Highlight clicked node + neighbours
+// ─────────────────────────────────────────────────────────────────
+function highlightNode(node) {
+    if (!cy) return;
+    cy.batch(() => {
+        cy.elements().addClass('dim').removeClass('hl');
+        node.addClass('hl').removeClass('dim');
+        const edges = node.connectedEdges(':visible');
+        edges.addClass('hl').removeClass('dim');
+        edges.connectedNodes().addClass('hl').removeClass('dim');
+    });
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Info panel
+// ─────────────────────────────────────────────────────────────────
+function renderInfoPanel(node) {
+    if (!parsedData) return;
+    const uri = node.id();
+    const nodeType = node.data('type');
+    
+    let html = '';
+
+    // Handle Classes
+    if (nodeType === 'class') {
+        const cls = parsedData.classes.get(uri);
+        if (!cls) return;
+
+        const col   = node.data('nodeColor');
+        const edges = node.connectedEdges(':visible');
+
+        const superNodes = edges
+            .filter(e => e.data('edgeType') === 'subClassOf' && e.source().id() === uri)
+            .map(e => e.target());
+
+        const subNodes = edges
+            .filter(e => e.data('edgeType') === 'subClassOf' && e.target().id() === uri)
+            .map(e => e.source());
+
+        const outProps = edges
+            .filter(e => e.data('edgeType') === 'objectProperty' && e.source().id() === uri);
+
+        const inProps = edges
+            .filter(e => e.data('edgeType') === 'objectProperty' && e.target().id() === uri);
+
+        const outDTProps = edges
+            .filter(e => e.data('edgeType') === 'datatypeProperty' && e.source().id() === uri);
+
+        const instances = edges
+            .filter(e => e.data('edgeType') === 'instanceOf' && e.target().id() === uri)
+            .map(e => e.source());
+
+        html = `
+            <div class="node-name" style="color:${col}">${esc(cls.label)}</div>
+            <div class="node-uri">${linkify(esc(uri))}</div>
+        `;
+
+        if (cls.comment) {
+            const short = cls.comment.length > 320
+                ? cls.comment.substring(0, 320) + '…'
+                : cls.comment;
+            html += `<div class="node-comment">${esc(short)}</div>`;
+        }
+
+        if (superNodes.length > 0) {
+            html += `<div class="section-title">▲ Superclasses (${superNodes.length})</div>`;
+            superNodes.forEach(n => {
+                const c = n.data('nodeColor');
+                html += `<span class="pill"
+                    style="background:${c}1a;color:${c};border-color:${c}40"
+                    data-nid="${esc(n.id())}">${esc(n.data('label'))}</span>`;
+            });
+        }
+
+        if (subNodes.length > 0) {
+            html += `<div class="section-title">▼ Sous-classes (${subNodes.length})</div>`;
+            subNodes.forEach(n => {
+                const c = n.data('nodeColor');
+                html += `<span class="pill"
+                    style="background:${c}1a;color:${c};border-color:${c}40"
+                    data-nid="${esc(n.id())}">${esc(n.data('label'))}</span>`;
+            });
+        }
+
+        if (outProps.length > 0) {
+            html += `<div class="section-title">→ Propriétés objets (${outProps.length})</div>`;
+            outProps.forEach(e => {
+                const tgt = e.target();
+                html += `<div class="prop-row">
+                    <span class="prop-name">${esc(e.data('label'))}</span>
+                    <span class="prop-arr">→</span>
+                    <span class="prop-target" data-nid="${esc(tgt.id())}">${esc(tgt.data('label'))}</span>
+                </div>`;
+            });
+        }
+
+        if (inProps.length > 0) {
+            html += `<div class="section-title">← Propriétés objets entrantes (${inProps.length})</div>`;
+            inProps.forEach(e => {
+                const src = e.source();
+                html += `<div class="prop-row">
+                    <span class="prop-target" data-nid="${esc(src.id())}">${esc(src.data('label'))}</span>
+                    <span class="prop-arr">→</span>
+                    <span class="prop-name">${esc(e.data('label'))}</span>
+                </div>`;
+            });
+        }
+
+        if (outDTProps.length > 0) {
+            html += `<div class="section-title">⟿ Propriétés de données (${outDTProps.length})</div>`;
+            outDTProps.forEach(e => {
+                const tgt = e.target();
+                html += `<div class="prop-row">
+                    <span class="prop-name">${esc(e.data('label'))}</span>
+                    <span class="prop-arr">→</span>
+                    <span class="prop-target">${esc(tgt.data('label'))}</span>
+                </div>`;
+            });
+        }
+
+        if (instances.length > 0) {
+            html += `<div class="section-title">▪ Instances (${instances.length})</div>`;
+            instances.forEach(n => {
+                html += `<span class="pill"
+                    style="background:#ec489933;color:#be185d;border-color:#ec489955"
+                    data-nid="${esc(n.id())}">${esc(n.data('label'))}</span>`;
+            });
+        }
+    }
+    // Handle Instances
+    else if (nodeType === 'instance') {
+        const inst = parsedData.instances.get(uri);
+        if (!inst) return;
+
+        const classNode = cy.getElementById(inst.type);
+        const col = classNode.length ? classNode.data('nodeColor') : '#94a3b8';
+
+        html = `
+            <div class="node-name" style="color:#be185d">⟐ ${esc(inst.label)}</div>
+            <div class="node-uri">${linkify(esc(uri))}</div>
+        `;
+
+        if (inst.comment) {
+            const short = inst.comment.length > 320
+                ? inst.comment.substring(0, 320) + '…'
+                : inst.comment;
+            html += `<div class="node-comment">${esc(short)}</div>`;
+        }
+
+        html += `<div class="section-title">▲ Type</div>`;
+        html += `<span class="pill"
+            style="background:${col}1a;color:${col};border-color:${col}40"
+            data-nid="${esc(inst.type)}">${esc(classNode.length ? classNode.data('label') : 'Inconnu')}</span>`;
+    }
+    // Handle Datatypes
+    else if (nodeType === 'datatype') {
+        const label = node.data('label');
+        html = `
+            <div class="node-name" style="color:#059669">◇ ${esc(label)}</div>
+            <div class="node-uri">${linkify(esc(uri))}</div>
+        `;
+    }
+
+    const body = document.getElementById('infoBody');
+    body.innerHTML = html;
+
+    // Attach click handlers via delegation
+    body.querySelectorAll('[data-nid]').forEach(el => {
+        el.addEventListener('click', () => focusNode(el.dataset.nid));
+    });
+}
+
+function resetInfoPanel() {
+    document.getElementById('infoBody').innerHTML =
+        '<div class="info-empty">Cliquez sur un nœud<br>pour afficher ses détails.</div>';
+}
+
+function focusNode(id) {
+    if (!cy) return;
+    const node = cy.getElementById(id);
+    if (!node.length) return;
+    cy.animate({ center: { eles: node }, zoom: Math.max(cy.zoom(), 1.8) }, { duration: 300 });
+    highlightNode(node);
+    renderInfoPanel(node);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Layout application
+// ─────────────────────────────────────────────────────────────────
+const LAYOUTS = {
+    'dagre-tb': {
+        name: 'dagre',
+        rankDir: 'TB',
+        spacingFactor: 1.25,
+        nodeSep: 30,
+        rankSep: 55,
+        animate: true, animationDuration: 450
+    },
+    'dagre-lr': {
+        name: 'dagre',
+        rankDir: 'LR',
+        spacingFactor: 1.2,
+        nodeSep: 25,
+        rankSep: 80,
+        animate: true, animationDuration: 450
+    },
+    breadthfirst: {
+        name: 'breadthfirst',
+        directed: true,
+        spacingFactor: 1.6,
+        animate: true, animationDuration: 450
+    },
+    cose: {
+        name: 'cose',
+	idealEdgeLength: 100,
+	nodeOverlap: 20,
+	gravity: 0.2,
+	animate: true,
+	numIter: 1000,
+	padding: 30,
+	animationDuration: 700,
+	randomize: true,
+	fit: true
+    },
+    circle: {
+        name: 'circle',
+        animate: true, animationDuration: 400
+    },
+    grid: {
+        name: 'grid',
+        animate: true, animationDuration: 400
+    }
+};
+
+function applyLayout(name) {
+    if (!cy) return;
+    const cfg = LAYOUTS[name] || LAYOUTS['dagre-tb'];
+    cy.layout(cfg).run();
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Edge visibility helpers
+// ─────────────────────────────────────────────────────────────────
+function applyEdgeVisibility() {
+    if (!cy) return;
+    cy.edges('[edgeType="subClassOf"]').style('display',
+        showSubclass  ? 'element' : 'none');
+    cy.edges('[edgeType="objectProperty"]').style('display',
+        showPropEdges ? 'element' : 'none');
+    cy.edges('[edgeType="datatypeProperty"]').style('display',
+        showDatatypeProps ? 'element' : 'none');
+    cy.edges('[edgeType="instanceOf"]').style('display',
+        showInstances ? 'element' : 'none');
+    
+    // Mostrar/ocultar nodos de datatype según visibilidad
+    cy.nodes('[type="datatype"]').forEach(node => {
+        const hasVisibleEdge = node.connectedEdges().some(e => 
+            e.style('display') === 'element' && e.data('edgeType') === 'datatypeProperty'
+        );
+        node.style('display', hasVisibleEdge ? 'element' : 'none');
+    });
+    
+    // Mostrar/ocultar nodos de instance
+    cy.nodes('[type="instance"]').style('display',
+        showInstances ? 'element' : 'none');
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Main processing pipeline
+// ─────────────────────────────────────────────────────────────────
+async function processText(ttlText, sourceName) {
+    setLoading(true, 'Parsing du fichier TTL…');
+    document.getElementById('welcome').style.display = 'none';
+
+    let quads;
+    try {
+        quads = await parseTTL(ttlText);
+    } catch(e) {
+        setLoading(false);
+        setStatus('Erreur de parsing');
+        showToast('⚠ ' + e.message);
+        document.getElementById('welcome').style.display = 'flex';
+        return;
+    }
+
+    setLoading(true, 'Extraction de l\'ontologie…');
+    await new Promise(r => setTimeout(r, 20));  // let UI breathe
+
+    const store = new N3.Store(quads);
+    const ontology = extractOntology(store);
+    parsedData = ontology;
+
+    setLoading(true, 'Construction du graphe…');
+    await new Promise(r => setTimeout(r, 20));
+
+    const { elements } = buildElements(ontology);
+
+    // Respect current toggle state
+    const filtered = elements.filter(el => {
+        if (!el.data.edgeType) {
+            // Nodes: filter instances and datatypes
+            if (el.data.type === 'instance' && !showInstances) return false;
+            if (el.data.type === 'datatype') return true; // Will be hidden via edge visibility
+            return true;
+        }
+        if (el.data.edgeType === 'subClassOf'        && !showSubclass)      return false;
+        if (el.data.edgeType === 'objectProperty'    && !showPropEdges)     return false;
+        if (el.data.edgeType === 'datatypeProperty'  && !showDatatypeProps) return false;
+        if (el.data.edgeType === 'instanceOf'        && !showInstances)     return false;
+        return true;
+    });
+
+    initCytoscape(filtered);
+
+    const layoutName = document.getElementById('layoutSelect').value;
+    applyLayout(layoutName);
+    applyEdgeVisibility();
+
+    // Count stats
+    const nClass  = ontology.classes.size;
+    const nSub    = ontology.subClassEdges.length;
+    const nProps  = [...ontology.properties.values()]
+        .filter(p => p.domains.length && p.ranges.length).length;
+    const nPEdges = elements.filter(e => e.data.edgeType === 'objectProperty').length;
+    const nDatatype = ontology.datatypeProperties.size;
+    const nDTEdges = elements.filter(e => e.data.edgeType === 'datatypeProperty').length;
+    const nInst   = ontology.instances.size;
+    const nInstEdges = elements.filter(e => e.data.edgeType === 'instanceOf').length;
+
+    document.getElementById('statsArea').innerHTML = `
+        <div class="chip"><em>${nClass}</em> classes</div>
+        <div class="chip"><em>${nSub}</em> subClassOf</div>
+        <div class="chip"><em>${nPEdges}</em> object props</div>
+        <div class="chip"><em>${nDatatype}</em> datatype props</div>
+        <div class="chip"><em>${nInst}</em> instances</div>
+    `;
+
+    document.getElementById('toolbar').style.display = 'flex';
+    document.getElementById('legend').style.display  = 'flex';
+    setStatus(`${nClass} classes · ${nInst} instances · ${nPEdges} object props · ${nDTEdges} datatype props — ${sourceName}`);
+    setLoading(false);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Load from URL
+// ─────────────────────────────────────────────────────────────────
+async function loadFromURL(url) {
+    setLoading(true, 'Téléchargement…');
+    setStatus('Téléchargement en cours…');
+
+    let text;
+    try {
+        const res = await fetch(url, { mode: 'cors', cache: 'no-cache' });
+        if (!res.ok) throw new Error(`HTTP ${res.status} — ${res.statusText}`);
+        text = await res.text();
+    } catch(e) {
+        setLoading(false);
+        setStatus('Erreur réseau');
+        showToast(
+            '⚠ Impossible de charger le fichier : ' + e.message +
+            '\n\nVérifiez l\'URL et les en-têtes CORS du serveur.'
+        );
+        document.getElementById('welcome').style.display = 'flex';
+        return;
+    }
+
+    await processText(text, url);
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Load from local file
+// ─────────────────────────────────────────────────────────────────
+function loadFromFile(file) {
+    const reader = new FileReader();
+    reader.onload  = e  => processText(e.target.result, file.name);
+    reader.onerror = () => showToast('⚠ Erreur de lecture du fichier');
+    reader.readAsText(file, 'utf-8');
+}
+
+// ─────────────────────────────────────────────────────────────────
+// Event listeners
+// ─────────────────────────────────────────────────────────────────
+document.getElementById('btnLoad').addEventListener('click', () => {
+    const url = document.getElementById('ttlUrl').value.trim();
+    if (!url) { showToast('Veuillez entrer une URL.'); return; }
+    loadFromURL(url);
+});
+
+document.getElementById('ttlUrl').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btnLoad').click();
+});
+
+document.getElementById('fileInput').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (f) loadFromFile(f);
+    e.target.value = '';
+});
+
+document.getElementById('layoutSelect').addEventListener('change', e => {
+    applyLayout(e.target.value);
+});
+
+document.getElementById('btnSubclass').addEventListener('click', function() {
+    showSubclass = !showSubclass;
+    this.classList.toggle('on', showSubclass);
+    if (cy) cy.edges('[edgeType="subClassOf"]')
+        .style('display', showSubclass ? 'element' : 'none');
+});
+
+document.getElementById('btnProps').addEventListener('click', function() {
+    showPropEdges = !showPropEdges;
+    this.classList.toggle('on-gold', showPropEdges);
+    if (cy) cy.edges('[edgeType="objectProperty"]')
+        .style('display', showPropEdges ? 'element' : 'none');
+});
+
+document.getElementById('btnDatatypeProps').addEventListener('click', function() {
+    showDatatypeProps = !showDatatypeProps;
+    this.classList.toggle('on-gold', showDatatypeProps);
+    if (cy) {
+        cy.edges('[edgeType="datatypeProperty"]')
+            .style('display', showDatatypeProps ? 'element' : 'none');
+        // También mostrar/ocultar los nodos de datatype que están conectados
+        cy.nodes('[type="datatype"]').forEach(node => {
+            const hasVisibleEdge = node.connectedEdges().some(e => 
+                e.style('display') === 'element' && e.data('edgeType') === 'datatypeProperty'
+            );
+            if (!hasVisibleEdge && !showDatatypeProps) {
+                node.style('display', 'none');
+            } else if (hasVisibleEdge && showDatatypeProps) {
+                node.style('display', 'element');
+            }
+        });
+    }
+});
+
+document.getElementById('btnInstances').addEventListener('click', function() {
+    showInstances = !showInstances;
+    this.classList.toggle('on-gold', showInstances);
+    if (cy) {
+        cy.nodes('[type="instance"]')
+            .style('display', showInstances ? 'element' : 'none');
+        cy.edges('[edgeType="instanceOf"]')
+            .style('display', showInstances ? 'element' : 'none');
+    }
+});
+
+document.getElementById('searchInput').addEventListener('input', function() {
+    if (!cy) return;
+    const q = this.value.trim().toLowerCase();
+
+    if (!q) {
+        cy.elements().removeClass('hl dim');
+        return;
+    }
+
+    cy.batch(() => {
+        cy.elements().addClass('dim').removeClass('hl');
+        cy.nodes().filter(n => {
+            return n.data('label').toLowerCase().includes(q)
+                || n.id().toLowerCase().includes(q);
+        }).addClass('hl').removeClass('dim').connectedEdges(':visible')
+            .addClass('hl').removeClass('dim')
+            .connectedNodes().addClass('hl').removeClass('dim');
+    });
+});
+
+document.getElementById('btnFit').addEventListener('click', () => {
+    if (cy) cy.animate({ fit: { padding: 40 } }, { duration: 300 });
+});
+
+document.getElementById('btnCenter').addEventListener('click', () => {
+    if (cy) {
+        cy.elements().removeClass('hl dim');
+        resetInfoPanel();
+        cy.animate({ fit: { padding: 40 } }, { duration: 300 });
+    }
+});
+</script>
+</body>
+</html>
