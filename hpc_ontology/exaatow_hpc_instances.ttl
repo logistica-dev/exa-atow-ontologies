@@ -29,7 +29,7 @@
 @prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
 @prefix dc:       <http://purl.org/dc/elements/1.1/> .
-@prefix schema:   <http://www.schema.org/> .
+@prefix schema:   <https://www.schema.org/> .
 @prefix inst:     <https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_instances.ttl#> .
 
 <https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_instances.ttl>
