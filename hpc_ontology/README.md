@@ -4,7 +4,7 @@
 | Resource | Link |
 |---|---|
 | Ontology (TTL) | https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl |
-| Knowledge Graph viewer | https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/grafo_full_Exa-AToW_HPC.html |
+| Knowledge Graph viewer | https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/onto_viewer.html |
 | Widoco documentation | *(link to be added)* |
 
 ## Overview
