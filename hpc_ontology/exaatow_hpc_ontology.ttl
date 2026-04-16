@@ -1229,7 +1229,6 @@ exa-atow:website rdf:type owl:DatatypeProperty ;
     skos:prefLabel "website"@en , "site web"@fr .
 
 # -->> 8.9 Software <<--
-
 exa-atow:softwareName rdf:type owl:DatatypeProperty ;
     rdfs:domain exa-atow:Software ;
     rdfs:range xsd:string ;
