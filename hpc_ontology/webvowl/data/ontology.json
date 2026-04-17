@@ -1,0 +1,6296 @@
+{
+  "_comment" : "Created with OWL2VOWL (version 0.3.5), http://vowl.visualdataweb.org",
+  "header" : {
+    "languages" : [ "en", "fr", "undefined" ],
+    "baseIris" : [ "https://www.w3.org/ns/org", "http://www.w3.org/1999/02/22-rdf-syntax-ns", "http://www.w3.org/2000/01/rdf-schema", "http://www.w3.org/2001/XMLSchema", "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl" ],
+    "title" : {
+      "en" : "Exa-AToW HPC Resource Ontology"
+    },
+    "iri" : "https://raw.githubusercontent.com/logistica-dev/exa-atow-ontologies/refs/heads/main/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "version" : "0.1",
+    "author" : [ "Exa-AToW team" ],
+    "description" : {
+      "en" : "Ontology for modeling high-performance computing resources, infrastructure, and physical characteristics within the Exa-AToW project."
+    },
+    "labels" : {
+      "en" : "Exa-AToW HPC Resource Ontology",
+      "fr" : "Ontologie des Ressources HPC Exa-AToW"
+    },
+    "comments" : {
+      "en" : "Ontology for modeling high-performance computing resources, infrastructure, \n    and physical characteristics within the Exa-AToW project.\n    \n    This ontology describes the physical and logical components that constitute HPC systems,\n    including compute nodes, processors, storage, interconnects, and their relationships.\n    It supports the modeling of supercomputer architectures, partitions, and execution environments,\n    with a focus on French national HPC centers (IDRIS/Jean Zay, CEA/TGCC, Cines/Adastra)."
+    },
+    "other" : {
+      "creator" : [ {
+        "identifier" : "creator",
+        "language" : "undefined",
+        "value" : "Exa-AToW team",
+        "type" : "label"
+      } ],
+      "created" : [ {
+        "identifier" : "created",
+        "language" : "undefined",
+        "value" : "2025-12-05",
+        "type" : "label"
+      } ],
+      "modified" : [ {
+        "identifier" : "modified",
+        "language" : "undefined",
+        "value" : "2026-02-18",
+        "type" : "label"
+      } ],
+      "versionInfo" : [ {
+        "identifier" : "versionInfo",
+        "language" : "undefined",
+        "value" : "0.1",
+        "type" : "label"
+      } ],
+      "title" : [ {
+        "identifier" : "title",
+        "language" : "en",
+        "value" : "Exa-AToW HPC Resource Ontology",
+        "type" : "label"
+      } ]
+    }
+  },
+  "namespace" : [ ],
+  "class" : [ {
+    "id" : "12",
+    "type" : "owl:Class"
+  }, {
+    "id" : "14",
+    "type" : "owl:Class"
+  }, {
+    "id" : "26",
+    "type" : "owl:Class"
+  }, {
+    "id" : "31",
+    "type" : "owl:Class"
+  }, {
+    "id" : "33",
+    "type" : "owl:Class"
+  }, {
+    "id" : "38",
+    "type" : "owl:Class"
+  }, {
+    "id" : "44",
+    "type" : "owl:Class"
+  }, {
+    "id" : "73",
+    "type" : "owl:Class"
+  }, {
+    "id" : "46",
+    "type" : "owl:Class"
+  }, {
+    "id" : "79",
+    "type" : "owl:Thing"
+  }, {
+    "id" : "80",
+    "type" : "owl:Thing"
+  }, {
+    "id" : "81",
+    "type" : "owl:Class"
+  }, {
+    "id" : "82",
+    "type" : "owl:Thing"
+  }, {
+    "id" : "61",
+    "type" : "owl:Class"
+  }, {
+    "id" : "54",
+    "type" : "owl:Class"
+  }, {
+    "id" : "106",
+    "type" : "owl:Class"
+  }, {
+    "id" : "2",
+    "type" : "owl:Class"
+  }, {
+    "id" : "11",
+    "type" : "owl:Class"
+  }, {
+    "id" : "110",
+    "type" : "owl:Class"
+  }, {
+    "id" : "21",
+    "type" : "owl:Class"
+  }, {
+    "id" : "13",
+    "type" : "owl:Class"
+  }, {
+    "id" : "39",
+    "type" : "owl:Class"
+  }, {
+    "id" : "40",
+    "type" : "owl:Class"
+  }, {
+    "id" : "126",
+    "type" : "owl:Class"
+  }, {
+    "id" : "77",
+    "type" : "owl:Class"
+  }, {
+    "id" : "129",
+    "type" : "owl:Class"
+  }, {
+    "id" : "116",
+    "type" : "owl:Class"
+  }, {
+    "id" : "133",
+    "type" : "owl:Class"
+  }, {
+    "id" : "120",
+    "type" : "owl:Class"
+  }, {
+    "id" : "153",
+    "type" : "owl:Class"
+  }, {
+    "id" : "154",
+    "type" : "owl:Class"
+  }, {
+    "id" : "155",
+    "type" : "owl:Class"
+  }, {
+    "id" : "17",
+    "type" : "owl:Class"
+  }, {
+    "id" : "168",
+    "type" : "owl:Class"
+  }, {
+    "id" : "124",
+    "type" : "owl:Class"
+  }, {
+    "id" : "15",
+    "type" : "owl:Class"
+  }, {
+    "id" : "186",
+    "type" : "owl:Class"
+  }, {
+    "id" : "191",
+    "type" : "owl:equivalentClass"
+  }, {
+    "id" : "42",
+    "type" : "owl:Class"
+  }, {
+    "id" : "217",
+    "type" : "owl:Class"
+  }, {
+    "id" : "149",
+    "type" : "owl:Class"
+  }, {
+    "id" : "194",
+    "type" : "owl:Class"
+  }, {
+    "id" : "165",
+    "type" : "owl:Class"
+  }, {
+    "id" : "1",
+    "type" : "owl:Class"
+  }, {
+    "id" : "145",
+    "type" : "owl:Class"
+  }, {
+    "id" : "123",
+    "type" : "owl:Class"
+  }, {
+    "id" : "9",
+    "type" : "owl:Class"
+  }, {
+    "id" : "138",
+    "type" : "owl:Class"
+  }, {
+    "id" : "203",
+    "type" : "owl:Class"
+  }, {
+    "id" : "163",
+    "type" : "owl:Class"
+  }, {
+    "id" : "160",
+    "type" : "owl:Class"
+  }, {
+    "id" : "24",
+    "type" : "owl:Class"
+  }, {
+    "id" : "43",
+    "type" : "owl:Class"
+  }, {
+    "id" : "88",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "34",
+    "type" : "owl:Class"
+  }, {
+    "id" : "224",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "260",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "231",
+    "type" : "owl:Class"
+  }, {
+    "id" : "171",
+    "type" : "owl:Class"
+  }, {
+    "id" : "143",
+    "type" : "owl:Class"
+  }, {
+    "id" : "51",
+    "type" : "owl:Class"
+  }, {
+    "id" : "167",
+    "type" : "owl:Class"
+  }, {
+    "id" : "230",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "78",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "87",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "209",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "105",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "131",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "268",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "201",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "85",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "114",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "277",
+    "type" : "owl:Class"
+  }, {
+    "id" : "90",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "36",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "233",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "100",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "68",
+    "type" : "owl:Class"
+  }, {
+    "id" : "279",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "294",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "92",
+    "type" : "owl:Class"
+  }, {
+    "id" : "70",
+    "type" : "owl:Class"
+  }, {
+    "id" : "72",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "197",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "25",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "29",
+    "type" : "owl:Class"
+  }, {
+    "id" : "187",
+    "type" : "owl:Class"
+  }, {
+    "id" : "64",
+    "type" : "owl:Class"
+  }, {
+    "id" : "4",
+    "type" : "owl:Class"
+  }, {
+    "id" : "96",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "57",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "49",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "48",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "298",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "66",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "299",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "301",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "98",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "185",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "132",
+    "type" : "owl:Class"
+  }, {
+    "id" : "182",
+    "type" : "owl:Class"
+  }, {
+    "id" : "19",
+    "type" : "owl:Class"
+  }, {
+    "id" : "27",
+    "type" : "owl:Class"
+  }, {
+    "id" : "152",
+    "type" : "owl:Class"
+  }, {
+    "id" : "267",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "74",
+    "type" : "owl:Class"
+  }, {
+    "id" : "112",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "195",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "271",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "189",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "122",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "272",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "215",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "103",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "128",
+    "type" : "owl:Thing"
+  }, {
+    "id" : "216",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "263",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "314",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "315",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "192",
+    "type" : "owl:equivalentClass"
+  }, {
+    "id" : "41",
+    "type" : "owl:Class"
+  }, {
+    "id" : "183",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "296",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "262",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "309",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "94",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "304",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "249",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "235",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "174",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "307",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "125",
+    "type" : "owl:Class"
+  }, {
+    "id" : "101",
+    "type" : "owl:Class"
+  }, {
+    "id" : "32",
+    "type" : "owl:Class"
+  }, {
+    "id" : "227",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "7",
+    "type" : "rdfs:Datatype"
+  }, {
+    "id" : "147",
+    "type" : "owl:Class"
+  }, {
+    "id" : "6",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "226",
+    "type" : "owl:unionOf"
+  }, {
+    "id" : "109",
+    "type" : "rdfs:Datatype"
+  } ],
+  "classAttribute" : [ {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#CPUComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Composant CPU",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "CPU Component",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "CPUComponent"
+    },
+    "comment" : {
+      "en" : "A hardware component representing CPUs installed in a node.",
+      "fr" : "Un composant matériel représentant des CPU installés dans un nœud."
+    },
+    "attributes" : [ "external" ],
+    "id" : "12",
+    "superClasses" : [ "13" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#CoolingSystem",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Système de refroidissement",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Cooling System",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "CoolingSystem"
+    },
+    "comment" : {
+      "en" : "System maintaining temperature conditions of HPC components.",
+      "fr" : "Système maintenant les conditions de température des composants HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "14",
+    "superClasses" : [ "15" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#MemoryComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Memory Component",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Composant mémoire",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "MemoryComponent"
+    },
+    "comment" : {
+      "en" : "A component representing system memory installed in a node.",
+      "fr" : "Un composant représentant la mémoire système installée dans un nœud."
+    },
+    "attributes" : [ "external" ],
+    "id" : "26",
+    "superClasses" : [ "27" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#GCD",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "GCD (Graphics Compute Die)",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "GCD (Graphics Compute Die)",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "GCD"
+    },
+    "comment" : {
+      "en" : "Graphics Compute Die — one of the two independent compute dies on an AMD multi-chip-module accelerator card such as the MI250X. Each GCD has its own HBM stack and appears as a separate device to the OS/runtime.",
+      "fr" : "Graphics Compute Die — l'un des deux dies de calcul indépendants d'une carte accélératrice AMD multi-chip-module (ex : MI250X). Chaque GCD possède son propre empilement HBM et apparaît comme un dispositif distinct pour l'OS/runtime."
+    },
+    "attributes" : [ "external" ],
+    "id" : "31",
+    "superClasses" : [ "32" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Supercomputer",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Superordinateur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Supercomputer",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://fr.wikipedia.org/wiki/Superordinateur",
+        "type" : "iri"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Supercomputer"
+    },
+    "comment" : {
+      "en" : "High-performance computing system composed of compute nodes, storage, and networking (Jean Zay, Adastra, Irene).",
+      "fr" : "Système de calcul haute performance composé de nœuds de calcul, stockage et réseau (Jean Zay, Adastra, Irene)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "33",
+    "superClasses" : [ "34" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#HardwareModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "HardwareModel",
+      "en" : "Hardware model",
+      "fr" : "Modèle matériel"
+    },
+    "subClasses" : [ "39", "40", "41", "42", "43" ],
+    "comment" : {
+      "en" : "Abstract description of a hardware device (CPU model, SSD model, NIC model).",
+      "fr" : "Description abstraite d’un composant matériel (modèle CPU, SSD, NIC)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "38",
+    "superClasses" : [ "34" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#HardwareGeneration",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Hardware Generation",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Génération matérielle",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "HardwareGeneration"
+    },
+    "comment" : {
+      "en" : "A discrete hardware generation or extension phase of a supercomputer (e.g. Jean Zay H100 extension, 2023).",
+      "fr" : "Génération matérielle ou phase d'extension d'un superordinateur (ex : extension H100 de Jean Zay)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "44",
+    "superClasses" : [ "34" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Lustre",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Lustre",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Lustre"
+    },
+    "comment" : {
+      "en" : "Open-source parallel distributed file system, widely used in HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "73",
+    "superClasses" : [ "74" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Throughput",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Throughput",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Débit",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Throughput"
+    },
+    "comment" : {
+      "en" : "I/O performance of storage system, including value and unit (e.g., TB/s).",
+      "fr" : "Performance d'E/S d'un système de stockage."
+    },
+    "attributes" : [ "external" ],
+    "id" : "46",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.w3.org/2002/07/owl#Thing",
+    "baseIri" : "http://owl2vowl.de",
+    "id" : "79",
+    "label" : {
+      "undefined" : "Thing"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2002/07/owl#Thing",
+    "baseIri" : "http://owl2vowl.de",
+    "id" : "80",
+    "label" : {
+      "undefined" : "Thing"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#HDD",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "HDD",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Disque dur (HDD)",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "HDD"
+    },
+    "comment" : {
+      "en" : "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs.",
+      "fr" : "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d'E/S inférieure."
+    },
+    "attributes" : [ "external" ],
+    "id" : "81",
+    "superClasses" : [ "39" ]
+  }, {
+    "iri" : "http://www.w3.org/2002/07/owl#Thing",
+    "baseIri" : "http://owl2vowl.de",
+    "id" : "82",
+    "label" : {
+      "undefined" : "Thing"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#HPCResource",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Ressource HPC",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "HPC Resource",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "HPCResource"
+    },
+    "subClasses" : [ "15", "34", "64" ],
+    "comment" : {
+      "en" : "Root class for all physical, logical, and infrastructural resources involved in high-performance computing.",
+      "fr" : "Classe racine pour toutes les ressources physiques, logiques et infrastructurelles du calcul haute performance."
+    },
+    "attributes" : [ "external" ],
+    "id" : "61"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Partition",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Partition",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Partition",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Partition"
+    },
+    "comment" : {
+      "en" : "Logical grouping of compute nodes within a supercomputer sharing hardware characteristics or workload type, mapped to a scheduler partition (SLURM, PBS).",
+      "fr" : "Regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, associé à une partition d'ordonnanceur (SLURM, PBS)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "54",
+    "superClasses" : [ "64" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Rack",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Rack",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Baie",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Rack"
+    },
+    "comment" : {
+      "en" : "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter.",
+      "fr" : "Un châssis physique abritant plusieurs nœuds de calcul et éléments d'infrastructure dans un centre de données."
+    },
+    "attributes" : [ "external" ],
+    "id" : "106",
+    "superClasses" : [ "34" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#QuantitativeValue",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Valeur quantitative",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Quantitative Value",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "QuantitativeValue"
+    },
+    "subClasses" : [ "68", "70", "46", "51", "1", "4", "9", "11", "17", "19", "21" ],
+    "comment" : {
+      "en" : "A value with an associated unit of measurement.",
+      "fr" : "Valeur numérique avec une unité de mesure associée."
+    },
+    "attributes" : [ "external" ],
+    "id" : "2"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Lifetime",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Durée de vie",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Lifetime",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Lifetime"
+    },
+    "comment" : {
+      "en" : "Operational lifespan of a hardware component (years), such as a server or processor.",
+      "fr" : "Durée de vie opérationnelle d'un composant matériel (années)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "11",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#IntelOmniPath",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Intel Omni-Path",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "IntelOmniPath"
+    },
+    "comment" : {
+      "en" : "Intel's high-performance interconnect technology (OPA - 100 Gb/s)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "110",
+    "superClasses" : [ "40" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#MemoryCapacity",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Capacité mémoire",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Memory Capacity",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "MemoryCapacity"
+    },
+    "comment" : {
+      "en" : "Total amount of volatile data storage available in a computing component (e.g., RAM, HBM, VRAM).",
+      "fr" : "Quantité de données volatile qu'un dispositif de mémoire peut stocker (Go, To)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "21",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#ProcessorComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Composant processeur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Processor Component",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ProcessorComponent"
+    },
+    "subClasses" : [ "12" ],
+    "comment" : {
+      "en" : "A hardware component representing one or more processors (CPU, GPU, APU) installed in a node.",
+      "fr" : "Un composant matériel représentant un ou plusieurs processeurs (CPU, GPU, APU) installés dans un nœud."
+    },
+    "attributes" : [ "external" ],
+    "id" : "13",
+    "superClasses" : [ "27" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Storage",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Stockage",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Storage",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Storage"
+    },
+    "subClasses" : [ "123", "81" ],
+    "comment" : {
+      "en" : "Persistent storage devices and systems.",
+      "fr" : "Dispositifs et systèmes de stockage persistant."
+    },
+    "attributes" : [ "external" ],
+    "id" : "39",
+    "superClasses" : [ "38" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Interconnect",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Interconnect",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Interconnexion",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Interconnect"
+    },
+    "subClasses" : [ "124", "125", "110" ],
+    "comment" : {
+      "en" : "High-speed network infrastructure enabling communication between compute nodes and system components.",
+      "fr" : "Infrastructure réseau à haute vitesse permettant la communication entre les nœuds de calcul et les composants du système."
+    },
+    "attributes" : [ "external" ],
+    "id" : "40",
+    "superClasses" : [ "38" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#FrontendNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Nœud frontal",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Frontend Node",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "FrontendNode"
+    },
+    "comment" : {
+      "en" : "Login/frontend node for user access, job submission, and compilation.",
+      "fr" : "Nœud frontal pour l'accès utilisateur, la soumission de tâches et la compilation."
+    },
+    "attributes" : [ "external" ],
+    "id" : "126",
+    "superClasses" : [ "29" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#SoftwareVersion",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Version logicielle",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Software Version",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "SoftwareVersion"
+    },
+    "comment" : {
+      "en" : "A specific version/installation of software on a system."
+    },
+    "attributes" : [ "external" ],
+    "id" : "77"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#ScalarNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Nœud scalaire",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Scalar Node",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ScalarNode"
+    },
+    "comment" : {
+      "en" : "A compute node equipped with general-purpose CPUs only (no accelerators).",
+      "fr" : "Un nœud de calcul équipé uniquement de processeurs généraux (CPU), sans accélérateurs."
+    },
+    "attributes" : [ "external" ],
+    "id" : "129",
+    "superClasses" : [ "29" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#InterconnectComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Composant réseau",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Interconnect Component",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "InterconnectComponent"
+    },
+    "comment" : {
+      "en" : "A component representing network interfaces (NICs) connecting a node to the HPC interconnect.",
+      "fr" : "Un composant représentant les interfaces réseau (NICs) connectant un nœud à l'interconnexion HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "116",
+    "superClasses" : [ "27" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#FileSystem",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "File System",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Système de fichiers",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "FileSystem"
+    },
+    "subClasses" : [ "74" ],
+    "comment" : {
+      "en" : "Shared storage infrastructure for I/O and checkpoint data in HPC environments.",
+      "fr" : "Infrastructure de stockage partagée utilisée pour les données d'entrée/sortie et les points de sauvegarde dans les environnements HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "133",
+    "superClasses" : [ "64" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#StorageComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Composant de stockage",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Storage Component",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "StorageComponent"
+    },
+    "comment" : {
+      "en" : "A component representing storage devices (SSD, HDD) attached to a node.",
+      "fr" : "Un composant représentant les dispositifs de stockage (SSD, HDD) attachés à un nœud."
+    },
+    "attributes" : [ "external" ],
+    "id" : "120",
+    "superClasses" : [ "27" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#NVMe_SSD",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "NVMe",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "NVMe",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "NVMe_SSD"
+    },
+    "comment" : {
+      "en" : "NVMe-based solid state drive, typically used as local scratch on HPC nodes.",
+      "fr" : "Disque SSD NVMe, typiquement utilisé comme stockage scratch local sur les nœuds HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "153",
+    "superClasses" : [ "123" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#ResourceManager",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Gestionnaire de ressources",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Resource Manager",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ResourceManager"
+    },
+    "individuals" : [ {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#LSF",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "LSF",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Load Sharing Facility."
+      },
+      "labels" : {
+        "IRI-based" : "LSF",
+        "undefined" : "LSF"
+      }
+    }, {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#PBS",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "PBS",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Portable Batch System — used at CEA/TGCC."
+      },
+      "labels" : {
+        "IRI-based" : "PBS",
+        "undefined" : "PBS"
+      }
+    }, {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#SLURM",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "SLURM",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Simple Linux Utility for Resource Management — the standard job scheduler at IDRIS (Jean Zay)."
+      },
+      "labels" : {
+        "IRI-based" : "SLURM",
+        "undefined" : "SLURM"
+      }
+    } ],
+    "comment" : {
+      "en" : "Software system for job scheduling and resource allocation (e.g., SLURM, PBS, LSF).",
+      "fr" : "Système logiciel pour la planification des tâches et l'allocation des ressources."
+    },
+    "attributes" : [ "external" ],
+    "id" : "154",
+    "superClasses" : [ "152" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#InfiniBandHDR",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "InfiniBand HDR",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "InfiniBandHDR"
+    },
+    "comment" : {
+      "en" : "InfiniBand HDR (High Data Rate) - 200 Gb/s per port."
+    },
+    "attributes" : [ "external" ],
+    "id" : "155",
+    "superClasses" : [ "124" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#StorageCapacity",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Storage Capacity",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Capacité de stockage",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "StorageCapacity"
+    },
+    "comment" : {
+      "en" : "Total amount of non-volatile, persistent data storage (e.g., SSD, HDD, Parallel File Systems).",
+      "fr" : "Capacité totale de stockage persistant (To, Po)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "17",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#ParallelLibrary",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Bibliothèque parallèle",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Parallel Library",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ParallelLibrary"
+    },
+    "comment" : {
+      "en" : "Parallel programming library or framework (e.g. OpenMPI, MPICH, CUDA, ROCm, OpenMP).",
+      "fr" : "Bibliothèque ou framework de programmation parallèle (ex : OpenMPI, CUDA, ROCm, OpenMP)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "168",
+    "superClasses" : [ "152" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#InfiniBand",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "InfiniBand",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "InfiniBand"
+    },
+    "subClasses" : [ "155", "171" ],
+    "comment" : {
+      "en" : "InfiniBand high-speed network fabric (multiple generations: HDR 200 Gb/s, NDR 400 Gb/s)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "124",
+    "superClasses" : [ "40" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Infrastructure",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Infrastructure",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Infrastructure",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Infrastructure"
+    },
+    "subClasses" : [ "14", "186", "187" ],
+    "comment" : {
+      "en" : "Facility-level support systems (cooling, power, energy management).",
+      "fr" : "Systèmes de support au niveau installation (refroidissement, alimentation, gestion de l'énergie)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "15",
+    "superClasses" : [ "61" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#PowerDistributionUnit",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Power Distribution Unit (PDU)",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Unité de distribution d'alimentation (PDU)",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "PowerDistributionUnit"
+    },
+    "comment" : {
+      "en" : "Hardware unit distributing electrical power to racks and nodes; its metered output feeds PUE calculations.",
+      "fr" : "Unité matérielle distribuant l'énergie électrique aux baies et nœuds ; sa mesure alimente les calculs de PUE."
+    },
+    "attributes" : [ "external" ],
+    "id" : "186",
+    "superClasses" : [ "15" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Organization",
+    "equivalent" : [ "192" ],
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Organisation",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Organization",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Organization"
+    },
+    "subClasses" : [ "101" ],
+    "comment" : {
+      "en" : "Legal entity operating, owning, or funding HPC facilities.",
+      "fr" : "Entité légale qui exploite, possède ou finance des installations HPC."
+    },
+    "attributes" : [ "equivalent", "external" ],
+    "id" : "191"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#AcceleratorCard",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Accelerator Card",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Carte accélératrice",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "AcceleratorCard"
+    },
+    "comment" : {
+      "en" : "Physical card hosting one or more GPU/accelerator dies (e.g. NVIDIA A100 SXM4 80 GB).",
+      "fr" : "Carte physique hébergeant un ou plusieurs GPU/accélérateurs (ex : NVIDIA A100 SXM4 80 Go)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "42",
+    "superClasses" : [ "38" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#GPFS",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "GPFS / Spectrum Scale",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "GPFS"
+    },
+    "comment" : {
+      "en" : "IBM General Parallel File System (Spectrum Scale), used at TGCC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "217",
+    "superClasses" : [ "74" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#AcceleratedNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Nœud accéléré",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Accelerated Node",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "AcceleratedNode"
+    },
+    "comment" : {
+      "en" : "A compute node equipped with one or more accelerator cards (GPUs or APUs). May also have a CPU (classic GPU nodes) or integrate CPU and GPU in the same package (APU nodes such as MI300A).",
+      "fr" : "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."
+    },
+    "attributes" : [ "external" ],
+    "id" : "149",
+    "superClasses" : [ "29" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#CPU",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "CPU",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "CPU",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://en.wikipedia.org/wiki/Central_processing_unit",
+        "type" : "iri"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "CPU"
+    },
+    "comment" : {
+      "en" : "The central processing unit responsible for executing general-purpose instructions.",
+      "fr" : "L'unité centrale de traitement responsable de l'exécution des instructions générales."
+    },
+    "attributes" : [ "external" ],
+    "id" : "194",
+    "superClasses" : [ "41" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#RAM",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "RAM",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Mémoire vive (RAM)",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "RAM"
+    },
+    "comment" : {
+      "en" : "Main volatile memory used by compute nodes for temporary data access during job execution (DRAM).",
+      "fr" : "Mémoire principale volatile utilisée par les nœuds de calcul (DRAM)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "165",
+    "superClasses" : [ "43" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Frequency",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Fréquence",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Frequency",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Frequency"
+    },
+    "comment" : {
+      "en" : "Clock frequency of a processor, including value and unit (e.g., GHz).",
+      "fr" : "Fréquence d'horloge d'un processeur (e.g., GHz.)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "1",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#VisualizationNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Visualization Node",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Nœud de visualisation",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "VisualizationNode"
+    },
+    "comment" : {
+      "en" : "Dedicated visualization node with GPU, not deducted from allocation (e.g. jean-zay-visu at IDRIS).",
+      "fr" : "Nœud de visualisation dédié avec GPU, non décompté de l'allocation (ex : jean-zay-visu à l'IDRIS)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "145",
+    "superClasses" : [ "29" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#SSD",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "SSD",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "SSD",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "SSD"
+    },
+    "subClasses" : [ "203", "153" ],
+    "comment" : {
+      "en" : "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O.",
+      "fr" : "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."
+    },
+    "attributes" : [ "external" ],
+    "id" : "123",
+    "superClasses" : [ "39" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#TDP",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "TDP",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Puissance thermique de conception (TDP)",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "TDP"
+    },
+    "comment" : {
+      "en" : "Manufacturer-specified Thermal Design Power (Watts): maximum sustained power the processor's cooling system must dissipate under typical HPC workloads.",
+      "fr" : "Puissance thermique de conception (TDP) spécifiée par le fabricant (en Watts): puissance maximale soutenue que le système de refroidissement du processeur doit dissiper sous charges HPC typiques."
+    },
+    "attributes" : [ "external" ],
+    "id" : "9",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#QoS",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Quality of Service (QoS)",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Qualité de Service (QoS)",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "QoS"
+    },
+    "comment" : {
+      "en" : "Scheduler QoS class defining job time limits, priority, and resource caps for a partition (e.g. qos_gpu-t3).",
+      "fr" : "Classe QoS de l'ordonnanceur définissant les limites de temps, la priorité et les plafonds de ressources (ex : qos_gpu-t3)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "138",
+    "superClasses" : [ "64" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#SAS_SSD",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "SSD SAS",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "SAS SSD",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "SAS_SSD"
+    },
+    "comment" : {
+      "en" : "SAS-based solid state drive (Serial Attached SCSI), known for high reliability and endurance in server environments.",
+      "fr" : "Disque SSD SAS, reconnu pour sa haute fiabilité et son endurance dans les environnements serveurs."
+    },
+    "attributes" : [ "external" ],
+    "id" : "203",
+    "superClasses" : [ "123" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#GDDRMemory",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "GDDR Memory",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Mémoire GDDR",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "GDDRMemory"
+    },
+    "comment" : {
+      "en" : "Graphics DDR memory used on GPUs (e.g. GDDR6 on NVIDIA L40)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "163",
+    "superClasses" : [ "43" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Server",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Server",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Serveur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Server"
+    },
+    "comment" : {
+      "en" : "A physical server housing processors, memory, and storage.",
+      "fr" : "Un serveur physique contenant des processeurs, de la mémoire et du stockage."
+    },
+    "attributes" : [ "external" ],
+    "id" : "160",
+    "superClasses" : [ "34" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#StorageMount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Point de montage",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Storage Mount",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "StorageMount"
+    },
+    "comment" : {
+      "en" : "A specific storage mountpoint or workspace exposed to users (e.g. $HOME, $SCRATCH, $STORE, $WORK).",
+      "fr" : "Un point de montage ou espace de travail spécifique exposé aux utilisateurs (ex : $HOME, $SCRATCH, $STORE, $WORK)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "24",
+    "superClasses" : [ "64" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Memory",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Memory",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Mémoire",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Memory"
+    },
+    "subClasses" : [ "163", "165", "167" ],
+    "comment" : {
+      "en" : "Volatile memory components used during computation (DRAM, HBM, etc.).",
+      "fr" : "Composants de mémoire volatile utilisés pendant le calcul (DRAM, HBM, etc.)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "43",
+    "superClasses" : [ "38" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "88",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#PhysicalResource",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Ressource physique",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Physical Resource",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "PhysicalResource"
+    },
+    "subClasses" : [ "27", "29", "33", "38", "44", "106", "160" ],
+    "comment" : {
+      "en" : "Tangible hardware component of an HPC system.",
+      "fr" : "Composant matériel tangible d'un système HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "34",
+    "superClasses" : [ "61" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#boolean",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "224",
+    "label" : {
+      "IRI-based" : "boolean"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "260",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#OperatingSystem",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Système d'exploitation",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Operating System",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "OperatingSystem"
+    },
+    "individuals" : [ {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Linux",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Linux",
+          "type" : "label"
+        } ]
+      },
+      "labels" : {
+        "IRI-based" : "Linux",
+        "undefined" : "Linux"
+      }
+    }, {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Ubuntu",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Ubuntu",
+          "type" : "label"
+        } ]
+      },
+      "labels" : {
+        "IRI-based" : "Ubuntu",
+        "undefined" : "Ubuntu"
+      }
+    }, {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#RedHat",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Red Hat",
+          "type" : "label"
+        } ]
+      },
+      "labels" : {
+        "IRI-based" : "RedHat",
+        "undefined" : "Red Hat Enterprise Linux"
+      }
+    } ],
+    "comment" : {
+      "en" : "Operating system running on HPC nodes.",
+      "fr" : "Système d'exploitation exécuté sur les nœuds HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "231",
+    "superClasses" : [ "152" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#InfiniBandNDR",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "InfiniBand NDR",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "InfiniBandNDR"
+    },
+    "comment" : {
+      "en" : "InfiniBand NDR (Next Data Rate) - 400 Gb/s per port. Used in Jean Zay H100 partition (gpu_p6)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "171",
+    "superClasses" : [ "124" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#AcceleratorCardComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Composant carte accélératrice",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Accelerator Card Component",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "AcceleratorCardComponent"
+    },
+    "comment" : {
+      "en" : "A hardware component representing accelerator cards installed in a node.",
+      "fr" : "Un composant matériel représentant des cartes accélératrices installées dans un nœud."
+    },
+    "attributes" : [ "external" ],
+    "id" : "143",
+    "superClasses" : [ "27" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#NominalPower",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Puissance nominale",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Nominal Power",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "NominalPower"
+    },
+    "comment" : {
+      "en" : "Design-time power ceiling of a compute node or rack (Watts), typically the sum of component TDPs plus board and memory overhead. This is a static hardware specification, not a measured value. Published as input to PUE microservice.",
+      "fr" : "Puissance nominale de conception d'un nœud ou d'une baie (Watts), typiquement la somme des TDP des composants plus les surcharges carte et mémoire. Spécification statique, non une mesure. Publiée en entrée du microservice PUE."
+    },
+    "attributes" : [ "external" ],
+    "id" : "51",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#HBMMemory",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "HBM Memory",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Mémoire HBM",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "HBMMemory"
+    },
+    "comment" : {
+      "en" : "High Bandwidth Memory used on GPU accelerators (e.g. HBM2e on A100, HBM3 on H100).",
+      "fr" : "Mémoire haute bande passante utilisée sur les accélérateurs GPU (ex : HBM2e sur A100, HBM3 sur H100)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "167",
+    "superClasses" : [ "43" ]
+  }, {
+    "instances" : 0,
+    "union" : [ "29", "33" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "230"
+  }, {
+    "instances" : 0,
+    "union" : [ "29", "33" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "78"
+  }, {
+    "instances" : 0,
+    "union" : [ "33", "54" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "87"
+  }, {
+    "instances" : 0,
+    "union" : [ "33", "54" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "209"
+  }, {
+    "instances" : 0,
+    "union" : [ "133", "24" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "105"
+  }, {
+    "instances" : 0,
+    "union" : [ "33", "54" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "131"
+  }, {
+    "instances" : 0,
+    "union" : [ "41", "42" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "268"
+  }, {
+    "instances" : 0,
+    "union" : [ "92", "33" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "201"
+  }, {
+    "instances" : 0,
+    "union" : [ "29", "106", "42" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "85"
+  }, {
+    "instances" : 0,
+    "union" : [ "29", "42" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "114"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#ModuleEnvironment",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Environnement de modules",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Module Environment",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ModuleEnvironment"
+    },
+    "comment" : {
+      "en" : "Software environment for dynamic module loading (e.g. Lmod, Environment Modules).",
+      "fr" : "Environnement logiciel pour le chargement dynamique de modules (ex : Lmod, Environment Modules)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "277",
+    "superClasses" : [ "152" ]
+  }, {
+    "instances" : 0,
+    "union" : [ "39", "43" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "90"
+  }, {
+    "instances" : 0,
+    "union" : [ "29", "54", "106" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "36"
+  }, {
+    "instances" : 0,
+    "union" : [ "29", "41", "160" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "233"
+  }, {
+    "instances" : 0,
+    "union" : [ "92", "33" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "100"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#ProcessNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Nœud de procédé",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Process Node",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ProcessNode"
+    },
+    "comment" : {
+      "en" : "[Semiconductor manufacturing] Specific generation of integrated circuit fabrication technology defined by the minimum feature size of transistors and interconnects, typically measured in nanometers (nm), where smaller nodes enable denser integration of components, higher performance, and reduced power consumption in devices such as microprocessors and memory chips.",
+      "fr" : "Nœud de procédé de fabrication de semiconducteurs en nm (ex : 7 nm, 4 nm). Corrélé à l'efficacité énergétique et à la taille de puce."
+    },
+    "attributes" : [ "external" ],
+    "id" : "68",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "279",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "294",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#HPCCenter",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Centre HPC",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "HPC Center",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "HPCCenter"
+    },
+    "comment" : {
+      "en" : "Institutional entity that operates and hosts one or more supercomputers.",
+      "fr" : "Entité institutionnelle qui exploite et héberge un ou plusieurs supercalculateurs."
+    },
+    "attributes" : [ "external" ],
+    "id" : "92"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#DieSize",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Die Size",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Taille de puce",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "DieSize"
+    },
+    "comment" : {
+      "en" : "The physical area of the CPU or GPU die. Used in environmental impact estimation.",
+      "fr" : "Surface physique du die silicium d'un CPU ou GPU en mm². Utilisée pour l'estimation du carbone incorporé et des coûts de fabrication."
+    },
+    "attributes" : [ "external" ],
+    "id" : "70",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "72",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "197",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#boolean",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "25",
+    "label" : {
+      "IRI-based" : "boolean"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#ComputeNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Nœud de calcul",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Compute Node",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ComputeNode"
+    },
+    "subClasses" : [ "126", "145", "147", "149", "129" ],
+    "comment" : {
+      "en" : "A physical or virtual machine in an HPC system that executes computational jobs.",
+      "fr" : "Une machine physique ou virtuelle dans un système HPC qui exécute des tâches de calcul."
+    },
+    "attributes" : [ "external" ],
+    "id" : "29",
+    "superClasses" : [ "34" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#EnergyManagement",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Système de gestion de l'énergie",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Energy Management System",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "EnergyManagement"
+    },
+    "comment" : {
+      "en" : "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment.",
+      "fr" : "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d'énergie dans l'environnement HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "187",
+    "superClasses" : [ "15" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#LogicalResource",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Logical Resource",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Ressource logique",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "LogicalResource"
+    },
+    "subClasses" : [ "152", "133", "54", "138", "24" ],
+    "comment" : {
+      "en" : "Software-defined or abstract resource exposed to users or schedulers.",
+      "fr" : "Ressource définie par logiciel ou abstraite exposée aux utilisateurs ou aux ordonnanceurs."
+    },
+    "attributes" : [ "external" ],
+    "id" : "64",
+    "superClasses" : [ "61" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#PerformanceMetric",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Métrique de performance",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Performance Metric",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "PerformanceMetric"
+    },
+    "subClasses" : [ "132" ],
+    "comment" : {
+      "en" : "Measure of computational performance.",
+      "fr" : "Mesure de la performance de calcul."
+    },
+    "attributes" : [ "external" ],
+    "id" : "4",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "96",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#decimal",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "57",
+    "label" : {
+      "IRI-based" : "decimal"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#anyURI",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "49",
+    "label" : {
+      "IRI-based" : "anyURI"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "92", "33", "54" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "48"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "298",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "66",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "299",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "29", "33", "44", "54" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "301"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "98",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "185",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#PeakPerformance",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Peak Performance",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Performance crête",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "PeakPerformance"
+    },
+    "comment" : {
+      "en" : "Theoretical peak performance (Rpeak) in FLOPS (e.g. TFLOPS, PFLOPS).",
+      "fr" : "Performance crête théorique (Rpeak) en FLOPS (ex : TFLOPS, PFLOPS)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "132",
+    "superClasses" : [ "4" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Compiler",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Compilateur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Compiler",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Compiler"
+    },
+    "individuals" : [ {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#GCC",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "GCC",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "GNU Compiler Collection."
+      },
+      "labels" : {
+        "IRI-based" : "GCC",
+        "undefined" : "GCC"
+      }
+    }, {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#IntelCompiler",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Intel Compiler",
+          "type" : "label"
+        }, {
+          "identifier" : "prefLabel",
+          "language" : "fr",
+          "value" : "Compilateur Intel",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "Intel oneAPI DPC++/C++ and Fortran Compilers."
+      },
+      "labels" : {
+        "IRI-based" : "IntelCompiler",
+        "undefined" : "Intel Compiler"
+      }
+    }, {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#AOCC",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "AOCC",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "AMD Optimizing C/C++ and Fortran Compilers — required for Jean Zay A100 partition (gpu_p5, AMD EPYC nodes)."
+      },
+      "labels" : {
+        "IRI-based" : "AOCC",
+        "undefined" : "AOCC"
+      }
+    }, {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#CrayCC",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "Cray Compiler",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "HPE Cray Compiling Environment (CCE) for C, C++ and Fortran."
+      },
+      "labels" : {
+        "IRI-based" : "CrayCC",
+        "undefined" : "Cray Compiler"
+      }
+    }, {
+      "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#NVCC",
+      "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+      "annotations" : {
+        "prefLabel" : [ {
+          "identifier" : "prefLabel",
+          "language" : "en",
+          "value" : "NVCC",
+          "type" : "label"
+        } ]
+      },
+      "comment" : {
+        "en" : "NVIDIA CUDA Compiler."
+      },
+      "labels" : {
+        "IRI-based" : "NVCC",
+        "undefined" : "NVCC"
+      }
+    } ],
+    "comment" : {
+      "en" : "Software tool for compiling source code (e.g., GCC, Intel oneAPI, NVCC, AOCC).",
+      "fr" : "Outil logiciel pour compiler le code source."
+    },
+    "attributes" : [ "external" ],
+    "id" : "182",
+    "superClasses" : [ "152" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Bandwidth",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Bandwidth",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Bande passante",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Bandwidth"
+    },
+    "comment" : {
+      "en" : "Data transfer rate of an interconnect or memory bus (e.g. 200 Gb/s, 2 TB/s HBM3).",
+      "fr" : "Débit de transfert de données d'un interconnexion ou bus mémoire."
+    },
+    "attributes" : [ "external" ],
+    "id" : "19",
+    "superClasses" : [ "2" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#HardwareComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Composant matériel",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Hardware Component",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "HardwareComponent"
+    },
+    "subClasses" : [ "143", "116", "26", "13", "120" ],
+    "comment" : {
+      "en" : "A contextualized hardware element within a node, representing the usage of a hardware model with a given quantity.",
+      "fr" : "Un élément matériel contextualisé dans un nœud, représentant l’utilisation d’un modèle matériel avec une quantité donnée."
+    },
+    "attributes" : [ "external" ],
+    "id" : "27",
+    "superClasses" : [ "34" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Software",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Software",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Logiciel",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Software"
+    },
+    "subClasses" : [ "168", "154", "231", "182", "277" ],
+    "comment" : {
+      "en" : "General class for software used in HPC environments."
+    },
+    "attributes" : [ "external" ],
+    "id" : "152",
+    "superClasses" : [ "64" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "267",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#ParallelFileSystem",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Parallel File System",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Système de fichiers parallèle",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "ParallelFileSystem"
+    },
+    "subClasses" : [ "73", "217" ],
+    "comment" : {
+      "en" : "Distributed file system for parallel I/O operations.",
+      "fr" : "Système de fichiers distribué pour les opérations d'E/S parallèles à haut débit."
+    },
+    "attributes" : [ "external" ],
+    "id" : "74",
+    "superClasses" : [ "133" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "112",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "195",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "33", "44" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "271"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "189",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "122",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#date",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "272",
+    "label" : {
+      "IRI-based" : "date"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "92", "152", "191" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "215"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "103",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2002/07/owl#Thing",
+    "baseIri" : "http://owl2vowl.de",
+    "id" : "128",
+    "label" : {
+      "undefined" : "Thing"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#anyURI",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "216",
+    "label" : {
+      "IRI-based" : "anyURI"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "263",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "314",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "152", "41", "42" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "315"
+  }, {
+    "iri" : "https://www.w3.org/ns/org#Organization",
+    "equivalent" : [ "191" ],
+    "baseIri" : "https://www.w3.org/ns/org",
+    "instances" : 0,
+    "label" : {
+      "IRI-based" : "Organization"
+    },
+    "attributes" : [ "equivalent", "external" ],
+    "id" : "192"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Processor",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Processor",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Processeur",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://en.wikipedia.org/wiki/Processor_(computing)",
+        "type" : "iri"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Processor"
+    },
+    "subClasses" : [ "194", "32" ],
+    "comment" : {
+      "en" : "A general category for processing units, including CPUs and GPUs.",
+      "fr" : "Catégorie générale pour les unités de traitement, y compris les CPU et les GPU."
+    },
+    "attributes" : [ "external" ],
+    "id" : "41",
+    "superClasses" : [ "38" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "183",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "296",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "instances" : 0,
+    "union" : [ "33", "54" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "262"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "309",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#positiveInteger",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "94",
+    "label" : {
+      "IRI-based" : "positiveInteger"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "304",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "249",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "235",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "174",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "307",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#Slingshot",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "HPE Cray Slingshot",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "Slingshot"
+    },
+    "comment" : {
+      "en" : "HPE Cray Slingshot high-speed interconnect (200 Gb/s), used on HPE Cray EX systems."
+    },
+    "attributes" : [ "external" ],
+    "id" : "125",
+    "superClasses" : [ "40" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#FundingAgency",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Agence de financement",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Funding Agency",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "FundingAgency"
+    },
+    "comment" : {
+      "en" : "Agency funding HPC infrastructure (e.g. GENCI, ANR, European Commission, France 2030).",
+      "fr" : "Agence finançant l'infrastructure HPC (ex : GENCI, ANR, Commission européenne, France 2030)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "101",
+    "superClasses" : [ "191" ]
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#GPU",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "GPU",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "GPU",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://en.wikipedia.org/wiki/Graphics_processing_unit",
+        "type" : "iri"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "GPU"
+    },
+    "subClasses" : [ "31" ],
+    "comment" : {
+      "en" : "Graphics processing unit used to accelerate parallel computation tasks in HPC workloads.",
+      "fr" : "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."
+    },
+    "attributes" : [ "external" ],
+    "id" : "32",
+    "superClasses" : [ "41" ]
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#integer",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "227",
+    "label" : {
+      "IRI-based" : "integer"
+    }
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "7",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#PrePostNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "instances" : 0,
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Nœud de pré/post-traitement",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Pre/Post-processing Node",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "PrePostNode"
+    },
+    "comment" : {
+      "en" : "Dedicated pre/post-processing node with large memory, not deducted from CPU/GPU allocation (e.g. jean-zay-pp at IDRIS).",
+      "fr" : "Nœud dédié au pré/post-traitement avec grande mémoire, non décompté de l'allocation (ex : jean-zay-pp à l'IDRIS)."
+    },
+    "attributes" : [ "external" ],
+    "id" : "147",
+    "superClasses" : [ "29" ]
+  }, {
+    "instances" : 0,
+    "union" : [ "33", "38" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "6"
+  }, {
+    "instances" : 0,
+    "union" : [ "33", "54" ],
+    "attributes" : [ "union", "anonymous" ],
+    "id" : "226"
+  }, {
+    "iri" : "http://www.w3.org/2001/XMLSchema#string",
+    "baseIri" : "http://www.w3.org/2001/XMLSchema",
+    "id" : "109",
+    "label" : {
+      "IRI-based" : "string"
+    }
+  } ],
+  "property" : [ {
+    "id" : "0",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "3",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "5",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "8",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "10",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "16",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "18",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "20",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "22",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "23",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "28",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "35",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "45",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "47",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "50",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "52",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "53",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "55",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "56",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "58",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "59",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "60",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "62",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "63",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "65",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "67",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "69",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "71",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "75",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "76",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "83",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "84",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "86",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "89",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "91",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "93",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "95",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "97",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "99",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "102",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "104",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "107",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "108",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "111",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "113",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "115",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "117",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "118",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "119",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "121",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "127",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "130",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "134",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "135",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "136",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "137",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "139",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "140",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "141",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "142",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "144",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "146",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "148",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "150",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "151",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "156",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "157",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "158",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "159",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "161",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "162",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "164",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "166",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "169",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "170",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "172",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "173",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "30",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "179",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "180",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "181",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "184",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "188",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "190",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "176",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "193",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "196",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "198",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "199",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "200",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "202",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "204",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "205",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "206",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "207",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "208",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "210",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "211",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "212",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "213",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "214",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "218",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "219",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "220",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "221",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "222",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "223",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "225",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "228",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "229",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "232",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "234",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "236",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "237",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "238",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "239",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "240",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "241",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "242",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "243",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "244",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "245",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "246",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "247",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "248",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "250",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "251",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "252",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "253",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "254",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "37",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "255",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "256",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "257",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "258",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "259",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "261",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "264",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "265",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "266",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "269",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "270",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "273",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "274",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "275",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "276",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "278",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "280",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "281",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "282",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "283",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "284",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "285",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "286",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "287",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "288",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "289",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "290",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "291",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "292",
+    "type" : "owl:allValuesFrom"
+  }, {
+    "id" : "293",
+    "type" : "rdfs:SubClassOf"
+  }, {
+    "id" : "295",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "175",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "297",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "300",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "302",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "303",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "305",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "306",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "308",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "310",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "311",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "177",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "312",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "313",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "316",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "317",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "318",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "319",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "320",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "321",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "322",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "323",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "324",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "325",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "326",
+    "type" : "owl:datatypeProperty"
+  }, {
+    "id" : "327",
+    "type" : "owl:someValuesFrom"
+  }, {
+    "id" : "328",
+    "type" : "owl:disjointWith"
+  }, {
+    "id" : "329",
+    "type" : "owl:objectProperty"
+  }, {
+    "id" : "178",
+    "type" : "owl:objectProperty"
+  } ],
+  "propertyAttribute" : [ {
+    "range" : "2",
+    "domain" : "1",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "0"
+  }, {
+    "range" : "2",
+    "domain" : "4",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "3"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#model",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "7",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "model",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "modèle",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "model"
+    },
+    "domain" : "6",
+    "comment" : {
+      "en" : "Model name of a supercomputer or a processor."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "5"
+  }, {
+    "range" : "2",
+    "domain" : "9",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "8"
+  }, {
+    "range" : "2",
+    "domain" : "11",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "10"
+  }, {
+    "range" : "2",
+    "domain" : "17",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "16"
+  }, {
+    "range" : "2",
+    "domain" : "19",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "18"
+  }, {
+    "range" : "2",
+    "domain" : "21",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "20"
+  }, {
+    "range" : "13",
+    "domain" : "12",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "22"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#isPurged",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "25",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "is purged",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "est purgé",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "isPurged"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Whether this storage space is automatically purged (e.g., scratch spaces typically are)."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "23"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#isComponentOf",
+    "inverse" : "30",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "29",
+    "label" : {
+      "IRI-based" : "isComponentOf"
+    },
+    "domain" : "27",
+    "attributes" : [ "object", "external" ],
+    "id" : "28"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#composedOf",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "36",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "composed of",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "composé de",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "composedOf"
+    },
+    "superproperty" : [ "37" ],
+    "domain" : "33",
+    "attributes" : [ "object", "external" ],
+    "id" : "35"
+  }, {
+    "range" : "2",
+    "domain" : "46",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "45"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#documentationURL",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "49",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "documentation URL",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "URL documentation",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "documentationURL"
+    },
+    "domain" : "48",
+    "comment" : {
+      "en" : "URL of the official documentation page for this center, system or partition."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "47"
+  }, {
+    "range" : "2",
+    "domain" : "51",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "50"
+  }, {
+    "range" : "38",
+    "domain" : "40",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "52"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#usesNodeType",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "29",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "utilise type de nœud",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "uses node type",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "usesNodeType"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Indicates the type of compute node used in this partition.",
+      "fr" : "Lie une partition à son ou ses types de nœuds de calcul. Pointe vers une configuration matérielle partagée, non des nœuds individuels."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "53"
+  }, {
+    "range" : "38",
+    "domain" : "41",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "55"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasValue",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "57",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a valeur numérique",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has numeric value",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasValue"
+    },
+    "domain" : "2",
+    "comment" : {
+      "en" : "Numeric value."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "56"
+  }, {
+    "range" : "38",
+    "domain" : "42",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "58"
+  }, {
+    "range" : "38",
+    "domain" : "43",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "59"
+  }, {
+    "range" : "61",
+    "domain" : "15",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "60"
+  }, {
+    "range" : "61",
+    "domain" : "34",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "62"
+  }, {
+    "range" : "61",
+    "domain" : "64",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "63"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#frontendNodeCount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "66",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "frontend node count",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nombre de nœuds frontaux",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "frontendNodeCount"
+    },
+    "domain" : "33",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "65"
+  }, {
+    "range" : "2",
+    "domain" : "68",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "67"
+  }, {
+    "range" : "2",
+    "domain" : "70",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "69"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#memoryModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "72",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "memory model",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "memoryModel"
+    },
+    "domain" : "43",
+    "comment" : {
+      "en" : "Memory technology/model (e.g. 'DDR5-4800', 'HBM2e')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "71"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasBandwidth",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "19",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has bandwidth",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a bande passante",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasBandwidth"
+    },
+    "domain" : "40",
+    "comment" : {
+      "en" : "Links interconnect to its data transfer rate.",
+      "fr" : "Relie interconnexion à son débit."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "75"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#installedOn",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "78",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "installé sur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "installed on",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "installedOn"
+    },
+    "domain" : "77",
+    "comment" : {
+      "en" : "Links a specific software version to the system or node it is installed on. Enables queries such as 'which CUDA versions are available on Jean Zay' or 'which nodes support GCC 12'.",
+      "fr" : "Lie une version logicielle spécifique au système ou au nœud sur lequel elle est installée. Permet des requêtes telles que 'quelles versions CUDA sont disponibles sur Jean Zay' ou 'quels nœuds supportent GCC 12'."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "76"
+  }, {
+    "range" : "38",
+    "domain" : "39",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "83"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasNominalPower",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "51",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a puissance nominale",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has nominal power",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasNominalPower"
+    },
+    "domain" : "85",
+    "comment" : {
+      "en" : "Design-time power ceiling of a node, rack, or card. Key input for PUE microservice."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "84"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#acceleratorCount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "88",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nombre total d'accelerateurs",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Total accelerator count",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "acceleratorCount"
+    },
+    "domain" : "87",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "86"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasMemoryCapacity",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "21",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has memory capacity",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a capacité mémoire",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasMemoryCapacity"
+    },
+    "domain" : "90",
+    "comment" : {
+      "en" : "Links memory/storage device to its capacity.",
+      "fr" : "Relie mémoire/stockage à sa capacité."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "89"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hostedAt",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "92",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "hosted at",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "hébergé à",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hostedAt"
+    },
+    "domain" : "33",
+    "comment" : {
+      "en" : "Supercomputer physically hosted at HPC facility.",
+      "fr" : "Superordinateur physiquement installé dans un centre HPC."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "91"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#quantity",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "94",
+    "label" : {
+      "IRI-based" : "quantity",
+      "en" : "quantity",
+      "fr" : "quantité"
+    },
+    "domain" : "27",
+    "comment" : {
+      "en" : "Number of physical instances of the referenced hardware model within the parent node.",
+      "fr" : "Nombre d'unités physiques de ce composant matériel présentes dans le nœud."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "93"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#identifier",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "96",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "identifier",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "identifiant",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "identifier"
+    },
+    "domain" : "61",
+    "comment" : {
+      "en" : "Unique identifier (e.g., hostname, serial number)."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "95"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#description",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "98",
+    "label" : {
+      "IRI-based" : "description"
+    },
+    "domain" : "61",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "97"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#fundedBy",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "101",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "funded by",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "financé par",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "fundedBy"
+    },
+    "domain" : "100",
+    "comment" : {
+      "en" : "Links a center or supercomputer to its funding agency."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "99"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#versionNumber",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "103",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "numéro de version",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "version number",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "versionNumber"
+    },
+    "domain" : "77",
+    "comment" : {
+      "en" : "Version string (e.g., '23.02.1', '12.2.0')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "102"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasStorageCapacity",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "17",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a capacité de stockage",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has storage capacity",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasStorageCapacity"
+    },
+    "domain" : "105",
+    "comment" : {
+      "en" : "Total storage capacity of a file system or mountpoint in TB or PB. On a StorageMount, represents the per-user or per-project quota when known.",
+      "fr" : "Capacité totale de stockage d'un système de fichiers ou d'un point de montage en To ou Po. Sur un StorageMount, représente le quota par utilisateur ou par projet lorsqu'il est connu."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "104"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasFrequency",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "1",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a fréquence",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has frequency",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasFrequency"
+    },
+    "domain" : "41",
+    "comment" : {
+      "en" : "Base clock frequency of a processor in GHz. Used in peak performance calculations (Rpeak = cores × frequency × FLOPs/cycle).",
+      "fr" : "Fréquence d'horloge de base d'un processeur en GHz. Utilisée dans le calcul de la performance crête (Rpeak = cœurs × fréquence × FLOPS/cycle)."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "107"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#mountPath",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "109",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "mount path",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "chemin de montage",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "mountPath"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "The environment variable or path of the mountpoint (e.g., '$SCRATCH', '$HOME', '$STORE', '$WORK')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "108"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#coresCount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "112",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "CPU core per processor",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "coresCount"
+    },
+    "domain" : "41",
+    "comment" : {
+      "en" : "CPU cores per processor: useful for APUs, the chip contains not only the GPU but also CPU."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "111"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasMemoryComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "26",
+    "label" : {
+      "IRI-based" : "hasMemoryComponent",
+      "en" : "has memory component",
+      "fr" : "a un composant mémoire"
+    },
+    "superproperty" : [ "30" ],
+    "domain" : "114",
+    "comment" : {
+      "en" : "Links a compute node to a contextualized memory component (capacity + type).",
+      "fr" : "Lie un nœud de calcul à un composant mémoire contextualisé."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "113"
+  }, {
+    "range" : "27",
+    "domain" : "116",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "115"
+  }, {
+    "range" : "27",
+    "domain" : "26",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "117"
+  }, {
+    "range" : "27",
+    "domain" : "13",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "118"
+  }, {
+    "range" : "27",
+    "domain" : "120",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "119"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#computerBrand",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "122",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "Marque de calculateur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "Computer brand",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "computerBrand"
+    },
+    "domain" : "33",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "121"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#partOf",
+    "inverse" : "37",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "128",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "partie de",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "part of",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "partOf"
+    },
+    "domain" : "128",
+    "comment" : {
+      "en" : "Indicates membership in a larger structure."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "127"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasPeakPerformance",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "132",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has peak performance",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a performance crête",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasPeakPerformance"
+    },
+    "domain" : "131",
+    "comment" : {
+      "en" : "Links supercomputer to its theoretical peak FLOPS (Rpeak).",
+      "fr" : "Relie superordinateur à sa performance théorique (Rpeak)."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "130"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#belongsToPartition",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "54",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "belongs to partition",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "appartient à la partition",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "belongsToPartition"
+    },
+    "domain" : "29",
+    "attributes" : [ "object", "external" ],
+    "id" : "134"
+  }, {
+    "range" : "64",
+    "domain" : "133",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "135"
+  }, {
+    "range" : "64",
+    "domain" : "54",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "136"
+  }, {
+    "range" : "64",
+    "domain" : "138",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "137"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasPartition",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "54",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a partition",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has partition",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasPartition"
+    },
+    "domain" : "33",
+    "comment" : {
+      "en" : "Links a supercomputer to one of its SLURM/job-scheduler partitions."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "139"
+  }, {
+    "range" : "64",
+    "domain" : "24",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "140"
+  }, {
+    "range" : "4",
+    "domain" : "132",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "141"
+  }, {
+    "range" : "27",
+    "domain" : "143",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "142"
+  }, {
+    "range" : "29",
+    "domain" : "145",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "144"
+  }, {
+    "range" : "29",
+    "domain" : "147",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "146"
+  }, {
+    "range" : "29",
+    "domain" : "149",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "148"
+  }, {
+    "range" : "29",
+    "domain" : "129",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "150"
+  }, {
+    "range" : "64",
+    "domain" : "152",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "151"
+  }, {
+    "range" : "34",
+    "domain" : "38",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "156"
+  }, {
+    "range" : "34",
+    "domain" : "44",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "157"
+  }, {
+    "range" : "34",
+    "domain" : "106",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "158"
+  }, {
+    "range" : "34",
+    "domain" : "160",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "159"
+  }, {
+    "range" : "29",
+    "domain" : "126",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "161"
+  }, {
+    "range" : "43",
+    "domain" : "163",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "162"
+  }, {
+    "range" : "43",
+    "domain" : "165",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "164"
+  }, {
+    "range" : "43",
+    "domain" : "167",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "166"
+  }, {
+    "range" : "34",
+    "domain" : "27",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "169"
+  }, {
+    "range" : "34",
+    "domain" : "29",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "170"
+  }, {
+    "range" : "34",
+    "domain" : "33",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "172"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#partitionName",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "174",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "partition name",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom de partition",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "partitionName"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Scheduler partition identifier (e.g., 'cpu_p1', 'gpu_p5', 'prepost')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "173"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "27",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has component",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a pour composant",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasComponent"
+    },
+    "domain" : "29",
+    "subproperty" : [ "175", "176", "177", "113", "178" ],
+    "comment" : {
+      "en" : "Links a node to one of its hardware components.",
+      "fr" : "Relie un nœud à l’un de ses composants matériels."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "30"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasStorage",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "39",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has storage",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasStorage"
+    },
+    "domain" : "29",
+    "comment" : {
+      "en" : "Links a node to its local persistent storage device."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "179"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#mountedOn",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "133",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "mounted on",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "monté sur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "mountedOn"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Links a user-facing storage mountpoint to the underlying file system that backs it.",
+      "fr" : "Lie un point de montage exposé aux utilisateurs au système de fichiers sous-jacent qui le supporte."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "180"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#supportsLanguage",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "183",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "supporte langage",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "supports language",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "supportsLanguage"
+    },
+    "domain" : "182",
+    "comment" : {
+      "en" : "Programming language supported (e.g., 'C', 'Fortran', 'CUDA')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "181"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#defaultWallTime",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "185",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "default wall time",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "temps mur par défaut",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "defaultWallTime"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Default wall time for jobs on this partition when not specified by the user."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "184"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#architecture",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "189",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "architecture",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "architecture",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "architecture"
+    },
+    "domain" : "41",
+    "comment" : {
+      "en" : "Processor microarchitecture (e.g., 'Cascade Lake', 'Sapphire Rapids', 'Ampere', 'Hopper')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "188"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#requiresModule",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "77",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nécessite module",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "requires module",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "requiresModule"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Software module that must be loaded before using this partition (e.g. arch/a100, arch/h100 for specific partitions).",
+      "fr" : "Module logiciel devant être chargé avant de soumettre des tâches sur cette partition."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "190"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasAcceleratorCardComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "143",
+    "label" : {
+      "IRI-based" : "hasAcceleratorCardComponent",
+      "en" : "has accelerator card component",
+      "fr" : "a un composant carte accélératrice"
+    },
+    "superproperty" : [ "30" ],
+    "domain" : "82",
+    "comment" : {
+      "en" : "Links a compute node to a contextualized accelerator card component (model + quantity).",
+      "fr" : "Lie un nœud de calcul à un composant carte accélératrice contextualisé (modèle + quantité)."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "176"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#coresCountPerSocket",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "195",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "core count in each CPU",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nombre de cœurs per CPU",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "coresCountPerSocket"
+    },
+    "domain" : "194",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "193"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#maxWallTime",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "197",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "temps mur maximum",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "max wall time",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "maxWallTime"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Maximum wall time allowed for jobs on this partition (e.g., '100:00:00', '20:00:00')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "196"
+  }, {
+    "range" : "15",
+    "domain" : "187",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "198"
+  }, {
+    "range" : "191",
+    "domain" : "101",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "199"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasStorageMount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "24",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a point de montage",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has storage mount",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasStorageMount"
+    },
+    "domain" : "201",
+    "comment" : {
+      "en" : "Links a supercomputer or HPC center to its user-accessible storage mountpoints (e.g. $HOME, $SCRATCH, $WORK, $STORE).",
+      "fr" : "Lie un superordinateur ou un centre HPC à ses points de montage accessibles aux utilisateurs (ex : $HOME, $SCRATCH, $WORK, $STORE)."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "200"
+  }, {
+    "range" : "123",
+    "domain" : "203",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "202"
+  }, {
+    "range" : "123",
+    "domain" : "153",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "204"
+  }, {
+    "range" : "40",
+    "domain" : "125",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "205"
+  }, {
+    "range" : "40",
+    "domain" : "110",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "206"
+  }, {
+    "range" : "133",
+    "domain" : "74",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "207"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#supportsCompiler",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "182",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "supports compiler",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "supporte compilateur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "supportsCompiler"
+    },
+    "domain" : "209",
+    "comment" : {
+      "en" : "Compilers available on this system or partition."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "208"
+  }, {
+    "range" : "124",
+    "domain" : "155",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "210"
+  }, {
+    "range" : "124",
+    "domain" : "171",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "211"
+  }, {
+    "range" : "15",
+    "domain" : "14",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "212"
+  }, {
+    "range" : "15",
+    "domain" : "186",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "213"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#website",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "216",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "website",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "site web",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "website"
+    },
+    "domain" : "215",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "214"
+  }, {
+    "range" : "39",
+    "domain" : "123",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "218"
+  }, {
+    "range" : "39",
+    "domain" : "81",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "219"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#refersToModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "38",
+    "label" : {
+      "IRI-based" : "refersToModel",
+      "en" : "refers to hardware model",
+      "fr" : "réfère au modèle matériel"
+    },
+    "domain" : "27",
+    "attributes" : [ "object", "external" ],
+    "id" : "220"
+  }, {
+    "range" : "40",
+    "domain" : "124",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "221"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasQoS",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "138",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a QoS",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has QoS",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasQoS"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Links a partition to its Quality of Service classes, each defining a specific wall time limit, job priority and allocation deduction policy.",
+      "fr" : "Lie une partition à ses classes de Qualité de Service, chacune définissant un temps mur, une priorité et une politique de décompte d'allocation."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "222"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#allocatedFromQuota",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "224",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "décompté du quota",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "allocated from quota",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "allocatedFromQuota"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Whether jobs on this partition are deducted from the user's compute allocation. False for prepost, visu."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "223"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#nodeCount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "227",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nombre de nœuds",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "node count",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "nodeCount"
+    },
+    "domain" : "226",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "225"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#refersToModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "41",
+    "label" : {
+      "IRI-based" : "refersToModel",
+      "en" : "refers to hardware model",
+      "fr" : "réfère au modèle matériel"
+    },
+    "domain" : "13",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "228"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#runsOS",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "231",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "exécute SE",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "runs OS",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "runsOS"
+    },
+    "domain" : "230",
+    "comment" : {
+      "en" : "Operating system running on nodes."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "229"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasLifetime",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "11",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a durée de vie",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has lifetime",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasLifetime"
+    },
+    "domain" : "233",
+    "attributes" : [ "object", "external" ],
+    "id" : "232"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#quota",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "235",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "quota",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "quota",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "quota"
+    },
+    "domain" : "24",
+    "comment" : {
+      "en" : "Storage quota per user or project on this mount (e.g., '100 GB', '5 TB')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "234"
+  }, {
+    "range" : "165",
+    "domain" : "41",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "236"
+  }, {
+    "range" : "39",
+    "domain" : "41",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "237"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#refersToModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "43",
+    "label" : {
+      "IRI-based" : "refersToModel",
+      "en" : "refers to hardware model",
+      "fr" : "réfère au modèle matériel"
+    },
+    "domain" : "26",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "238"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasGeneration",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "44",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a génération",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has generation",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasGeneration"
+    },
+    "domain" : "33",
+    "comment" : {
+      "en" : "Links a supercomputer to one of its hardware generations or extension phases."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "239"
+  }, {
+    "range" : "34",
+    "domain" : "64",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "240"
+  }, {
+    "range" : "13",
+    "domain" : "26",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "241"
+  }, {
+    "range" : "120",
+    "domain" : "26",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "242"
+  }, {
+    "range" : "26",
+    "domain" : "116",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "243"
+  }, {
+    "range" : "165",
+    "domain" : "40",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "244"
+  }, {
+    "range" : "13",
+    "domain" : "116",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "245"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#refersToModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "40",
+    "label" : {
+      "IRI-based" : "refersToModel",
+      "en" : "refers to hardware model",
+      "fr" : "réfère au modèle matériel"
+    },
+    "domain" : "116",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "246"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hosts",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "33",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "héberge",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "hosts",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hosts"
+    },
+    "domain" : "92",
+    "attributes" : [ "object", "external" ],
+    "id" : "247"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#shortName",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "249",
+    "label" : {
+      "IRI-based" : "shortName"
+    },
+    "domain" : "61",
+    "comment" : {
+      "en" : "Short name (e.g., 'jean-zay', 'adastra', 'topaze')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "248"
+  }, {
+    "range" : "64",
+    "domain" : "15",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "250"
+  }, {
+    "range" : "34",
+    "domain" : "15",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "251"
+  }, {
+    "range" : "41",
+    "domain" : "40",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "252"
+  }, {
+    "range" : "32",
+    "domain" : "194",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "253"
+  }, {
+    "range" : "13",
+    "domain" : "143",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "254"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#contains",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "128",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "contient",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "contains",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "contains"
+    },
+    "domain" : "128",
+    "subproperty" : [ "35" ],
+    "comment" : {
+      "en" : "General containment relationship in HPC hierarchy."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "37"
+  }, {
+    "range" : "123",
+    "domain" : "81",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "255"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#refersToModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "194",
+    "label" : {
+      "IRI-based" : "refersToModel",
+      "en" : "refers to hardware model",
+      "fr" : "réfère au modèle matériel"
+    },
+    "domain" : "12",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "256"
+  }, {
+    "range" : "145",
+    "domain" : "129",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "257"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#refersToModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "42",
+    "label" : {
+      "IRI-based" : "refersToModel",
+      "en" : "refers to hardware model",
+      "fr" : "réfère au modèle matériel"
+    },
+    "domain" : "143",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "258"
+  }, {
+    "range" : "41",
+    "domain" : "42",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "259"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#totalCoresCount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "263",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nombre total de cœurs",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "total number of cores",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "totalCoresCount"
+    },
+    "domain" : "262",
+    "comment" : {
+      "en" : "Total number of cores at the Partition or Supercomputer level"
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "261"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#usesFileSystem",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "133",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "uses file system",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "utilise système de fichiers",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "usesFileSystem"
+    },
+    "domain" : "33",
+    "comment" : {
+      "en" : "Links a supercomputer to its underlying storage file systems. Represents the physical storage infrastructure.",
+      "fr" : "Lie un superordinateur à ses systèmes de fichiers de stockage sous-jacents. Représente l'infrastructure de stockage physique."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "264"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#housedInRack",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "106",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "logé dans la baie",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "housed in rack",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "housedInRack"
+    },
+    "domain" : "29",
+    "attributes" : [ "object", "external" ],
+    "id" : "265"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#coresCountPerNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "267",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "CPU core per node",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "coresCountPerNode"
+    },
+    "domain" : "29",
+    "comment" : {
+      "en" : "CPU cores per node (for CPU, number of CPU socket x cores per CPU => quantity (CPU)*coresCountPerSocket)."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "266"
+  }, {
+    "range" : "41",
+    "domain" : "194",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "269"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#commissioningDate",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "272",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "commissioning date",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "date de mise en service",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "commissioningDate"
+    },
+    "domain" : "271",
+    "comment" : {
+      "en" : "Date when the system or generation became operational."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "270"
+  }, {
+    "range" : "41",
+    "domain" : "32",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "273"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#operatedBy",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "191",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "operated by",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "exploité par",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "operatedBy"
+    },
+    "domain" : "92",
+    "attributes" : [ "object", "external" ],
+    "id" : "274"
+  }, {
+    "range" : "32",
+    "domain" : "31",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "275"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasProcessNode",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "68",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has process node",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a nœud de procédé",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasProcessNode"
+    },
+    "domain" : "41",
+    "comment" : {
+      "en" : "Links processor to its manufacturing technology node.",
+      "fr" : "Relie le processeur à son nœud de fabrication."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "276"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#location",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "279",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "location",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "localisation",
+        "type" : "label"
+      } ],
+      "seeAlso" : [ {
+        "identifier" : "seeAlso",
+        "language" : "undefined",
+        "value" : "https://www.schema.org/address",
+        "type" : "iri"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "location"
+    },
+    "minCardinality" : "1",
+    "domain" : "92",
+    "comment" : {
+      "en" : "Geographic location of the HPC center as string(e.g., 'Orsay, France'). For structured postal data, use schema:address"
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "278"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasTotalAcceleratorMemory",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "21",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has total accelerator memory",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a mémoire totale des accélérateurs",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasTotalAcceleratorMemory"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Links the partition to the total memory of all its accelerators (GPUs/APUs).",
+      "fr" : "Relie la partition à la mémoire totale de tous ses accélérateurs (GPU/APU)."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "280"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#refersToModel",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "39",
+    "label" : {
+      "IRI-based" : "refersToModel",
+      "en" : "refers to hardware model",
+      "fr" : "réfère au modèle matériel"
+    },
+    "domain" : "120",
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "281"
+  }, {
+    "range" : "152",
+    "domain" : "168",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "282"
+  }, {
+    "range" : "152",
+    "domain" : "154",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "283"
+  }, {
+    "range" : "152",
+    "domain" : "231",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "284"
+  }, {
+    "range" : "39",
+    "domain" : "165",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "285"
+  }, {
+    "range" : "152",
+    "domain" : "182",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "286"
+  }, {
+    "range" : "120",
+    "domain" : "13",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "287"
+  }, {
+    "range" : "152",
+    "domain" : "277",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "288"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasTDP",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "9",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a TDP",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has TDP",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasTDP"
+    },
+    "domain" : "268",
+    "comment" : {
+      "en" : "Links processor to its manufacturer-specified TDP (Watts). e.g. NVIDIA A100 SXM4 -> 400W TDP, H100 SXM5 -> 700W TDP.",
+      "fr" : "Relie le processeur à son TDP spécifié par le fabricant (Watts). ex: NVIDIA A100 SXM4->TDP 400W, H100 SXM5->TDP 700W."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "289"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasCPUComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasCPUComponent",
+      "en" : "has CPU component",
+      "fr" : "a un composant CPU"
+    },
+    "superproperty" : [ "30" ],
+    "domain" : "129",
+    "comment" : {
+      "en" : "Links a compute node to a contextualized CPU component (model + socket count).",
+      "fr" : "Lie un nœud de calcul à un composant CPU contextualisé (modèle + quantité)."
+    },
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "290"
+  }, {
+    "range" : "74",
+    "domain" : "73",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "291"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasCPUComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasCPUComponent",
+      "en" : "has CPU component",
+      "fr" : "a un composant CPU"
+    },
+    "superproperty" : [ "30" ],
+    "domain" : "129",
+    "comment" : {
+      "en" : "Links a compute node to a contextualized CPU component (model + socket count).",
+      "fr" : "Lie un nœud de calcul à un composant CPU contextualisé (modèle + quantité)."
+    },
+    "attributes" : [ "object", "external", "allValues" ],
+    "id" : "292"
+  }, {
+    "range" : "74",
+    "domain" : "217",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "293"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#softwareName",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "296",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "software name",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nom du logiciel",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "softwareName"
+    },
+    "domain" : "152",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "295"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasProcessorComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "13",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a pour composant processeur",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has processor component",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasProcessorComponent"
+    },
+    "superproperty" : [ "30" ],
+    "domain" : "80",
+    "attributes" : [ "object", "external" ],
+    "id" : "175"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#acceleratorUnitsPerCard",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "260",
+    "label" : {
+      "IRI-based" : "acceleratorUnitsPerCard"
+    },
+    "domain" : "42",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "297"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#isSoftware",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "152",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "est logiciel",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "is software",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "isSoftware"
+    },
+    "domain" : "77",
+    "comment" : {
+      "en" : "Links a specific installed version to its parent software package (e.g. version arch/a100 -> AOCC compiler).",
+      "fr" : "Lie une version installée spécifique à son logiciel parent (ex : version arch/a100 -> compilateur AOCC)."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "300"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#decommissioningDate",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "299",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "date de décommissionnement",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "decommissioning date",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "decommissioningDate"
+    },
+    "domain" : "301",
+    "comment" : {
+      "en" : "Date when the system/partition/generation was retired."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "302"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#partitionType",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "304",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "partition type",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "type de partition",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "partitionType"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Type of Partition (e.g. cpu, gpu, visu, etc.)."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "303"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasThroughput",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "46",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has throughput",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a débit",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasThroughput"
+    },
+    "domain" : "133",
+    "comment" : {
+      "en" : "Aggregate I/O throughput of a file system in GB/s or TB/s.",
+      "fr" : "Débit d'E/S agrégé d'un système de fichiers en Go/s ou To/s."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "305"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#osVersion",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "307",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "version SE",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "OS version",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "osVersion"
+    },
+    "domain" : "231",
+    "comment" : {
+      "en" : "Version of the operating system (e.g., 'Red Hat 8.5', 'Ubuntu 20.04')."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "306"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#threadCount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "309",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "thread count",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "nombre de fils",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "threadCount"
+    },
+    "domain" : "194",
+    "comment" : {
+      "en" : "Total hardware threads (cores × threads per core)."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "308"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#linkCount",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "294",
+    "label" : {
+      "IRI-based" : "linkCount",
+      "en" : "link count",
+      "fr" : "nombre de liens"
+    },
+    "domain" : "116",
+    "comment" : {
+      "en" : "Number of physical interconnect links available on this node.",
+      "fr" : "Nombre de liens d'interconnexion physiques disponibles sur ce nœud."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "310"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasTotalScalarMemory",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "21",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a mémoire totale scalaire",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has total scalar memory",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasTotalScalarMemory"
+    },
+    "domain" : "54",
+    "comment" : {
+      "en" : "Links the partition to the total scalar memory."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "311"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasCPUComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "12",
+    "label" : {
+      "IRI-based" : "hasCPUComponent",
+      "en" : "has CPU component",
+      "fr" : "a un composant CPU"
+    },
+    "superproperty" : [ "30" ],
+    "domain" : "79",
+    "comment" : {
+      "en" : "Links a compute node to a contextualized CPU component (model + socket count).",
+      "fr" : "Lie un nœud de calcul à un composant CPU contextualisé (modèle + quantité)."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "177"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasUnit",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "298",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a unité",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has unit",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasUnit"
+    },
+    "domain" : "2",
+    "comment" : {
+      "en" : "Unit of measurement."
+    },
+    "attributes" : [ "datatype", "external" ],
+    "id" : "312"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hostsAccelerator",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "32",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "hosts accelerator",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "héberge accélérateur",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hostsAccelerator"
+    },
+    "domain" : "42",
+    "comment" : {
+      "en" : "Links an accelerator card to the GPU die it hosts.",
+      "fr" : "Lie une carte accélératrice physique au die GPU qu'elle héberge."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "313"
+  }, {
+    "range" : "147",
+    "domain" : "149",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "316"
+  }, {
+    "range" : "129",
+    "domain" : "149",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "317"
+  }, {
+    "range" : "145",
+    "domain" : "149",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "318"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasDieSize",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "70",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "a taille de puce",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has die size",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasDieSize"
+    },
+    "domain" : "41",
+    "comment" : {
+      "en" : "Links processor to its physical silicon die size (mm²).",
+      "fr" : "Relie le processeur à la dimension physique de sa puce silicium (mm²)."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "319"
+  }, {
+    "range" : "147",
+    "domain" : "126",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "320"
+  }, {
+    "range" : "129",
+    "domain" : "126",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "321"
+  }, {
+    "range" : "145",
+    "domain" : "126",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "322"
+  }, {
+    "range" : "129",
+    "domain" : "147",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "323"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#usesResourceManager",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "154",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "utilise gestionnaire de ressources",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "uses resource manager",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "usesResourceManager"
+    },
+    "domain" : "33",
+    "comment" : {
+      "en" : "The resource manager/scheduler used by this system."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "324"
+  }, {
+    "range" : "145",
+    "domain" : "147",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "325"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#vendor",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "314",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "vendor",
+        "type" : "label"
+      }, {
+        "identifier" : "prefLabel",
+        "language" : "fr",
+        "value" : "fabricant",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "vendor"
+    },
+    "domain" : "315",
+    "attributes" : [ "datatype", "external" ],
+    "id" : "326"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasAcceleratorCardComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "42",
+    "label" : {
+      "IRI-based" : "hasAcceleratorCardComponent",
+      "en" : "has accelerator card component",
+      "fr" : "a un composant carte accélératrice"
+    },
+    "superproperty" : [ "30" ],
+    "domain" : "149",
+    "comment" : {
+      "en" : "Links a compute node to a contextualized accelerator card component (model + quantity).",
+      "fr" : "Lie un nœud de calcul à un composant carte accélératrice contextualisé (modèle + quantité)."
+    },
+    "attributes" : [ "object", "external", "someValues" ],
+    "id" : "327"
+  }, {
+    "range" : "126",
+    "domain" : "149",
+    "attributes" : [ "anonymous", "object" ],
+    "id" : "328"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasPhysicalStorageCapacity",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "17",
+    "annotations" : {
+      "prefLabel" : [ {
+        "identifier" : "prefLabel",
+        "language" : "en",
+        "value" : "has physical storage capacity",
+        "type" : "label"
+      } ]
+    },
+    "label" : {
+      "IRI-based" : "hasPhysicalStorageCapacity"
+    },
+    "domain" : "39",
+    "comment" : {
+      "en" : "Capacity of a physical storage device like an SSD or HDD."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "329"
+  }, {
+    "iri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#hasInterconnectComponent",
+    "baseIri" : "https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl",
+    "range" : "116",
+    "label" : {
+      "IRI-based" : "hasInterconnectComponent",
+      "en" : "has interconnect component",
+      "fr" : "a un composant interconnexion"
+    },
+    "superproperty" : [ "30" ],
+    "domain" : "29",
+    "comment" : {
+      "en" : "Links a compute node to a contextualized interconnect component (technology + link count).",
+      "fr" : "Lie un nœud de calcul à un composant d'interconnexion contextualisé."
+    },
+    "attributes" : [ "object", "external" ],
+    "id" : "178"
+  } ]
+}

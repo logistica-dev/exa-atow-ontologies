@@ -29,6 +29,7 @@
 @prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
 @prefix dc:       <http://purl.org/dc/elements/1.1/> .
+@prefix schema:   <https://www.schema.org/> .
 @prefix inst:     <https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_instances.ttl#> .
 
 <https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_instances.ttl>
@@ -215,6 +216,24 @@ inst:SC_Adastra rdf:type exa-atow:Supercomputer ;
     # 544×192 (Scalar) + 356×64 (Accelerated) (Add APU? 24x4 = 96)
     exa-atow:totalCoresCount 127232 .
 
+# EN – Irene (also known as Joliot-Curie) is the flagship supercomputer for 
+#      academic research at TGCC. It features several partitions including
+#      SKL (Intel Skylake), KNL (Intel Knights Landing), AMD (Rome), 
+#      and GPU (NVIDIA V100).
+
+inst:SC_Irene rdf:type exa-atow:Supercomputer ;
+    rdfs:label "Irene (Joliot-Curie)"@en , "Irene (Joliot-Curie)"@fr ;
+    rdfs:comment "Supercomputer hosted at TGCC. Multi-partition system including Intel Skylake, AMD Rome, and NVIDIA GPU nodes."@en ;
+    exa-atow:shortName "irene" ;
+    exa-atow:hostedAt inst:Center_TGCC ;
+    exa-atow:usesResourceManager exa-atow:SLURM ;
+    exa-atow:fundedBy inst:Org_GENCI ;
+    exa-atow:hasPartition inst:Part_Irene_SKL , 
+                           inst:Part_Irene_AMD , 
+                           inst:Part_Irene_V100 ;
+    exa-atow:computerBrand "Atos" ;
+    exa-atow:model "BullSequana X1000/XH2000" .
+
 
 ###############################################################################
 # ══════════════════════════════════════════════════════════════════════════════
@@ -241,16 +260,38 @@ inst:CPU_AMD_EPYC7A53_Trento rdf:type exa-atow:CPU ;
 # processor per node: 2 AMDGenoaEPY9654.
 inst:CPU_AMD_EPYC9654_Genoa rdf:type exa-atow:CPU ;
     rdfs:label "AMD EPYC 9654 (Genoa)"@en ;
-    rdfs:comment "96-core AMD Genoa CPU at 2.4 GHz (boost 3.7 GHz). Used in Adastra scalar nodes (768 GB DDR5) and 
-                 visualization/prepost nodes (2048 GiB DDR5), and frontend nodes (512 GiB DDR5)."@en ,
-                 "CPU AMD Genoa 96 cœurs à 2,4 GHz (boost 3,7 GHz). Utilisé dans les nœuds scalaires (768 Gio DDR5-4800), 
-                 visualisation/pré-post (2048 Gio DDR5) et frontaux (512 Gio DDR5) d'Adastra."@fr ;
+    rdfs:comment "AMD Genoa CPU wiht 96 cores at 2.4 GHz (boost 3.7 GHz). Used in Adastra scalar nodes (768 GB DDR5) and visualization/prepost nodes (2048 GiB DDR5), and frontend nodes (512 GiB DDR5)."@en ,
+                 "CPU AMD Genoa 96 cœurs à 2,4 GHz (boost 3,7 GHz). Utilisé dans les nœuds scalaires (768 Gio DDR5-4800),visualisation/pré-post (2048 Gio DDR5) et frontaux (512 Gio DDR5) d'Adastra."@fr ;
     exa-atow:vendor "AMD" ;
     exa-atow:model "AMD EPYC 9654" ;
     exa-atow:architecture "Genoa / Zen 4" ;
     exa-atow:coresCountPerSocket 96 ;
     exa-atow:threadCount 192 ; #-----------------------------------> check!
     exa-atow:hasFrequency inst:Freq_2_4GHz .
+
+
+#---------------------- TGCC Irene -------------------------
+# --- Modelos de Hardware (CPUs) ---
+
+inst:CPU_Intel_Skylake_8168 rdf:type exa-atow:CPU ;
+    rdfs:label "Intel Xeon Platinum 8168"@en ;
+    exa-atow:vendor "Intel" ;
+    exa-atow:coresCountPerSocket 24 ;
+    exa-atow:hasFrequency [ 
+        rdf:type exa-atow:Frequency ; 
+        exa-atow:hasValue 2.7 ; 
+        exa-atow:hasUnit "GHz" 
+    ] .s
+
+inst:CPU_AMD_Rome_7H12 rdf:type exa-atow:CPU ;
+    rdfs:label "AMD EPYC 7H12 (Rome)"@en ;
+    exa-atow:vendor "AMD" ;
+    exa-atow:coresCountPerSocket 64 ;
+    exa-atow:hasFrequency [ 
+        rdf:type exa-atow:Frequency ; 
+        exa-atow:hasValue 2.6 ; 
+        exa-atow:hasUnit "GHz" 
+    ] .
 
 
 # ────────── GPUs ──────────────────────────────────────────────────────────────
@@ -387,7 +428,7 @@ inst:Node_Adastra_Frontend rdf:type exa-atow:FrontendNode ;
         # 4 disks per node; RAID10 gives 3.2 TiB usable
         exa-atow:quantity 4
     ] ;
-    exa-atow:belongsToPartition Part_Adastra_frontend .
+    exa-atow:belongsToPartition inst:Part_Adastra_frontend .
 
 # ──── Visualization / prepost node ───────────────────────────────────────────
 # 12 nodes. 2× AMD EPYC 9654 Genoa (96 cores each) = 192 cores/node.
@@ -421,7 +462,7 @@ inst:Node_Adastra_Visu rdf:type exa-atow:VisualizationNode ;
         exa-atow:refersToModel inst:IC_Slingshot11_200G ;
         exa-atow:linkCount 1
     ] ;
-    exa-atow:belongsToPartition Part_Adastra_visu .
+    exa-atow:belongsToPartition inst:Part_Adastra_visu .
 
 # ──── Scalar node (Genoa) ─────────────────────────────────────────────────────
 # 544 nodes. 2× AMD EPYC 9654 (96 cores each) = 192 cores/node.
@@ -554,10 +595,40 @@ inst:Node_Adastra_APU rdf:type exa-atow:AcceleratedNode ;
         exa-atow:refersToModel inst:IC_Slingshot11_200G ;
         exa-atow:linkCount 4
     ] ;
-    exa-atow:belongsToPartition Part_Adastra_apu .
+    exa-atow:belongsToPartition inst:Part_Adastra_apu .
     # NOTE: no hasCPUComponent — CPU is embedded in MI300A package (see Card_MI300A / GPU_AMDInstinctMI300A).
     # NOTE: no hasMemoryComponent (RAM) — HBM3 is the sole memory, modeled at AcceleratorCard level.
 
+#-*-*
+# ========================= TGCC =============================================
+
+# --- Especificaciones de Nodos (Compute Nodes) ---
+
+inst:Node_Irene_SKL rdf:type exa-atow:ScalarNode ;
+    rdfs:label "Irene Skylake Compute Node"@en ;
+    exa-atow:hasCPUComponent [
+        rdf:type exa-atow:CPUComponent ;
+        exa-atow:refersToModel inst:CPU_Intel_Skylake_8168 ;
+        exa-atow:quantity 2
+    ] ;
+    exa-atow:hasMemoryComponent [
+        rdf:type exa-atow:MemoryComponent ;
+        exa-atow:refersToModel inst:Mem_DDR4_192GB ;
+        exa-atow:quantity 1
+    ] .
+
+inst:Node_Irene_AMD rdf:type exa-atow:ScalarNode ;
+    rdfs:label "Irene AMD Rome Compute Node"@en ;
+    exa-atow:hasCPUComponent [
+        rdf:type exa-atow:CPUComponent ;
+        exa-atow:refersToModel inst:CPU_AMD_Rome_7H12 ;
+        exa-atow:quantity 2
+    ] ;
+    exa-atow:hasMemoryComponent [
+        rdf:type exa-atow:MemoryComponent ;
+        exa-atow:refersToModel inst:Mem_DDR4_256GB ;
+        exa-atow:quantity 1
+    ] .
 
 ###############################################################################
 # ══════════════════════════════════════════════════════════════════════════════
@@ -711,6 +782,24 @@ inst:Part_Adastra_frontend rdf:type exa-atow:Partition ;
     exa-atow:totalCoresCount 1920 ; 
     exa-atow:usesNodeType inst:Node_Adastra_Frontend .
 
+#-------------------------------------------
+# --- Irene TGCC - Principal Partitions ---
+#-------------------------------------------
+
+inst:Part_Irene_SKL rdf:type exa-atow:Partition ;
+    rdfs:label "Irene SKL (Skylake) Partition"@en ;
+    exa-atow:hasComputeNode inst:Node_Irene_SKL ;
+    exa-atow:nodeCount 1656 ;
+    exa-atow:totalCoresCount 79488 . # 1656 nodes * 48 cores
+
+inst:Part_Irene_AMD rdf:type exa-atow:Partition ;
+    rdfs:label "Irene AMD (Rome) Partition"@en ;
+    exa-atow:hasComputeNode inst:Node_Irene_AMD ;
+    exa-atow:nodeCount 2292 ;
+    exa-atow:totalCoresCount 293376 . # 2292 nodes * 128 cores
+
+
+
 
 ###############################################################################
 # ══════════════════════════════════════════════════════════════════════════════
@@ -818,7 +907,6 @@ inst:OS_RHEL rdf:type exa-atow:OperatingSystem ;
 ###############################################################################
 
 # ──── CPU RAM (RAM subclass) ──────────────────────────────────────────────────
---->>> voy revisando las memoruas c/r a lo q dijo claude.
 inst:Mem_DDR4_3200_256GiB rdf:type exa-atow:RAM ;
     rdfs:label "256 GiB DDR4-3200 (Adastra GPU node CPU RAM)"@en ;
     rdfs:comment "CPU-side RAM for Adastra MI250X accelerated nodes. 256 GiB DDR4-3200 per node."@en ;
@@ -894,7 +982,7 @@ inst:Storage_SAS_SSD_1_6TiB rdf:type exa-atow:SAS_SSD ;
         exa-atow:hasUnit "TiB"
     ] .
 
------------------------------------------
+#-----------------------------------------
 
 ###############################################################################
 # ══════════════════════════════════════════════════════════════════════════════
