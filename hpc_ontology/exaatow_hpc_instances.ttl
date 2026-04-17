@@ -216,6 +216,24 @@ inst:SC_Adastra rdf:type exa-atow:Supercomputer ;
     # 544×192 (Scalar) + 356×64 (Accelerated) (Add APU? 24x4 = 96)
     exa-atow:totalCoresCount 127232 .
 
+# EN – Irene (also known as Joliot-Curie) is the flagship supercomputer for 
+#      academic research at TGCC. It features several partitions including
+#      SKL (Intel Skylake), KNL (Intel Knights Landing), AMD (Rome), 
+#      and GPU (NVIDIA V100).
+
+inst:SC_Irene rdf:type exa-atow:Supercomputer ;
+    rdfs:label "Irene (Joliot-Curie)"@en , "Irene (Joliot-Curie)"@fr ;
+    rdfs:comment "Supercomputer hosted at TGCC. Multi-partition system including Intel Skylake, AMD Rome, and NVIDIA GPU nodes."@en ;
+    exa-atow:shortName "irene" ;
+    exa-atow:hostedAt inst:Center_TGCC ;
+    exa-atow:usesResourceManager exa-atow:SLURM ;
+    exa-atow:fundedBy inst:Org_GENCI ;
+    exa-atow:hasPartition inst:Part_Irene_SKL , 
+                           inst:Part_Irene_AMD , 
+                           inst:Part_Irene_V100 ;
+    exa-atow:computerBrand "Atos" ;
+    exa-atow:model "BullSequana X1000/XH2000" .
+
 
 ###############################################################################
 # ══════════════════════════════════════════════════════════════════════════════
@@ -250,6 +268,30 @@ inst:CPU_AMD_EPYC9654_Genoa rdf:type exa-atow:CPU ;
     exa-atow:coresCountPerSocket 96 ;
     exa-atow:threadCount 192 ; #-----------------------------------> check!
     exa-atow:hasFrequency inst:Freq_2_4GHz .
+
+
+#---------------------- TGCC Irene -------------------------
+# --- Modelos de Hardware (CPUs) ---
+
+inst:CPU_Intel_Skylake_8168 rdf:type exa-atow:CPU ;
+    rdfs:label "Intel Xeon Platinum 8168"@en ;
+    exa-atow:vendor "Intel" ;
+    exa-atow:coresCountPerSocket 24 ;
+    exa-atow:hasFrequency [ 
+        rdf:type exa-atow:Frequency ; 
+        exa-atow:hasValue 2.7 ; 
+        exa-atow:hasUnit "GHz" 
+    ] .s
+
+inst:CPU_AMD_Rome_7H12 rdf:type exa-atow:CPU ;
+    rdfs:label "AMD EPYC 7H12 (Rome)"@en ;
+    exa-atow:vendor "AMD" ;
+    exa-atow:coresCountPerSocket 64 ;
+    exa-atow:hasFrequency [ 
+        rdf:type exa-atow:Frequency ; 
+        exa-atow:hasValue 2.6 ; 
+        exa-atow:hasUnit "GHz" 
+    ] .
 
 
 # ────────── GPUs ──────────────────────────────────────────────────────────────
@@ -557,6 +599,36 @@ inst:Node_Adastra_APU rdf:type exa-atow:AcceleratedNode ;
     # NOTE: no hasCPUComponent — CPU is embedded in MI300A package (see Card_MI300A / GPU_AMDInstinctMI300A).
     # NOTE: no hasMemoryComponent (RAM) — HBM3 is the sole memory, modeled at AcceleratorCard level.
 
+#-*-*
+# ========================= TGCC =============================================
+
+# --- Especificaciones de Nodos (Compute Nodes) ---
+
+inst:Node_Irene_SKL rdf:type exa-atow:ScalarNode ;
+    rdfs:label "Irene Skylake Compute Node"@en ;
+    exa-atow:hasCPUComponent [
+        rdf:type exa-atow:CPUComponent ;
+        exa-atow:refersToModel inst:CPU_Intel_Skylake_8168 ;
+        exa-atow:quantity 2
+    ] ;
+    exa-atow:hasMemoryComponent [
+        rdf:type exa-atow:MemoryComponent ;
+        exa-atow:refersToModel inst:Mem_DDR4_192GB ;
+        exa-atow:quantity 1
+    ] .
+
+inst:Node_Irene_AMD rdf:type exa-atow:ScalarNode ;
+    rdfs:label "Irene AMD Rome Compute Node"@en ;
+    exa-atow:hasCPUComponent [
+        rdf:type exa-atow:CPUComponent ;
+        exa-atow:refersToModel inst:CPU_AMD_Rome_7H12 ;
+        exa-atow:quantity 2
+    ] ;
+    exa-atow:hasMemoryComponent [
+        rdf:type exa-atow:MemoryComponent ;
+        exa-atow:refersToModel inst:Mem_DDR4_256GB ;
+        exa-atow:quantity 1
+    ] .
 
 ###############################################################################
 # ══════════════════════════════════════════════════════════════════════════════
@@ -709,6 +781,24 @@ inst:Part_Adastra_frontend rdf:type exa-atow:Partition ;
     #10 nodes x 192 cores
     exa-atow:totalCoresCount 1920 ; 
     exa-atow:usesNodeType inst:Node_Adastra_Frontend .
+
+#-------------------------------------------
+# --- Irene TGCC - Principal Partitions ---
+#-------------------------------------------
+
+inst:Part_Irene_SKL rdf:type exa-atow:Partition ;
+    rdfs:label "Irene SKL (Skylake) Partition"@en ;
+    exa-atow:hasComputeNode inst:Node_Irene_SKL ;
+    exa-atow:nodeCount 1656 ;
+    exa-atow:totalCoresCount 79488 . # 1656 nodes * 48 cores
+
+inst:Part_Irene_AMD rdf:type exa-atow:Partition ;
+    rdfs:label "Irene AMD (Rome) Partition"@en ;
+    exa-atow:hasComputeNode inst:Node_Irene_AMD ;
+    exa-atow:nodeCount 2292 ;
+    exa-atow:totalCoresCount 293376 . # 2292 nodes * 128 cores
+
+
 
 
 ###############################################################################
