@@ -41,7 +41,19 @@ The ontology is organized around four disjoint top-level branches:
 
 ### Core design pattern: HardwareModel vs HardwareComponent
 
-A central design decision separates **abstract hardware specifications** (`HardwareModel`) from **contextualized instantiations** (`HardwareComponent`):
+A central design decision separates **abstract hardware specifications** (`HardwareModel`) from **contextualized instantiations** (`HardwareComponent`).
+
+* HardwareModel: Represents the component model/type (e.g., NVIDIA H100, Intel Xeon Platinum). It is a conceptual class describing the general specifications.
+
+* HardwareComponent: Represents the actual physical instance of a model installed in a specific system.
+
+By doing this:
+- It allows us to state that a node has N instances of the same component model.
+- Provenance chains: We can track which models are present, in which nodes, and in what quantity.
+- Targeted queries: It makes it possible to ask "how many instances of the H100 model are present?" vs "which GPU models are being used?"
+- Scalability: Facilitates the management of configuration variants.
+
+
 
 ```
 ComputeNode

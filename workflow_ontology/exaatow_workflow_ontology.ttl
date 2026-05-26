@@ -1,4 +1,4 @@
-@prefix exa-atow: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#> .
+@prefix exato-wf: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -10,6 +10,8 @@
 @prefix dct:   <http://purl.org/dc/terms/> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix emmo: <http://emmo.info/emmo#> .
+@prefix osmo: <http://www.molmod.info/semantics/osmo#> .
 
 
 <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#> rdf:type owl:Ontology ;
@@ -44,50 +46,51 @@ skos:definition rdf:type owl:AnnotationProperty .
 # Workflow classes + execution
 #################################################################
 
-exa-atow:Workflow rdf:type owl:Class ;
+exato-wf:Workflow rdf:type owl:Class ;
     rdfs:subClassOf wfdesc:Workflow ,
                     [ rdf:type owl:Restriction ;
-                      owl:onProperty exa-atow:hasStep ;
+                      owl:onProperty exato-wf:hasStep ;
                       owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-                      owl:onClass exa-atow:WorkflowStep
+                      owl:onClass exato-wf:WorkflowStep
                     ] ;
     rdfs:comment "A discrete unit within a workflow representing a task, command, or function that contributes to the overall workflow goal. It may execute computations, data manipulations, or invoke external services. Dependencies and scheduling are defined between steps to control execution order."@en ,
                  "Une unité discrète au sein d'un flux de travail représentant une tâche, une commande ou une fonction contribuant à l'objectif global du workflow. Elle peut executer des calculs, manipulation des donnes ou appel aux services externes."@fr ;
     rdfs:label "Flux de travail"@fr , "Workflow"@en .
 
 
-exa-atow:WorkflowStep rdf:type owl:Class ;
+exato-wf:WorkflowStep rdf:type owl:Class ;
     rdfs:subClassOf wfdesc:Process , prov:Activity ;
     rdfs:comment "A discrete unit within a workflow representing a task, command, or function that contributes to the overall workflow goal. It may execute computations, data manipulations, or invoke external services. Dependencies and scheduling are defined between steps to control execution order."@en ,
                  "Une unité discrète au sein d'un flux de travail représentant une tâche, une commande ou une fonction contribuant à l'objectif global du workflow. Elle peut exécuter des calculs, manipuler des données ou appeler des services externes. Les dépendances et la planification entre les étapes contrôlent l'ordre d'exécution."@fr ;
     skos:prefLabel "Workflow Step"@en , "Étape du flux de travail"@fr .
 
 
-exa-atow:WorkflowEngine rdf:type owl:Class ;
+exato-wf:WorkflowEngine rdf:type owl:Class ;
     rdfs:subClassOf wfprov:WorkflowEngine, prov:SoftwareAgent ;
     rdfs:comment "A software system responsible for interpreting, orchestrating, scheduling, and managing the execution of a workflow, including its steps and underlying computational tools. Examples include CWL runner, Apache NiFi, Snakemake, and Airflow."@en ,
                  "Un système logiciel responsable de l'**interprétation, de l'orchestration, de la planification et de la gestion de l'exécution** d'un flux de travail, y compris ses étapes et les outils de calcul sous-jacents (par exemple, CWL runner, Airflow, Nextflow)."@fr ;
     skos:prefLabel "Moteur de flux de travail"@fr , "Workflow Engine"@en .
 
 
-exa-atow:SoftwareTool rdf:type owl:Class ;
+exato-wf:SoftwareTool rdf:type owl:Class ;
     rdfs:subClassOf prov:SoftwareAgent ;
-    rdfs:comment "A specific scientific software application, script, or command-line utility executed within a workflow step."@en ;
-    skos:prefLabel "Software Tool"@en .
+    rdfs:comment "A scientific software application, library, script, framework, or command-line utility used during workflow execution."@en ,
+                 "Une application logicielle scientifique, bibliothèque, script, framework ou utilitaire en ligne de commande utilisé lors de l’exécution d’un workflow."@fr ;
+    skos:prefLabel "Software Tool"@en ,
+                   "Outil logiciel"@fr .
 
-## Add in comment? Use
-## Use prov:wasAssociatedWith to link to the WorkflowEngine or SoftwareTool responsible.
-## Use prov:used and prov:generated for data provenance.
-## Use prov:startedAtTime and prov:endedAtTime for temporal information
-exa-atow:Execution rdf:type owl:Class ;
+
+exato-wf:Execution rdf:type owl:Class ;
     rdfs:subClassOf wfprov:WorkflowRun , prov:Activity ;
-    rdfs:comment "Represents an execution (run) instance of a workflow."@en ,
+    skos:definition "Represents an execution (run) instance of a workflow."@en ,
                  "Représente une instance d'exécution (run) d'un flux de travail."@fr ;
+    rdfs:comment "Usage note: Link to the responsible WorkflowEngine or SoftwareTool (prov:Agent) using 'prov:wasAssociatedWith'. Track data provenance using 'prov:used' and 'prov:generated'. Record temporal data using 'prov:startedAtTime' and 'prov:endedAtTime'."@en ,
+                 "Note d'utilisation : Lier al WorkflowEngine ou SoftwareTool responsable via 'prov:wasAssociatedWith'. Suivre la provenance des données avec 'prov:used' et 'prov:generated'. Enregistrer les données temporelles avec 'prov:startedAtTime' et 'prov:endedAtTime'."@fr ;
     skos:prefLabel "Execution"@en , "Exécution"@fr .
 
 
-exa-atow:ExecutionStatus rdf:type owl:Class ;
-    owl:oneOf (exa-atow:QueuedStatus exa-atow:RunningStatus exa-atow:CompletedStatus exa-atow:FailedStatus exa-atow:CancelledStatus) ;
+exato-wf:ExecutionStatus rdf:type owl:Class ;
+    owl:oneOf (exato-wf:QueuedStatus exato-wf:RunningStatus exato-wf:CompletedStatus exato-wf:FailedStatus exato-wf:CancelledStatus) ;
     rdfs:comment "Enumerated states for runtime (Queued, Running, Completed, Failed, Cancelled)."@en ,
                  "États énumérés pour l'exécution (En attente, En cours, Terminé, Échoué, Annulé)."@fr ;
     skos:prefLabel "Execution Status"@en , "Status d'exécution"@fr .
@@ -97,22 +100,22 @@ exa-atow:ExecutionStatus rdf:type owl:Class ;
 # Parameter/data classes
 #################################################################
 
-exa-atow:Parameter rdf:type owl:Class ;
+exato-wf:Parameter rdf:type owl:Class ;
     rdfs:subClassOf wfdesc:Parameter ;
     rdfs:comment "A variable representing an input or output data element within a workflow or step."@en ;
     skos:prefLabel "Parameter"@en ,
                    "Parametre"@fr .
 
-exa-atow:InputParameter rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:Parameter , wfdesc:Input ;
+exato-wf:InputParameter rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:Parameter , wfdesc:Input ;
     rdfs:comment "A data value or configuration setting required by a workflow step or command-line tool to begin execution. Inputs may include file paths, memory limits, container images, or dataset identifiers."@en ,
                  "Une valeur de donnée ou un paramètre de configuration requis par une étape ou un outil en ligne de commande pour démarrer l'exécution. Les entrées peuvent inclure des chemins de fichiers, des limites de mémoire, des images de conteneurs ou des identifiants de jeux de données."@fr ;
     skos:prefLabel "Input Parameter"@en ,
                    "Paramètre d’entrée"@fr .
 
 
-exa-atow:OutputParameter rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:Parameter , wfdesc:Output ;
+exato-wf:OutputParameter rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:Parameter , wfdesc:Output ;
     rdfs:comment "A result produced by a workflow step after execution. It may be a file, dataset, metric, or computation result used by other steps or stored for future processing."@en ,
                  "Un résultat produit par une étape de flux de travail après exécution. Il peut s'agir d'un fichier, d'un jeu de données, d'une métrique ou d'un résultat de calcul utilisé par d'autres étapes ou stocké pour un traitement ultérieur."@fr ;
     skos:prefLabel "Output Parameter"@en ,
@@ -124,10 +127,66 @@ exa-atow:OutputParameter rdf:type owl:Class ;
 #    - prov:wasGeneratedBy: links to the WorkflowStep that created this artifact
 #    - prov:wasDerivedFrom: links to source artifacts used to create this one
 #    - prov:wasUsedBy: links to WorkflowSteps that consumed this artifact
-exa-atow:DataArtifact rdf:type owl:Class ;
+exato-wf:DataArtifact rdf:type owl:Class ;
     rdfs:subClassOf prov:Entity ;
+    rdfs:subClassOf emmo:Datum ;
     rdfs:comment "A data artifact (file, dataset, object) produced or consumed by workflow steps."@en ;
     skos:prefLabel "Data Artifact"@en .
+
+
+########################################################
+# Link to Materials Science 
+ 
+exato-wf:ScientificIntent rdf:type owl:Class ;
+    rdfs:subClassOf prov:Plan ;
+    rdfs:label "Scientific Intent"@en ,
+               "Intention scientifique"@fr ;
+    skos:definition "High-level scientific objective or purpose motivating a workflow."@en ,
+                    "Objectif ou finalité scientifique de haut niveau motivant un workflow."@fr .
+
+exato-wf:hasScientificIntent rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:ScientificIntent ;
+    rdfs:label "has scientific intent"@en ,
+               "a une intention scientifique"@fr ;
+    skos:definition "Links a workflow to its scientific objective or purpose."@en ,
+                    "Relie un workflow à son objectif ou à sa finalité scientifique."@fr .
+
+
+# ----------------------------------------------------------
+# Properties -> Semantic linking points to Materials Science ontologies
+# ==========
+#
+exato-wf:targetsScientificConcept rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:ScientificIntent ;
+    rdfs:label "targets scientific concept"@en , "cible un concept scientifique"@fr ;
+    skos:definition "Relates a scientific intent to a scientific concept, physical property, phenomenon, or measurable quantity of interest."@en ,
+                    "Relie une intention scientifique à un concept scientifique, une propriété physique, un phénomène ou une grandeur mesurable d’intérêt."@fr ;
+    rdfs:comment "Scientific concepts may reference terms from domain ontologies such as EMMO, CHAMEO, OSMO, or other community vocabularies. Example: a workflow for band gap prediction may target emmo:ElectronicBandGap."@en ,
+                 "Exemple : un workflow de prédiction du gap électronique peut cibler emmo:ElectronicBandGap."@fr .
+
+
+exato-wf:usesScientificMethod rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:label "uses scientific method"@en , "utilise une méthode scientifique"@fr ;
+    skos:definition "Associates a workflow with a scientific or computational method employed during execution."@en ,
+                    "Associe un workflow à une méthode scientifique ou computationnelle utilisée pendant l’exécution."@fr ;
+    rdfs:comment "Scientific methods may reference concepts from ontologies such as OSMO, EMMO, or domain-specific method taxonomies. Example: a workflow may use emmo:ElectronicModel (or osmo:pe_type_atomistic_density_functional or osmo:pe_type_atomistic_molecular_dynamics) as computational methods."@en ,
+                 "Exemple : un workflow peut utiliser emmo:ElectronicModel (or osmo:pe_type_atomistic_density_functional or  osmo:pe_type_atomistic_molecular_dynamics) comme méthodes computationnelles."@fr .                 
+# :workflow1 exaw:usesScientificMethod emmo:DensityFunctionalTheory .
+# :step3 exaw:usesScientificMethod osmo:osmo:pe_type_atomistic_molecular_dynamics) .
+
+
+# Material/system of interest
+exato-wf:targetsMaterial rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:ScientificIntent ;
+    # rdfs:range emmo:EMMO_4207e895_8b83_4318_996a_72cfb32acd94 ;
+    rdfs:label "targets material"@en , "cible un matériau"@fr ;
+    skos:definition "Relates a scientific intent to the material or material class under investigation."@en ,
+                    "Relie une intention scientifique au matériau ou à la classe de matériaux étudiée."@fr ;
+    rdfs:comment "Example: a workflow studying thermoelectric alloys may target emmo:ThermoelectricMaterial."@en ,
+                 "Exemple : un workflow étudiant des alliages thermoélectriques peut cibler emmo:ThermoelectricMaterial."@fr .
+
 
 
 
@@ -135,7 +194,7 @@ exa-atow:DataArtifact rdf:type owl:Class ;
 # Workflow Metadata
 #################################################################
 
-exa-atow:WorkflowMetadata rdf:type owl:Class ;
+exato-wf:WorkflowMetadata rdf:type owl:Class ;
     rdfs:comment """
     Metadata entities describing contextual, provenance, or evaluative aspects 
     of workflows, their components, and results. Includes provenance records, 
@@ -144,8 +203,8 @@ exa-atow:WorkflowMetadata rdf:type owl:Class ;
     """@en ;
     skos:prefLabel "Workflow Metadata"@en , "Métadonnées du flux de travail"@fr .
 
-exa-atow:DataProvenance rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowMetadata ;
+exato-wf:DataProvenance rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowMetadata ;
     rdfs:comment """
     Describes the lineage and transformation history of data artifacts 
     within workflows. It links data inputs, intermediate results, and outputs 
@@ -155,58 +214,57 @@ exa-atow:DataProvenance rdf:type owl:Class ;
     skos:prefLabel "Data Provenance"@en , "Provenance des données"@fr .
 		   
 
-exa-atow:FAIRCompliance rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowMetadata ;
+exato-wf:FAIRCompliance rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowMetadata ;
     rdfs:comment "Indicates the extent to which the workflow, its components, and outputs adhere to the FAIR principles (Findable, Accessible, Interoperable, Reusable). Used to capture FAIRness evaluations or certifications"@en ,
                  "Indique dans quelle mesure le flux de travail, ses composants et ses sorties respectent les principes FAIR (Faciles à trouver, Accessibles, Interopérables, Réutilisables)."@fr ;
     skos:prefLabel "Conformité aux principes FAIR"@fr , "FAIR Compliance"@en .
 
 
 #################################################################
-# Computational resources + execution environments
+# Execution environments
 #################################################################
-exa-atow:ComputationalResource rdf:type owl:Class ;
-    rdfs:comment "A hardware or virtual resource required by an execution environment, such as HPC nodes, CPUs, GPUs, or memory."@en ,
-                 "Une ressource matérielle ou virtuelle requise par un environnement d'exécution, comme des nœuds HPC, des CPU, GPU ou mémoire."@fr ;
-    skos:prefLabel "Computational Resource"@en ,
-                   "Resource computationnelle"@fr .
-
-exa-atow:ExecutionEnvironment rdf:type owl:Class ;
+exato-wf:ExecutionEnvironment rdf:type owl:Class ;
     rdfs:comment "L'environnement dans lequel un flux de travail ou une étape s'exécute, incluant le logiciel, les conteneurs ou les ressources computationnelles."@fr ,
                  "The environment in which a workflow or step executes, including software, containers, or computational resources."@en ;
     skos:prefLabel "Environnement d'exécution"@fr ,
                    "Execution Environment"@en .
 
-exa-atow:LocalMachine rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:ExecutionEnvironment ;
+exato-wf:LocalMachine rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:ExecutionEnvironment ;
     rdfs:comment "Environment of the local workstation or laptop."@en ,
                  "Environnement local (poste de travail, portable)."@fr ;
     skos:prefLabel "Local Machine"@en ,
                    "Machine locale"@fr .
 
-exa-atow:HPCEnvironment rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:ExecutionEnvironment ;
-    rdfs:comment "A high-performance computing cluster providing compute nodes, memory, and scheduling capabilities for workflow execution."@en ,
-                 "Un cluster de calcul haute performance fournissant des nœuds de calcul, de la mémoire et des capacités d'ordonnancement pour l'exécution de workflows."@fr ;
-    skos:prefLabel "Environnement HPC"@fr ,
-                   "HPC Environment"@en .
+exato-wf:HPCEnvironment rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:ExecutionEnvironment ;
+    rdfs:subClassOf [
+        rdf:type owl:Restriction ;
+        owl:onProperty exa-atow:requiresResourceType ;
+        owl:allValuesFrom exa-hpc:HardwareModel
+    ] ;
+    rdfs:comment "An execution environment configured for high-performance computing workflows, typically involving parallel runtimes, schedulers, and specialized compute resources."@en ,
+                 "Un environnement d’exécution configuré pour des workflows de calcul haute performance, impliquant généralement des runtimes parallèles, des ordonnanceurs et des ressources de calcul spécialisées."@fr ;
+    skos:prefLabel "HPC Environment"@en ,
+                   "Environnement HPC"@fr .
 
-exa-atow:CloudEnvironment rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:ExecutionEnvironment ;
+exato-wf:CloudEnvironment rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:ExecutionEnvironment ;
     rdfs:comment "Cloud execution context (managed services, VMs, serverless platforms)."@en ,
                  "Contexte d'exécution cloud (services managés, VM, plateformes serverless)."@fr ;
     skos:prefLabel "Cloud Environment"@en ,
                    "Environnement Cloud"@fr .
 
-exa-atow:CondaEnvironment rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:ExecutionEnvironment ;
+exato-wf:CondaEnvironment rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:ExecutionEnvironment ;
     rdfs:comment "A software environment managed by Conda containing packages and dependencies needed for a workflow."@en ,
                  "Un environnement logiciel géré par Conda contenant les packages et dépendances nécessaires pour un flux de travail."@fr ;
    skos:prefLabel "Conda Environment"@en ,
                   "Environnement Conda"@fr .
 
-exa-atow:Container rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:ExecutionEnvironment ;
+exato-wf:Container rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:ExecutionEnvironment ;
     rdfs:comment "A portable, encapsulated execution environment containing all software dependencies required by a workflow step. Common formats include Docker and Singularity."@en ,
                  "Un environnement d'exécution portable et encapsulé contenant toutes les dépendances logicielles requises par une étape de flux de travail. Les formats courants incluent Docker et Singularity."@fr ;
     skos:prefLabel "Container"@en ,
@@ -217,106 +275,106 @@ exa-atow:Container rdf:type owl:Class ;
 # WorkflowProperty metaclass and subclasses (design & architecture)
 #################################################################
 
-exa-atow:WorkflowProperty rdf:type owl:Class ;
+exato-wf:WorkflowProperty rdf:type owl:Class ;
     rdfs:comment "Attributes describing structural, execution, or data management characteristic of a workflow."@en ,
                  "Attributs décrivant les caractéristiques structurelles, d'exécution ou de gestion des données d'un flux de travail."@fr ;
     skos:prefLabel "Propriété du flux de travail"@fr , "Workflow Property"@en .
 
 # Properties
-exa-atow:AbstractionLevel rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty;
-    owl:oneOf (exa-atow:Astract exa-atow:Concrete exa-atow:Implicit exa-atow:Intermediate) ;
+exato-wf:AbstractionLevel rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty;
+    owl:oneOf (exato-wf:Abstract exato-wf:Concrete exato-wf:Implicit exato-wf:Intermediate) ;
     rdfs:comment "Le niveau conceptuel auquel le flux de travail est défini. Va de implicite (niveau code), à abstrait (étapes logiques), intermédiaire, ou concret (plans d'exécution entièrement spécifiés)."@fr ,
                  "The conceptual level at which the workflow is defined. Ranges from implicit (code-level), abstract (logical steps), intermediate, to concrete (fully specified execution plans)."@en ;
     skos:prefLabel "Abstraction Level"@en , "Niveau d'abstraction"@fr .
 
 
-exa-atow:CompositionMethod rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:SchemaBased exa-atow:APIDriven exa-atow:GUIBased) ;
+exato-wf:CompositionMethod rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:SchemaBased exato-wf:APIDriven exato-wf:GUIBased) ;
     rdfs:comment "L’approche utilisée pour décrire et assembler un flux de travail dans un système de gestion de flux de travail (WMS). La composition peut être : (1) basée sur un schéma, où les workflows sont définis dans des fichiers texte structurés (XML, JSON, YAML, DSL) avec une syntaxe ad hoc spécifique à un WMS ou un format standard partagé par plusieurs WMS (par ex. CWL, IWIR, Wf-Format) ; (2) pilotée par API, où les workflows sont exprimés via une API de programmation ou un moteur de gabarit, permettant des structures de contrôle comme des boucles et des conditions ; ou (3) basée sur une interface graphique, où les workflows sont construits visuellement."@fr ,
                  "The approach used to describe and assemble a workflow within a workflow management system (WMS). Composition can be: (1) schema-based, where workflows are defined in structured text files (XML, JSON, YAML, DSL) with either ad-hoc syntax specific to a single WMS or a standardized format shared across multiple WMSs (e.g., CWL, IWIR, Wf-Format); (2) API-driven, where workflows are expressed through a programming API or template engine, enabling control structures such as loops and conditionals; or (3) GUI-based, where workflows are constructed visually via a graphical interface."@en ;
     skos:prefLabel "Composition Method"@en , "Méthode de composition"@fr .
 
 
-exa-atow:Coupling rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:TightCoupling exa-atow:LooseCoupling) ;
+exato-wf:Coupling rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:TightCoupling exato-wf:LooseCoupling) ;
     rdfs:comment "Degree of dependency between workflow components. Tight coupling implies strong interdependence and synchronous execution; loose coupling implies modularity and flexibility."@en ,
                  "Degré de dépendance entre les composants du flux de travail. Le couplage fort implique une interdépendance importante et une exécution synchrone ; le couplage faible favorise la modularité et la flexibilité."@fr ;
     skos:prefLabel "Couplage"@fr , "Coupling"@en .
 
 
-exa-atow:DataManagementGranularity rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:Batch exa-atow:Pipelined exa-atow:Partitioned) ;
+exato-wf:DataManagementGranularity rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:Batch exato-wf:Pipelined exato-wf:Partitioned) ;
     rdfs:comment "Granularity at which the WMS handles data operations. Possible values: Batch (data consumed and produced in full sets), Pipelined (data streamed record by record), Partitioned (data divided into groups of records)."@en ,
                  "Granularité à laquelle le système de gestion de workflow traite les opérations sur les données. Valeurs possibles : Batch (consommation et production en ensembles complets), Pipeline (flux enregistrements individuels), Partitionné (groupes d'enregistrements)."@fr ;
     skos:prefLabel "Data Management Granularity"@en , "Granularité de la gestion des données"@fr .
 
 
-exa-atow:DataManagementStorage rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:InMemory
-               exa-atow:LocalFileSystem
-               exa-atow:ReplicatedStorage
-               exa-atow:TransferTasks
-               exa-atow:SharedFileSystem
-               exa-atow:DistributedStorage) ;
+exato-wf:DataManagementStorage rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:InMemory
+               exato-wf:LocalFileSystem
+               exato-wf:ReplicatedStorage
+               exato-wf:TransferTasks
+               exato-wf:SharedFileSystem
+               exato-wf:DistributedStorage) ;
     rdfs:comment "Modèle de stockage utilisé pour les données intermédiaires. Valeurs possibles : Système de fichiers local, Système de fichiers partagé, Stockage distribué, Stockage répliqué, Tâches de transfert, En mémoire."@fr ,
                  "Storage model used for intermediate data. Possible values: LocalFileSystem, SharedFileSystem, DistributedStorage, ReplicatedStorage, TransferTasks, InMemory."@en ;
     skos:prefLabel "Data Management Storage"@en , "Stockage de la gestion des données"@fr .
 
-exa-atow:DataManagementTransport rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:StreamBased exa-atow:FileBased) ;
+exato-wf:DataManagementTransport rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:StreamBased exato-wf:FileBased) ;
     rdfs:comment "Mechanism to transfer intermediate data between workflow components. Possible values: FileBased (written/read from files), StreamBased (direct streaming via memory or network)."@en ,
                  "Mécanisme de transfert des données intermédiaires entre composants. Valeurs possibles : Basé sur fichiers (écriture/lecture depuis des fichiers), Basé sur flux (streaming direct via mémoire ou réseau)."@fr ;
     skos:prefLabel "Data Management Transport"@en , "Transport de la gestion des données"@fr .
 
-exa-atow:DomainSpecificity rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:GenericWorkflow exa-atow:DomainSpecificWorkflow) ;
+exato-wf:DomainSpecificity rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:GenericWorkflow exato-wf:DomainSpecificWorkflow) ;
     rdfs:comment "Describes whether the workflow is designed for a specific scientific or industrial domain, or is domain-agnostic and reusable."@en ,
                  "Indique si le flux de travail est conçu pour un domaine scientifique ou industriel spécifique, ou s’il est agnostique et réutilisable."@fr ;
     skos:prefLabel "Domain Specificity"@en , "Spécificité du domaine"@fr .
 
 
-exa-atow:ExecutionControl rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:ResourceManager exa-atow:Runner exa-atow:Serverless) ;
+exato-wf:ExecutionControl rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:ResourceManager exato-wf:Runner exato-wf:Serverless) ;
     rdfs:comment "Specifies the method used to execute tasks within a workflow. Possible values include: Runner (workflow system fully manages resources and task execution), Resource Manager (delegates resource allocation to an external manager such as a batch scheduler), and Serverless (cloud-based model where infrastructure management is handled by the provider)."@en ,
                  "Spécifie la méthode utilisée pour exécuter les tâches dans un workflow. Les valeurs possibles incluent : Exécuteur (le système gère entièrement les ressources et l'exécution), Gestionnaire de ressources (délègue l'allocation des ressources à un gestionnaire externe comme un ordonnanceur), et Sans serveur (modèle basé sur le cloud où la gestion de l'infrastructure est assurée par le fournisseur)."@fr ;
     skos:prefLabel "Contrôle d'exécution"@fr , "Execution Control"@en .
 
 
-exa-atow:FlowType rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:TaskBased exa-atow:DataDriven exa-atow:Iterative) ;
+exato-wf:FlowType rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:TaskBased exato-wf:DataDriven exato-wf:Iterative) ;
     rdfs:comment "La nature structurelle du flux de travail : basé sur les tâches (étapes séquentielles), orienté données (déclenché par la disponibilité des données) ou itératif (boucles sur des conditions ou des données)."@fr ,
                  "The structural nature of the workflow: task-based (sequential steps), data-driven (triggered by data availability), or iterative (looping over conditions or data)."@en ;
     skos:prefLabel "Flow Type"@en , "Type de flux"@fr .
 
 
-exa-atow:Granularity rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:FineGrained exa-atow:CoarsedGrained) ;
+exato-wf:Granularity rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:FineGrained exato-wf:CoarseGrained) ;
     rdfs:comment "Level of decomposition of a workflow: from fine-grained functions to coarse-grained sub-workflows or standalone executables."@en ,
                  "Niveau de décomposition d’un flux de travail : des fonctions de bas niveau aux sous-flux de travail ou exécutables autonomes de haut niveau."@fr ;
     skos:prefLabel "Granularity"@en , "Granularité"@fr .
 
 
-exa-atow:Modularity rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:Flat exa-atow:Hierarchical) ;
+exato-wf:Modularity rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:Flat exato-wf:Hierarchical) ;
     rdfs:comment "Describes how workflows are structured in terms of their components. Possible values include: Flat (single-level composition with no nested sub-workflows) and Hierarchical (nested sub-workflows enabling modular and scalable design)."@en ,
                  "Décrit la façon dont les workflows sont structurés en termes de composants. Les valeurs possibles sont : Plate (composition à un seul niveau sans sous-workflows imbriqués) et Hiérarchique (sous-workflows imbriqués permettant une conception modulaire et évolutive)."@fr ;
     skos:prefLabel "Modularity"@en , "Modularité"@fr .
 
 
-exa-atow:OrchestrationPlanning rdf:type owl:Class ;
-    rdfs:subClassOf exa-atow:WorkflowProperty ;
-    owl:oneOf (exa-atow:StaticPlanning exa-atow:DynamicPlanning exa-atow:EventDriven) ;
+exato-wf:OrchestrationPlanning rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    owl:oneOf (exato-wf:StaticPlanning exato-wf:DynamicPlanning exato-wf:EventDriven) ;
     rdfs:comment "Defines how a workflow system plans its execution. Possible values include: Static (all scheduling and resource allocation decisions made before execution starts), Dynamic (decisions are adapted during execution), and Event-driven (execution reacts to triggers or conditions at runtime)."@en ,
                  "Définit la manière dont un système de workflow planifie son exécution. Les valeurs possibles incluent : Statique (toutes les décisions prises avant l'exécution), Dynamique (les décisions sont adaptées pendant l'exécution) et Piloté par événements (l'exécution réagit à des déclencheurs ou conditions en temps réel)."@fr ;
     skos:prefLabel "Orchestration Planning"@en , "Planification de l'orchestration"@fr .
@@ -329,188 +387,188 @@ exa-atow:OrchestrationPlanning rdf:type owl:Class ;
 # ===== WorkflowProperty instances =====
 
 # ----- CompositionMethod -----
-exa-atow:SchemaBased rdf:type owl:NamedIndividual , exa-atow:CompositionMethod ;
+exato-wf:SchemaBased rdf:type owl:NamedIndividual , exato-wf:CompositionMethod ;
     rdfs:comment "Workflows defined in structured text files  (XML, JSON, YAML, DSL) with either ad-hoc syntax specific to a single WMS or a standardized format shared across multiple WMSs (e.g., CWL, IWIR, Wf-format)."@en ,
                  "Workflows définis dans des fichiers texte structurés  (XML, JSON, YAML, DSL) avec une syntaxe ad hoc spécifique à un WMS ou un format standard partagé par plusieurs WMS (par ex. CWL, IWIR, Wf-Format) ."@fr ;
     skos:prefLabel "Basée sur un schéma"@fr , "Schema-based"@en .
 
-exa-atow:APIDriven rdf:type owl:NamedIndividual , exa-atow:CompositionMethod ;
+exato-wf:APIDriven rdf:type owl:NamedIndividual , exato-wf:CompositionMethod ;
     rdfs:comment "Workflows expressed via a programming API or template engine, enabling control structures such as loops and conditionals."@en ,
                  "Workflows exprimés via une API de programmation ou un moteur de gabarit, permettant des structures de contrôle comme des boucles et des conditions."@fr ;
     skos:prefLabel "API-driven"@en , "Pilotée par API"@fr .
 
-exa-atow:GUIBased rdf:type owl:NamedIndividual , exa-atow:CompositionMethod ;
+exato-wf:GUIBased rdf:type owl:NamedIndividual , exato-wf:CompositionMethod ;
     rdfs:comment "Workflows built visually through a GUI."@en ,
                  "Workflows construits visuellement via une interface graphique."@fr ;
     skos:prefLabel "Basée sur une interface graphique"@fr , "GUI-based"@en .
 
 # ----- AbstractionLevel -----
-exa-atow:Abstract rdf:type owl:NamedIndividual , exa-atow:AbstractionLevel ;
+exato-wf:Abstract rdf:type owl:NamedIndividual , exato-wf:AbstractionLevel ;
     rdfs:comment "Flux de travail défini comme étapes logiques."@fr ,
                  "Workflow defined as logical steps."@en ;
     skos:prefLabel "Abstract level"@en , "Abstrait"@fr .
 
-exa-atow:Concrete rdf:type owl:NamedIndividual , exa-atow:AbstractionLevel ;
+exato-wf:Concrete rdf:type owl:NamedIndividual , exato-wf:AbstractionLevel ;
     rdfs:comment "Fully specified execution plans."@en ,
                  "Plans d'exécution entièrement spécifiés."@fr ;
     skos:prefLabel "Concret"@fr , "Concrete"@en .
 
-exa-atow:Implicit rdf:type owl:NamedIndividual , exa-atow:AbstractionLevel ;
+exato-wf:Implicit rdf:type owl:NamedIndividual , exato-wf:AbstractionLevel ;
     rdfs:comment "Flux de travail défini au niveau du code."@fr ,
                  "Workflow defined at code level."@en ;
     skos:prefLabel "Implicit"@en , "Implicite"@fr .
 				 
-exa-atow:Intermediate rdf:type owl:NamedIndividual , exa-atow:AbstractionLevel ;
+exato-wf:Intermediate rdf:type owl:NamedIndividual , exato-wf:AbstractionLevel ;
     rdfs:comment "Workflow defined with a balance between logical steps and initial execution constraints, often including platform-agnostic configuration or data flow specifications."@en ,
                  "Le flux de travail est défini avec un équilibre entre les étapes logiques et les contraintes d'exécution initiales, incluant souvent une configuration agnostique de la plateforme ou des spécifications de flux de données."@fr ;
     skos:prefLabel "Intermediate"@en , "Intermédiaire"@fr .
 
 # ----- Coupling instances -----
-exa-atow:TightCoupling rdf:type owl:NamedIndividual , exa-atow:Coupling ;
+exato-wf:TightCoupling rdf:type owl:NamedIndividual , exato-wf:Coupling ;
     rdfs:comment "Forte interdépendance et exécution synchrone entre les composants."@fr ,
                  "Strong interdependence and synchronous execution between components."@en ;
     skos:prefLabel "Couplage fort"@fr , "Tight Coupling"@en .
 
-exa-atow:LooseCoupling rdf:type owl:NamedIndividual , exa-atow:Coupling ;
+exato-wf:LooseCoupling rdf:type owl:NamedIndividual , exato-wf:Coupling ;
     rdfs:comment "Interaction modulaire et flexible entre les composants du flux de travail."@fr ,
                  "Modular and flexible interaction between workflow components."@en ;
     skos:prefLabel "Couplage faible"@fr , "Loose Coupling"@en .
 
 # ----- ExecutionControl instances -----
-exa-atow:ResourceManager rdf:type owl:NamedIndividual , exa-atow:ExecutionControl ;
+exato-wf:ResourceManager rdf:type owl:NamedIndividual , exato-wf:ExecutionControl ;
     rdfs:comment "Delegates to external resource managers."@en ,
                  "Délègue à un gestionnaire de ressources externe."@fr ;
     skos:prefLabel "Gestionnaire de ressources"@fr , "Resource Manager"@en .
 
-exa-atow:Runner rdf:type owl:NamedIndividual , exa-atow:ExecutionControl ;
+exato-wf:Runner rdf:type owl:NamedIndividual , exato-wf:ExecutionControl ;
     rdfs:comment "Gère l'exécution des tâches et les ressources."@fr ,
                  "Manages task execution and resources."@en ;
     skos:prefLabel "Exécuteur"@fr ,"Runner"@en .
 
-exa-atow:Serverless rdf:type owl:NamedIndividual , exa-atow:ExecutionControl ;
+exato-wf:Serverless rdf:type owl:NamedIndividual , exato-wf:ExecutionControl ;
     rdfs:comment "Infrastructure gérée par le fournisseur."@fr ,
                  "Infrastructure handled by the provider."@en ;
     skos:prefLabel "Sans serveur"@fr , "Serverless"@en .
 
 # ----- FlowType instances -----
-exa-atow:TaskBased rdf:type owl:NamedIndividual , exa-atow:FlowType ;
+exato-wf:TaskBased rdf:type owl:NamedIndividual , exato-wf:FlowType ;
     rdfs:comment "Le flux de travail progresse à travers une séquence définie de tâches."@fr ,
                  "Workflow progresses through a defined sequence of tasks."@en ;
     skos:prefLabel "Basé sur les tâches"@fr , "Task-based"@en .
 
-exa-atow:DataDriven rdf:type owl:NamedIndividual , exa-atow:FlowType ;
+exato-wf:DataDriven rdf:type owl:NamedIndividual , exato-wf:FlowType ;
     rdfs:comment "L'exécution du flux est déclenchée par la disponibilité des données."@fr ,
                  "Workflow execution is triggered by data availability."@en ;
     skos:prefLabel "Data-driven"@en , "Orienté données"@fr .
 
-exa-atow:Iterative rdf:type owl:NamedIndividual , exa-atow:FlowType ;
+exato-wf:Iterative rdf:type owl:NamedIndividual , exato-wf:FlowType ;
     rdfs:comment "Le flux de travail boucle sur des conditions ou des données jusqu’à ce qu’un critère soit satisfait."@fr ,
                  "Workflow loops over conditions or data until a criterion is met."@en ;
     skos:prefLabel "Iterative"@en , "Itératif"@fr .
 
 
 # ----- Granularity instances -----
-exa-atow:FineGrained rdf:type owl:NamedIndividual , exa-atow:Granularity ;
+exato-wf:FineGrained rdf:type owl:NamedIndividual , exato-wf:Granularity ;
     rdfs:comment "Le flux est composé de petites tâches atomiques ou fonctions."@fr ,
                  "Workflow is composed of small, atomic tasks or functions."@en ;
     skos:prefLabel "Fine-grained"@en , "Finesse granulaire"@fr .
 
-exa-atow:CoarseGrained rdf:type owl:NamedIndividual , exa-atow:Granularity ;
+exato-wf:CoarseGrained rdf:type owl:NamedIndividual , exato-wf:Granularity ;
     rdfs:comment "Le flux est construit avec des composants plus larges comme des sous-flux ou des applications complètes."@fr ,
                  "Workflow is built with larger components such as sub-workflows or complete applications."@en ;
     skos:prefLabel "Coarse-grained"@en , "Gros grain"@fr .
 
 
 # ----- Modularity instances -----
-exa-atow:Flat rdf:type owl:NamedIndividual , exa-atow:Modularity ;
+exato-wf:Flat rdf:type owl:NamedIndividual , exato-wf:Modularity ;
     rdfs:comment "Composition à un seul niveau sans sous-workflows imbriqués."@fr ,
                  "Single-level composition with no nesting."@en ;
     skos:prefLabel "Flat"@en , "Plate"@fr .
 
-exa-atow:Hierarchical rdf:type owl:NamedIndividual , exa-atow:Modularity ;
-    rdfs:comment "Nested sub-workflows for modular design. Use exa-atow:isPartOfWorkflow to link parent steps to child workflows."@en ,
+exato-wf:Hierarchical rdf:type owl:NamedIndividual , exato-wf:Modularity ;
+    rdfs:comment "Nested sub-workflows for modular design. Use exato-wf:isPartOfWorkflow to link parent steps to child workflows."@en ,
                  "Sous-workflows imbriqués pour une conception modulaire."@fr ;
     skos:prefLabel "Hierarchical"@en , "Hiérarchique"@fr .
 
 
 # ----- Orchestration Planning instances  -----
-exa-atow:StaticPlanning rdf:type owl:NamedIndividual , exa-atow:OrchestrationPlanning ;
+exato-wf:StaticPlanning rdf:type owl:NamedIndividual , exato-wf:OrchestrationPlanning ;
     rdfs:comment "Decisions made before execution."@en ,
                  "Décisions prises avant l'exécution."@fr ;
     skos:prefLabel "Static"@en , "Statique"@fr .
 
-exa-atow:DynamicPlanning rdf:type owl:NamedIndividual , exa-atow:OrchestrationPlanning ;
+exato-wf:DynamicPlanning rdf:type owl:NamedIndividual , exato-wf:OrchestrationPlanning ;
     rdfs:comment "Adapted during execution."@en ,
                  "Adapté pendant l'exécution."@fr ;
     skos:prefLabel "Dynamic"@en , "Dynamique"@fr .
 
-exa-atow:EventDriven rdf:type owl:NamedIndividual , exa-atow:OrchestrationPlanning ;
+exato-wf:EventDriven rdf:type owl:NamedIndividual , exato-wf:OrchestrationPlanning ;
     rdfs:comment "Execution reacts to runtime triggers."@en ,
                  "Réagit à des déclencheurs en temps réel."@fr ;
     skos:prefLabel "Event-driven"@en , "Piloté par événements"@fr .
 
 
 # ----- DomainSpecificity instances -----
-exa-atow:GenericWorkflow rdf:type owl:NamedIndividual , exa-atow:DomainSpecificity ;
+exato-wf:GenericWorkflow rdf:type owl:NamedIndividual , exato-wf:DomainSpecificity ;
     skos:prefLabel "Generic"@en , "Générique"@fr .
 
-exa-atow:DomainSpecificWorkflow rdf:type owl:NamedIndividual , exa-atow:DomainSpecificity ;
+exato-wf:DomainSpecificWorkflow rdf:type owl:NamedIndividual , exato-wf:DomainSpecificity ;
     skos:prefLabel "Domain-specific"@en , "Spécifique au domaine"@fr .
 
 
 # ----- DataManagementStorage instances  -----
-exa-atow:InMemory rdf:type owl:NamedIndividual , exa-atow:DataManagementStorage ;
+exato-wf:InMemory rdf:type owl:NamedIndividual , exato-wf:DataManagementStorage ;
     rdfs:comment "Data held in RAM."@en , "Données conservées en RAM."@fr ;
     skos:prefLabel "En mémoire"@fr , "In-Memory"@en .
 
-exa-atow:LocalFileSystem rdf:type owl:NamedIndividual , exa-atow:DataManagementStorage ;
+exato-wf:LocalFileSystem rdf:type owl:NamedIndividual , exato-wf:DataManagementStorage ;
     rdfs:comment "Data stored locally on one machine."@en , 
                  "Données stockées localement sur une machine."@fr ;
     skos:prefLabel "Local File System"@en , "Système de fichiers local"@fr .
 
-exa-atow:ReplicatedStorage rdf:type owl:NamedIndividual , exa-atow:DataManagementStorage ;
+exato-wf:ReplicatedStorage rdf:type owl:NamedIndividual , exato-wf:DataManagementStorage ;
     rdfs:comment "Copies de données dans plusieurs emplacements."@fr ,
                  "Copies of data stored in multiple locations."@en ;
     skos:prefLabel "Replicated Storage"@en , "Stockage répliqué"@fr .
 
-exa-atow:TransferTasks rdf:type owl:NamedIndividual , exa-atow:DataManagementStorage ;
+exato-wf:TransferTasks rdf:type owl:NamedIndividual , exato-wf:DataManagementStorage ;
     rdfs:comment "Intermediate tasks move data."@en , 
                  "Tâches intermédiaires déplacent les données."@fr ;
     skos:prefLabel "Transfer Tasks"@en , "Tâches de transfert"@fr .
 
-exa-atow:SharedFileSystem rdf:type owl:NamedIndividual , exa-atow:DataManagementStorage ;
+exato-wf:SharedFileSystem rdf:type owl:NamedIndividual , exato-wf:DataManagementStorage ;
     rdfs:comment "Accessible by multiple nodes."@en , "Accessible par plusieurs nœuds."@fr ;
     skos:prefLabel "Shared File System"@en , "Système de fichiers partagé"@fr .
 
-exa-atow:DistributedStorage rdf:type owl:NamedIndividual , exa-atow:DataManagementStorage ;
+exato-wf:DistributedStorage rdf:type owl:NamedIndividual , exato-wf:DataManagementStorage ;
     rdfs:comment "Data spread across several machines."@en ,
                  "Données réparties sur plusieurs machines."@fr ;
     skos:prefLabel "Distributed Storage"@en , "Stockage distribué"@fr .
 
 
 # ----- DataManagementTransport instances -----
-exa-atow:StreamBased rdf:type owl:NamedIndividual , exa-atow:DataManagementTransport ;
+exato-wf:StreamBased rdf:type owl:NamedIndividual , exato-wf:DataManagementTransport ;
     rdfs:comment "Streaming via memory or network."@en ,
                  "Streaming via mémoire ou réseau."@fr ;
     skos:prefLabel "Basé sur flux"@fr , "Stream-based"@en .
 
-exa-atow:FileBased rdf:type owl:NamedIndividual , exa-atow:DataManagementTransport ;
+exato-wf:FileBased rdf:type owl:NamedIndividual , exato-wf:DataManagementTransport ;
     rdfs:comment "Transfer via file writing/reading."@en , "Transfert via fichiers."@fr ;
     skos:prefLabel "Basé sur fichiers"@fr , "File-based"@en .
 
 
 # ----- DataManagementGranularity -----
-exa-atow:Batch rdf:type owl:NamedIndividual , exa-atow:DataManagementGranularity ;
+exato-wf:Batch rdf:type owl:NamedIndividual , exato-wf:DataManagementGranularity ;
     rdfs:comment "Full sets of data consumed/produced."@en ,
                  "Jeux de données complets consommés/produits."@fr ;
     skos:prefLabel "Batch"@en , "Batch"@fr .
 
-exa-atow:Pipelined rdf:type owl:NamedIndividual , exa-atow:DataManagementGranularity ;
+exato-wf:Pipelined rdf:type owl:NamedIndividual , exato-wf:DataManagementGranularity ;
     rdfs:comment "Data streamed record by record."@en ,
                  "Flux de données enregistrements par enregistrements."@fr ;
     skos:prefLabel "Pipeline"@fr , "Pipelined"@en .
 
-exa-atow:Partitioned rdf:type owl:NamedIndividual , exa-atow:DataManagementGranularity ;
+exato-wf:Partitioned rdf:type owl:NamedIndividual , exato-wf:DataManagementGranularity ;
     rdfs:comment "Data divided into groups of records."@en ,
                  "Données divisées en groupes d'enregistrements."@fr ;
     skos:prefLabel "Partitioned"@en , "Partitionné"@fr .
@@ -518,27 +576,27 @@ exa-atow:Partitioned rdf:type owl:NamedIndividual , exa-atow:DataManagementGranu
 
 # ===== ExecutionStatus instances  =====
 
-exa-atow:QueuedStatus rdf:type owl:NamedIndividual , exa-atow:ExecutionStatus ;
+exato-wf:QueuedStatus rdf:type owl:NamedIndividual , exato-wf:ExecutionStatus ;
     rdfs:comment "The workflow or task has been submitted and is waiting for resources to become available for execution."@en ,
                  "Le flux de travail ou la tâche a été soumis et est en attente que les ressources deviennent disponibles pour l'exécution."@fr ;
     skos:prefLabel "Queued"@en , "En attente"@fr .
 
-exa-atow:RunningStatus rdf:type owl:NamedIndividual , exa-atow:ExecutionStatus ;
+exato-wf:RunningStatus rdf:type owl:NamedIndividual , exato-wf:ExecutionStatus ;
     rdfs:comment "The workflow or task is currently being executed."@en ,
                  "Le flux de travail ou la tâche est en cours d'exécution."@fr ;
     skos:prefLabel "Running"@en , "En cours"@fr .
 
-exa-atow:CompletedStatus rdf:type owl:NamedIndividual , exa-atow:ExecutionStatus ;
+exato-wf:CompletedStatus rdf:type owl:NamedIndividual , exato-wf:ExecutionStatus ;
     rdfs:comment "The workflow or task finished successfully."@en ,
                  "Le flux de travail ou la tâche s'est terminé avec succès."@fr ;
     skos:prefLabel "Completed"@en , "Terminé"@fr .
 
-exa-atow:FailedStatus rdf:type owl:NamedIndividual , exa-atow:ExecutionStatus ;
+exato-wf:FailedStatus rdf:type owl:NamedIndividual , exato-wf:ExecutionStatus ;
     rdfs:comment "The workflow or task terminated due to an error."@en ,
                  "Le flux de travail ou la tâche s'est terminé en raison d'une erreur."@fr ;
     skos:prefLabel "Failed"@en , "Échoué"@fr .
 
-exa-atow:CancelledStatus rdf:type owl:NamedIndividual , exa-atow:ExecutionStatus ;
+exato-wf:CancelledStatus rdf:type owl:NamedIndividual , exato-wf:ExecutionStatus ;
     rdfs:comment "The workflow or task was explicitly stopped by a user or system prior to completion."@en ,
                  "Le flux de travail ou la tâche a été explicitement arrêté par un utilisateur ou le système avant son achèvement."@fr ;
     skos:prefLabel "Cancelled"@en , "Annulé"@fr .
@@ -551,11 +609,11 @@ exa-atow:CancelledStatus rdf:type owl:NamedIndividual , exa-atow:ExecutionStatus
 # ===== Provenance & Data Lineage =====
 
 ## prov:wasGeneratedBy
-exa-atow:wasGeneratedBy rdf:type owl:ObjectProperty ;
+exato-wf:wasGeneratedBy rdf:type owl:ObjectProperty ;
     rdfs:subPropertyOf prov:wasGeneratedBy ;
-    rdfs:domain exa-atow:DataArtifact ;
-    rdfs:range exa-atow:WorkflowStep ;
-    owl:inverseOf exa-atow:produces ;
+    rdfs:domain exato-wf:DataArtifact ;
+    rdfs:range exato-wf:WorkflowStep ;
+    owl:inverseOf exato-wf:produces ;
     rdfs:comment "Indicates the workflow step that produced this data artifact."@en ,
                  "Indique l'étape du flux de travail qui a produit cet artefact de données."@fr ;
     skos:prefLabel "was generated by"@en ,
@@ -563,37 +621,29 @@ exa-atow:wasGeneratedBy rdf:type owl:ObjectProperty ;
     rdfs:seeAlso <https://www.w3.org/TR/prov-o/#wasGeneratedBy> .
 
 ## prov:wasDerivedFrom
-exa-atow:wasDerivedFrom rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
-    rdfs:range exa-atow:DataArtifact ;
+exato-wf:wasDerivedFrom rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
+    rdfs:range exato-wf:DataArtifact ;
     rdfs:comment "Indicates that one data artifact was derived from another."@en ,
                  "Indique qu’un artefact de données a été dérivé d’un autre."@fr ;
     skos:prefLabel "was derived from"@en , "a été dérivé de"@fr ;
     rdfs:seeAlso <https://www.w3.org/TR/prov-o/> .
 
-##========================Check if need to add these properties ======
-#prov:used rdfs:domain exa-atow:WorkflowStep ;
-#    rdfs:range exa-atow:DataArtifact .
-
-#prov:wasAssociatedWith rdfs:domain exa-atow:Execution ;
-#    rdfs:range [ owl:unionOf ( exa-atow:WorkflowEngine exa-atow:SoftwareTool ) ] .
-#=======================================================================
-
-exa-atow:usedInStep rdf:type owl:ObjectProperty ;
+exato-wf:usedInStep rdf:type owl:ObjectProperty ;
 #    rdfs:subPropertyOf prov:wasUsedBy ;
-    rdfs:domain exa-atow:DataArtifact ;
-    rdfs:range exa-atow:WorkflowStep ;
-    owl:inverseOf exa-atow:consumes ;
+    rdfs:domain exato-wf:DataArtifact ;
+    rdfs:range exato-wf:WorkflowStep ;
+    owl:inverseOf exato-wf:consumes ;
     rdfs:comment "Indicates that a data artifact was consumed by a workflow step."@en ,
                  "Indique qu’un artefact de données a été consommé par une étape du flux de travail."@fr ;
     skos:prefLabel "used in step"@en ,
                    "utilisé dans l'étape"@fr ;
     rdfs:seeAlso <https://www.w3.org/TR/prov-o/> .
 
-exa-atow:hasProvenanceRecord rdf:type owl:ObjectProperty ;
+exato-wf:hasProvenanceRecord rdf:type owl:ObjectProperty ;
     rdfs:domain [ rdf:type owl:Class ;
-                  owl:unionOf ( exa-atow:DataArtifact exa-atow:Workflow ) ] ;
-    rdfs:range exa-atow:DataProvenance ;
+                  owl:unionOf ( exato-wf:DataArtifact exato-wf:Workflow ) ] ;
+    rdfs:range exato-wf:DataProvenance ;
     rdfs:comment "Links a data artifact or workflow to its provenance record."@en ,
                  "Relie un artefact de données ou un flux de travail à son enregistrement de provenance."@fr ;
     skos:prefLabel "has provenance record"@en ,
@@ -602,9 +652,9 @@ exa-atow:hasProvenanceRecord rdf:type owl:ObjectProperty ;
 
 # ===== FAIR Compliance =====
 
-exa-atow:hasFAIRCompliance rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:FAIRCompliance ;
+exato-wf:hasFAIRCompliance rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:FAIRCompliance ;
     rdfs:comment "Associates a workflow with a FAIR compliance record or evaluation."@en ,
                  "Associe un flux de travail à un enregistrement ou une évaluation de conformité FAIR."@fr ;
     skos:prefLabel "has FAIR compliance"@en ,
@@ -613,50 +663,50 @@ exa-atow:hasFAIRCompliance rdf:type owl:ObjectProperty ;
 
 # ===== Data Flow and Step Relations =====
 
-exa-atow:hasInputParameter rdfs:subPropertyOf wfdesc:hasInput ;
-    rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:InputParameter ;
+exato-wf:hasInputParameter rdfs:subPropertyOf wfdesc:hasInput ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:InputParameter ;
     rdfs:comment "Connects a workflow step to its input parameters."@en ;
     rdfs:comment "Connecte une étape de workflow à ses paramètres d'entrée."@fr .
 
-exa-atow:hasOutputParameter rdfs:subPropertyOf wfdesc:hasOutput ;
-    rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:OutputParameter ;
+exato-wf:hasOutputParameter rdfs:subPropertyOf wfdesc:hasOutput ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:OutputParameter ;
     rdfs:comment "Connects a workflow step to its output parameters."@en ;
     rdfs:comment "Connecte une étape de workflow à ses paramètres de sortie."@fr .
 
-exa-atow:connectsTo rdf:type owl:ObjectProperty ;
+exato-wf:connectsTo rdf:type owl:ObjectProperty ;
     rdfs:subPropertyOf wfdesc:hasDataLink ;
-    rdfs:domain exa-atow:OutputParameter ;
-    rdfs:range exa-atow:InputParameter ;
+    rdfs:domain exato-wf:OutputParameter ;
+    rdfs:range exato-wf:InputParameter ;
     rdfs:comment "Indicates that an output parameter connects to an input parameter of another step."@en ,
                  "Indique qu’un paramètre de sortie est connecté à un paramètre d’entrée d’une autre étape."@fr ;
     skos:prefLabel "connects to"@en ,
                    "se connecte à"@fr .
 
-exa-atow:consumes rdf:type owl:ObjectProperty ;
+exato-wf:consumes rdf:type owl:ObjectProperty ;
     rdfs:subPropertyOf prov:used ;
-    rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:DataArtifact ;
-    owl:inverseOf exa-atow:usedInStep ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:DataArtifact ;
+    owl:inverseOf exato-wf:usedInStep ;
     rdfs:comment "Workflow-specific: indicates data consumption during step execution."@en ,
                  "Indique qu’une étape du flux de travail consomme un artefact de données."@fr ;
     skos:prefLabel "consumes"@en ,
                    "consomme"@fr .
 
-exa-atow:dependsOn rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:WorkflowStep ;
+exato-wf:dependsOn rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:WorkflowStep ;
     rdf:type owl:TransitiveProperty ;
     rdfs:comment "Indicates that one workflow step depends on the completion of another."@en ,
                  "Indique qu’une étape du flux de travail dépend de l’exécution d’une autre."@fr ;
     skos:prefLabel "depends on"@en , "dépend de"@fr .
 
-exa-atow:produces rdf:type owl:ObjectProperty ;
+exato-wf:produces rdf:type owl:ObjectProperty ;
     rdfs:subPropertyOf prov:generated ;
-    rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:DataArtifact ;
-    owl:inverseOf exa-atow:wasGeneratedBy ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:DataArtifact ;
+    owl:inverseOf exato-wf:wasGeneratedBy ;
     rdfs:comment "Indicates that a workflow step produces a data artifact."@en ,
                  "Indique qu’une étape du flux de travail produit un artefact de données."@fr ;
     skos:prefLabel "produces"@en , "produit"@fr .
@@ -664,204 +714,217 @@ exa-atow:produces rdf:type owl:ObjectProperty ;
 
 # ===== Workflow Structure & Execution =====
 
-exa-atow:hasStep rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:WorkflowStep ;
-    owl:inverseOf exa-atow:isPartOfWorkflow ;
+exato-wf:hasStep rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:WorkflowStep ;
+    owl:inverseOf exato-wf:isPartOfWorkflow ;
     rdfs:comment "Indicates that a workflow includes a given workflow step."@en ,
                  "Indique qu’un flux de travail comprend une étape donnée."@fr ;
     skos:prefLabel "has step"@en , "a une étape"@fr .
 
-exa-atow:isPartOfWorkflow rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:Workflow ;
+exato-wf:isPartOfWorkflow rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:Workflow ;
     rdf:type owl:TransitiveProperty ;
     rdfs:comment "Indicates that a workflow step is part of a workflow."@en ,
                  "Indique qu’une étape fait partie d’un flux de travail."@fr ;
     skos:prefLabel "is part of workflow"@en ,
                    "fait partie du flux de travail"@fr .
 
-wfdesc:hasSubProcess rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:Workflow ;
+wfdesc:hasSubProcess rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:Workflow ;
     rdfs:comment "Links a workflow step to a nested sub-workflow, enabling hierarchical workflow composition. Use this property when a step encapsulates an entire workflow as a reusable component. This specializes wfdesc:hasSubProcess for Exa-AToW's cross-WMS interoperability requirements."@en ;
     rdfs:comment "Relie une étape de workflow à un sous-workflow imbriqué, permettant la composition hiérarchique de workflows. Utilisez cette propriété lorsqu'une étape encapsule un workflow entier comme composant réutilisable."@fr ;
     skos:prefLabel "has sub-process"@en , "a un sous-processus"@fr .
 
-exa-atow:hasStatus rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Execution ;
-    rdfs:range exa-atow:ExecutionStatus ;
-    rdfs:comment "Links an execution instance to its current or final status, selecting from a controlled vocabulary of exa-atow:ExecutionStatus individuals."@en ,
-                 "Lie l'instance d'exécution à son statut actuel ou final, sélectionné à partir d'un vocabulaire contrôlé d'individus exa-atow:ExecutionStatus."@fr ;
+exato-wf:hasStatus rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Execution ;
+    rdfs:range exato-wf:ExecutionStatus ;
+    rdfs:comment "Links an execution instance to its current or final status, selecting from a controlled vocabulary of exato-wf:ExecutionStatus individuals."@en ,
+                 "Lie l'instance d'exécution à son statut actuel ou final, sélectionné à partir d'un vocabulaire contrôlé d'individus exato-wf:ExecutionStatus."@fr ;
     skos:prefLabel "has status"@en , "a statut"@fr .
 
 
-exa-atow:hasExecution rdf:type owl:ObjectProperty ;
+exato-wf:hasExecution rdf:type owl:ObjectProperty ;
     rdfs:domain [ rdf:type owl:Class ;
-                  owl:unionOf ( exa-atow:Workflow exa-atow:WorkflowStep ) ] ;
-    rdfs:range exa-atow:Execution ;
-    owl:inverseOf exa-atow:isExecutionOf ;
+                  owl:unionOf ( exato-wf:Workflow exato-wf:WorkflowStep ) ] ;
+    rdfs:range exato-wf:Execution ;
+    owl:inverseOf exato-wf:isExecutionOf ;
     rdfs:comment "Links a workflow or step to its execution instance."@en ,
                  "Relie un flux de travail ou une étape à son instance d'exécution."@fr ;
     skos:prefLabel "has execution"@en ,
                    "a une exécution"@fr .
 
-exa-atow:isExecutionOf rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Execution ;
+exato-wf:isExecutionOf rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Execution ;
     rdfs:range [ rdf:type owl:Class ;
-                 owl:unionOf ( exa-atow:Workflow exa-atow:WorkflowStep ) ] ;
+                 owl:unionOf ( exato-wf:Workflow exato-wf:WorkflowStep ) ] ;
     rdfs:comment "Indicates that an execution instance corresponds to a workflow or a workflow step."@en ,
                  "Indique qu’une instance d’exécution correspond à un flux de travail ou à une étape du flux de travail."@fr ;
     skos:prefLabel "is execution of"@en ,
                    "est l'exécution de"@fr .
 
-exa-atow:hasExecutionEnvironment rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Execution ;
-    rdfs:range exa-atow:ExecutionEnvironment ;
+exato-wf:hasExecutionEnvironment rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Execution ;
+    rdfs:range exato-wf:ExecutionEnvironment ;
     rdfs:comment "Links an execution to its computational environment."@en ,
                  "Relie une exécution à son environnement de calcul."@fr ;
     skos:prefLabel "has execution environment"@en ,
                    "a un environnement d’exécution"@fr .
 
-exa-atow:requiresResource rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:ExecutionEnvironment ;
-    rdfs:range exa-atow:ComputationalResource ;
-    rdfs:comment "Indicates that an execution environment requires a computational resource."@en ,
-                 "Indique qu’un environnement d’exécution nécessite une ressource informatique."@fr ;
-    skos:prefLabel "requires resource"@en ,
-                   "nécessite une ressource"@fr .
+exato-wf:requiresPackage rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:CondaEnvironment ;
+    rdfs:range exato-wf:SoftwareTool ;
+    rdfs:label "requires package"@en ,
+               "requiert un package"@fr ;
+    skos:definition "Associates a Conda environment with software tools or libraries required for workflow execution."@en ,
+                    "Associe un environnement Conda aux outils logiciels ou bibliothèques requis pour l’exécution d’un workflow."@fr ;
+    rdfs:comment "Example: a Conda environment may require NumPy, pymatgen, or ASE."@en ,
+                 "Exemple : un environnement Conda peut nécessiter NumPy, pymatgen ou ASE."@fr .
 
-exa-atow:usesContainer rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:Container ;
+exato-wf:requiresResourceType rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:ExecutionEnvironment ;
+    rdfs:label "requires resource type"@en ,
+               "requiert un type de ressource"@fr ;
+    skos:definition "Associates an execution environment with the type of computational resources required for workflow execution."@en ,
+                    "Associe un environnement d’exécution au type de ressources computationnelles requis pour l’exécution d’un workflow."@fr ;
+    rdfs:comment "Example: an HPC environment may require GPU resources, high-memory nodes, or high-speed interconnects."@en ,
+                 "Exemple : un environnement HPC peut nécessiter des ressources GPU, des nœuds à haute mémoire ou des interconnexions à haut débit."@fr .
+
+exato-wf:executedOnResource rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:WorkflowExecution ;
+    rdfs:label "executed on resource"@en ,
+               "exécuté sur une ressource"@fr ;
+    skos:definition "Associates a workflow execution with the concrete computational resource or infrastructure on which it was executed."@en ,
+                    "Associe une exécution de workflow à la ressource computationnelle ou à l’infrastructure concrète sur laquelle elle a été exécutée."@fr ;
+    rdfs:comment "Example: a workflow execution may run on a GPU partition of the Jean Zay supercomputer."@en ,
+                 "Exemple : une exécution de workflow peut être exécutée sur une partition GPU du supercalculateur Jean Zay."@fr .
+
+
+exato-wf:usesContainer rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:Container ;
     rdfs:comment "Indicates that a workflow step uses a container for execution."@en ,
                  "Indique qu’une étape du flux de travail utilise un conteneur pour l’exécution."@fr ;
     skos:prefLabel "uses container"@en ,
                    "utilise un conteneur"@fr .
 
-exa-atow:usesEngine rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:WorkflowEngine ;
+exato-wf:usesEngine rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:WorkflowEngine ;
     rdfs:comment "Specifies the primary workflow management system (WMS) used to define, orchestrate, and execute the overall workflow structure."@en ,
                  "Spécifie le système principal de gestion des flux de travail (WMS) utilisé pour définir, orchestrer et exécuter la structure globale du flux de travail."@fr ;
     skos:prefLabel "uses engine"@en ,
                    "utilise un moteur"@fr .
 
-exa-atow:usesTool rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:WorkflowStep ;
-    rdfs:range exa-atow:SoftwareTool ;
+exato-wf:usesTool rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf:SoftwareTool ;
     rdfs:comment "Indicates the specific software application or tool executed by a workflow step."@en ,
                  "Indique l'application logicielle ou l'outil spécifique exécuté par une étape du flux de travail."@fr ;
     skos:prefLabel "uses tool"@en , "utilise outil"@fr .
 
-
-###==========###===============++######
-#
-# Use the PROV-O wasAssociatedWith to give the responsability of an Execution to a WorkflowEngine and a SoftwareTool??? 
-#prov:wasAssociatedWith rdfs:domain exa-atow:Execution ;
-#    rdfs:range [ owl:unionOf ( exa-atow:WorkflowEngine exa-atow:SoftwareTool ) ] .
-
-
 # ===== Workflow Property Associations =====
 
-exa-atow:hasProperty rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:WorkflowProperty ;
+exato-wf:hasProperty rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:WorkflowProperty ;
     rdfs:comment "Associates a workflow with its descriptive properties."@en ,
                  "Associe un flux de travail avec ses propriétés descriptives."@fr ;
     skos:prefLabel "has property"@en ,
                    "a une propriété"@fr .
 
-exa-atow:hasAbstractionLevel rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:AbstractionLevel ;
+exato-wf:hasAbstractionLevel rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:AbstractionLevel ;
     rdfs:comment "Associates a workflow with its abstraction level, indicating the conceptual level at which it is defined."@en ,
                  "Associe un flux de travail avec son niveau d'abstraction, indiquant le niveau conceptuel auquel il est défini."@fr ;
     skos:prefLabel "has abstraction level"@en ,
                    "a un niveau d'abstraction"@fr .
 
-exa-atow:hasCompositionMethod rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:CompositionMethod ;
+exato-wf:hasCompositionMethod rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:CompositionMethod ;
     rdfs:comment "Associates a workflow with its composition method, indicating how it is assembled within a WMS."@en ,
                  "Associe un flux de travail avec sa méthode de composition, indiquant comment il est assemblé dans un WMS."@fr ;
     skos:prefLabel "has composition method"@en ,
                    "a une méthode de composition"@fr .
 
-exa-atow:hasCoupling rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:Coupling ;
+exato-wf:hasCoupling rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:Coupling ;
     rdfs:comment "Links a workflow to its coupling type (tight or loose)."@en ,
                  "Relie un flux de travail à son type de couplage (serré ou lâche)."@fr ;
     skos:prefLabel "has coupling type"@en ,
                    "a un type de couplage"@fr .
 
-exa-atow:hasDataManagementGranularity rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:DataManagementGranularity ;
+exato-wf:hasDataManagementGranularity rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:DataManagementGranularity ;
     rdfs:comment "Associates a workflow with its data management granularity, indicating how the WMS handles data operations."@en ,
                  "Associe un flux de travail avec sa granularité de gestion des données, indiquant comment le WMS traite les opérations sur les données."@fr ;
     skos:prefLabel "has data management granularity"@en ,
                    "a une granularité de gestion des données"@fr .
 
-exa-atow:hasDataManagementStorage rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:DataManagementStorage ;
+exato-wf:hasDataManagementStorage rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:DataManagementStorage ;
     rdfs:comment "Associates a workflow with its data management storage model for intermediate data."@en ,
                  "Associe un flux de travail avec son modèle de stockage pour les données intermédiaires."@fr ;
     skos:prefLabel "has data management storage"@en ,
                    "a un stockage de gestion des données"@fr .
 
-exa-atow:hasDataManagementTransport rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:DataManagementTransport ;
+exato-wf:hasDataManagementTransport rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:DataManagementTransport ;
     rdfs:comment "Associates a workflow with its data management transport mechanism for transferring intermediate data."@en ,
                  "Associe un flux de travail avec son mécanisme de transport de données intermédiaires."@fr ;
     skos:prefLabel "has data management transport"@en ,
                    "a un transport de gestion des données"@fr .
 
-exa-atow:hasDomainSpecificity rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:DomainSpecificity ;
+exato-wf:hasDomainSpecificity rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:DomainSpecificity ;
     rdfs:comment "Links a workflow to its domain specificity classification (domain-specific or domain-agnostic)."@en ,
                  "Relie un flux de travail à sa classification de spécificité de domaine (spécifique ou agnostique)."@fr ;
     skos:prefLabel "has domain specificity"@en ,
                    "a une spécificité de domaine"@fr .
 
-exa-atow:hasExecutionControl rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:ExecutionControl ;
+exato-wf:hasExecutionControl rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:ExecutionControl ;
     rdfs:comment "Associates a workflow with its execution control method, specifying how tasks are executed."@en ,
                  "Associe un flux de travail avec sa méthode de contrôle d'exécution, spécifiant comment les tâches sont exécutées."@fr ;
     skos:prefLabel "has execution control"@en ,
                    "a un contrôle d'exécution"@fr .
 
-exa-atow:hasFlowType rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:FlowType ;
+exato-wf:hasFlowType rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:FlowType ;
     rdfs:comment "Links a workflow to its flow type (task-based, iterative, or data-driven)."@en ,
                  "Relie un flux de travail à son type de flux (basé sur des tâches, itératif ou orienté données)."@fr ;
     skos:prefLabel "has flow type"@en ,
                    "a un type de flux"@fr .
 
-exa-atow:hasGranularity rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:Granularity ;
+exato-wf:hasGranularity rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:Granularity ;
     rdfs:comment "Links a workflow to its granularity level (functions, standalone executables, sub-workflows)."@en ,
                  "Relie un flux de travail à son niveau de granularité (fonctions, exécutables autonomes, sous-flux)."@fr ;
     skos:prefLabel "has granularity type"@en ,
                    "a un type de granularité"@fr .
 
-exa-atow:hasModularity rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:Modularity ;
+exato-wf:hasModularity rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:Modularity ;
     rdfs:comment "Associates a workflow with its modularity characteristic, describing how it is structured in terms of components."@en ,
                  "Associe un flux de travail avec sa modularité, décrivant comment il est structuré en termes de composants."@fr ;
     skos:prefLabel "has modularity"@en ,
                    "a une modularité"@fr .
 
-exa-atow:hasOrchestrationPlanning rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ;
-    rdfs:range exa-atow:OrchestrationPlanning ;
+exato-wf:hasOrchestrationPlanning rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf:Workflow ;
+    rdfs:range exato-wf:OrchestrationPlanning ;
     rdfs:comment "Associates a workflow with its orchestration planning approach, defining how the system plans execution."@en ,
                  "Associe un flux de travail avec son approche de planification d'orchestration, définissant comment le système planifie l'exécution."@fr ;
     skos:prefLabel "has orchestration planning"@en ,
@@ -874,7 +937,7 @@ exa-atow:hasOrchestrationPlanning rdf:type owl:ObjectProperty ;
 
 # ===== Generic reusable properties =====
 
-exa-atow:description rdf:type owl:DatatypeProperty ;
+exato-wf:description rdf:type owl:DatatypeProperty ;
     rdfs:domain owl:Thing ;
     rdfs:range xsd:string ;
     rdfs:comment "Generic description applicable to any entity."@en ,
@@ -882,7 +945,7 @@ exa-atow:description rdf:type owl:DatatypeProperty ;
     skos:prefLabel "description"@en ,
                    "description"@fr .
 
-exa-atow:version rdf:type owl:DatatypeProperty ;
+exato-wf:version rdf:type owl:DatatypeProperty ;
     rdfs:domain owl:Thing ;
     rdfs:range xsd:string ;
     rdfs:comment "Generic version identifier applicable to any entity."@en ,
@@ -892,32 +955,32 @@ exa-atow:version rdf:type owl:DatatypeProperty ;
 
 # ===== Workflow =====
 
-exa-atow:workflowName rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Workflow ;
+exato-wf:workflowName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Workflow ;
     rdfs:range xsd:string ;
     rdfs:comment "Human-readable name of the workflow."@en ,
                  "Nom lisible du flux de travail."@fr ;
     skos:prefLabel "workflow name"@en ,
                    "nom du flux de travail"@fr .
 
-exa-atow:workflowVersion rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Workflow ;
+exato-wf:workflowVersion rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Workflow ;
     rdfs:range xsd:string ;
     rdfs:comment "Version identifier of the workflow."@en ,
                  "Identifiant de version du flux de travail."@fr ;
     skos:prefLabel "workflow version"@en ,
                    "version du flux de travail"@fr .
 
-exa-atow:workflowDescription rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Workflow ;
+exato-wf:workflowDescription rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Workflow ;
     rdfs:range xsd:string ;
     rdfs:comment "Textual description of the workflow purpose and logic."@en ,
                  "Description textuelle de l'objectif et de la logique du flux de travail."@fr ;
     skos:prefLabel "workflow description"@en ,
                    "description du flux de travail"@fr .
 
-exa-atow:domainLabel rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Workflow ;
+exato-wf:domainLabel rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Workflow ;
     rdfs:range xsd:string ;
     rdfs:comment "Specifies the domain name(s) to which the workflow applies, e.g., 'materials science', 'genomics'."@en ,
                  "Spécifie le ou les domaines auxquels s'applique le flux de travail, par exemple 'science des matériaux', 'génomique'."@fr ;
@@ -925,13 +988,13 @@ exa-atow:domainLabel rdf:type owl:DatatypeProperty ;
                    "étiquette de domaine"@fr .
 
 pav:authoredBy rdf:type owl:ObjectProperty ;
-    rdfs:domain exa-atow:Workflow ; # The workflow itself
+    rdfs:domain exato-wf:Workflow ; # The workflow itself
     rdfs:range prov:Agent ; # An author or group (e.g., person, organization)
     rdfs:comment "The creator or author of the workflow definition."@en ;
     skos:prefLabel "authored by"@en .
 
 pav:createdOn rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Workflow ;
+    rdfs:domain exato-wf:Workflow ;
     rdfs:range xsd:dateTime ;
     rdfs:comment "The date and time when the workflow was initially created or defined (creation timestamp)."@en ;
     skos:prefLabel "created on"@en ,
@@ -942,24 +1005,24 @@ pav:createdOn rdf:type owl:DatatypeProperty ;
 
 # ===== WorkflowStep =====
 
-exa-atow:stepName rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:WorkflowStep ;
+exato-wf:stepName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:WorkflowStep ;
     rdfs:range xsd:string ;
     rdfs:comment "Human-readable name of the workflow step."@en ,
                  "Nom lisible de l'étape du flux de travail."@fr ;
     skos:prefLabel "step name"@en ,
                    "nom de l'étape"@fr .
 
-exa-atow:stepDescription rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:WorkflowStep ;
+exato-wf:stepDescription rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:WorkflowStep ;
     rdfs:range xsd:string ;
     rdfs:comment "Description of what the workflow step does."@en ,
                  "Description de la fonction de l'étape du flux de travail."@fr ;
     skos:prefLabel "step description"@en ,
                    "description de l'étape"@fr .
 
-exa-atow:commandLine rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:WorkflowStep ;
+exato-wf:commandLine rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:WorkflowStep ;
     rdfs:range xsd:string ;
     rdfs:comment "Command or script executed by the workflow step."@en ,
                  "Commande ou script exécuté par l'étape du flux de travail."@fr ;
@@ -969,16 +1032,16 @@ exa-atow:commandLine rdf:type owl:DatatypeProperty ;
 
 # ===== Software Tools =====
 
-exa-atow:toolName rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:SoftwareTool ;
+exato-wf:toolName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:SoftwareTool ;
     rdfs:range xsd:string ;
     rdfs:comment "The formal, full name of the software application or computational tool."@en ,
                  "Le nom formel et complet de l'application logicielle ou de l'outil de calcul."@fr ;
     skos:prefLabel "tool name"@en ,
                    "nom de l'outil"@fr .
 
-exa-atow:toolVersion rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:SoftwareTool ;
+exato-wf:toolVersion rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:SoftwareTool ;
     rdfs:range xsd:string ;
     rdfs:comment "The specific version identifier of the software application, which is crucial for reproducibility."@en ,
                  "L'identifiant de version spécifique de l'application logicielle, crucial pour la reproductibilité."@fr ;
@@ -988,32 +1051,32 @@ exa-atow:toolVersion rdf:type owl:DatatypeProperty ;
 # ===== Parameter =====
 
 
-exa-atow:parameterName rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Parameter ;
+exato-wf:parameterName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Parameter ;
     rdfs:range xsd:string ;
     rdfs:comment "Name of the parameter as defined in the workflow system."@en ,
                  "Nom du paramètre tel que défini dans le système de flux de travail."@fr ;
     skos:prefLabel "parameter name"@en ,
                    "nom du paramètre"@fr .
 
-exa-atow:parameterType rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Parameter ;
+exato-wf:parameterType rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Parameter ;
     rdfs:range xsd:string ;
     rdfs:comment "Type of the parameter (e.g., string, integer, file, URI)."@en ,
                  "Type du paramètre (par ex., chaîne, entier, fichier, URI)."@fr ;
     skos:prefLabel "parameter type"@en ,
                    "type de paramètre"@fr .
 
-exa-atow:defaultValue rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Parameter ;
+exato-wf:defaultValue rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Parameter ;
     rdfs:range xsd:string ;
     rdfs:comment "Default value assigned to the parameter if not specified."@en ,
                  "Valeur par défaut attribuée au paramètre si elle n'est pas spécifiée."@fr ;
     skos:prefLabel "default value"@en ,
                    "valeur par défaut"@fr .
 
-exa-atow:parameterFormat rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Parameter ;
+exato-wf:parameterFormat rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Parameter ;
     rdfs:range xsd:string ;
     rdfs:comment "Expected format or encoding of the parameter value (e.g., JSON, CSV)."@en ,
                  "Format ou encodage attendu de la valeur du paramètre (par ex., JSON, CSV)."@fr ;
@@ -1023,24 +1086,24 @@ exa-atow:parameterFormat rdf:type owl:DatatypeProperty ;
 
 # ===== WorkflowEngine =====
 
-exa-atow:engineName rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:WorkflowEngine ;
+exato-wf:engineName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:WorkflowEngine ;
     rdfs:range xsd:string ;
     rdfs:comment "Name of the workflow engine used (e.g., CWL, Nextflow, Snakemake)."@en ,
                  "Nom du moteur de flux de travail utilisé (par ex., CWL, Nextflow, Snakemake)."@fr ;
     skos:prefLabel "engine name"@en ,
                    "nom du moteur"@fr .
 
-exa-atow:engineVersion rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:WorkflowEngine ;
+exato-wf:engineVersion rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:WorkflowEngine ;
     rdfs:range xsd:string ;
     rdfs:comment "Version of the workflow engine."@en ,
                  "Version du moteur de flux de travail."@fr ;
     skos:prefLabel "engine version"@en ,
                    "version du moteur"@fr .
 
-exa-atow:engineDescription rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:WorkflowEngine ;
+exato-wf:engineDescription rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:WorkflowEngine ;
     rdfs:range xsd:string ;
     rdfs:comment "Description of the workflow engine’s purpose or key features."@en ,
                  "Description du moteur de flux de travail et de ses fonctionnalités clés."@fr ;
@@ -1050,14 +1113,14 @@ exa-atow:engineDescription rdf:type owl:DatatypeProperty ;
 
 # ===== Execution =====
 
-prov:startedAtTime rdfs:domain exa-atow:Execution ;
+prov:startedAtTime rdfs:domain exato-wf:Execution ;
     rdfs:range xsd:dateTime ;
     rdfs:comment "Start time of the workflow or step execution."@en ,
                  "Heure de début de l'exécution du flux de travail ou de l'étape."@fr ;
     skos:prefLabel "has start time"@en ,
                    "a une heure de début"@fr .
 
-prov:endedAtTime rdfs:domain exa-atow:Execution ;
+prov:endedAtTime rdfs:domain exato-wf:Execution ;
     rdfs:range xsd:dateTime ;
     rdfs:comment "End time of the workflow or step execution."@en ,
                  "Heure de fin de l'exécution du flux de travail ou de l'étape."@fr ;
@@ -1067,24 +1130,24 @@ prov:endedAtTime rdfs:domain exa-atow:Execution ;
 
 # ===== ExecutionEnvironment =====
 
-exa-atow:environmentName rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:ExecutionEnvironment ;
+exato-wf:environmentName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:ExecutionEnvironment ;
     rdfs:range xsd:string ;
     rdfs:comment "Name of the computational environment (e.g., cluster, HPC node)."@en ,
                  "Nom de l'environnement de calcul (par ex., cluster, nœud HPC)."@fr ;
     skos:prefLabel "environment name"@en ,
                    "nom de l'environnement"@fr .
 
-exa-atow:environmentVersion rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:ExecutionEnvironment ;
+exato-wf:environmentVersion rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:ExecutionEnvironment ;
     rdfs:range xsd:string ;
     rdfs:comment "Version or identifier of the environment configuration."@en ,
                  "Version ou identifiant de la configuration de l'environnement."@fr ;
     skos:prefLabel "environment version"@en ,
                    "version de l'environnement"@fr .
 
-exa-atow:environmentDescription rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:ExecutionEnvironment ;
+exato-wf:environmentDescription rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:ExecutionEnvironment ;
     rdfs:range xsd:string ;
     rdfs:comment "Description of the computational environment, including hardware and software context."@en ,
                  "Description de l'environnement de calcul, incluant le contexte matériel et logiciel."@fr ;
@@ -1093,16 +1156,16 @@ exa-atow:environmentDescription rdf:type owl:DatatypeProperty ;
 
 
 # ===== Container =====
-exa-atow:containerImage rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Container ;
+exato-wf:containerImage rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Container ;
     rdfs:range xsd:string ;
     rdfs:comment "Container image identifier (e.g., Docker or Singularity image URI)."@en ,
                  "Identifiant de l'image de conteneur (par ex., URI d'une image Docker ou Singularity)."@fr ;
     skos:prefLabel "container image"@en ,
                    "image de conteneur"@fr .
 
-exa-atow:containerTag rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:Container ;
+exato-wf:containerTag rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:Container ;
     rdfs:range xsd:string ;
     rdfs:comment "Tag or version of the container image."@en ,
                  "Étiquette ou version de l'image de conteneur."@fr ;
@@ -1112,16 +1175,16 @@ exa-atow:containerTag rdf:type owl:DatatypeProperty ;
 
 # ===== CondaEnvironment =====
 
-exa-atow:environmentFile rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:CondaEnvironment ;
+exato-wf:environmentFile rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:CondaEnvironment ;
     rdfs:range xsd:string ;
     rdfs:comment "Path or URI of the Conda environment file (e.g., environment.yml)."@en ,
                  "Chemin ou URI du fichier d'environnement Conda (par ex., environment.yml)."@fr ;
     skos:prefLabel "environment file"@en ,
                    "fichier d'environnement"@fr .
 
-exa-atow:environmentHash rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:CondaEnvironment ;
+exato-wf:environmentHash rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:CondaEnvironment ;
     rdfs:range xsd:string ;
     rdfs:comment "Checksum or hash identifier of the Conda environment file for verification."@en ,
                  "Somme de contrôle ou identifiant de hachage du fichier d'environnement Conda pour vérification."@fr ;
@@ -1131,80 +1194,80 @@ exa-atow:environmentHash rdf:type owl:DatatypeProperty ;
 
 # ===== DataArtifact =====
 
-exa-atow:fileName rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:fileName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:string ;
     rdfs:comment "Name of the data artifact file or object."@en ,
                  "Nom du fichier ou de l'objet de l'artéfact de données."@fr ;
     skos:prefLabel "file name"@en ,
                    "nom du fichier"@fr .
 
-exa-atow:filePath rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:filePath rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:string ;
     rdfs:comment "Local or remote path/URI where the data artifact is stored."@en ,
                  "Chemin local ou URI distant où l'artéfact de données est stocké."@fr ;
     skos:prefLabel "file path"@en ,
                    "chemin du fichier"@fr .
 
-exa-atow:fileFormat rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:fileFormat rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:string ;
     rdfs:comment "Format or MIME type of the data artifact (e.g., CSV, JSON, NetCDF)."@en ,
                  "Format ou type MIME de l'artéfact de données (par ex., CSV, JSON, NetCDF)."@fr ;
     skos:prefLabel "file format"@en ,
                    "format du fichier"@fr .
 
-exa-atow:fileSize rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:fileSize rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:decimal ;
     rdfs:comment "Size of the data artifact file, in bytes."@en ,
                  "Taille du fichier d'artéfact de données, en octets."@fr ;
     skos:prefLabel "file size"@en ,
                    "taille du fichier"@fr .
 
-exa-atow:checksum rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:checksum rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:string ;
     rdfs:comment "Checksum or hash value (e.g., MD5, SHA256) to verify data integrity."@en ,
                  "Somme de contrôle ou valeur de hachage (par ex., MD5, SHA256) pour vérifier l'intégrité des données."@fr ;
     skos:prefLabel "checksum"@en ,
                    "somme de contrôle"@fr .
 
-exa-atow:creationDate rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:creationDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:dateTime ;
     rdfs:comment "Date and time when the data artifact was created."@en ,
                  "Date et heure de création de l'artéfact de données."@fr ;
     skos:prefLabel "creation date"@en ,
                    "date de création"@fr .
 
-exa-atow:lastModified rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:lastModified rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:dateTime ;
     rdfs:comment "Date and time when the data artifact was last modified."@en ,
                  "Date et heure de la dernière modification de l'artéfact de données."@fr ;
     skos:prefLabel "last modified"@en ,
                    "dernière modification"@fr .
 
-exa-atow:license rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:license rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:string ;
     rdfs:comment "License or usage terms associated with the data artifact."@en ,
                  "Licence ou conditions d'utilisation associées à l'artéfact de données."@fr ;
     skos:prefLabel "license"@en ,
                    "licence"@fr .
 
-exa-atow:accessURL rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:accessURL rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:anyURI ;
     rdfs:comment "Resolvable URL to access or download the data artifact."@en ,
                  "URL résoluble pour accéder ou télécharger l'artéfact de données."@fr ;
     skos:prefLabel "access URL"@en ,
                    "URL d'accès"@fr .
 
-exa-atow:doi rdf:type owl:DatatypeProperty ;
-    rdfs:domain exa-atow:DataArtifact ;
+exato-wf:doi rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf:DataArtifact ;
     rdfs:range xsd:string ;
     rdfs:comment "Digital Object Identifier (DOI) associated with the data artifact, if available."@en ,
                  "Identifiant d'objet numérique (DOI) associé à l'artéfact de données, le cas échéant."@fr ;

@@ -1,0 +1,442 @@
+{
+  "ontology_id": "exa-atow:Supercomputer",
+  "name": "Jean Zay",
+  "partitions": [
+    {
+      "name": "cpu_p1",
+      "nodes": [
+        {
+          "count": 720,
+          "item": {
+            "identifier": "cpu_p1_node",
+            "cpus": [
+              {
+                "item": {
+                  "model": "Intel Xeon Gold 6248",
+                  "vendor": "Intel",
+                  "cores": [
+                    {
+                      "item": {
+                        "ontology_id": "exa-atow:Core"
+                      },
+                      "count": 20
+                    }
+                  ],
+                  "ontology_id": "exa-atow:CPU"
+                },
+                "count": 2
+              }
+            ],
+            "ram": [
+              {
+                "capacity": {
+                  "value": 192.0,
+                  "unit": "GB",
+                  "ontology_id": "exa-atow:MemoryCapacity"
+                },
+                "ontology_id": "exa-atow:RAM"
+              }
+            ],
+            "ontology_id": "exa-atow:ScalarNode"
+          }
+        }
+      ],
+      "qos": [
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_cpu-t3",
+          "quotas": {
+            "user_quota": { "number": 20480, "kind": "core" },
+            "project_quota": { "number": 20480, "kind": "core" },
+            "job_quota": { "number": 10240, "kind": "core" }
+          },
+          "max_time_h": 20
+        },
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_cpu-t4",
+          "quotas": {
+            "user_quota": { "number": 640, "kind": "core" },
+            "project_quota": { "number": 640, "kind": "core" },
+            "job_quota": { "number": 160, "kind": "core" },
+            "qos_quota": { "number": 5120, "kind": "core" }
+          },
+          "max_time_h": 100
+        },
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_cpu-dev",
+          "qos_cpu-dev": {
+            "quotas": {
+              "user_quota": { "number": 5120, "kind": "core" },
+              "project_quota": { "number": 5120, "kind": "core" },
+              "job_quota": { "number": 5120, "kind": "core" },
+              "qos_quota": { "number": 10240, "kind": "core" }
+            },
+            "max_time_h": 2
+          }
+        }
+      ],
+      "ontology_id": "exa-atow:Partition"
+    },
+    {
+      "name": "gpu_p13",
+      "nodes": [
+        {
+          "count": 126,
+          "item": {
+            "identifier": "gpu_p13_v100_16g",
+            "ontology_id": "exa-atow:AcceleratedNode",
+            "cpus": [
+              {
+                "item": {
+                  "model": "Intel Xeon Gold 6248",
+                  "vendor": "Intel",
+                  "cores": [
+                    {
+                      "item": {
+                        "ontology_id": "exa-atow:Core"
+                      },
+                      "count": 20
+                    }
+                  ],
+                  "ontology_id": "exa-atow:CPU"
+                },
+                "count": 2
+              }
+            ],
+            "gpus": [
+              {
+                "item": {
+                  "model": "Nvidia Tesla V100 SXM2 16 Go",
+                  "vendor": "NVIDIA",
+                  "ontology_id": "exa-atow:GPU"
+                },
+                "count": 4
+              }
+            ],
+            "ram": [
+              {
+                "capacity": {
+                  "value": 192,
+                  "unit": "GB",
+                  "ontology_id": "exa-atow:MemoryCapacity"
+                },
+                "ontology_id": "exa-atow:RAM"
+              }
+            ]
+          }
+        },
+        {
+          "count": 270,
+          "item": {
+            "identifier": "gpu_p13_v100_32g",
+            "ontology_id": "exa-atow:AcceleratedNode",
+            "cpus": [
+              {
+                "item": {
+                  "model": "Intel Xeon Gold 6248",
+                  "vendor": "Intel",
+                  "cores": [
+                    {
+                      "item": {
+                        "ontology_id": "exa-atow:Core"
+                      },
+                      "count": 20
+                    }
+                  ],
+                  "ontology_id": "exa-atow:CPU"
+                },
+                "count": 2
+              }
+            ],
+            "gpus": [
+              {
+                "item": {
+                  "model": "Nvidia Tesla V100 SXM2 32 Go",
+                  "vendor": "NVIDIA",
+                  "ontology_id": "exa-atow:GPU"
+                },
+                "count": 4
+              }
+            ],
+            "ram": [
+              {
+                "capacity": {
+                  "value": 192,
+                  "unit": "GB",
+                  "ontology_id": "exa-atow:MemoryCapacity"
+                },
+                "ontology_id": "exa-atow:RAM"
+              }
+            ]
+          }
+        }
+      ],
+      "qos": [
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_gpu-t3",
+          "quotas": {
+            "user_quota": { "number": 512, "kind": "gpu" },
+            "project_quota": { "number": 512, "kind": "gpu" },
+            "job_quota": { "number": 512, "kind": "gpu" }
+          },
+          "max_time_h": 20
+        },
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_gpu-t4",
+          "quotas": {
+            "user_quota": { "number": 96, "kind": "gpu" },
+            "project_quota": { "number": 96, "kind": "gpu" },
+            "job_quota": { "number": 16, "kind": "gpu" },
+            "qos_quota": { "number": 256, "kind": "gpu" }
+          },
+          "max_time_h": 100
+        },
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_gpu-dev",
+          "quotas": {
+            "user_quota": { "number": 32, "kind": "gpu" },
+            "project_quota": { "number": 32, "kind": "gpu" },
+            "job_quota": { "number": 32, "kind": "gpu" },
+            "qos_quota": { "number": 512, "kind": "gpu" }
+          },
+          "max_time_h": 2
+        }
+      ],
+      "ontology_id": "exa-atow:Partition"
+    },
+    {
+      "name": "gpu_p2",
+      "nodes": [
+        {
+          "count": 20,
+          "item": {
+            "identifier": "gpu_p2s_node",
+            "cpus": [
+              {
+                "item": {
+                  "model": "Intel Xeon Gold 6226",
+                  "vendor": "Intel",
+                  "cores": [
+                    {
+                      "item": {
+                        "ontology_id": "exa-atow:Core"
+                      },
+                      "count": 12
+                    }
+                  ],
+                  "ontology_id": "exa-atow:CPU"
+                },
+                "count": 2
+              }
+            ],
+            "gpus": [
+              {
+                "item": {
+                  "model": "Nvidia Tesla V100 SXM2 32Go",
+                  "vendor": "NVIDIA",
+                  "ontology_id": "exa-atow:GPU"
+                },
+                "count": 8
+              }
+            ],
+            "ram": [
+              {
+                "capacity": {
+                  "value": 384,
+                  "unit": "GB",
+                  "ontology_id": "exa-atow:MemoryCapacity"
+                },
+                "ontology_id": "exa-atow:RAM"
+              }
+            ],
+            "ontology_id": "exa-atow:AcceleratedNode"
+          }
+        },
+        {
+          "count": 11,
+          "item": {
+            "identifier": "gpu_p2l",
+            "cpus": [
+              {
+                "item": {
+                  "model": "Intel Xeon Gold 6226",
+                  "vendor": "Intel",
+                  "cores": [
+                    {
+                      "item": {
+                        "ontology_id": "exa-atow:Core"
+                      },
+                      "count": 12
+                    }
+                  ],
+                  "ontology_id": "exa-atow:CPU"
+                },
+                "count": 2
+              }
+            ],
+            "gpus": [
+              {
+                "item": {
+                  "model": "Nvidia Tesla V100 SXM2 32Go",
+                  "vendor": "NVIDIA",
+                  "ontology_id": "exa-atow:GPU"
+                },
+                "count": 8
+              }
+            ],
+            "ram": [
+              {
+                "capacity": {
+                  "value": 768.0,
+                  "unit": "GB",
+                  "ontology_id": "exa-atow:MemoryCapacity"
+                },
+                "ontology_id": "exa-atow:RAM"
+              }
+            ],
+            "ontology_id": "exa-atow:AcceleratedNode"
+          }
+        }
+      ],
+      "qos": [
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_gpu-t3",
+          "quotas": {
+            "user_quota": { "number": 512, "kind": "gpu" },
+            "project_quota": { "number": 512, "kind": "gpu" },
+            "job_quota": { "number": 512, "kind": "gpu" }
+          },
+          "max_time_h": 20
+        },
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_gpu-t4",
+          "quotas": {
+            "user_quota": { "number": 96, "kind": "gpu" },
+            "project_quota": { "number": 96, "kind": "gpu" },
+            "job_quota": { "number": 16, "kind": "gpu" },
+            "qos_quota": { "number": 256, "kind": "gpu" }
+          },
+          "max_time_h": 100
+        },
+        {
+          "ontology_id": "exa-atow:QualityOfService",
+          "name": "qos_gpu-dev",
+          "quotas": {
+            "user_quota": { "number": 32, "kind": "gpu" },
+            "project_quota": { "number": 32, "kind": "gpu" },
+            "job_quota": { "number": 32, "kind": "gpu" },
+            "qos_quota": { "number": 512, "kind": "gpu" }
+          },
+          "max_time_h": 2
+        }
+      ],
+      "ontology_id": "exa-atow:Partition"
+    },
+    {
+      "name": "gpu_p5",
+      "nodes": [
+        {
+          "count": 52,
+          "item": {
+            "identifier": "gpu_p5_8a100",
+            "cpus": [
+              {
+                "item": {
+                  "model": "AMD Milan EPYC 7543",
+                  "vendor": "AMD",
+                  "cores": [
+                    {
+                      "item": {
+                        "ontology_id": "exa-atow:Core"
+                      },
+                      "count": 32
+                    }
+                  ],
+                  "ontology_id": "exa-atow:CPU"
+                },
+                "count": 2
+              }
+            ],
+            "gpus": [
+              {
+                "item": {
+                  "model": "Nvidia A100 SXM4 80 Go",
+                  "vendor": "NVIDIA",
+                  "ontology_id": "exa-atow:GPU"
+                },
+                "count": 8
+              }
+            ],
+            "ram": [
+              {
+                "capacity": {
+                  "value": 512,
+                  "unit": "GB",
+                  "ontology_id": "exa-atow:MemoryCapacity"
+                },
+                "ontology_id": "exa-atow:RAM"
+              }
+            ],
+            "ontology_id": "exa-atow:AcceleratedNode"
+          }
+        }
+      ],
+      "ontology_id": "exa-atow:Partition"
+    },
+    {
+      "name": "gpu_p6",
+      "nodes": [
+        {
+          "identifier": "gpu_p6_4h100",
+          "cpus": [
+            {
+              "item": {
+                "model": "Intel Sapphire Rapids",
+                "vendor": "Intel",
+                "cores": [
+                  {
+                    "item": {
+                      "ontology_id": "exa-atow:Core"
+                    },
+                    "count": 56
+                  }
+                ],
+                "ontology_id": "exa-atow:CPU"
+              },
+              "count": 2
+            }
+          ],
+          "gpus": [
+            {
+              "item": {
+                "model": "NVIDIA H100",
+                "vendor": "NVIDIA",
+                "ontology_id": "exa-atow:GPU"
+              },
+              "count": 4
+            }
+          ],
+          "ram": [
+            {
+              "capacity": {
+                "value": 468.0,
+                "unit": "GB",
+                "ontology_id": "exa-atow:MemoryCapacity"
+              },
+              "ontology_id": "exa-atow:RAM"
+            }
+          ],
+          "ontology_id": "exa-atow:AcceleratedNode"
+        }
+      ],
+      "ontology_id": "exa-atow:Partition"
+    }
+  ]
+}

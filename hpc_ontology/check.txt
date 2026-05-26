@@ -1,0 +1,26 @@
+The REAL Strength: Decoupling Within HPC
+The ontology DOES achieve one important decoupling WITHIN HPC:
+✅ It Decouples HARDWARE MODELS from HARDWARE INSTANCES
+turtle# LEVEL 1: ABSTRACT MODEL
+exa-atow:GPU_A100 a exa-atow:GPU ;  # Abstract model
+  exa-atow:hasTDP "400 W" ;
+  exa-atow:hasMemoryCapacity "40 GB" .
+
+# LEVEL 2: CONTEXTUALIZED COMPONENT
+exa-atow:GPU_Component_001 a exa-atow:AcceleratorCardComponent ;
+  exa-atow:refersToModel exa-atow:GPU_A100 ;
+  exa-atow:quantity 8 .
+
+# LEVEL 3: INTEGRATED IN NODE
+exa-atow:ComputeNode_5 a exa-atow:AcceleratedNode ;
+  exa-atow:hasAcceleratorCardComponent exa-atow:GPU_Component_001 .
+
+# LEVEL 4: ASSIGNED TO PARTITION
+exa-atow:gpu_p5 a exa-atow:Partition ;
+  exa-atow:usesNodeType exa-atow:ComputeNode_5 .
+This is smart because:
+
+✅ You define the GPU MODEL once (A100 = 400W)
+✅ You can reuse it in many nodes (8 GPUs per node)
+✅ You can change allocation without redefining the GPU
+✅ Multiple partitions can use the same node types

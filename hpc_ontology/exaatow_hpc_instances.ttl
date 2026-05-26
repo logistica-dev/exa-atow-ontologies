@@ -1016,7 +1016,10 @@ inst:MemCap_80GB  rdf:type exa-atow:MemoryCapacity ; exa-atow:hasValue "80"^^xsd
 inst:MemCap_128GiB rdf:type exa-atow:MemoryCapacity ; exa-atow:hasValue "128"^^xsd:decimal ; exa-atow:hasUnit "GiB" .
 
 # ──── Storage capacities (file system) ───────────────────────────────────────
-inst:StorageCap_125TiB  rdf:type exa-atow:StorageCapacity ; exa-atow:hasValue "125"^^xsd:decimal  ; exa-atow:hasUnit "TiB" .
+inst:StorageCap_125TiB  rdf:type exa-atow:StorageCapacity ; 
+    exa-atow:hasValue "125"^^xsd:decimal  ; 
+    exa-atow:hasUnit "TiB" .
+
 inst:StorageCap_1890TiB rdf:type exa-atow:StorageCapacity ; exa-atow:hasValue "1890"^^xsd:decimal ; exa-atow:hasUnit "TiB" .
 inst:StorageCap_2500TB  rdf:type exa-atow:StorageCapacity ; exa-atow:hasValue "2500"^^xsd:decimal ; exa-atow:hasUnit "TB" .
 inst:StorageCap_30000TB rdf:type exa-atow:StorageCapacity ; exa-atow:hasValue "30000"^^xsd:decimal; exa-atow:hasUnit "TB" .
@@ -1061,3 +1064,12 @@ inst:Perf_Adastra_91PFlops rdf:type exa-atow:PeakPerformance ;
                "Adastra – ~91.6 PFlop/s crête totale"@fr ;
     exa-atow:hasValue "91.6"^^xsd:decimal ;
     exa-atow:hasUnit "PFlop/s" .
+
+
+
+#---------------------
+| Centro           | Tecnología                                  | Tipo ontológico                     | Capacidades principales                                    |
+| ---------------- | ------------------------------------------- | ----------------------------------- | ---------------------------------------------------------- |
+| CINES / Adastra  | Lustre                                      | FileSystem con ParallelIOCapability | Parallel I/O, shared access, striping dci.dci-gitlab.cines |
+| TGCC             | Lustre / GPFS según el servicio documentado | FileSystem con ParallelIOCapability | Parallel I/O, shared access, HSM en STORE hpc.cea+1        |
+| IDRIS / Jean Zay | Lustre                                      | FileSystem con ParallelIOCapability | Parallel I/O, shared access idris+1                        |

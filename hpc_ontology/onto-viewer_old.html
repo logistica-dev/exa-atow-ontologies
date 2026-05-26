@@ -36,7 +36,7 @@
             type="text"
             id="ttlUrl"
             class="url-input"
-	    value="https://cnherrera.github.io/DIADEM-ontology/projects/diamond_instances.ttl"
+	    value="https://cnherrera.github.io/DIADEM-ontology/pepr-ontology.ttl"
             spellcheck="false"
             autocomplete="off"
         />
@@ -65,8 +65,7 @@
     <div class="tb-group">
         <span class="tb-label">View</span>
         <button id="btnInstances"     class="toggle-btn on-rose">ABox (Instances)</button>
-        <button id="btnTBox"      class="toggle-btn">TBox (Classes)</button>
-<!---        <button id="btnTBox"      class="toggle-btn on-rose">TBox (Classes)</button> -->
+        <button id="btnTBox"      class="toggle-btn on-rose">TBox (Classes)</button>
         <button id="btnSubclass" class="toggle-btn on">subClassOf</button>
         <button id="btnProps"    class="toggle-btn on-gold">Object Properties</button>
         <button id="btnDatatypeProps" class="toggle-btn on-gold">Datatype Props</button>
@@ -162,7 +161,6 @@ const OWL  = 'http://www.w3.org/2002/07/owl#';
 const RDF  = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#';
 const RDFS = 'http://www.w3.org/2000/01/rdf-schema#';
 const SKOS = 'http://www.w3.org/2004/02/skos/core#';
-const FOAF = 'http://xmlns.com/foaf/0.1/';
 
 // ─────────────────────────────────────────────────────────────────
 // Colour palette (one per top-level branch)
@@ -295,8 +293,7 @@ function isSystemUri(uri) {
         'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
         'http://www.w3.org/2000/01/rdf-schema#',
         'http://www.w3.org/2002/07/owl#',
-        'http://www.w3.org/2001/XMLSchema#',
-        'http://xmlns.com/foaf/0.1#'
+        'http://www.w3.org/2001/XMLSchema#'
     ];
     return systemNamespaces.some(ns => uri.startsWith(ns));
 }
@@ -490,50 +487,15 @@ function extractOntology(store) {
         // Para añadir atributos.
         const inst = instances.get(q.subject.value);
         if (inst && !inst.attributes) inst.attributes = []; // Inicializamos un array de atributos
-
     }
 
     // Instance labels
-    // --- 7.1 Instance labels con prioridad mejorada ---
-    const instLabelPriority = new Map(); // uri → priority
-
-    function trySetInstLabel(uri, val, priority) {
-        const inst = instances.get(uri);
-        if (!inst) return;
-    
-        const curPriority = instLabelPriority.get(uri) ?? 99;
-        if (priority < curPriority) {
-            inst.label = val;
-            instLabelPriority.set(uri, priority);
+    for (const lp of [SKOS + 'prefLabel', RDFS + 'label']) {
+        for (const q of store.getQuads(null, lp, null, null)) {
+            const inst = instances.get(q.subject.value);
+            if (!inst) continue;
+            if (q.object.language === 'en') inst.label = q.object.value;
         }
-    }
-
-    // Procesar etiquetas en orden de relevancia:
-    // Prioridad 0: skos:prefLabel @en
-    // Prioridad 1: foaf:name (especialmente útil para Personas)
-    // Prioridad 2: rdfs:label @en
-    // Prioridad 3: Cualquier etiqueta sin idioma o en otros idiomas
-
-    // Capturar FOAF:NAME (Prioridad alta para individuos)
-    for (const q of store.getQuads(null, FOAF + 'name', null, null)) {
-        const lang = q.object.language || '';
-        // Si es inglés o no tiene idioma definido (literal simple), prioridad 1
-        const priority = (lang === 'en' || lang === '') ? 1 : 3;
-        trySetInstLabel(q.subject.value, q.object.value, priority);
-    }
-
-    // Capturar SKOS:PREFLABEL
-    for (const q of store.getQuads(null, SKOS + 'prefLabel', null, null)) {
-        const lang = q.object.language || '';
-        const priority = (lang === 'en') ? 0 : 3;
-        trySetInstLabel(q.subject.value, q.object.value, priority);
-    }
-
-    // Capturar RDFS:LABEL
-    for (const q of store.getQuads(null, RDFS + 'label', null, null)) {
-        const lang = q.object.language || '';
-        const priority = (lang === 'en') ? 2 : 4;
-        trySetInstLabel(q.subject.value, q.object.value, priority);
     }
 
     // Instance comments
@@ -550,32 +512,11 @@ function extractOntology(store) {
     // 
     // Capturar todos los Literales para el panel de detalles
     for (const q of store.getQuads(null, null, null, null)) {
-        if (q.object.termType === 'Literal' || q.predicate.value.includes('hasURL')) {
+        if (q.object.termType === 'Literal') {
             const inst = instances.get(q.subject.value);
             if (inst) {
-                const pred = q.predicate.value;
-                const predLocal = localName(pred);
-                const predFull  = q.predicate.value; // Guardamos la URI completa por seguridad
-
-
-                // Capturar específicamente el estado de membresía
-                if (predLocal === 'isCurrentMember') {
-                    // Convertimos el literal "true"/"false" a booleano real
-                    inst.isCurrentMember = (q.object.value === 'true');
-                }
-
-                // --- FILTRO AQUÍ ---
-                // No añadimos a 'attributes' lo que ya mostramos en secciones especiales
-                if (pred === RDFS + 'comment' || 
-//                    pred === SKOS + 'definition' || 
-//                    pred === RDFS + 'label' || 
-//                    pred === SKOS + 'prefLabel' || 
-                    pred === FOAF + 'name') {
-                    continue; 
-                }
-
                 inst.attributes.push({
-                    prop: predLocal,
+                    prop: localName(q.predicate.value),
                     value: q.object.value
                 });
             }
@@ -734,8 +675,6 @@ function buildElements(ontology) {
                 uri:     uri,
                 type:    'instance',
                 classType: inst.type,
-                // PASAMOS EL VALOR AQUÍ (por defecto true si no existe)
-                isCurrentMember: inst.isCurrentMember !== false,
                 classColor: classNode ? classNode.color : '#ec4899' // <--- Guardamos el color aquí
             }
         });
@@ -872,7 +811,7 @@ function buildElements(ontology) {
 let cy         = null;
 let parsedData = null;
 
-let showTBox          = false; //true;
+let showTBox          = true;
 let showInstances     = true;
 let showSubclass      = true;
 let showPropEdges     = true;
@@ -1019,17 +958,6 @@ function initCytoscape(elements) {
                     'transition-duration': '120ms'
                 }
             },
-            // Estilo para miembros no actuales (isCurrentMember = false)
-            {
-                selector: 'node[type="instance"][!isCurrentMember]', // Selector para cuando es false
-                style: {
-                    'background-color': '#94a3b8', // Un gris azulado apagado
-                    'border-color':     '#475569',
-                    'color':            '#475569', // Texto también en gris
-                    'background-opacity': 0.2,     // Más transparente
-                    'border-style':     'dashed'   // Línea discontinua para dar efecto de "inactivo"
-                }
-            },
             // ─ Datatype node ────────────────────────────────────────
             {
                 selector: 'node[type="datatype"]',
@@ -1162,16 +1090,7 @@ function initCytoscape(elements) {
                     'z-index':            0,
                     'events':             'no'    // Opcional: hace que no puedas clickear lo "invisible"
                 }
-            }//,
-            // {
-            //     selector: 'node[active = false]', // o node[!active] según cómo pases la data
-            //     style: {
-            //         'background-color': '#d1d1d1', // Gris claro
-            //         'color': '#888',               // Texto gris
-            //         'opacity': 0.6,                // Un poco transparente
-            //         'border-style': 'dashed'       // Borde punteado para indicar "pasado"
-            //     }
-            // } 
+            }       
         ],
 
 	wheelSensitivity: 0.1, 
@@ -1219,8 +1138,6 @@ function formatAttributeValue(val) {
     // Si no es URL, lo devolvemos tal cual (escapado por seguridad)
     return esc(val);
 }
-
-// FALTA hasURL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 function renderInfoPanel(node) {
     if (!parsedData) return;
@@ -1343,27 +1260,10 @@ function renderInfoPanel(node) {
         const classNode = cy.getElementById(inst.type);
         const col = classNode.length ? classNode.data('nodeColor') : '#94a3b8';
 
-        // --- NUEVO: Buscar si existe la propiedad hasURL ---
-        const urlAttr = inst.attributes ? inst.attributes.find(a => a.prop === 'hasURL') : null;
-        const otherAttributes = inst.attributes ? inst.attributes.filter(a => a.prop !== 'hasURL') : [];
-
-
         html = `
-            <div class="node-name" style="color:#be185d; font-size: 1.2rem; font-weight: bold;">⟐ ${esc(inst.label)}</div>
-            <div class="node-uri" style="font-size: 0.6rem; color: #666;">${linkify(esc(uri))}</div>
+            <div class="node-name" style="color:#be185d">⟐ ${esc(inst.label)}</div>
+            <div class="node-uri">${linkify(esc(uri))}</div>
         `;
-        // 1. Mostrar URL destacada (si existe)
-        if (urlAttr) {
-            html += `
-                <div class="node-url-box" style="margin-top: 10px; padding: 8px; background: #f0f4ff; border-radius: 6px; border-left: 4px solid #2563eb;">
-                    <div style="font-size: 0.7rem; text-transform: uppercase; color: #2563eb; font-weight: bold; margin-bottom: 2px;">DIAMOND image container</div>
-                    <a href="${urlAttr.value}" target="_blank" style="color:#1d4ed8; text-decoration:none; font-weight:500; word-break: break-all; font-size: 0.9rem;">
-                        ${esc(urlAttr.value)} ↗
-                    </a>
-                </div>
-                <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 15px 0;">
-            `;
-        }
 
         // 1. Mostrar Comentario
         if (inst.comment) {
@@ -1375,9 +1275,9 @@ function renderInfoPanel(node) {
 
         // 2. Mostrar Atributos / Literales (NUEVO)
         // Esto mostrará: nodeCount: 12, partitionName: "Adastra...", etc.
-        if (otherAttributes.length > 0) {
+        if (inst.attributes && inst.attributes.length > 0) {
             html += `<div class="section-title">◈ Data Properties (Attributs)</div>`;
-            otherAttributes.forEach(attr => {
+            inst.attributes.forEach(attr => {
                 html += `
                 <div class="prop-row">
                     <span class="prop-name" style="color:#666">${esc(attr.prop)}</span>
@@ -1385,7 +1285,6 @@ function renderInfoPanel(node) {
                     <span style="font-weight:500; color:#333">${formatAttributeValue(attr.value)}</span>
                 </div>`;
             });
-
         }
 
         // 3. Mostrar el Tipo (Clase)
@@ -1510,46 +1409,41 @@ function applyInstanceColoring() {
     cy.nodes('[type="instance"]').forEach(instNode => {
         // Get the class this instance belongs to
         const classType = instNode.data('classType'); // The class URI
-        const isCurrent = instNode.data('isCurrentMember');
-
-        // Definimos colores según el estado: rosa si es miembro, gris si no
-        const activeColor = '#ec4899';
-        const inactiveColor = '#94a3b8'; // Gris azulado
-        const activeBorder = '#be185d';
-        const inactiveBorder = '#475569';
-
+        
         if (!showTBox && classType) {
+            // TBox is hidden: apply the class color to the instance
             const classNode = cy.getElementById(classType);
             if (classNode.length > 0) {
                 const classColor = classNode.data('nodeColor');
-                
-                // Si no es miembro actual, usamos gris; si lo es, usamos el color de su clase
-                const finalColor = isCurrent ? classColor : inactiveColor;
-                const finalBorder = isCurrent ? classColor : inactiveBorder;
-
+                // Apply TBox-like styling to the instance node
                 instNode.style({
-                    'background-color': finalColor,
+                    'background-color': classColor,
                     'background-opacity': 0.22,
-                    'border-color': finalBorder,
+                    'border-color': classColor,
                     'border-opacity': 0.95,
                     'border-width': 2,
-                    'border-style': isCurrent ? 'solid' : 'dashed',
-                    'color': isCurrent ? '#1f3550' : '#475569',
+                    'color': '#1f3550',
+                    'font-weight': 600,
                     'shape': 'round-rectangle',
+                    'width': 'label',
+                    'height': 'label',
                     'font-style': 'normal'
                 });
             }
         } else if (showTBox) {
-            // Estilo estándar (con la TBox visible)
+            // TBox is visible: reset to default styling
             instNode.style({
-                'background-color': isCurrent ? activeColor : inactiveColor,
-                'background-opacity': isCurrent ? 0.35 : 0.2,
-                'border-color': isCurrent ? activeBorder : inactiveBorder,
-                'border-width': isCurrent ? 1.5 : 3,
-                'border-style': isCurrent ? 'solid' : 'dashed',
-                'color': isCurrent ? '#6b0551' : '#475569',
+                'background-color': '#ec4899',
+                'background-opacity': 0.35,
+                'border-color': '#be185d',
+                'border-width': 1.5,
+                'border-opacity': 0.85,
+                'color': '#6b0551',
+                'font-weight': 500,
+                'font-style': 'italic',
                 'shape': 'ellipse',
-                'font-style': isCurrent ? 'italic' : 'normal'
+                'width': 'label',
+                'height': 'label'
             });
         }
     });

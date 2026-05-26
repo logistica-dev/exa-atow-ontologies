@@ -1,0 +1,143 @@
+Infrastructure Layer
+
+The Infrastructure class represents the facility-level support systems that enable the operation, stability, and sustainability of HPC environments. 
+Unlike compute or logical resources, this layer focuses on the physical services required to maintain large-scale supercomputing infrastructures efficiently and reliably.
+
+Main subclasses of Infrastructure
+CoolingSystem
+Represents the systems responsible for maintaining optimal temperature conditions across HPC components and datacenter environments.
+This includes cooling technologies that protect hardware performance, reliability, and energy efficiency.
+EnergyManagement
+Describes the infrastructure and monitoring mechanisms used to control, optimize, and analyze power consumption within the HPC ecosystem.
+This layer supports energy-aware operation and sustainability strategies for large-scale computing facilities.
+PowerDistributionUnit (PDU)
+Models the hardware units responsible for distributing electrical power to racks, nodes, and other infrastructure components.
+PDUs also provide metering information that can be used for operational monitoring and metrics such as Power Usage Effectiveness (PUE).
+Role within the Ontology
+
+The Infrastructure layer complements both the physical HPC resources and the logical management layers by representing the environmental and operational backbone of the datacenter. Through this abstraction, the ontology is able to capture not only computational capabilities, but also the energy, cooling, and power-management aspects that are essential in modern HPC systems.
+
+
+Add to onto:
+
+# ===============================================================
+# TBOX: INFRASTRUCTURE PROPERTIES (OBJECT PROPERTIES)
+# ===============================================================
+
+exa-atow:cools rdf:type owl:ObjectProperty ;
+    rdfs:label "cools"@en , "enfría"@es ;
+    rdfs:domain exa-atow:CoolingSystem ;
+    rdfs:range [ owl:unionOf ( exa-atow:Supercomputer exa-atow:Rack exa-atow:ComputeNode ) ] ;
+    rdfs:comment "Relates a cooling system to the hardware component it maintains at temperature."@en .
+
+exa-atow:monitors rdf:type owl:ObjectProperty ;
+    rdfs:label "monitors"@en , "monitorea"@es ;
+    rdfs:domain exa-atow:EnergyManagement ;
+    rdfs:range exa-atow:HPCResource ;
+    rdfs:comment "Links an energy management system to the resources it observes for telemetry and power usage."@en .
+
+exa-atow:providesPowerTo rdf:type owl:ObjectProperty ;
+    rdfs:label "provides power to"@en , "suministra energía a"@es ;
+    rdfs:domain exa-atow:PowerDistributionUnit ;
+    rdfs:range [ owl:unionOf ( exa-atow:Rack exa-atow:Supercomputer exa-atow:NetworkEquipment ) ] ;
+    rdfs:comment "Relates a PDU to the physical equipment it provides electricity to."@en .
+
+# ===============================================================
+# TBOX: INFRASTRUCTURE PROPERTIES (DATATYPE PROPERTIES)
+# ===============================================================
+
+# --- Cooling Related ---
+exa-atow:coolingType rdf:type owl:DatatypeProperty ;
+    rdfs:label "cooling type"@en ;
+    rdfs:domain exa-atow:CoolingSystem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Method of cooling, e.g., 'Direct Liquid Cooling', 'Air-cooled'."@en .
+
+exa-atow:coolantMedium rdf:type owl:DatatypeProperty ;
+    rdfs:label "coolant medium"@en ;
+    rdfs:domain exa-atow:CoolingSystem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The fluid used in the cooling process, e.g., 'Water', 'Refrigerant'."@en .
+
+exa-atow:inletTemperature rdf:type owl:DatatypeProperty ;
+    rdfs:label "inlet temperature"@en ;
+    rdfs:domain exa-atow:CoolingSystem ;
+    rdfs:range xsd:float ;
+    rdfs:comment "Temperature of the coolant as it enters the system (in Celsius)."@en .
+
+# --- Energy Management Related ---
+exa-atow:managementProtocol rdf:type owl:DatatypeProperty ;
+    rdfs:label "management protocol"@en ;
+    rdfs:domain exa-atow:EnergyManagement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The communication protocol used, e.g., 'Redfish', 'SNMP', 'IPMI'."@en .
+
+exa-atow:energyEfficiencyRating rdf:type owl:DatatypeProperty ;
+    rdfs:label "energy efficiency rating"@en ;
+    rdfs:domain exa-atow:EnergyManagement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "External certification or ranking, e.g., 'Green500 Rank'."@en .
+
+# --- Power Distribution Related ---
+exa-atow:phaseCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "phase count"@en ;
+    rdfs:domain exa-atow:PowerDistributionUnit ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Number of electrical phases, typically 1 or 3."@en .
+
+exa-atow:pduType rdf:type owl:DatatypeProperty ;
+    rdfs:label "PDU type"@en ;
+    rdfs:domain exa-atow:PowerDistributionUnit ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Classification of the PDU, e.g., 'Monitored', 'Switched', 'Managed'."@en .
+
+
+
+
+
+Instances:
+
+@prefix exa-atow: <https://cnherrera.github.io/Exa-AToW_onto/hpc_ontology/exaatow_hpc_ontology.ttl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# ===============================================================
+# 1. COOLING SYSTEM (Direct Liquid Cooling)
+# ===============================================================
+exa-atow:Adastra_Cooling rdf:type exa-atow:CoolingSystem ;
+    rdfs:label "Adastra Direct Liquid Cooling (DLC)" ;
+    exa-atow:coolingType "Direct Liquid Cooling" ;
+    # Published values from CINES
+    exa-atow:coolantMedium "Water (Nalco Coolant)" ;
+    exa-atow:waterFlowRate "90 m3/h" ; 
+    exa-atow:inletTemperature "31.0"^^xsd:float ; # Celsius (CDU Inlet)
+    exa-atow:outletTemperature "42.0"^^xsd:float ; # Celsius (CDU Outlet)
+    exa-atow:coolingEfficiency "97%" ; # 97% of heat captured by water
+    exa-atow:cools exa-atow:Adastra .
+
+# ===============================================================
+# 2. ENERGY MANAGEMENT (HPE CSM & Redfish)
+# ===============================================================
+exa-atow:Adastra_EnergyManagement rdf:type exa-atow:EnergyManagement ;
+    rdfs:label "Adastra Energy Monitoring System" ;
+    # Based on HPE Cray Management Software (CSM)
+    exa-atow:managementProtocol "Redfish (DMTF REST API)" ;
+    exa-atow:monitors exa-atow:Adastra ;
+    # Adastra ranked 3rd in Green500 (Nov 2022) 
+    # ~58 GFlops/Watt for the accelerated partition
+    exa-atow:energyEfficiencyRating "Green500 #3 (Nov 2022)" ;
+    exa-atow:telemetrySource "/sys/cray/pm_counters" ;
+    rdfs:comment "Monitors power, energy, and temperature metrics at node and cabinet levels."@en .
+
+# ===============================================================
+# 3. POWER DISTRIBUTION (HPE Cray EX Power Shelves)
+# ===============================================================
+exa-atow:Adastra_PowerSystem rdf:type exa-atow:PowerDistributionUnit ;
+    rdfs:label "Adastra HPE Cray EX Power Shelf" ;
+    # Technical architecture of HPE Cray EX cabinets
+    exa-atow:pduType "Integrated Managed Power Shelf" ;
+    exa-atow:phaseCount 3 ; # 3-phase power (400V/480V)
+    exa-atow:rectifierCount 8 ; # 8 rectifiers per shelf (7+1 redundancy)
+    exa-atow:rectifierCapacity "15 kW" ; # Each rectifier is 15kW
+    exa-atow:peakPower "1493 kW" ; # Published peak for MI250X + Genoa blades
+    exa-atow:providesPowerTo exa-atow:Adastra .
