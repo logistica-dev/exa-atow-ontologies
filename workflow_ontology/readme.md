@@ -19,7 +19,7 @@ The ontology is designed to support reproducibility, interoperability, FAIR work
 
 ### Ontology File (Turtle)
 
-https://raw.githubusercontent.com/logistica-dev/exa-atow-ontologies/refs/heads/main/workflow_ontology/exaatow_workflow_ontology.ttl
+https://w3id.org/Exa-AToW/exato-wf.ttl
 
 ### Documentation
 
