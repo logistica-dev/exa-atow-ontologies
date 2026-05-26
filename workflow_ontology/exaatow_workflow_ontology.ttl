@@ -1,4 +1,4 @@
-@prefix exato-wf: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#> .
+@prefix exato-wf: <https://w3id.org/Exa-AToW/exato-wf.ttl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -12,9 +12,10 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix emmo: <http://emmo.info/emmo#> .
 @prefix osmo: <http://www.molmod.info/semantics/osmo#> .
+@prefix exato-hpc: <https://w3id.org/Exa-AToW/exato-hpc.ttl#> .
 
 
-<https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/exaatow_workflow_ontology.ttl#> rdf:type owl:Ontology ;
+<https://w3id.org/Exa-AToW/exato-wf.ttl#> rdf:type owl:Ontology ;
     rdfs:label "Exa-AToW Workflow Ontology"@en ;
     rdfs:comment """Ontology for describing workflows, engines, steps, data, provenance, 
     execution environment and design properties for heterogeneous WMS interoperability.
@@ -241,8 +242,8 @@ exato-wf:HPCEnvironment rdf:type owl:Class ;
     rdfs:subClassOf exato-wf:ExecutionEnvironment ;
     rdfs:subClassOf [
         rdf:type owl:Restriction ;
-        owl:onProperty exa-atow:requiresResourceType ;
-        owl:allValuesFrom exa-hpc:HardwareModel
+        owl:onProperty exato-wf:requiresResourceType ;
+        owl:allValuesFrom exato-hpc:HardwareModel
     ] ;
     rdfs:comment "An execution environment configured for high-performance computing workflows, typically involving parallel runtimes, schedulers, and specialized compute resources."@en ,
                  "Un environnement d’exécution configuré pour des workflows de calcul haute performance, impliquant généralement des runtimes parallèles, des ordonnanceurs et des ressources de calcul spécialisées."@fr ;
