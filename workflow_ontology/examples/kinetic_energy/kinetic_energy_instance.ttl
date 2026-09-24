@@ -1,0 +1,148 @@
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix exato-wf: <https://w3id.org/Exa-AToW/exato-wf.ttl#> .
+@prefix exato-wf-cwl: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/workflow_ontology/exato-wf-cwl-extension.ttl#> .
+@prefix inst: <http://example.org/kinetic_energy#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix wfdesc: <http://purl.org/wf4ever/wfdesc#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#<http://example.org/kinetic_energy.ttl> a owl:Ontology ;
+#    owl:imports <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/workflow_ontology/exato-wf-cwl-extension.ttl>,
+#        <https://w3id.org/Exa-AToW/exato-wf.ttl> .
+
+
+inst:step_get_kinetic_energy a owl:NamedIndividual,
+        exato-wf-cwl:CWLWorkflowStep,
+        exato-wf-cwl:CWLCommandLineTool,
+        exato-wf:WorkflowStep ;
+    rdfs:label "get_kinetic_energy"@en ;
+    exato-wf-cwl:baseCommand "python3"^^xsd:string ;
+    exato-wf-cwl:cwlClass "CommandLineTool"^^xsd:string ;
+    exato-wf-cwl:cwlVersion "v1.2"^^xsd:string ;
+    exato-wf-cwl:stepID "get_kinetic_energy"^^xsd:string ;
+    exato-wf:dependsOn inst:step_get_speed ;
+    exato-wf:hasInputParameter inst:step_get_kinetic_energy_in_mass,
+        inst:step_get_kinetic_energy_in_velocity ;
+    exato-wf:hasOutputParameter inst:step_get_kinetic_energy_out_kinetic_energy ;
+    exato-wf:isPartOfWorkflow inst:wf_kinetic_energy_workflow ;
+    exato-wf:stepName "get_kinetic_energy"^^xsd:string .
+
+inst:step_get_kinetic_energy_in_mass a owl:NamedIndividual,
+        exato-wf-cwl:CWLInputParameter,
+        exato-wf:InputParameter ;
+    rdfs:label "mass"@en ;
+    exato-wf-cwl:parameterID "mass"^^xsd:string ;
+    exato-wf-cwl:sourceWorkflowInput inst:wf_input_mass ;
+    exato-wf:parameterName "mass"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:step_get_kinetic_energy_out_kinetic_energy a owl:NamedIndividual,
+        exato-wf-cwl:CWLOutputParameter,
+        exato-wf:OutputParameter ;
+    rdfs:label "kinetic_energy"@en ;
+    exato-wf-cwl:parameterID "kinetic_energy"^^xsd:string ;
+    exato-wf:connectsTo inst:wf_output_kinetic_energy ;
+    exato-wf:parameterName "kinetic_energy"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:step_get_speed_in_distance a owl:NamedIndividual,
+        exato-wf-cwl:CWLInputParameter,
+        exato-wf:InputParameter ;
+    rdfs:label "distance"@en ;
+    exato-wf-cwl:parameterID "distance"^^xsd:string ;
+    exato-wf-cwl:sourceWorkflowInput inst:wf_input_distance ;
+    exato-wf:parameterName "distance"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:step_get_speed_in_time a owl:NamedIndividual,
+        exato-wf-cwl:CWLInputParameter,
+        exato-wf:InputParameter ;
+    rdfs:label "time"@en ;
+    exato-wf-cwl:parameterID "time"^^xsd:string ;
+    exato-wf-cwl:sourceWorkflowInput inst:wf_input_time ;
+    exato-wf:parameterName "time"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:step_get_kinetic_energy_in_velocity a owl:NamedIndividual,
+        exato-wf-cwl:CWLInputParameter,
+        exato-wf:InputParameter ;
+    rdfs:label "velocity"@en ;
+    exato-wf-cwl:parameterID "velocity"^^xsd:string ;
+    exato-wf-cwl:sourceFrom inst:step_get_speed_out_speed ;
+    exato-wf:parameterName "velocity"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:step_get_speed a owl:NamedIndividual,
+        exato-wf-cwl:CWLWorkflowStep,
+        exato-wf-cwl:CWLCommandLineTool,
+        exato-wf:WorkflowStep ;
+    rdfs:label "get_speed"@en ;
+    exato-wf-cwl:baseCommand "python3"^^xsd:string ;
+    exato-wf-cwl:cwlClass "CommandLineTool"^^xsd:string ;
+    exato-wf-cwl:cwlVersion "v1.2"^^xsd:string ;
+    exato-wf-cwl:stepID "get_speed"^^xsd:string ;
+    exato-wf:hasInputParameter inst:step_get_speed_in_distance,
+        inst:step_get_speed_in_time ;
+    exato-wf:hasOutputParameter inst:step_get_speed_out_speed ;
+    exato-wf:isPartOfWorkflow inst:wf_kinetic_energy_workflow ;
+    exato-wf:stepName "get_speed"^^xsd:string .
+
+inst:step_get_speed_out_speed a owl:NamedIndividual,
+        exato-wf-cwl:CWLOutputParameter,
+        exato-wf:OutputParameter ;
+    rdfs:label "speed"@en ;
+    exato-wf-cwl:parameterID "speed"^^xsd:string ;
+    exato-wf:connectsTo inst:step_get_kinetic_energy_in_velocity ;
+    exato-wf:parameterName "speed"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:wf_input_distance a owl:NamedIndividual,
+        exato-wf-cwl:CWLInputParameter,
+        exato-wf:InputParameter ;
+    rdfs:label "distance"@en ;
+    exato-wf-cwl:parameterID "distance"^^xsd:string ;
+    exato-wf:parameterName "distance"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:wf_input_mass a owl:NamedIndividual,
+        exato-wf-cwl:CWLInputParameter,
+        exato-wf:InputParameter ;
+    rdfs:label "mass"@en ;
+    exato-wf-cwl:parameterID "mass"^^xsd:string ;
+    exato-wf:parameterName "mass"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:wf_input_time a owl:NamedIndividual,
+        exato-wf-cwl:CWLInputParameter,
+        exato-wf:InputParameter ;
+    rdfs:label "time"@en ;
+    exato-wf-cwl:parameterID "time"^^xsd:string ;
+    exato-wf:parameterName "time"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+
+inst:wf_kinetic_energy_workflow a owl:NamedIndividual,
+        exato-wf-cwl:CWLWorkflow,
+        exato-wf:Workflow ;
+    rdfs:label "kinetic_energy_workflow"@en ;
+    wfdesc:hasInput inst:wf_input_distance,
+        inst:wf_input_mass,
+        inst:wf_input_time ;
+    wfdesc:hasOutput inst:wf_output_kinetic_energy ;
+    exato-wf-cwl:cwlClass "Workflow"^^xsd:string ;
+    exato-wf-cwl:cwlVersion "v1.2"^^xsd:string ;
+    exato-wf:hasAbstractionLevel exato-wf:Concrete ;
+    exato-wf:hasCompositionMethod exato-wf:SchemaBased ;
+    exato-wf:hasFlowType exato-wf:DataDriven ;
+    exato-wf:hasStep inst:step_get_kinetic_energy,
+        inst:step_get_speed ;
+    exato-wf:workflowName "kinetic_energy_workflow"^^xsd:string .
+
+inst:wf_output_kinetic_energy a owl:NamedIndividual,
+        exato-wf-cwl:CWLOutputParameter,
+        exato-wf:OutputParameter ;
+    rdfs:label "kinetic_energy"@en ;
+    exato-wf-cwl:parameterID "kinetic_energy"^^xsd:string ;
+    exato-wf:parameterName "kinetic_energy"^^xsd:string ;
+    exato-wf:parameterType "float"^^xsd:string .
+

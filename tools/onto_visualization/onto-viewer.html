@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OWL Ontology Visualizer — Cytoscape</title>
+    <title>OWL Ontology Visualizer</title>
 
     <link rel="stylesheet" href="style.css">
 
@@ -36,7 +36,7 @@
             type="text"
             id="ttlUrl"
             class="url-input"
-	    value="https://cnherrera.github.io/DIADEM-ontology/projects/diamond_instances.ttl"
+	    value="https://cnherrera.github.io/Exa-AToW_onto/workflow_ontology/exaatow_workflow_ontology.ttl"
             spellcheck="false"
             autocomplete="off"
         />
@@ -65,7 +65,7 @@
     <div class="tb-group">
         <span class="tb-label">View</span>
         <button id="btnInstances"     class="toggle-btn on-rose">ABox (Instances)</button>
-        <button id="btnTBox"      class="toggle-btn">TBox (Classes)</button>
+        <button id="btnTBox"      class="toggle-btn on-rose">TBox (Classes)</button>
 <!---        <button id="btnTBox"      class="toggle-btn on-rose">TBox (Classes)</button> -->
         <button id="btnSubclass" class="toggle-btn on">subClassOf</button>
         <button id="btnProps"    class="toggle-btn on-gold">Object Properties</button>
@@ -80,6 +80,10 @@
     </div>
 
     <div class="tb-group">
+        <button id="btnImportedConcepts" class="toggle-btn" title="Load &amp; show concepts from external ontologies used by instances">🔗 Imported Concepts</button>
+    </div>
+
+    <div class="tb-group">
         <button id="btnFit"    class="icon-btn" title="Fit to screen">⊞ Fit</button>
         <button id="btnCenter" class="icon-btn" title="Reset view">↺ Reset</button>
     </div>
@@ -90,21 +94,27 @@
 <!-- ── Main ─────────────────────────────────────────────────────── -->
 <div class="main">
 
-    <div id="cy">
-        <!-- Welcome message -->
-        <div id="welcome">
-            <div class="welcome-icon">⬡</div>
+    <!-- cy-wrap keeps #cy and its overlays stacked together -->
+    <div id="cy-wrap" style="position:relative;flex:1;min-width:0;overflow:hidden;">
+
+        <!-- Cytoscape canvas — must be empty so Cytoscape owns it fully -->
+        <div id="cy" style="width:100%;height:100%;"></div>
+
+        <!-- Welcome message — absolute overlay, safe from Cytoscape -->
+        <div id="welcome" style="position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;">
+            <div class="welcome-icon">&#x2B21;</div>
             <div class="welcome-text">
                 Type the URL of a TTL (Turtle/OWL) file<br>
                 and click <strong>Upload</strong> to visualise the ontology.
             </div>
         </div>
 
-        <!-- Loading overlay -->
-        <div id="loadingOverlay">
+        <!-- Loading overlay — absolute, safe from Cytoscape -->
+        <div id="loadingOverlay" style="position:absolute;inset:0;z-index:20;">
             <div class="spinner"></div>
             <div class="loading-msg" id="loadingMsg">Uploading...</div>
         </div>
+
     </div>
 
     <!-- Info panel -->
@@ -134,6 +144,10 @@
             <span>Datatype Property</span>
         </div>
         <div class="leg-item">
+            <div style="width: 28px; height: 2px; background: #7c3aed; opacity: 0.7; border-top: 2px dashed #7c3aed; display: inline-block; margin-right: 6px;"></div>
+            <span>rdf:type (TBox ref)</span>
+        </div>
+        <div class="leg-item">
             <div style="width: 18px; height: 12px; background: #ec4899; opacity: 0.35; border: 1px solid #be185d; border-radius: 2px; display: inline-block; margin-right: 6px;"></div>
             <span>Instance</span>
         </div>
@@ -141,11 +155,41 @@
             <div style="width: 12px; height: 12px; background: #a7f3d0; opacity: 0.3; border: 1px solid #059669; transform: rotate(45deg); display: inline-block; margin-right: 6px;"></div>
             <span>Datatype</span>
         </div>
+        <div class="leg-item">
+            <div style="width: 22px; height: 12px; background: #818cf8; opacity: 0.3; border: 2px dashed #818cf8; border-radius: 2px; display: inline-block; margin-right: 6px;"></div>
+            <span>Imported Concept</span>
+        </div>
     </div>
 </div>
 
 <!-- ── Toast ────────────────────────────────────────────────────── -->
 <div id="toast"></div>
+
+<!-- ── Imported Concepts Modal ──────────────────────────────────── -->
+<div id="importedModal" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:12px;padding:28px 32px;min-width:480px;max-width:640px;box-shadow:0 8px 40px rgba(0,0,0,0.22);position:relative;">
+    <button id="importedModalClose" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:#888;">✕</button>
+    <div style="font-size:1.1rem;font-weight:700;color:#3b0764;margin-bottom:6px;">🔗 Imported Concepts</div>
+    <div style="font-size:0.82rem;color:#64748b;margin-bottom:14px;">
+      Add the URL of an external ontology (e.g. <code>exato-wf</code>, <code>exato-wf-cwl</code>). Only concepts &amp; properties
+      actually used in the loaded instances will appear, together with their ancestor classes.
+    </div>
+
+    <!-- Detected namespaces hint -->
+    <div id="importedNsHint" style="margin-bottom:12px;"></div>
+
+    <!-- URL inputs list -->
+    <div id="importedUrlList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;"></div>
+
+    <button id="importedAddUrl" style="background:none;border:1px dashed #a78bfa;color:#7c3aed;border-radius:6px;padding:4px 12px;cursor:pointer;font-size:0.82rem;margin-bottom:16px;">+ Add ontology URL</button>
+
+    <div style="display:flex;gap:10px;justify-content:flex-end;align-items:center;">
+      <span id="importedStatus" style="font-size:0.78rem;color:#64748b;flex:1;"></span>
+      <button id="importedClear" style="background:#fee2e2;color:#b91c1c;border:none;border-radius:6px;padding:6px 16px;cursor:pointer;font-size:0.85rem;">Clear</button>
+      <button id="importedLoad"  style="background:#7c3aed;color:#fff;border:none;border-radius:6px;padding:6px 18px;cursor:pointer;font-size:0.88rem;font-weight:600;">Load &amp; Show</button>
+    </div>
+  </div>
+</div>
 
 
 <!-- ══════════════════════════════════════════════════════════════ -->
@@ -389,13 +433,35 @@ function extractOntology(store) {
     // ── 5. Object properties ──────────────────────────────────
     const properties = new Map(); // uri → { uri, label, domains:[], ranges:[] }
 
-    for (const q of store.getQuads(null, RDF + 'type', OWL + 'ObjectProperty', null)) {
-        if (q.subject.termType !== 'NamedNode') continue;
-        const uri = q.subject.value;
-        if (!properties.has(uri)) {
-            properties.set(uri, { uri, label: localName(uri), domains: [], ranges: [] });
+
+   // CORRECCIÓN: Buscamos tanto ObjectProperty como sus subtipos comunes (Transitive, Symmetric, etc.)
+    const objectPropertyTypes = [
+        OWL + 'ObjectProperty',
+        OWL + 'TransitiveProperty',
+        OWL + 'SymmetricProperty',
+        OWL + 'AsymmetricProperty',
+        OWL + 'FunctionalProperty',
+        OWL + 'InverseFunctionalProperty',
+        OWL + 'ReflexiveProperty',
+        OWL + 'IrreflexiveProperty'
+    ];
+
+    for (const propType of objectPropertyTypes) {
+        for (const q of store.getQuads(null, RDF + 'type', propType, null)) {
+            if (q.subject.termType !== 'NamedNode') continue;
+            const uri = q.subject.value;
+            if (!properties.has(uri)) {
+                properties.set(uri, { uri, label: localName(uri), domains: [], ranges: [] });
+            }
         }
     }
+    //for (const q of store.getQuads(null, RDF + 'type', OWL + 'ObjectProperty', null)) {
+    //    if (q.subject.termType !== 'NamedNode') continue;
+    //    const uri = q.subject.value;
+    //    if (!properties.has(uri)) {
+    //        properties.set(uri, { uri, label: localName(uri), domains: [], ranges: [] });
+    //    }
+    //}
 
     // Property labels
     for (const lp of [SKOS + 'prefLabel', RDFS + 'label']) {
@@ -403,6 +469,35 @@ function extractOntology(store) {
             const prop = properties.get(q.subject.value);
             if (!prop) continue;
             if (q.object.language === 'en') prop.label = q.object.value;
+        }
+    }
+
+    // PASS extra — register any URI that has rdfs:domain + rdfs:range pointing to known classes
+    // but was NOT declared with rdf:type owl:ObjectProperty (e.g. only rdfs:subPropertyOf).
+    // This fixes properties like hasInputParameter / hasOutputParameter.
+    {
+        const domainCandidates = new Set(
+            store.getQuads(null, RDFS + 'domain', null, null)
+                .map(q => q.subject.value)
+                .filter(v => !properties.has(v))
+        );
+        for (const uri of domainCandidates) {
+            // Only auto-register if range also points to a named node (likely a class)
+            const rangeQuads = store.getQuads(uri, RDFS + 'range', null, null);
+            const hasClassRange = rangeQuads.some(q => q.object.termType === 'NamedNode');
+            // Skip datatype properties (already handled) and OWL meta-predicates
+            const isDT = store.getQuads(uri, RDF + 'type', OWL + 'DatatypeProperty', null).length > 0;
+            if (!isDT && hasClassRange) {
+                properties.set(uri, { uri, label: localName(uri), domains: [], ranges: [] });
+                // Pick up label if available
+                for (const lp of [SKOS + 'prefLabel', RDFS + 'label']) {
+                    for (const q of store.getQuads(uri, lp, null, null)) {
+                        if (q.object.language === 'en' || !q.object.language) {
+                            properties.get(uri).label = q.object.value;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -474,17 +569,32 @@ function extractOntology(store) {
 
         if (isSystemUri(instUri)) continue;
 
-        if (typeUri === OWL + 'Ontology' || typeUri === OWL + 'AnnotationProperty' || typeUri === OWL + 'Class' ) continue;
-        if (typeUri === OWL + 'DatatypeProperty' || typeUri === OWL + 'ObjectProperty' ) continue;
-    
-        
+        // Skip all OWL meta-types — they are never real domain classes
+        const OWL_SKIP = new Set([
+            OWL + 'Ontology', OWL + 'AnnotationProperty', OWL + 'Class',
+            OWL + 'DatatypeProperty', OWL + 'ObjectProperty',
+            OWL + 'TransitiveProperty', OWL + 'SymmetricProperty',
+            OWL + 'AsymmetricProperty', OWL + 'FunctionalProperty',
+            OWL + 'InverseFunctionalProperty', OWL + 'ReflexiveProperty',
+            OWL + 'IrreflexiveProperty',
+            OWL + 'NamedIndividual',   // ← key: never a domain class
+        ]);
+        if (OWL_SKIP.has(typeUri)) continue;
+
         // Solo consideramos instancias de clases que hemos identificado
         // it doesnt work when i upload only Abox.
         // Just try getting all. Maybe I should "import" the entire ontology.
         //if (classes.has(typeUri) && !instUri.startsWith('_:')) {
         if (!instUri.startsWith('_:')) {
             if (!instances.has(instUri)) {
-                instances.set(instUri, { uri: instUri, label: localName(instUri), type: typeUri, comment: '' });
+                instances.set(instUri, { uri: instUri, label: localName(instUri), type: typeUri, comment: '', allTypes: [typeUri] });
+            } else {
+                const existing = instances.get(instUri);
+                if (classes.has(typeUri) && !classes.has(existing.type)) {
+                    existing.type = typeUri;
+                }
+                if (!existing.allTypes) existing.allTypes = [existing.type];
+                if (!existing.allTypes.includes(typeUri)) existing.allTypes.push(typeUri);
             }
         }
         // Para añadir atributos.
@@ -631,33 +741,69 @@ function extractOntology(store) {
     }
 
     // Instances edges
-    // Instances → Instance edges (con salto de Blank Nodes mejorado)
+    // Strategy: scan ALL triples where subject is a known instance and object is also a known instance.
+    // This works even when the ontology TBox (properties map) was not loaded (e.g. CORS blocked imports).
     const instancesEdges = [];
+    const seenEdgeKey = new Set();
+
+    function pushInstanceEdge(from, to, label, uri) {
+        const key = from + '|' + uri + '|' + to;
+        if (seenEdgeKey.has(key)) return;
+        seenEdgeKey.add(key);
+        instancesEdges.push({ from, to, label, uri });
+    }
+
+    // PASS 1 — Use known TBox ObjectProperties (original behaviour, keeps labels)
     for (const [pUri, prop] of properties) {
         const quads = store.getQuads(null, pUri, null, null);
         for (const q of quads) {
             if (q.subject.termType !== 'NamedNode' || !instances.has(q.subject.value)) continue;
-
-            // CASO A: Link directo
+            // CASO A: direct instance→instance link
             if (q.object.termType === 'NamedNode' && instances.has(q.object.value)) {
-                instancesEdges.push({ from: q.subject.value, to: q.object.value, label: prop.label, uri: pUri });
-            } 
-            // CASO B: Link vía BNode (Ej: hasAcceleratorCardComponent -> [] -> refersToModel -> Instancia)
+                pushInstanceEdge(q.subject.value, q.object.value, prop.label, pUri);
+            }
+            // CASO B: link via BNode
             else if (q.object.termType === 'BlankNode') {
-                // Buscamos dentro del BNode cualquier cosa que apunte a una instancia conocida
                 const subQuads = store.getQuads(q.object, null, null, null);
                 for (const sq of subQuads) {
                     if (sq.object.termType === 'NamedNode' && instances.has(sq.object.value)) {
-                        instancesEdges.push({
-                            from: q.subject.value,
-                            to: sq.object.value,
-                            // Combinamos nombres para que el usuario entienda el link
-                            label: prop.label + " (" + localName(sq.predicate.value) + ")",
-                            uri: pUri
-                        });
+                        pushInstanceEdge(
+                            q.subject.value, sq.object.value,
+                            prop.label + ' (' + localName(sq.predicate.value) + ')', pUri
+                        );
                     }
                 }
             }
+        }
+    }
+
+    // PASS 2 — Scan ALL triples whose subject AND object are known instances,
+    //          regardless of whether the predicate is in the loaded TBox.
+    //          This catches relations from ontologies that failed to load (CORS etc.).
+    {
+        // Skip purely annotation / meta predicates that we never want as graph edges
+        const SKIP_PREDICATES = new Set([
+            RDF  + 'type',
+            RDFS + 'label', RDFS + 'comment', RDFS + 'seeAlso', RDFS + 'isDefinedBy',
+            OWL  + 'sameAs', OWL  + 'differentFrom',
+            'http://www.w3.org/2004/02/skos/core#prefLabel',
+            'http://www.w3.org/2004/02/skos/core#definition',
+            'http://www.w3.org/2004/02/skos/core#altLabel',
+        ]);
+
+        for (const q of store.getQuads(null, null, null, null)) {
+            if (q.subject.termType !== 'NamedNode') continue;
+            if (q.object.termType  !== 'NamedNode') continue;
+            if (!instances.has(q.subject.value))    continue;
+            if (!instances.has(q.object.value))     continue;
+            if (SKIP_PREDICATES.has(q.predicate.value)) continue;
+
+            const pUri  = q.predicate.value;
+            const label = properties.has(pUri)
+                ? properties.get(pUri).label
+                : localName(pUri);          // fallback: local name of the predicate
+
+            pushInstanceEdge(q.subject.value, q.object.value, label, pUri);
         }
     }
 
@@ -824,9 +970,36 @@ function buildElements(ontology) {
     }
 
     // Instance type edges (rdf:type)
+    // Build a set of all node IDs already in elements so we can validate edge targets
+    const nodeIds = new Set(elements.filter(e => !e.data.source).map(e => e.data.id));
+
+    // OWL meta-types that are not domain classes — skip them as instanceOf targets
+    const OWL_META = new Set([
+        OWL + 'NamedIndividual',
+        OWL + 'Class',
+        OWL + 'ObjectProperty',
+        OWL + 'DatatypeProperty',
+        OWL + 'AnnotationProperty',
+        OWL + 'TransitiveProperty',
+        OWL + 'SymmetricProperty',
+        OWL + 'AsymmetricProperty',
+        OWL + 'FunctionalProperty',
+        OWL + 'InverseFunctionalProperty',
+        OWL + 'ReflexiveProperty',
+        OWL + 'IrreflexiveProperty',
+        OWL + 'Ontology',
+    ]);
+
     let instIdx = 0;
     const seenInst = new Set();
     for (const [uri, inst] of instances) {
+        // Skip OWL meta-types (owl:NamedIndividual, etc.) — not real domain classes
+        if (OWL_META.has(inst.type)) continue;
+        // Skip if the target class node doesn't exist in the graph (e.g. from unloaded imports)
+        if (!nodeIds.has(inst.type)) {
+            console.warn('⚠ instanceOf edge skipped — target node not in graph:', inst.type, '← for instance:', uri);
+            continue;
+        }
         const key = uri + '|' + inst.type;
         if (seenInst.has(key)) continue;
         seenInst.add(key);
@@ -835,7 +1008,7 @@ function buildElements(ontology) {
                 id:       'inst_' + instIdx++,
                 source:   uri,
                 target:   inst.type,
-                label:    'rdf:type',
+                label:    'type',
                 edgeType: 'instanceOf'
             }
         });
@@ -872,7 +1045,7 @@ function buildElements(ontology) {
 let cy         = null;
 let parsedData = null;
 
-let showTBox          = false; //true;
+let showTBox          = true;
 let showInstances     = true;
 let showSubclass      = true;
 let showPropEdges     = true;
@@ -1091,14 +1264,23 @@ function initCytoscape(elements) {
             {
                 selector: 'edge[edgeType="instanceOf"]',
                 style: {
-                    'line-color':             '#be185d',
-                    'target-arrow-color':     '#ec4899',
+                    'line-color':             '#7c3aed',
+                    'target-arrow-color':     '#7c3aed',
                     'target-arrow-shape':     'triangle',
-                    'arrow-scale':            0.8,
+                    'arrow-scale':            0.75,
                     'curve-style':            'bezier',
                     'width':                  1.2,
-                    'line-style':             'dotted',
-                    'line-dash-pattern':      [4, 4],
+                    'line-style':             'dashed',
+                    'line-dash-pattern':      [5, 4],
+                    'label':                  'data(label)',
+                    'font-size':              '9px',
+                    'color':                  '#7c3aed',
+                    'text-rotation':          'autorotate',
+                    'text-margin-y':          -6,
+                    'text-background-color':  '#ffffff',
+                    'text-background-opacity': 0.85,
+                    'text-background-shape':  'round-rectangle',
+                    'text-background-padding': '2px',
                     'opacity':                0.6,
                     'min-zoomed-font-size':   4,
                     'transition-property':    'opacity, width',
@@ -1125,6 +1307,71 @@ function initCytoscape(elements) {
 	    	    'opacity':              0.9
 	    	    }
 	        },
+            // ─ Imported concept node ─────────────────────────────────
+            {
+                selector: 'node[type="importedConcept"]',
+                style: {
+                    'background-color':    'data(nodeColor)',
+                    'background-opacity':  0.22,
+                    'border-color':        'data(nodeColor)',
+                    'border-width':        2,
+                    'border-opacity':      0.9,
+                    'label':               'data(label)',
+                    'color':               '#1f3550',
+                    'text-valign':         'center',
+                    'text-halign':         'center',
+                    'font-size':           '11px',
+                    'font-family':         '"Segoe UI", system-ui, sans-serif',
+                    'font-weight':         600,
+                    'width':               'label',
+                    'height':              'label',
+                    'padding':             '10px',
+                    'shape':               'round-rectangle',
+                    'text-wrap':           'wrap',
+                    'text-max-width':      '130px',
+                    'min-zoomed-font-size': 4,
+                    'border-style':        'dashed'
+                }
+            },
+            // ─ Imported concept ancestry edge ────────────────────────
+            {
+                selector: 'edge[edgeType="importedSubClassOf"]',
+                style: {
+                    'line-color':           '#3f4a5e',
+                    'target-arrow-color':   '#4e5f75',
+                    'target-arrow-shape':   'triangle',
+                    'arrow-scale':          0.85,
+                    'curve-style':          'bezier',
+                    'width':                1.5,
+                    'line-style':           'dashed',
+                    'line-dash-pattern':    [6, 4],
+                    'opacity':              0.55
+                }
+            },
+            // ─ Imported instanceOf edge (instance → imported concept) ─
+            {
+                selector: 'edge[edgeType="importedInstanceOf"]',
+                style: {
+                    'line-color':             '#7c3aed',
+                    'target-arrow-color':     '#7c3aed',
+                    'target-arrow-shape':     'triangle',
+                    'arrow-scale':            0.75,
+                    'curve-style':            'bezier',
+                    'width':                  1.2,
+                    'line-style':             'dashed',
+                    'line-dash-pattern':      [5, 4],
+                    'label':                  'data(label)',
+                    'font-size':              '9px',
+                    'color':                  '#7c3aed',
+                    'text-rotation':          'autorotate',
+                    'text-margin-y':          -6,
+                    'text-background-color':  '#ffffff',
+                    'text-background-opacity': 0.85,
+                    'text-background-shape':  'round-rectangle',
+                    'text-background-padding': '2px',
+                    'opacity':                0.6
+                }
+            },
             // ─ Edge dimmed ───────────────────────────────────────
             {
                 selector: 'edge.dim',
@@ -1335,6 +1582,66 @@ function renderInfoPanel(node) {
             });
         }
     }
+    // Handle Imported Concepts
+    else if (nodeType === 'importedConcept') {
+        const col   = node.data('nodeColor') || '#d97706';
+        const label = node.data('label') || localName(uri);
+        const comment = node.data('comment') || '';
+
+        // All connected edges (imported subClassOf + importedInstanceOf)
+        const allEdges = node.connectedEdges();
+
+        const superNodes = allEdges
+            .filter(e => e.data('edgeType') === 'importedSubClassOf' && e.source().id() === uri)
+            .map(e => e.target());
+
+        const subNodes = allEdges
+            .filter(e => e.data('edgeType') === 'importedSubClassOf' && e.target().id() === uri)
+            .map(e => e.source());
+
+        const instNodes = allEdges
+            .filter(e => e.data('edgeType') === 'importedInstanceOf' && e.target().id() === uri)
+            .map(e => e.source());
+
+        html = `
+            <div class="node-name" style="color:${col}">${esc(label)}</div>
+            <div class="node-uri">${linkify(esc(uri))}</div>
+        `;
+
+        if (comment) {
+            const short = comment.length > 320 ? comment.substring(0, 320) + '…' : comment;
+            html += `<div class="node-comment">${esc(short)}</div>`;
+        }
+
+        if (superNodes.length > 0) {
+            html += `<div class="section-title">▲ Superclasses (${superNodes.length})</div>`;
+            superNodes.forEach(n => {
+                const c = n.data('nodeColor') || '#d97706';
+                html += `<span class="pill"
+                    style="background:${c}1a;color:${c};border-color:${c}40"
+                    data-nid="${esc(n.id())}">${esc(n.data('label'))}</span>`;
+            });
+        }
+
+        if (subNodes.length > 0) {
+            html += `<div class="section-title">▼ Subclasses (${subNodes.length})</div>`;
+            subNodes.forEach(n => {
+                const c = n.data('nodeColor') || '#d97706';
+                html += `<span class="pill"
+                    style="background:${c}1a;color:${c};border-color:${c}40"
+                    data-nid="${esc(n.id())}">${esc(n.data('label'))}</span>`;
+            });
+        }
+
+        if (instNodes.length > 0) {
+            html += `<div class="section-title">▪ Instances (${instNodes.length})</div>`;
+            instNodes.forEach(n => {
+                html += `<span class="pill"
+                    style="background:#ec489933;color:#be185d;border-color:#ec489955"
+                    data-nid="${esc(n.id())}">${esc(n.data('label'))}</span>`;
+            });
+        }
+    }
     // Handle Instances
     else if (nodeType === 'instance') {
         const inst = parsedData.instances.get(uri);
@@ -1474,25 +1781,31 @@ const LAYOUTS = {
         animate: true, animationDuration: 450
     },
     cose: {
-        name: 'cose',
-	idealEdgeLength: 100,
-	nodeOverlap: 20,
-	gravity: 0.2,
-	animate: true,
-	numIter: 1000,
-	padding: 30,
-	animationDuration: 700,
-	randomize: true,
-	fit: true
-    },
-    circle: {
-        name: 'circle',
-        animate: true, animationDuration: 400
-    },
-    grid: {
-        name: 'grid',
-        animate: true, animationDuration: 400
-    }
+    name: 'cose',
+    idealEdgeLength: 100,
+    nodeOverlap: 20,
+    
+    nodeRepulsion: function(node) { return 800000; }, 
+    
+    componentSpacing: 100, 
+    
+    gravity: 0.2,
+    numIter: 1000,
+    padding: 30,
+    animationDuration: 700,
+    randomize: true,
+    fit: true
+},
+circle: {
+    name: 'circle',
+    animate: true, 
+    animationDuration: 400
+},
+grid: {
+    name: 'grid',
+    animate: true, 
+    animationDuration: 400
+}
 };
 
 function applyLayout(name) {
@@ -1554,6 +1867,46 @@ function applyInstanceColoring() {
         }
     });
 
+    // ── Style exposed class-reference bubbles in ABox-only mode ────
+    if (!showTBox && showInstances) {
+        // Collect IDs of class nodes that are currently visible (exposed by applyEdgeVisibility)
+        cy.nodes('[type="class"]').forEach(classNode => {
+            if (classNode.style('display') === 'none') return;
+            const col = classNode.data('nodeColor') || '#6ee7b7';
+            classNode.style({
+                'background-color':   col,
+                'background-opacity': 0.18,
+                'border-color':       col,
+                'border-opacity':     0.7,
+                'border-width':       2,
+                'border-style':       'solid',
+                'shape':              'ellipse',
+                'color':              '#1f5c40',
+                'font-style':         'normal',
+                'font-weight':        500,
+                'font-size':          '10px'
+            });
+        });
+    } else if (showTBox) {
+        // Reset class nodes to their normal TBox round-rectangle style
+        cy.nodes('[type="class"]').forEach(classNode => {
+            const col = classNode.data('nodeColor') || '#94a3b8';
+            classNode.style({
+                'background-color':   col,
+                'background-opacity': 0.22,
+                'border-color':       col,
+                'border-opacity':     0.95,
+                'border-width':       2,
+                'border-style':       'solid',
+                'shape':              'round-rectangle',
+                'color':              '#1f3550',
+                'font-style':         'normal',
+                'font-weight':        600,
+                'font-size':          '11px'
+            });
+        });
+    }
+
     // Apply colors to instance relation edges when TBox is hidden
     cy.edges('[edgeType="instanceRelation"]').forEach(edge => {
         if (!showTBox) {
@@ -1593,49 +1946,74 @@ function applyInstanceColoring() {
 // ─────────────────────────────────────────────────────────────────
 function applyEdgeVisibility() {
     if (!cy) return;
-    // 1. Visibilidad básica de Nodos Clase (TBox)
-    cy.nodes('[type="class"]').style('display', showTBox ? 'element' : 'none');
 
-    cy.edges('[edgeType="instanceOf"]').style('display', showInstances ? 'element' : 'none');
-    cy.edges('[edgeType="subClassOf"]').style('display', showSubclass  ? 'element' : 'none');
-    cy.edges('[edgeType="objectProperty"]').style('display', showPropEdges ? 'element' : 'none');
-    cy.edges('[edgeType="datatypeProperty"]').style('display', showDatatypeProps ? 'element' : 'none');
+    // ── 1. TBox (class) nodes ────────────────────────────────────────
+    if (showTBox) {
+        // Full TBox: show all class nodes normally
+        cy.nodes('[type="class"]').style('display', 'element');
+    } else {
+        // ABox-only: hide all class nodes first; we'll selectively re-show
+        // those directly referenced by visible instance edges below.
+        cy.nodes('[type="class"]').style('display', 'none');
+    }
 
-    
-    // Mostrar/ocultar nodos de datatype según visibilidad
+    // ── 2. TBox-only edges ───────────────────────────────────────────
+    cy.edges('[edgeType="subClassOf"]').style('display',
+        (showTBox && showSubclass)      ? 'element' : 'none');
+    cy.edges('[edgeType="objectProperty"]').style('display',
+        (showTBox && showPropEdges)     ? 'element' : 'none');
+    cy.edges('[edgeType="datatypeProperty"]').style('display',
+        (showTBox && showDatatypeProps) ? 'element' : 'none');
+
+    // ── 3. ABox nodes & instance-relation edges ──────────────────────
+    cy.nodes('[type="instance"]').style('display',
+        showInstances ? 'element' : 'none');
+    cy.edges('[edgeType="instanceRelation"]').style('display',
+        showInstances ? 'element' : 'none');
+
+    // ── 4. instanceOf edge (ABox→TBox rdf:type link) ────────────────
+    //    Show when both views are on, OR when ABox is on without TBox
+    //    (we still want the "type" arrow to the class bubble).
+    cy.edges('[edgeType="instanceOf"]').style('display',
+        showInstances ? 'element' : 'none');
+    cy.edges('[edgeType="importedInstanceOf"]').style('display',
+        showInstances ? 'element' : 'none');
+
+    // ── 5. ABox-only mode: expose class nodes referenced by instances ─
+    if (showInstances && !showTBox) {
+        // Collect class-node IDs that are targets of visible instance edges
+        const referencedClassIds = new Set();
+
+        // rdf:type targets  (instanceOf edges)
+        cy.edges('[edgeType="instanceOf"]').forEach(e => {
+            referencedClassIds.add(e.target().id());
+        });
+
+        // object-property targets that are class nodes
+        // (instanceRelation edges whose target is a class, not an instance)
+        cy.edges('[edgeType="instanceRelation"]').forEach(e => {
+            const tgt = e.target();
+            if (tgt.data('type') === 'class') {
+                referencedClassIds.add(tgt.id());
+            }
+        });
+
+        // Show those class nodes as lightweight "ABox class reference" bubbles
+        referencedClassIds.forEach(id => {
+            cy.getElementById(id).style('display', 'element');
+        });
+    }
+
+    // ── 6. Datatype nodes ────────────────────────────────────────────
     cy.nodes('[type="datatype"]').forEach(node => {
-        const hasVisibleEdge = node.connectedEdges().some(e => 
-            e.style('display') === 'element' && e.data('edgeType') === 'datatypeProperty'
+        const hasVisibleEdge = node.connectedEdges().some(e =>
+            e.style('display') === 'element' &&
+            e.data('edgeType') === 'datatypeProperty'
         );
         node.style('display', hasVisibleEdge ? 'element' : 'none');
     });
 
-
-
-    // check this -----------------------------------------------
-    // Toggle TBox-specific edges
-    cy.edges('[edgeType="subClassOf"]').style('display', (showTBox && showSubclass) ? 'element' : 'none');
-    
-    cy.edges('[edgeType="objectProperty"]').style('display', (showTBox && showPropEdges) ? 'element' : 'none');
-    
-    cy.edges('[edgeType="datatypeProperty"]').style('display', (showTBox && showDatatypeProps) ? 'element' : 'none');
-
-    // Instance of edge connects Abox to Tbox, so it only shows if BOTH are on
-    cy.edges('[edgeType="instanceOf"]').style('display', (showInstances && showTBox) ? 'element' : 'none');
-
-    // Instances (Abox) and their internal relations
-    cy.nodes('[type="instance"]').style('display', showInstances ? 'element' : 'none');
-    cy.edges('[edgeType="instanceRelation"]').style('display', showInstances ? 'element' : 'none');
-
-    // Handle Datatype nodes visibility
-    cy.nodes('[type="datatype"]').forEach(node => {
-        const hasVisibleEdge = node.connectedEdges().some(e => 
-            e.style('display') === 'element' && e.data('edgeType') === 'datatypeProperty'
-        );
-        node.style('display', hasVisibleEdge ? 'element' : 'none');
-    });
-
-    // NUEVO: Aplicar colores del TBox al ABox cuando TBox está oculto
+    // ── 7. Recolour ABox nodes (and exposed class bubbles) ──────────
     applyInstanceColoring();
 }
 
@@ -1656,18 +2034,49 @@ async function loadTTLWithImports(url, store, visited = new Set(), depth = 0) {
     }
 
     visited.add(url);
-
     debug(indent + '⬇ loading:', url);
 
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Failed to load ${url}`);
+    let text = "";
+    try {
+        const res = await fetch(url);
+        if (!res.ok) {
+            console.warn(`${indent}⚠️ Failed to load resource (Status ${res.status}): ${url}`);
+            // Si es la ontología raíz (depth == 0) sí debemos lanzar error, si es un import remoto, lo ignoramos
+            if (depth === 0) throw new Error(`Failed to load root ontology: ${url}`);
+            return; 
+        }
+        text = await res.text();
+    } catch (fetchError) {
+        console.error(`${indent}❌ NetworkError/CORS preventing access to: ${url}`, fetchError);
+        if (depth === 0) {
+            throw new Error(`Critical NetworkError when attempting to fetch root resource: ${url}`);
+        }
+        // Si es un sub-import, no dejamos que muera la app: simplemente salimos de esta rama
+        return; 
+    }
 
-    const text = await res.text();
     debug(indent + '   size:', text.length, 'chars');
 
-    const quads = await parseTTL(text);
-    debug(indent + '   quads parsed:', quads.length);
+    let quads = [];
+    try {
+        quads = await parseTTL(text);
+        debug(indent + '   quads parsed:', quads.length);
+    } catch (parseError) {
+        console.error(`${indent}❌ Syntax/Parsing error in file: ${url}`, parseError);
+        if (depth === 0) throw parseError;
+        return;
+    }
 
+//
+//    const res = await fetch(url);
+//    if (!res.ok) throw new Error(`Failed to load ${url}`);
+//
+//    const text = await res.text();
+//    debug(indent + '   size:', text.length, 'chars');
+//
+//    const quads = await parseTTL(text);
+//    debug(indent + '   quads parsed:', quads.length);
+//
     store.addQuads(quads);
     debug(indent + '   store size now:', store.size);
 
@@ -1839,16 +2248,28 @@ function loadFromFile(file) {
                 }
             }
 
-            // Load imported ontologies (via URL)
+            // Load imported ontologies (via URL) — failures are non-fatal when loading local files
+            const failedImports = [];
             for (const imp of imports) {
-                showToast(imp);
-                await loadTTLWithImports(imp, store);
+                try {
+                    setLoading(true, 'Loading import…');
+                    await loadTTLWithImports(imp, store, new Set(), 1); // depth=1 → CORS failures are non-fatal
+                } catch (impErr) {
+                    console.warn('⚠ Could not load import (skipped):', imp, impErr.message);
+                    failedImports.push(imp);
+                }
+            }
+            if (failedImports.length > 0) {
+                showToast(`⚠ ${failedImports.length} import(s) could not be fetched (CORS/network) — visualising without them.`, 7000);
             }
 
             // Process everything
             await processStore(store, file.name);
 
         } catch (err) {
+            console.error('🔴 Full error:', err);
+            console.error('🔴 Stack:', err.stack);
+            setLoading(false);
             showToast('⚠ File processing error: ' + err.message);
         }
     };
@@ -1871,7 +2292,24 @@ document.getElementById('ttlUrl').addEventListener('keydown', e => {
     if (e.key === 'Enter') document.getElementById('btnLoad').click();
 });
 
+// ── AUTOMATIC INITIAL LOAD ────────────────────────────────────
+// Trigger the upload immediately when the DOM content has loaded
+document.addEventListener("DOMContentLoaded", () => {
+    const btnLoad = document.getElementById("btnLoad");
+    const ttlUrlInput = document.getElementById("ttlUrl");
 
+    // Check if there is an initial default URL present
+    if (ttlUrlInput && ttlUrlInput.value.trim() !== "") {
+        // A 150ms delay guarantees that Cytoscape containers and styles 
+        // are initialized before the network requests begin.
+        setTimeout(() => {
+            if (btnLoad) {
+                console.log("Auto-loading ontology from:", ttlUrlInput.value);
+                btnLoad.click();
+            }
+        }, 150);
+    }
+});
 document.getElementById('fileInput').addEventListener('change', e => {
     const f = e.target.files[0];
     if (f) {
@@ -1985,6 +2423,376 @@ document.getElementById('searchInput').addEventListener('input', function() {
 document.getElementById('btnFit').addEventListener('click', () => {
     if (cy) cy.animate({ fit: { padding: 40 } }, { duration: 300 });
 });
+
+// ─────────────────────────────────────────────────────────────────
+// IMPORTED CONCEPTS FEATURE
+// ─────────────────────────────────────────────────────────────────
+
+// Track added imported concept nodes/edges so we can clear them
+let importedConceptsActive = false;
+
+// ── Detect external namespaces used in the loaded instances ──────
+function detectExternalNamespaces() {
+    if (!parsedData) return [];
+    const mainNs = new Set();
+    const extNs  = new Set();
+
+    // Collect all namespaces that appear in instance URIs (these are "local")
+    for (const uri of parsedData.instances.keys()) {
+        const ns = getNamespace(uri);
+        if (ns) mainNs.add(ns);
+    }
+
+    // Now look at rdf:type targets and property predicates used by instances
+    // to find external namespaces
+    for (const [uri, inst] of parsedData.instances) {
+        // types
+        const typeNs = getNamespace(inst.type);
+        if (typeNs && !mainNs.has(typeNs) && !isSystemNs(typeNs)) extNs.add(typeNs);
+    }
+
+    return [...extNs];
+}
+
+function getNamespace(uri) {
+    if (!uri) return null;
+    const h = uri.lastIndexOf('#');
+    const s = uri.lastIndexOf('/');
+    const i = Math.max(h, s);
+    if (i <= 0) return null;
+    return uri.substring(0, i + 1);
+}
+
+function isSystemNs(ns) {
+    return [
+        'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+        'http://www.w3.org/2000/01/rdf-schema#',
+        'http://www.w3.org/2002/07/owl#',
+        'http://www.w3.org/2001/XMLSchema#',
+        'http://xmlns.com/foaf/0.1/',
+        'http://www.w3.org/2004/02/skos/core#',
+    ].some(s => ns.startsWith(s));
+}
+
+// ── Modal management ─────────────────────────────────────────────
+function openImportedModal() {
+    const modal = document.getElementById('importedModal');
+    modal.style.display = 'flex';
+
+    // Populate namespace hints as clickable suggestion chips
+    const extNs = detectExternalNamespaces();
+    const hintEl = document.getElementById('importedNsHint');
+
+    if (extNs.length > 0) {
+        const chips = extNs.map(ns => {
+            const safeNs = esc(ns);
+            return `<button onclick="addUrlRow('${safeNs}')"
+                style="display:inline-block;margin:3px 4px 3px 0;padding:3px 10px;
+                       background:#ede9fe;color:#5b21b6;border:1px solid #a78bfa;
+                       border-radius:20px;font-size:0.75rem;cursor:pointer;font-family:monospace;
+                       white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis;"
+                title="Click to add as URL">${safeNs}</button>`;
+        }).join('');
+
+        hintEl.innerHTML = `<div style="font-size:0.78rem;color:#5b21b6;background:#f5f3ff;border-radius:6px;padding:8px 10px;">
+            <b style="display:block;margin-bottom:5px;">Detected external namespaces — click to add:</b>
+            ${chips}
+        </div>`;
+    } else {
+        hintEl.innerHTML = `<div style="font-size:0.78rem;color:#64748b;">No external namespaces automatically detected.</div>`;
+    }
+
+    // Add a default empty URL row if none exist
+    const list = document.getElementById('importedUrlList');
+    if (!list.children.length) addUrlRow();
+}
+
+function addUrlRow(value = '') {
+    const list = document.getElementById('importedUrlList');
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;gap:6px;align-items:center;';
+    row.innerHTML = `
+        <input type="text" placeholder="https://example.org/my-ontology.ttl"
+            style="flex:1;padding:6px 10px;border:1px solid #d1d5db;border-radius:6px;font-size:0.83rem;"
+            value="${esc(value)}">
+        <button style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:1rem;padding:0 4px;">✕</button>
+    `;
+    row.querySelector('button').addEventListener('click', () => row.remove());
+    list.appendChild(row);
+}
+
+document.getElementById('importedAddUrl').addEventListener('click', () => addUrlRow());
+
+document.getElementById('importedModalClose').addEventListener('click', () => {
+    document.getElementById('importedModal').style.display = 'none';
+});
+
+document.getElementById('importedClear').addEventListener('click', () => {
+    clearImportedConcepts();
+    document.getElementById('importedModal').style.display = 'none';
+    document.getElementById('btnImportedConcepts').classList.remove('on-gold');
+    importedConceptsActive = false;
+});
+
+document.getElementById('importedLoad').addEventListener('click', async () => {
+    const inputs = document.querySelectorAll('#importedUrlList input');
+    const urls = [...inputs].map(i => i.value.trim()).filter(Boolean);
+    if (!urls.length) { showToast('Please enter at least one URL.'); return; }
+
+    document.getElementById('importedStatus').textContent = 'Loading…';
+    await loadAndShowImportedConcepts(urls);
+    document.getElementById('importedModal').style.display = 'none';
+    document.getElementById('btnImportedConcepts').classList.add('on-gold');
+    importedConceptsActive = true;
+});
+
+document.getElementById('btnImportedConcepts').addEventListener('click', () => {
+    if (!parsedData) { showToast('Load an ontology first.'); return; }
+    openImportedModal();
+});
+
+// ── Core: load external TTLs and inject relevant nodes into cy ───
+async function loadAndShowImportedConcepts(urls) {
+    if (!cy || !parsedData) return;
+
+    // 1. Collect URIs used by instances as types or predicates
+    const usedUris = collectUsedExternalUris();
+    if (usedUris.size === 0) {
+        showToast('No external concept URIs found in the loaded instances.');
+        document.getElementById('importedStatus').textContent = '';
+        return;
+    }
+
+    // 2. Load each ontology URL into a combined store
+    const extStore = new N3.Store();
+    let loaded = 0;
+    for (const url of urls) {
+        try {
+            setLoading(true, `Loading ${url.split('/').pop()}…`);
+            const res = await fetch(url);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const text = await res.text();
+            const quads = await parseTTL(text);
+            extStore.addQuads(quads);
+            loaded++;
+        } catch (e) {
+            showToast(`⚠ Could not load: ${url} — ${e.message}`);
+        }
+    }
+    setLoading(false);
+
+    if (loaded === 0) {
+        document.getElementById('importedStatus').textContent = 'No ontologies could be loaded.';
+        return;
+    }
+
+    // 3. For each used URI, collect it + all ancestors from extStore
+    const toAdd   = new Map();  // uri → { uri, label, comment }
+    const subEdges = [];        // { from, to } subClassOf in imported ontology
+
+    function registerImported(uri) {
+        if (toAdd.has(uri)) return;
+        // Get label
+        let label = localName(uri);
+        for (const lp of [SKOS + 'prefLabel', RDFS + 'label']) {
+            const lq = extStore.getQuads(N3.DataFactory.namedNode(uri), lp, null, null);
+            if (lq.length) { label = lq[0].object.value; break; }
+        }
+        // Get comment
+        let comment = '';
+        for (const cp of [RDFS + 'comment', SKOS + 'definition']) {
+            const cq = extStore.getQuads(N3.DataFactory.namedNode(uri), cp, null, null);
+            if (cq.length) { comment = cq[0].object.value; break; }
+        }
+        toAdd.set(uri, { uri, label, comment });
+
+        // Recurse into superclasses
+        const superQ = extStore.getQuads(N3.DataFactory.namedNode(uri), RDFS + 'subClassOf', null, null);
+        for (const q of superQ) {
+            if (q.object.termType !== 'NamedNode') continue;
+            const parentUri = q.object.value;
+            if (isSystemNs(getNamespace(parentUri) || '')) continue;
+            subEdges.push({ from: uri, to: parentUri });
+            registerImported(parentUri);
+        }
+    }
+
+    for (const uri of usedUris) {
+        // Verify it actually exists in the external store (is an owl:Class or used in subClassOf)
+        const isClass =
+            extStore.getQuads(N3.DataFactory.namedNode(uri), RDF + 'type', OWL + 'Class', null).length > 0 ||
+            extStore.getQuads(N3.DataFactory.namedNode(uri), RDF + 'type', RDFS + 'Class', null).length > 0 ||
+            extStore.getQuads(N3.DataFactory.namedNode(uri), RDFS + 'subClassOf', null, null).length > 0 ||
+            extStore.getQuads(null, RDFS + 'subClassOf', N3.DataFactory.namedNode(uri), null).length > 0;
+
+        if (isClass) registerImported(uri);
+    }
+
+    // Also collect external object/datatype properties used as predicates
+    const usedProps = collectUsedExternalProperties();
+    const propNodesToAdd = new Map(); // uri → { uri, label, domain, range }
+
+    for (const pUri of usedProps) {
+        const pNode = N3.DataFactory.namedNode(pUri);
+        const isObjProp =
+            extStore.getQuads(pNode, RDF + 'type', OWL + 'ObjectProperty', null).length > 0;
+        const isDTProp =
+            extStore.getQuads(pNode, RDF + 'type', OWL + 'DatatypeProperty', null).length > 0;
+        if (!isObjProp && !isDTProp) continue;
+
+        let label = localName(pUri);
+        for (const lp of [SKOS + 'prefLabel', RDFS + 'label']) {
+            const lq = extStore.getQuads(pNode, lp, null, null);
+            if (lq.length) { label = lq[0].object.value; break; }
+        }
+        propNodesToAdd.set(pUri, { uri: pUri, label, isObjProp });
+    }
+
+    // 4. Remove old imported concept nodes/edges
+    clearImportedConcepts();
+
+    // 4b. Compute branch colors for imported concepts (same palette as TBox)
+    const icColorMap = assignColors(
+        new Map([...toAdd.entries()].map(([uri, d]) => [uri, { uri: d.uri, label: d.label, comment: d.comment }])),
+        subEdges
+    );
+
+    // 5. Inject new nodes and edges into cy
+    const newElements = [];
+    let icIdx = 0;
+
+    for (const [uri, data] of toAdd) {
+        // Skip if already in graph (e.g. from TBox)
+        if (cy.getElementById(uri).length) continue;
+        const col = icColorMap.get(uri) || '#d97706';
+        newElements.push({
+            group: 'nodes',
+            data: {
+                id:        uri,
+                label:     data.label,
+                comment:   data.comment,
+                uri:       uri,
+                type:      'importedConcept',
+                nodeColor: col
+            }
+        });
+    }
+
+    // subClassOf edges among imported concepts
+    const seenIC = new Set();
+    for (const { from, to } of subEdges) {
+        const key = from + '|' + to;
+        if (seenIC.has(key)) continue;
+        seenIC.add(key);
+        // Both nodes must exist (either newly added or already in graph)
+        newElements.push({
+            group: 'edges',
+            data: {
+                id:       'icsub_' + icIdx++,
+                source:   from,
+                target:   to,
+                edgeType: 'importedSubClassOf'
+            }
+        });
+    }
+
+    cy.add(newElements);
+
+    // ── 6. Add instanceOf edges from instances → imported concept nodes ──
+    const localNs = new Set();
+    for (const uri of parsedData.instances.keys()) {
+        const ns = getNamespace(uri);
+        if (ns) localNs.add(ns);
+    }
+
+    let ioIdx = 0;
+    const seenIO = new Set();
+    for (const [instUri, inst] of parsedData.instances) {
+        const types = inst.allTypes || [inst.type];
+        for (const typeUri of types) {
+            if (!typeUri) continue;
+            const ns = getNamespace(typeUri);
+            if (!ns || localNs.has(ns) || isSystemNs(ns)) continue;
+            // Only add if the target node now exists in cy
+            if (!cy.getElementById(typeUri).length) continue;
+            const key = instUri + '|' + typeUri;
+            if (seenIO.has(key)) continue;
+            seenIO.add(key);
+            cy.add({
+                group: 'edges',
+                data: {
+                    id:       'ictype_' + ioIdx++,
+                    source:   instUri,
+                    target:   typeUri,
+                    label:    'type',
+                    edgeType: 'importedInstanceOf'
+                }
+            });
+        }
+    }
+
+    // Re-run layout so new nodes are placed
+    applyLayout(document.getElementById('layoutSelect').value);
+
+    const nAdded = toAdd.size;
+    const nEdges = seenIC.size;
+    const nIO = seenIO.size;
+    document.getElementById('importedStatus').textContent = `Added ${nAdded} concept(s), ${nEdges} subClassOf, ${nIO} type edge(s).`;
+    showToast(`✓ ${nAdded} imported concept(s), ${nIO} type links added.`);
+}
+
+function collectUsedExternalUris() {
+    const used = new Set();
+    if (!parsedData) return used;
+
+    // Collect instance namespaces as "local"
+    const localNs = new Set();
+    for (const uri of parsedData.instances.keys()) {
+        const ns = getNamespace(uri);
+        if (ns) localNs.add(ns);
+    }
+
+    // ALL types used by instances (not just the primary one)
+    for (const [uri, inst] of parsedData.instances) {
+        const types = inst.allTypes || [inst.type];
+        for (const typeUri of types) {
+            if (!typeUri) continue;
+            const ns = getNamespace(typeUri);
+            if (!ns || localNs.has(ns) || isSystemNs(ns)) continue;
+            used.add(typeUri);
+        }
+    }
+
+    return used;
+}
+
+function collectUsedExternalProperties() {
+    const used = new Set();
+    if (!parsedData) return used;
+
+    const localNs = new Set();
+    for (const uri of parsedData.instances.keys()) {
+        const ns = getNamespace(uri);
+        if (ns) localNs.add(ns);
+    }
+
+    // Predicates used in instance→instance edges
+    for (const edge of parsedData.instancesEdges || []) {
+        if (!edge.uri) continue;
+        const ns = getNamespace(edge.uri);
+        if (!ns || localNs.has(ns) || isSystemNs(ns)) continue;
+        used.add(edge.uri);
+    }
+
+    return used;
+}
+
+function clearImportedConcepts() {
+    if (!cy) return;
+    cy.elements('[type="importedConcept"]').remove();
+    cy.edges('[edgeType="importedSubClassOf"]').remove();
+    cy.edges('[edgeType="importedInstanceOf"]').remove();
+}
 
 document.getElementById('btnCenter').addEventListener('click', () => {
     if (cy) {

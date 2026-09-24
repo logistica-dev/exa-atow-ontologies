@@ -20,13 +20,13 @@
     This ontology describes the physical and logical components that constitute HPC systems,
     including compute nodes, processors, storage, interconnects, and their relationships.
     It supports the modeling of supercomputer architectures, partitions, and execution environments,
-    with a focus on French national HPC centers (IDRIS/Jean Zay, CEA/TGCC, Cines/Adastra)."""@en ;
+    with a focus on French national HPC centers (IDRIS/Jean Zay, CEA/TGCC, Cines/Adastra, GRICAD)."""@en ;
     dc:title "Exa-AToW HPC Resource Ontology"@en ;
     dc:description "Ontology for modeling high-performance computing resources, infrastructure, and physical characteristics within the Exa-AToW project."@en ;
     dcterms:created "2025-12-05"^^xsd:date ;
-    dcterms:modified "2026-02-18"^^xsd:date ;
+    dcterms:modified "2026-06-29"^^xsd:date ;
     dc:creator "Exa-AToW team" ;
-    owl:versionInfo "0.1" .
+    owl:versionInfo "0.2" .
 
 
 
@@ -490,42 +490,56 @@ exato-hpc:FileSystem rdf:type owl:Class ;
         "Infrastructure de stockage partagée utilisée pour les données d'entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ;
     skos:prefLabel "File System"@en , "Système de fichiers"@fr .
 
-#exato-hpc:ParallelFileSystem rdf:type owl:Class ;
-#    rdfs:subClassOf exato-hpc:FileSystem ;
-#    rdfs:comment "Distributed file system for parallel I/O operations."@en ,
-#    "Système de fichiers distribué pour les opérations d'E/S parallèles à haut débit."@fr ;
-#    skos:prefLabel "Parallel File System"@en , "Système de fichiers parallèle"@fr .
-
-exato-hpc:Lustre rdf:type owl:Class ;
-    rdfs:subClassOf exato-hpc:ParallelFileSystem ;
-    rdfs:comment "Open-source parallel distributed file system, widely used in HPC."@en ;
-    skos:prefLabel "Lustre"@en .
-
-exato-hpc:GPFS rdf:type owl:Class ;
-    rdfs:subClassOf exato-hpc:ParallelFileSystem ;
-    rdfs:comment "IBM General Parallel File System (Spectrum Scale), used at TGCC."@en ;
-    skos:prefLabel "GPFS / Spectrum Scale"@en .
-
-####--------------
-
-exato-hpc:hasParallelCapability rdf:type owl:DatatypeProperty ;
-    rdfs:domain exato-hpc:FileSystem ;
+exato-hpc:isParallel rdf:type owl:DatatypeProperty ;
+    rdf:type owl:FunctionalProperty ;
+    rdfs:domain exato-hpc:FileSystemTechnology ;
     rdfs:range xsd:boolean ;
-    rdfs:comment "Indicates whether the filesystem supports parallel I/O."@en ,
-                 "Indique si le système de fichiers prend en charge les E/S parallèles."@fr .
+    rdfs:comment
+        "Indicates whether the file system technology supports parallel and concurrent I/O operations from multiple compute nodes through a distributed storage architecture."@en ,
+        "Indique si la technologie de système de fichiers prend en charge des opérations d'entrée/sortie parallèles et concurrentes depuis plusieurs nœuds de calcul grâce à une architecture de stockage distribuée."@fr ;
+    skos:prefLabel "is parallel"@en , "est parallèle"@fr ;
+    skos:definition
+        "A value of true denotes a file system technology designed for high-throughput parallel access in HPC environments (e.g., Lustre, GPFS, BeeGFS). A value of false denotes technologies primarily intended for single-server or non-distributed access patterns (e.g., NFS, ext4)."@en ,
+        "Une valeur vraie indique une technologie de système de fichiers conçue pour un accès parallèle à haut débit dans les environnements HPC (par exemple Lustre, GPFS, BeeGFS). Une valeur fausse indique des technologies principalement destinées à des accès non distribués ou centralisés (par exemple NFS, ext4)."@fr .
 
-exato-hpc:ParallelFileSystem rdf:type owl:Class ;
-    rdfs:subClassOf exato-hpc:FileSystem ;
-    owl:equivalentClass [
-        rdf:type owl:Class ;
-        owl:intersectionOf (
-            exato-hpc:FileSystem
-            [ rdf:type owl:Restriction ;
-              owl:onProperty exato-hpc:hasParallelCapability ;
-              owl:hasValue true^^xsd:boolean
-            ]
-        )
-    ] .
+exato-hpc:FileSystemTechnology rdf:type owl:Class ;
+#    rdfs:subClassOf exato-hpc:Technology ;
+    rdfs:comment
+        "Software technology implementing a file system and defining its storage architecture and I/O capabilities."@en ,
+        "Technologie logicielle implémentant un système de fichiers et définissant son architecture de stockage et ses capacités d'entrée/sortie."@fr ;
+    skos:prefLabel
+        "File System Technology"@en ,
+        "Technologie de système de fichiers"@fr .
+
+exato-hpc:usesTechnology rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-hpc:FileSystem ;
+    rdfs:range exato-hpc:FileSystemTechnology ;
+    rdfs:comment
+        "Associates a file system instance with the underlying file system technology used for its implementation."@en ,
+        "Associe une instance de système de fichiers à la technologie de système de fichiers utilisée pour son implémentation."@fr ;
+    skos:prefLabel "uses technology"@en , "utilise la technologie"@fr .
+
+exato-hpc:Lustre rdf:type exato-hpc:FileSystemTechnology ;
+    exato-hpc:isParallel true ;
+    skos:prefLabel "Lustre"@en ;
+    rdfs:comment "Open-source distributed file system designed for high-performance parallel I/O in large-scale HPC systems."@en .
+
+exato-hpc:GPFS rdf:type exato-hpc:FileSystemTechnology ;
+    exato-hpc:isParallel true ;
+    skos:prefLabel "IBM Spectrum Scale (GPFS)"@en ;
+    rdfs:comment "IBM distributed file system providing scalable and parallel access to shared data in HPC and enterprise environments."@en .
+
+exato-hpc:NFS rdf:type exato-hpc:FileSystemTechnology ;
+    exato-hpc:isParallel false ;
+    skos:prefLabel "Network File System"@en ;
+    rdfs:comment "Client-server distributed file system primarily intended for shared access rather than high-performance parallel I/O."@en .
+
+exato-hpc:JeanZayScratch rdf:type exato-hpc:FileSystem ;
+    exato-hpc:usesTechnology exato-hpc:Lustre ;
+    exato-hpc:mountPoint "/gpfsscratch" ;
+    exato-hpc:capacityTB "10000"^^xsd:decimal .
+
+
 
 ###--------------
 exato-hpc:StorageMount rdf:type owl:Class ;

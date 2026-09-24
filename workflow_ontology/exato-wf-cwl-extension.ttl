@@ -1,0 +1,1099 @@
+@prefix exato-wf-cwl: <https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto/refs/heads/main/workflow_ontology/exato-wf-cwl-extension.ttl#> .
+@prefix exato-wf: <https://w3id.org/Exa-AToW/exato-wf.ttl#> .
+@prefix cwl: <https://w3id.org/cwl/cwl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wfdesc: <http://purl.org/wf4ever/wfdesc#> .
+@prefix wfprov: <http://purl.org/wf4ever/wfprov#> .
+@prefix pav: <http://purl.org/pav/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+<https://w3id.org/Exa-AToW/exato-wf-cwl.ttl#> rdf:type owl:Ontology ;
+    rdfs:label "Exa-AToW CWL Extension"@en , "Extension Exa-AToW pour CWL"@fr ;
+    rdfs:comment """
+    Extension of Exa-AToW Workflow Ontology to describe Common Workflow Language (CWL) constructs.
+    Enables instantiation of CWL workflows as knowledge graphs for cross-WSM interoperability.
+    Aligns with:
+    - exato-wf (core workflow ontology)
+    - PROV-O (provenance)
+    - CWL specification (https://www.commonwl.org/)
+    """@en ,
+    """
+    Extension de l'ontologie Exa-AToW pour décrire les constructions de Common Workflow Language (CWL).
+    Permet l'instanciation des workflows CWL en graphes de connaissances pour l'interopérabilité entre WSM.
+    Aligné avec :
+    - exato-wf (ontologie principale des flux de travail)
+    - PROV-O (provenance)
+    - Spécification CWL (https://www.commonwl.org/)
+    """@fr ;
+    owl:versionInfo "0.1" ;
+    owl:imports <https://w3id.org/Exa-AToW/exato-wf.ttl#> ,
+                <http://www.w3.org/ns/prov-o#> .
+
+#################################################################
+#    CWL-Specific Classes
+#################################################################
+
+### 1. CWL Workflow (exato-wf-cwl:CWLWorkflow)
+exato-wf-cwl:CWLWorkflow rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:Workflow ;
+    rdfs:comment """
+    A workflow defined using the Common Workflow Language (CWL) standard.
+    CWL workflows are composed of steps connected via data links, with explicit input/output declarations.
+    This class specializes exato-wf:Workflow for CWL-specific properties like 'cwl:class' and 'cwl:requirements'.
+    """@en ,
+    """
+    Un flux de travail défini selon la norme Common Workflow Language (CWL).
+    Les workflows CWL sont composés d'étapes connectées via des liens de données, avec des déclarations explicites d'entrées/sorties.
+    Cette classe spécialise exato-wf:Workflow pour des propriétés spécifiques à CWL comme 'cwl:class' et 'cwl:requirements'.
+    """@fr ;
+    skos:prefLabel "CWL Workflow"@en , "Workflow CWL"@fr ;
+    skos:definition """
+    A structured, portable workflow definition adhering to the CWL specification,
+    enabling execution across diverse workflow engines (e.g., cwltool, Toil, Arvados).
+    """@en ,
+    """
+    Une définition de workflow structurée et portable conforme à la spécification CWL,
+    permettant l'exécution sur divers moteurs de workflow (par ex., cwltool, Toil, Arvados).
+    """@fr .
+
+# ---------------------------------------------------------------------------
+# 2. CWL WorkflowStep 
+#    In CWL a Workflow contains WorkflowStep nodes, each of which wraps a
+#    CommandLineTool, ExpressionTool, or nested Workflow via 'run:'.
+#    This is distinct from the tool definition itself.
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLWorkflowStep rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowStep ;
+    rdfs:comment """
+    A step node inside a CWL Workflow document.
+    Each CWLWorkflowStep references a run target (CommandLineTool, ExpressionTool,
+    or nested Workflow) and declares step-level input/output source mappings,
+    scatter configuration, and optional conditional execution.
+
+    This class represents the *step wrapper* in the Workflow document, whereas
+    CWLCommandLineTool / CWLExpressionTool represent the *tool definitions*.
+    """@en ,
+    """
+    Un nœud d'étape dans un document Workflow CWL.
+    Chaque CWLWorkflowStep référence une cible 'run' (CommandLineTool,
+    ExpressionTool ou Workflow imbriqué) et déclare les mappages d'entrées/sorties
+    au niveau de l'étape, la configuration scatter et l'exécution conditionnelle.
+    """@fr ;
+    skos:prefLabel "CWL Workflow Step"@en , "Étape de Workflow CWL"@fr .
+
+# ---------------------------------------------------------------------------
+# 3. CWL CommandLineTool
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLCommandLineTool rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowStep ;
+    rdfs:comment "A CWL tool definition that executes a command-line tool (e.g., a shell command or script). Maps to 'class:CommandLineTool' in CWL, representing atomic tasks with declared inputs/outputs, a baseCommand, optional arguments, and containerization support."@en ,
+    "Un outil CWL qui exécute un outil en ligne de commande (par ex., une commande shell ou un script). Correspond à 'class:CommandLineTool' dans CWL, représentant des tâches atomiques avec des entrées/sorties declarées, un baseCommand, et une prise en charge de la conteneurisation."@fr ;
+    skos:prefLabel "CWL CommandLineTool"@en , "Outil en Ligne de Commande CWL"@fr ;
+    skos:definition "An atomic executable unit in CWL, wrapping a command-line interface (CLI) tool with declared inputs, outputs, and optional Docker/Singularity containers."@en ,
+    "Une unité exécutable atomique dans CWL, encapsulant un outil en ligne de commande (CLI) avec des entrées/sorties déclarées et des conteneurs Docker/Singularity optionnels."@fr .
+
+# ---------------------------------------------------------------------------
+# 4. CWL ExpressionTool
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLExpressionTool rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:WorkflowStep ;
+    rdfs:comment "A CWL step that evaluates expressions (e.g., JavaScript snippets) to transform input data into output data without invoking an external command. Used for lightweight computations or data manipulations within workflows."@en ,
+    " Une étape CWL qui évalue des expressions (par ex., des extraits JavaScript) pour transformer des données. Utilisée pour des calculs légers ou des manipulations de données au sein des workflows."@fr ;
+    skos:prefLabel "CWL ExpressionTool"@en , "Outil d'Expression CWL"@fr ;
+    skos:definition "A step that applies a script (e.g., JavaScript) to inputs, producing outputs without external tool invocation."@en ,
+    "Une étape qui applique un script (par ex., JavaScript) aux entrées, produisant des sorties sans invoquer d'outil externe."@fr .
+
+# ---------------------------------------------------------------------------
+# 5. CWL Requirement  
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLRequirement rdf:type owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:comment "A constraint or feature required (or hinted) by a CWL tool or workflow. Requirements modify execution behavior or environment setup. Subclasses cover Docker, resources, environment variables, shell access, etc."@en ,
+    "Une contrainte ou fonctionnalité requise par un outil/workflow CWL (par ex., Docker, limites de ressources, accès réseau). Les exigences CWL modifient le comportement d'exécution ou la configuration de l'environnement."@fr ;
+    skos:prefLabel "CWL Requirement"@en , "Exigence CWL"@fr ;
+    skos:definition "A declaration of prerequisites for tool/workflow execution, such as container engines, temporary directories, or hardware resources (CPU, RAM, GPU)."@en ,
+    "Une déclaration des prérequis pour l'exécution d'un outil/workflow, comme les moteurs de conteneurs, les répertoires temporaires ou les ressources matérielles (CPU, RAM, GPU)."@fr .
+
+# --- Requirement subclasses -------------------------------------------------
+
+## DockerRequirement  
+exato-wf-cwl:DockerRequirement rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Docker Requirement"@en , "Exigence Docker"@fr ;
+    skos:definition """
+    Specifies a Docker (or compatible OCI) container image for tool execution.
+    Instances carry the dockerPull URI identifying the exact image.
+    """@en ,
+    "Spécifie une image de conteneur Docker pour l'exécution de l'outil."@fr .
+
+## ResourceRequirement 
+exato-wf-cwl:ResourceRequirement rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Resource Requirement"@en , "Exigence de Ressource"@fr ;
+    skos:definition "Declares CPU core counts, RAM, or temporary storage limits. All values may be CWL expressions (stored as xsd:string). Example: coresMin: 4, ramMin: 8192 (MB)."@en ,
+    "Déclare les limites de CPU, RAM ou stockage temporaire. Exemple : coresMin: 4, ramMin: 8192 (Mo)"@fr .
+
+## InitialWorkDirRequirement 
+exato-wf-cwl:InitialWorkDirRequirement rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Initial Work Directory Requirement"@en , "Exigence de Répertoire de Travail Initial"@fr ;
+    skos:definition "Configures the working directory for a tool, including file listings or inline file contents to be staged before execution."@en ,
+    "Configure le répertoire de travail pour un outil, incluant les listes de fichiers et les écritures."@fr .
+
+## ScatterFeatureRequirement
+exato-wf-cwl:ScatterFeatureRequirement rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Scatter Feature Requirement"@en , "Exigence de fonctionnalité de diffusion"@fr ;
+    skos:definition "Declares that the workflow engine supports scatter methods (DotProduct, NestedCrossProduct, etc.)."@en .
+
+### SubworkflowFeatureRequirement
+exato-wf-cwl:SubworkflowFeatureRequirement a owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Subworkflow Feature Requirement"@en , "Exigence de sous-flux de travail"@fr ;
+    skos:definition "Declares that the workflow engine supports nested workflows (a step's 'run' field may reference another Workflow document)."@en .
+
+## InlineJavascriptRequirement
+exato-wf-cwl:InlineJavascriptRequirement rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Inline Javascript Requirement"@en , "Exigence JavaScript Inline"@fr ;
+    skos:definition """
+    Enables the use of ECMAScript 5.1 expressions within CWL documents.
+    Required for ExpressionTool and any valueFrom / outputEval expressions.
+    """@en .
+
+## EnvVarRequirement 
+exato-wf-cwl:EnvVarRequirement rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Env Var Requirement"@en , "Exigence de Variables d'Environnement"@fr ;
+    skos:definition """
+    Declares environment variables that must be set in the tool's execution
+    environment. Each variable is captured via exato-wf-cwl:envVarName and
+    exato-wf-cwl:envVarValue properties on an EnvVarRequirement instance.
+    """@en .
+
+## ShellCommandRequirement  
+exato-wf-cwl:ShellCommandRequirement rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Shell Command Requirement"@en , "Exigence de Commande Shell"@fr ;
+    skos:definition """
+    Enables shell pipelines (|, &&, etc.) by routing the command through /bin/sh.
+    Required whenever arguments contain shell operators.
+    """@en .
+
+## NetworkAccess
+exato-wf-cwl:NetworkAccess rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Network Access"@en , "Accès Réseau"@fr ;
+    skos:definition """
+    Declares whether the tool requires outbound network access during execution
+    (CWL v1.2+). Controlled by exato-wf-cwl:networkAccess (boolean).
+    """@en .
+
+## SoftwareRequirement 
+exato-wf-cwl:SoftwareRequirement rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLRequirement ;
+    skos:prefLabel "Software Requirement"@en , "Exigence Logicielle"@fr ;
+    skos:definition """
+    Declares software packages needed for tool execution without specifying a container (e.g., via package managers or module systems).
+    Each package is captured via a SoftwarePackage individual linked by exato-wf-cwl:softwarePackage.
+    """@en .
+
+## SoftwarePackage (companion to SoftwareRequirement)
+exato-wf-cwl:SoftwarePackage rdf:type owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    skos:prefLabel "Software Package"@en , "Package Logiciel"@fr ;
+    skos:definition "A named software package (and optional version/specifier) declared as a dependency inside a SoftwareRequirement."@en .
+
+
+# ---------------------------------------------------------------------------
+# 6. CWL Input/Output Parameter specialisations
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLInputParameter rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:InputParameter ;
+    rdfs:comment """
+    An input parameter in CWL, with optional type constraints, default values, input bindings, secondary files, and load-contents support.
+    Maps to 'InputParameter' in CWL specifications.
+    """@en ,
+    """
+    Un paramètre d'entrée dans CWL, avec des contraintes de type optionnelles, des valeurs par défaut et des fichiers secondaires.
+    Correspond à 'InputParameter' dans les spécifications CWL.
+    """@fr ;
+    skos:prefLabel "CWL Input Parameter"@en , "Paramètre d'Entrée CWL"@fr .
+
+exato-wf-cwl:CWLOutputParameter rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:OutputParameter ;
+    rdfs:comment """
+    An output parameter in CWL, with glob patterns for file collection, type declarations, and optional output evaluation expressions.
+    Maps to 'OutputParameter' in CWL.
+    """@en ,
+    """
+    Un paramètre de sortie dans CWL, avec des motifs glob pour la collecte de fichiers et des déclarations de type.
+    Correspond à 'OutputParameter' dans CWL.
+    """@fr ;
+    skos:prefLabel "CWL Output Parameter"@en , "Paramètre de Sortie CWL"@fr .
+
+
+
+
+
+
+# ---------------------------------------------------------------------------
+# 7. CWL InputBinding / OutputBinding
+# ---------------------------------------------------------------------------
+
+
+exato-wf-cwl:CWLInputBinding rdf:type owl:Class ;
+    rdfs:comment "Describes how to map a CWL input parameter value onto the command-line: its positional order, flag prefix, value/separator formatting, and whether the file content should be loaded into memory."@en ,
+    "Décrit comment mapper un paramètre d'entrée CWL sur la ligne de commande : position, préfixe, séparateur de valeur, chargement du contenu."@fr ;
+    skos:prefLabel "CWL Input Binding"@en , "Liaison d'Entrée CWL"@fr .
+
+exato-wf-cwl:CWLOutputBinding rdf:type owl:Class ; 
+    rdfs:comment """
+    Describes how output files are collected after tool execution:
+    glob patterns matching file paths and optional JavaScript expressions
+    that post-process the collected file set.
+    """@en ,
+    "Décrit comment les fichiers de sortie sont collectés après l'exécution : motifs glob et expressions JavaScript optionnelles."@fr ;
+    skos:prefLabel "CWL Output Binding"@en , "Liaison de Sortie CWL"@fr .
+
+
+# ---------------------------------------------------------------------------
+# 8. CWL Type system
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLType rdf:type owl:Class ;
+    rdfs:comment "Controlled vocabulary of primitive CWL types. Array and record types are handled by CWLArrayType and CWLRecordType."@en ;
+    skos:prefLabel "CWL Type"@en , "Type CWL"@fr .
+
+# Primitive type individuals
+exato-wf-cwl:CWLInt owl:equivalentClass xsd:integer .
+exato-wf-cwl:CWLFloat owl:equivalentClass xsd:float .
+exato-wf-cwl:CWLString owl:equivalentClass xsd:string .
+exato-wf-cwl:CWLBoolean owl:equivalentClass xsd:boolean .
+exato-wf-cwl:CWLDouble owl:equivalentClass xsd:double .
+exato-wf-cwl:CWLLong owl:equivalentClass xsd:long .
+exato-wf-cwl:CWLNull      rdf:type owl:NamedIndividual , exato-wf-cwl:CWLType ;
+    skos:prefLabel "null"@en .
+exato-wf-cwl:CWLFileType  rdf:type owl:NamedIndividual , exato-wf-cwl:CWLType ;
+    skos:prefLabel "File"@en .
+exato-wf-cwl:CWLDirType   rdf:type owl:NamedIndividual , exato-wf-cwl:CWLType ;
+    skos:prefLabel "Directory"@en .
+exato-wf-cwl:CWLAny       rdf:type owl:NamedIndividual , exato-wf-cwl:CWLType ;
+    skos:prefLabel "Any"@en .
+exato-wf-cwl:CWLStdout    rdf:type owl:NamedIndividual , exato-wf-cwl:CWLType ;
+    skos:prefLabel "stdout"@en ;
+    skos:definition "Special output type capturing stdout of the tool."@en .
+exato-wf-cwl:CWLStderr    rdf:type owl:NamedIndividual , exato-wf-cwl:CWLType ;
+    skos:prefLabel "stderr"@en ;
+    skos:definition "Special output type capturing stderr of the tool."@en .
+
+## Array type (e.g. type: {type: array, items: File})
+exato-wf-cwl:CWLArrayType rdf:type owl:Class ;   
+    rdfs:comment """
+    Represents a CWL array type declaration. Link the array type to its
+    item type using exato-wf-cwl:hasItemType.
+    Example: a parameter of type 'File[]' is represented as a CWLArrayType
+    instance with hasItemType pointing to exato-wf-cwl:CWLFileType.
+    """@en ;
+    skos:prefLabel "CWL Array Type"@en , "Type Tableau CWL"@fr .
+
+
+# ---------------------------------------------------------------------------
+# 9. CWL File and Directory (runtime values)
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLFile rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:DataArtifact ;
+    rdfs:comment """
+    A CWL File object — a runtime instance of a file value passed to or
+    produced by a tool. Carries location/path, basename, checksum, size,
+    and optional secondary files.
+
+    Use this class to instantiate concrete file values in the KG.
+    Non-CWL readers can understand it simply as 'a file used or produced
+    by this workflow step'.
+    """@en ,
+    "Un objet File CWL — une instance de valeur fichier passée à ou produite par un outil CWL."@fr ;
+    skos:prefLabel "CWL File"@en , "Fichier CWL"@fr .
+
+exato-wf-cwl:CWLDirectory rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:DataArtifact ;
+    rdfs:comment "A CWL Directory object — a runtime instance of a directory value. Carries location/path and basename."@en ;
+    skos:prefLabel "CWL Directory"@en , "Répertoire CWL"@fr .
+
+
+# ---------------------------------------------------------------------------
+# 10. CWL Secondary File
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLSecondaryFile rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf:DataArtifact ;
+    rdfs:comment "A file associated with a primary input/output in CWL (e.g., index files, sidecar metadata). Secondary files are automatically staged with their primary artifact."@en ,
+    "Un fichier associé à une entrée/sortie principale dans CWL (par ex., fichiers d'index, métadonnées annexes). Les fichiers secondaires sont automatiquement mis en scène avec leur artefact principal."@fr ;
+    skos:prefLabel "CWL Secondary File"@en , "Fichier Secondaire CWL"@fr .
+
+
+# ---------------------------------------------------------------------------
+# 11. CWL Scatter/Gather
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:CWLParallelismPattern rdf:type owl:Class ;    
+    rdfs:subClassOf exato-wf:WorkflowProperty ;
+    rdfs:comment "Abstract class for CWL parallelism strategies applied to workflow steps. Subclasses cover scatter/gather methods."@en ;
+    skos:prefLabel "CWL Parallelism Pattern"@en , "Patron de Parallélisme CWL"@fr .
+
+
+exato-wf-cwl:CWLScatterMethod rdf:type owl:Class ;
+    rdfs:subClassOf exato-wf-cwl:CWLParallelismPattern ;
+    owl:oneOf (exato-wf-cwl:DotProduct exato-wf-cwl:NestedCrossProduct exato-wf-cwl:FlatCrossProduct) ;
+    rdfs:comment """
+    Methods for parallelizing workflow steps over input arrays in CWL:
+    - DotProduct: one-to-one mapping of array elements to jobs.
+    - NestedCrossProduct: Cartesian product of multiple input arrays, producing nested arrays of outputs.
+    - FlatCrossProduct: Cartesian product flattened into a single output array.
+    """@en ,
+    """
+    Méthodes de parallélisation des étapes de workflow sur des tableaux d'entrée en CWL :
+    - DotProduct : association un à un (mapping biunivoque) des éléments du tableau aux tâches.
+    - NestedCrossProduct : produit cartésien de plusieurs tableaux d'entrée, générant des tableaux de sorties imbriqués.
+    - FlatCrossProduct : produit cartésien aplati en un seul tableau de sortie.
+    """@fr ;
+    skos:prefLabel "CWL Scatter Method"@en , "Méthode de Diffusion CWL"@fr .
+
+# Scatter method individuals
+exato-wf-cwl:DotProduct rdf:type owl:NamedIndividual , exato-wf-cwl:CWLScatterMethod ;
+    skos:prefLabel "Dot Product"@en , "Produit Point"@fr ;
+    skos:definition "One-to-one mapping: each array element triggers a separate job."@en ,
+    "Mappage un-à-un : chaque élément du tableau déclenche un job séparé."@fr .
+
+exato-wf-cwl:NestedCrossProduct rdf:type owl:NamedIndividual , exato-wf-cwl:CWLScatterMethod ;
+    skos:prefLabel "Nested Cross Product"@en , "Produit Cartésien Imbriqué"@fr ;
+    skos:definition "Cartesian product of input arrays: all combinations are processed."@en ,
+    "Produit cartésien des tableaux d'entrées : toutes les combinaisons sont traitées."@fr .
+
+exato-wf-cwl:FlatCrossProduct rdf:type owl:NamedIndividual , exato-wf-cwl:CWLScatterMethod ;
+    skos:prefLabel "Flat Cross Product"@en , "Produit Cartésien Aplati"@fr ;
+    skos:definition "Cartesian product of input arrays; outputs are a single flattened array."@en ,
+    "Produit cartésien des tableaux d'entrées : les sorties dorment un seul tableau aplati."@fr .
+
+# ---------------------------------------------------------------------------
+# 12. ConditionalExecution
+# ---------------------------------------------------------------------------
+
+exato-wf-cwl:ConditionalExecution a owl:Class ;
+    #rdfs:subClassOf prov:Plan ;
+    skos:prefLabel "Conditional Execution"@en , "Exécution conditionnelle"@fr ;
+    skos:definition "A modifier for workflow steps that adds a condition (e.g., 'when: input_size > 0')."@en ;
+    rdfs:comment """
+    A CWL v1.2 'when' condition attached to a workflow step.
+    The step is only executed when the CWL expression stored in
+    exato-wf-cwl:conditionExpression evaluates to true.
+    Non-CWL readers can understand this as: 'this step runs only if a
+    certain condition is met at runtime'.
+    """@en ,
+    """
+    Une condition CWL v1.2 'when' attachée à une étape de workflow.
+    L'étape n'est exécutée que si l'expression est vraie.
+    """@fr .
+
+
+
+#################################################################
+#  CWL-Specific Object Properties
+#################################################################
+
+# --- Step structure --------------------------------------------------------
+
+### runs: links a CWLWorkflowStep to what it actually executes
+exato-wf-cwl:runs rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf-cwl:CWLWorkflowStep ;
+    rdfs:range [ rdf:type owl:Class ;
+                 owl:unionOf ( exato-wf-cwl:CWLCommandLineTool
+                               exato-wf-cwl:CWLExpressionTool
+                               exato-wf-cwl:CWLWorkflow ) ] ;
+    rdfs:comment """
+    Links a CWLWorkflowStep to its run target: a CommandLineTool, ExpressionTool,
+    or nested Workflow. Corresponds to the 'run:' field in a CWL Workflow step.
+    Non-CWL readers: this property says 'this step executes the following tool
+    or sub-workflow'.
+    """@en ,
+    "Relie un CWLWorkflowStep à sa cible 'run' : un outil ou un sous-workflow."@fr ;
+    skos:prefLabel "runs"@en , "exécute"@fr .
+
+
+### runWorkflow: kept for backward compatibility, but 'runs' is preferred
+exato-wf-cwl:runWorkflow rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf exato-wf-cwl:runs ;
+    rdfs:domain exato-wf:WorkflowStep ;
+    rdfs:range exato-wf-cwl:CWLWorkflow ;
+    owl:deprecated "true"^^xsd:boolean ;
+    rdfs:comment "Deprecated: use exato-wf-cwl:runs instead."@en ;
+    skos:prefLabel "run workflow (deprecated)"@en .
+
+
+# --- Requirements and Hints ------------------------------------------------
+
+### hasRequirement
+exato-wf-cwl:hasRequirement rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf prov:wasInfluencedBy ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLWorkflow
+                                exato-wf-cwl:CWLCommandLineTool
+                                exato-wf-cwl:CWLExpressionTool
+                                exato-wf-cwl:CWLWorkflowStep ) ] ;
+    rdfs:range exato-wf-cwl:CWLRequirement ;
+    rdfs:comment """
+    Links a CWL entity to a requirement that MUST be satisfied for execution.
+    CWL requirements influence the execution environment (PROV-O alignment via
+    prov:wasInfluencedBy).
+    """@en ,
+    """
+    Relie une entité CWL à une exigence qui DOIT être satisfaite pour l'exécution.
+    """@fr ;
+    skos:prefLabel "has requirement"@en , "a une exigence"@fr .
+
+
+### hasHint
+exato-wf-cwl:hasHint rdf:type owl:ObjectProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLWorkflow
+                                exato-wf-cwl:CWLCommandLineTool
+                                exato-wf-cwl:CWLExpressionTool ) ] ;
+    rdfs:range exato-wf-cwl:CWLRequirement ;
+    rdfs:comment """
+    Non-mandatory suggestions for workflow execution (e.g., preferred Docker image).
+    Unlike requirements, hints may be silently ignored by the engine if unsupported.
+    """@en ,
+    """
+    Suggestions non obligatoires pour l'exécution. Contrairement aux exigences,
+    les hints peuvent être ignorés si non supportés.
+    """@fr ;
+    skos:prefLabel "has hint"@en , "a une indication"@fr .
+
+# --- Input/Output Bindings -------------------------------------------------
+
+### inputBinding
+
+exato-wf-cwl:inputBinding rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf-cwl:CWLInputParameter ;
+    rdfs:range exato-wf-cwl:CWLInputBinding ;
+    rdfs:comment "Links a CWL input parameter to its command-line binding specification."@en ,
+    "Spécifie comment un paramètre d'entrée est lié à un argument en ligne de commande."@fr ;
+    skos:prefLabel "input binding"@en , "liaison d'entrée"@fr .
+
+### outputBinding 
+exato-wf-cwl:outputBinding rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf-cwl:CWLOutputParameter ;
+    rdfs:range exato-wf-cwl:CWLOutputBinding ;
+    rdfs:comment "Links a CWL output parameter to its output binding, which specifies how output files are collected (glob patterns) and optionally post-processed."@en ,
+    "Relie un paramètre de sortie CWL à sa liaison de sortie (glob, outputEval)."@fr ;
+    skos:prefLabel "output binding"@en , "liaison de sortie"@fr .
+
+
+# --- Secondary Files -------------------------------------------------------
+
+### secondaryFiles
+exato-wf-cwl:secondaryFiles rdf:type owl:ObjectProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLInputParameter
+                                exato-wf-cwl:CWLOutputParameter ) ] ;
+    rdfs:range exato-wf-cwl:CWLSecondaryFile ;
+    rdfs:comment """
+    Links a primary input/output parameter to its secondary file declarations
+    (e.g., '.bai' index files for '.bam' alignment files).
+    Secondary files are automatically staged with their primary artifact.
+    """@en ;
+    skos:prefLabel "secondary files"@en , "fichiers secondaires"@fr .
+
+# --- Scatter ---------------------------------------------------------------
+
+### scatterMethod 
+exato-wf-cwl:scatterMethod rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf-cwl:CWLWorkflowStep ;
+    rdfs:range exato-wf-cwl:CWLScatterMethod ;
+    rdfs:comment """
+    Links a CWL workflow step to the scatter method used to parallelise it
+    over an input array. Requires ScatterFeatureRequirement on the Workflow.
+
+    Non-CWL readers: this says 'run this step once per element of the input list,
+    using the specified parallelism strategy'.
+    """@en ;
+    skos:prefLabel "scatter method"@en , "méthode de diffusion"@fr .
+
+
+# --- Conditional Execution -------------------------------------------------
+
+### hasCondition
+exato-wf-cwl:hasCondition rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf-cwl:CWLWorkflowStep ;
+    rdfs:range exato-wf-cwl:ConditionalExecution ;
+    rdfs:comment """
+    Links a CWL workflow step to a ConditionalExecution that guards it.
+    Corresponds to the 'when:' field in CWL v1.2.
+    """@en ;
+    skos:prefLabel "has condition"@en , "a une condition"@fr .
+
+
+
+# --- Data Links (step-to-step wiring)  ------------------------------------
+
+### sourceFrom
+exato-wf-cwl:sourceFrom rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf exato-wf:connectsTo ;
+    rdfs:domain exato-wf-cwl:CWLInputParameter ;
+    rdfs:range exato-wf-cwl:CWLOutputParameter ;
+    rdfs:comment """
+    Links a CWL step input parameter to the output parameter it receives data from.
+    Corresponds to the 'source:' field in a CWL WorkflowStep input mapping.
+
+    This property is what wires steps together into a dataflow graph.
+    Example: step B's input 'reads' comes from step A's output 'trimmed_reads'
+    is expressed as:
+        :stepB_reads_param exato-wf-cwl:sourceFrom :stepA_trimmed_reads_param .
+
+    Non-CWL readers: this says 'the data flowing into this step input was
+    produced by that other step's output'.
+
+    For data coming directly from the workflow-level inputs (not from another
+    step), use exato-wf-cwl:sourceWorkflowInput instead.
+    """@en ,
+    """
+    Relie un paramètre d'entrée d'une étape CWL au paramètre de sortie dont il
+    reçoit les données. Correspond au champ 'source:' dans un WorkflowStep CWL.
+    """@fr ;
+    skos:prefLabel "source from"@en , "source depuis"@fr .
+
+### sourceWorkflowInput
+exato-wf-cwl:sourceWorkflowInput rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf-cwl:CWLInputParameter ;
+    rdfs:range exato-wf-cwl:CWLInputParameter ;
+    rdfs:comment """
+    Links a step-level input parameter to the top-level workflow input it
+    receives data from (as opposed to another step's output).
+    Corresponds to a 'source:' value that references a workflow-level input id.
+    Non-CWL readers: this says 'this step input is fed directly from the
+    workflow's own input, not from another step'.
+    """@en ,
+    """
+    Relie un paramètre d'entrée d'étape à une entrée de workflow de niveau supérieur.
+    """@fr ;
+    skos:prefLabel "source workflow input"@en , "entrée de workflow source"@fr .
+
+
+
+# --- Type system -----------------------------------------------------------
+
+### hasType
+exato-wf-cwl:hasType rdf:type owl:ObjectProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLInputParameter
+                                exato-wf-cwl:CWLOutputParameter ) ] ;
+    rdfs:range [ rdf:type owl:Class ;
+                 owl:unionOf ( exato-wf-cwl:CWLType
+                               exato-wf-cwl:CWLArrayType ) ] ;
+    rdfs:comment """
+    Links a CWL parameter to its declared type (a CWLType individual or a
+    CWLArrayType instance).
+    Non-CWL readers: this says what kind of value this parameter holds
+    (e.g., a File, a string, a list of integers).
+    """@en ;
+    skos:prefLabel "has type"@en , "a un type"@fr .
+
+### hasItemType  — used with CWLArrayType
+exato-wf-cwl:hasItemType rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf-cwl:CWLArrayType ;
+    rdfs:range [ rdf:type owl:Class ;
+                 owl:unionOf ( exato-wf-cwl:CWLType
+                               exato-wf-cwl:CWLArrayType ) ] ;
+    rdfs:comment "Links a CWL array type to the type of its elements."@en ;
+    skos:prefLabel "has item type"@en , "a un type d'élément"@fr .
+
+
+# --- SoftwareRequirement helper --------------------------------------------
+
+### softwarePackage  
+exato-wf-cwl:softwarePackage rdf:type owl:ObjectProperty ;
+    rdfs:domain exato-wf-cwl:SoftwareRequirement ;
+    rdfs:range exato-wf-cwl:SoftwarePackage ;
+    rdfs:comment "Links a SoftwareRequirement to one or more package declarations."@en ;
+    skos:prefLabel "software package"@en , "package logiciel"@fr .
+
+
+#################################################################
+#  CWL-Specific Datatype Properties
+#################################################################
+
+# --- CWL version -----------------------------------------------------------
+
+### cwlVersion 
+exato-wf-cwl:cwlVersion rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLWorkflow
+                                exato-wf-cwl:CWLCommandLineTool
+                                exato-wf-cwl:CWLExpressionTool ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    The CWL specification version used by this document (e.g., 'v1.0', 'v1.2').
+    Required in every CWL document.
+    """@en ;
+    skos:prefLabel "cwl version"@en , "version CWL"@fr .
+
+
+# --- CWL class label -------------------------------------------------------
+
+### cwlClass
+exato-wf-cwl:cwlClass rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf (exato-wf-cwl:CWLWorkflow exato-wf-cwl:CWLCommandLineTool exato-wf-cwl:CWLExpressionTool) ] ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The CWL class of the entity (e.g., 'Workflow', 'CommandLineTool', 'ExpressionTool'). Maps direclty to the 'class:' field in CWL documents."@en ,
+    "La classe CWL de l'entité (par ex., 'Workflow', 'CommandLineTool', 'ExpressionTool'). Correspond au champ 'class:' dans les documents CWL."@fr ;
+    skos:prefLabel "CWL class"@en , "classe CWL"@fr .
+
+
+### stepID
+exato-wf-cwl:stepID rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLWorkflowStep ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    The local identifier of this step as declared in the CWL Workflow document
+    (e.g., 'trimming', 'alignment', 'variant_calling').
+    Used together with parameterID to fully qualify data link endpoints:
+    the source of a data link is identified as 'stepID/parameterID'.
+    Maps to the 'id:' field of a CWL WorkflowStep.
+    Non-CWL readers: this is simply the name of this step in the workflow.
+    """@en ,
+    "L'identifiant local de cette étape dans le document CWL Workflow. Utilisé avec parameterID pour qualifier les extrémités des liens de données."@fr ;
+    skos:prefLabel "step ID"@en , "identifiant de l'étape"@fr .
+
+
+
+# --- CommandLineTool execution ---------------------------------------------
+
+### baseCommand
+exato-wf-cwl:baseCommand rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLCommandLineTool ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    The base command to execute (e.g., ["python", "script.py"]).
+    Maps to 'baseCommand' in CWL CommandLineTool.
+    """@en ,
+    """
+    La commande de base à exécuter (par ex., ["python", "script.py"]).
+    Correspond à 'baseCommand' dans CWL CommandLineTool.
+    """@fr ;
+    skos:prefLabel "base command"@en , "commande de base"@fr .
+
+
+### arguments
+exato-wf-cwl:arguments rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLCommandLineTool ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    Static command-line fragments that are always appended regardless of inputs
+    (e.g., '--verbose', '-O bam'). Use one triple per argument token.
+    Maps to 'arguments:' in CWL CommandLineTool.
+    """@en ;
+    skos:prefLabel "arguments"@en , "arguments"@fr .
+
+### stdin 
+exato-wf-cwl:stdin rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLCommandLineTool ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    A CWL expression or file path to use as the standard input (stdin) of the tool.
+    Maps to 'stdin:' in CWL CommandLineTool.
+    """@en ;
+    skos:prefLabel "stdin"@en .
+
+### stdout  
+exato-wf-cwl:stdout rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLCommandLineTool ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    Filename pattern or CWL expression for the standard output file.
+    When set, the tool's stdout is captured into this file.
+    Maps to 'stdout:' in CWL CommandLineTool.
+    """@en ;
+    skos:prefLabel "stdout"@en .
+
+### stderr  
+exato-wf-cwl:stderr rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLCommandLineTool ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    Filename pattern or CWL expression for the standard error file.
+    When set, the tool's stderr is captured into this file.
+    Maps to 'stderr:' in CWL CommandLineTool.
+    """@en ;
+    skos:prefLabel "stderr"@en .
+
+### expression
+exato-wf-cwl:expression rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLExpressionTool ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    The JavaScript/CWL expression that this ExpressionTool evaluates.
+    The expression receives 'inputs' and must return an object mapping
+    output parameter names to their values.
+    Example: '${return {\"count\": inputs.files.length};}'
+    """@en ;
+    skos:prefLabel "expression"@en , "expression"@fr .
+
+
+# --- InputBinding ----------------------------------------------------------
+
+exato-wf-cwl:position a owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLInputBinding ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Positional order of this argument on the command line (lower = earlier)."@en ;
+    skos:prefLabel "position"@en .
+
+exato-wf-cwl:prefix a owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLInputBinding ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Flag/prefix prepended to the value (e.g., '--input', '-f')."@en ;
+    skos:prefLabel "prefix"@en .
+
+exato-wf-cwl:separate a owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLInputBinding ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment """
+    If true (default), the prefix and value are separate tokens on the command line.
+    If false, they are concatenated (e.g., '--input=file.txt').
+    """@en ;
+    skos:prefLabel "separate"@en .
+
+
+exato-wf-cwl:itemSeparator rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLInputBinding ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    Character used to join array values into a single argument
+    (e.g., ',' produces '--files a.txt,b.txt').
+    Maps to 'itemSeparator:' in CWL InputBinding.
+    """@en ;
+    skos:prefLabel "item separator"@en .
+
+exato-wf-cwl:valueFrom rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLInputBinding ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    A CWL expression (JavaScript) that computes the command-line value from
+    the parameter value at runtime. Requires InlineJavascriptRequirement.
+    Maps to 'valueFrom:' in CWL InputBinding.
+    """@en ;
+    skos:prefLabel "value from"@en , "valeur depuis"@fr .
+
+exato-wf-cwl:loadContents rdf:type owl:DatatypeProperty ; 
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLInputBinding
+                                exato-wf-cwl:CWLOutputBinding ) ] ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment """
+    If true, load the first 64KB of the referenced file into 'self.contents'
+    so it can be used in CWL expressions.
+    Maps to 'loadContents:' in CWL bindings.
+    """@en ;
+    skos:prefLabel "load contents"@en .
+
+
+# --- OutputBinding  --------------------------------------------------
+
+exato-wf-cwl:glob rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLOutputBinding ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    A glob pattern (or CWL expression returning one) used to collect output
+    files from the tool's working directory after execution.
+    Use one triple per glob pattern.
+    Maps to 'glob:' in CWL OutputBinding.
+    """@en ;
+    skos:prefLabel "glob"@en .
+
+exato-wf-cwl:outputEval rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLOutputBinding ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    A CWL JavaScript expression that post-processes the set of files matched
+    by the glob pattern. Requires InlineJavascriptRequirement.
+    Maps to 'outputEval:' in CWL OutputBinding.
+    """@en ;
+    skos:prefLabel "output eval"@en , "évaluation de sortie"@fr .
+
+
+# --- Scatter ---------------------------------------------------------------
+
+### scatterParameter (single parameter name — use for DotProduct)
+exato-wf-cwl:scatterParameter rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLWorkflowStep ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    The name of the input parameter to scatter over (for a single-parameter scatter).
+    Use one triple per parameter for multi-parameter scatter; combine with
+    scatterMethod NestedCrossProduct or FlatCrossProduct.
+    Maps to 'scatter:' in CWL WorkflowStep.
+    """@en ;
+    skos:prefLabel "scatter parameter"@en , "paramètre de diffusion"@fr .
+
+
+# --- Conditional Execution -------------------------------------------------
+
+exato-wf-cwl:conditionExpression rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:ConditionalExecution ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    The CWL JavaScript expression that must evaluate to 'true' for the step
+    to run. Requires InlineJavascriptRequirement.
+    Maps to 'when:' in a CWL v1.2 WorkflowStep.
+    Example: '$(inputs.skip == false)'
+    """@en ;
+    skos:prefLabel "condition expression"@en , "expression conditionnelle"@fr .
+
+
+
+
+# --- Requirement-specific datatype properties ------------------------------
+
+### DockerRequirement
+exato-wf-cwl:dockerPull rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:DockerRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "URI of the Docker image to pull (e.g., 'quay.io/biocontainers/samtools:1.15')."@en ;
+    skos:prefLabel "docker pull"@en , "image Docker"@fr .
+
+exato-wf-cwl:dockerFile rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:DockerRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Inline Dockerfile content to build the image from."@en ;
+    skos:prefLabel "docker file"@en .
+
+exato-wf-cwl:dockerImageId rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:DockerRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Image ID of a locally available Docker image."@en ;
+    skos:prefLabel "docker image id"@en .
+
+
+### ResourceRequirement
+exato-wf-cwl:coresMin rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:ResourceRequirement ;
+    rdfs:range xsd:string ;   # xsd:string allows CWL expressions as well as integers
+    rdfs:comment "Minimum number of CPU cores required. May be a CWL expression."@en ;
+    skos:prefLabel "minimum cores"@en , "cœurs minimum"@fr .
+
+exato-wf-cwl:coresMax rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:ResourceRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Maximum number of CPU cores to use. May be a CWL expression."@en ;
+    skos:prefLabel "maximum cores"@en .
+
+exato-wf-cwl:ramMin rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:ResourceRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Minimum RAM in mebibytes (MiB). May be a CWL expression."@en ;
+    skos:prefLabel "minimum RAM (MiB)"@en , "RAM minimum (Mio)"@fr .
+
+exato-wf-cwl:ramMax rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:ResourceRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Maximum RAM in mebibytes (MiB). May be a CWL expression."@en ;
+    skos:prefLabel "maximum RAM (MiB)"@en .
+
+exato-wf-cwl:tmpdirMin rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:ResourceRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Minimum temporary disk space in mebibytes (MiB)."@en ;
+    skos:prefLabel "minimum tmp disk (MiB)"@en .
+
+exato-wf-cwl:outdirMin rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:ResourceRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Minimum output directory disk space in mebibytes (MiB)."@en ;
+    skos:prefLabel "minimum output dir disk (MiB)"@en .
+
+
+### InitialWorkDirRequirement
+exato-wf-cwl:workDirListing rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:InitialWorkDirRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    A file path, CWL expression, or inline content string to stage in the
+    working directory. Use one triple per file/entry to be staged.
+    Maps to 'listing:' in CWL InitialWorkDirRequirement.
+    (FIX from v0.1: range was rdf:Seq — replaced by repeatable xsd:string.)
+    """@en ;
+    skos:prefLabel "working directory listing entry"@en ,
+                   "entrée du répertoire de travail"@fr .
+
+
+### EnvVarRequirement  [NEW]
+exato-wf-cwl:envVarName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:EnvVarRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Name of the environment variable to set."@en ;
+    skos:prefLabel "env var name"@en .
+
+exato-wf-cwl:envVarValue rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:EnvVarRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    Value of the environment variable (may be a CWL expression).
+    Pair with envVarName: one EnvVarRequirement instance per variable.
+    """@en ;
+    skos:prefLabel "env var value"@en .
+
+
+### NetworkAccess  [NEW]
+exato-wf-cwl:networkAccess rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:NetworkAccess ;
+    rdfs:range xsd:boolean ;
+    rdfs:comment "True if outbound network access is required during execution."@en ;
+    skos:prefLabel "network access"@en .
+
+
+### SoftwarePackage  [NEW]
+exato-wf-cwl:packageName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:SoftwarePackage ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Name of the software package (e.g., 'bwa', 'samtools')."@en ;
+    skos:prefLabel "package name"@en .
+
+exato-wf-cwl:packageVersion rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:SoftwarePackage ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Required version of the package (e.g., '0.7.17')."@en ;
+    skos:prefLabel "package version"@en .
+
+exato-wf-cwl:packageSpecs rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:SoftwarePackage ;
+    rdfs:range xsd:anyURI ;
+    rdfs:comment """
+    URI of a package repository or identifier (e.g., a bio.tools URI,
+    a Bioconda package URL). Use one triple per URI.
+    """@en ;
+    skos:prefLabel "package specs"@en .
+
+
+# --- CWL File / Directory runtime values  [NEW] ----------------------------
+
+exato-wf-cwl:fileLocation rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLFile
+                                exato-wf-cwl:CWLDirectory ) ] ;
+    rdfs:range xsd:anyURI ;
+    rdfs:comment """
+    Resolvable URI identifying the file or directory (preferred over path
+    for portable KG representations). Maps to 'location:' in CWL File/Directory.
+    """@en ;
+    skos:prefLabel "location"@en .
+
+exato-wf-cwl:filePath rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLFile
+                                exato-wf-cwl:CWLDirectory ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Local filesystem path to the file or directory. Maps to 'path:' in CWL."@en ;
+    skos:prefLabel "path"@en .
+
+exato-wf-cwl:basename rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLFile
+                                exato-wf-cwl:CWLDirectory ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Filename without directory component. Maps to 'basename:' in CWL."@en ;
+    skos:prefLabel "basename"@en .
+
+exato-wf-cwl:nameroot rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLFile ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Basename without extension (e.g., 'sample1' for 'sample1.bam')."@en ;
+    skos:prefLabel "nameroot"@en .
+
+exato-wf-cwl:nameext rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLFile ;
+    rdfs:range xsd:string ;
+    rdfs:comment "File extension including the dot (e.g., '.bam')."@en ;
+    skos:prefLabel "nameext"@en .
+
+exato-wf-cwl:fileSize rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLFile ;
+    rdfs:range xsd:long ;
+    rdfs:comment "File size in bytes."@en ;
+    skos:prefLabel "size"@en .
+
+exato-wf-cwl:fileChecksum rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLFile ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Checksum in 'algorithm:hex' format (e.g., 'sha1$abc123...')."@en ;
+    skos:prefLabel "checksum"@en .
+
+
+# --- requirementName helper ------------------------------------------------
+
+exato-wf-cwl:requirementName rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLRequirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    Human-readable or canonical name of the requirement
+    (e.g., 'DockerRequirement', 'ResourceRequirement').
+    Useful for non-CWL consumers reading the KG.
+    """@en ;
+    skos:prefLabel "requirement name"@en .
+
+
+
+# --- Input/Output Parameter properties ------------------------------------
+
+### defaultValue
+exato-wf-cwl:defaultValue rdf:type owl:DatatypeProperty ;
+    rdfs:domain exato-wf-cwl:CWLInputParameter ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    The default value for this input parameter when no value is provided
+    at runtime. Store as a string; interpret according to hasType.
+    For simple scalars the value is stored directly.
+    For structured defaults (File, array) use a JSON-encoded string.
+    Maps to 'default:' in CWL InputParameter.
+
+    Non-CWL readers: this is the fallback value used if the user does not
+    supply a value for this input when running the workflow.
+    """@en ,
+    """
+    La valeur par défaut de ce paramètre d'entrée si aucune valeur n'est
+    fournie à l'exécution. Correspond à 'default:' dans CWL InputParameter.
+    """@fr ;
+    skos:prefLabel "default value"@en , "valeur par défaut"@fr .
+
+### parameterID
+exato-wf-cwl:parameterID rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+                  owl:unionOf ( exato-wf-cwl:CWLInputParameter
+                                exato-wf-cwl:CWLOutputParameter ) ] ;
+    rdfs:range xsd:string ;
+    rdfs:comment """
+    The local identifier of this parameter as declared in the CWL document
+    (e.g., 'reads', 'reference', 'output_bam').
+    Used together with exato-wf-cwl:sourceFrom to unambiguously identify
+    the endpoints of data links.
+    Maps to the 'id:' field of a CWL parameter.
+    """@en ,
+    """
+    L'identifiant local de ce paramètre tel que déclaré dans le document CWL.
+    Utilisé avec sourceFrom pour identifier sans ambiguïté les extrémités
+    des liens de données.
+    """@fr ;
+    skos:prefLabel "parameter ID"@en , "identifiant du paramètre"@fr .
+
+
+

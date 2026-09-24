@@ -28,11 +28,11 @@
     
     Exa-AToW adds domain-specific classes for workflow properties, execution environments,
     and cross-WMS interoperability while maintaining full compatibility with W3C standards."""@en ;
-    owl:versionInfo "0.1" ;
-    owl:imports ( <http://www.w3.org/ns/prov-o#>
-                  <http://purl.org/wf4ever/wfdesc#>
-                  <http://purl.org/wf4ever/wfprov#>
-                  <https://pav-ontology.github.io/pav/> ) .
+    owl:versionInfo "0.1" .#;
+#    owl:imports <https://www.w3.org/ns/prov-o#> ;
+#    owl:imports <https://purl.org/wf4ever/wfdesc#> ;
+#    owl:imports <https://purl.org/wf4ever/wfprov#> ;
+#    owl:imports <https://pav-ontology.github.io/pav/> .
 
 
 #################################################################
@@ -664,13 +664,15 @@ exato-wf:hasFAIRCompliance rdf:type owl:ObjectProperty ;
 
 # ===== Data Flow and Step Relations =====
 
-exato-wf:hasInputParameter rdfs:subPropertyOf wfdesc:hasInput ;
+exato-wf:hasInputParameter rdf:type owl:ObjectProperty ; 
+    rdfs:subPropertyOf wfdesc:hasInput ;
     rdfs:domain exato-wf:WorkflowStep ;
     rdfs:range exato-wf:InputParameter ;
     rdfs:comment "Connects a workflow step to its input parameters."@en ;
     rdfs:comment "Connecte une étape de workflow à ses paramètres d'entrée."@fr .
 
-exato-wf:hasOutputParameter rdfs:subPropertyOf wfdesc:hasOutput ;
+exato-wf:hasOutputParameter rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf wfdesc:hasOutput ;
     rdfs:domain exato-wf:WorkflowStep ;
     rdfs:range exato-wf:OutputParameter ;
     rdfs:comment "Connects a workflow step to its output parameters."@en ;
@@ -793,7 +795,7 @@ exato-wf:requiresResourceType rdf:type owl:ObjectProperty ;
                  "Exemple : un environnement HPC peut nécessiter des ressources GPU, des nœuds à haute mémoire ou des interconnexions à haut débit."@fr .
 
 exato-wf:executedOnResource rdf:type owl:ObjectProperty ;
-    rdfs:domain exato-wf:WorkflowExecution ;
+    rdfs:domain exato-wf:Execution ;
     rdfs:label "executed on resource"@en ,
                "exécuté sur une ressource"@fr ;
     skos:definition "Associates a workflow execution with the concrete computational resource or infrastructure on which it was executed."@en ,
@@ -1274,3 +1276,5 @@ exato-wf:doi rdf:type owl:DatatypeProperty ;
                  "Identifiant d'objet numérique (DOI) associé à l'artéfact de données, le cas échéant."@fr ;
     skos:prefLabel "DOI"@en ,
                    "DOI"@fr .
+
+
