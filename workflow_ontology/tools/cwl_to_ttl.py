@@ -474,11 +474,11 @@ class CWLToTTL:
         # ── Ontology declaration with owl:imports ────────────────────────
         onto_uri = URIRef(str(self.NS).rstrip("#") + ".ttl")
         self.g.add((onto_uri, RDF.type, OWL.Ontology))
-        self.g.add((onto_uri, OWL.imports,
-                    URIRef("https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto"
-                           "/refs/heads/main/workflow_ontology/exato-wf-cwl-extension.ttl")))
-        self.g.add((onto_uri, OWL.imports,
-                    URIRef("https://w3id.org/Exa-AToW/exato-wf.ttl")))
+        #self.g.add((onto_uri, OWL.imports,
+        #            URIRef("https://raw.githubusercontent.com/cnherrera/Exa-AToW_onto"
+        #                   "/refs/heads/main/workflow_ontology/exato-wf-cwl-extension.ttl")))
+        #self.g.add((onto_uri, OWL.imports,
+        #            URIRef("https://w3id.org/Exa-AToW/exato-wf.ttl")))
 
         self._add_workflow(cwl, wf_uri)
         wf_inputs  = self._add_workflow_inputs(cwl, wf_uri)
