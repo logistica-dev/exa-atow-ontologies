@@ -1,0 +1,1045 @@
+@prefix : <https://w3id.org/Exa-AToW/hpc#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix org: <http://www.w3.org/ns/org#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<https://w3id.org/Exa-AToW/hpc/hpc.ttl> rdf:type owl:Ontology ;
+    rdfs:label "HPC Resource Ontology (full)"@en,
+        "Ontologie des Ressources HPC (complète)"@fr ;
+    dc:creator "Exa-AToW team" ;
+    dc:title "HPC Resource Ontology (full)"@en ;
+    dc:description "Ontology for modeling high-performance computing resources, infrastructure, and physical characteristics."@en ;
+    dcterms:created "2025-12-05"^^xsd:date ;
+    dcterms:modified "2026-10-07"^^xsd:date ;
+    rdfs:comment """Full HPC ontology. Imports hpc-core.ttl and adds infrastructure (cooling, PDU, energy management), interconnects, 
+    management controllers, software stack, file systems and storage mounts, archive systems, organizations, QoS and scheduling policy, 
+    performance metrics. 
+    Same namespace as hpc-core.ttl: https://w3id.org/Exa-AToW/hpc#"""@en ;
+    owl:imports <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    owl:versionInfo "0.3.0" .
+
+
+skos:definition rdf:type owl:AnnotationProperty .
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+
+:AOCC rdf:type :Compiler ;
+    rdfs:label "AOCC" ;
+    rdfs:comment "AMD Optimizing C/C++ and Fortran Compilers — required for Jean Zay A100 partition (gpu_p5, AMD EPYC nodes)."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "AOCC"@en ;
+    :softwareName "AOCC" ;
+    :supportsLanguage "C",
+        "C++",
+        "Fortran" ;
+    :vendor "AMD" .
+
+:AirCooling rdf:type :CoolingSystem ;
+    rdfs:label "Air cooling" ;
+    rdfs:comment "Cooling based on air flow (fans, air-conditioned rooms, hot/cold aisles)."@en,
+        "Refroidissement par circulation d'air (ventilateurs, salles climatisées, allées chaudes/froides)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:altLabel "Airflow-based cooling"@en ;
+    skos:prefLabel "Air Cooling"@en,
+        "Refroidissement par air"@fr .
+
+:BaseboardManagementController rdf:type owl:Class ;
+    rdfs:comment "Card (BMC) present on servers/compute nodes that accepts control commands (power on/off, reboot) whatever the state of the node, e.g. after a kernel crash. Some monitoring and power-consumption data are also reachable through it."@en,
+        "Carte (BMC) présente sur les serveurs/nœuds de calcul qui accepte des commandes de contrôle (allumage/extinction, redémarrage) quel que soit l'état du nœud, par ex. après un plantage du noyau. Certaines données de supervision et de consommation y sont aussi accessibles."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface> ;
+    rdfs:subClassOf :ManagementController ;
+    skos:altLabel "BMC"@en ;
+    skos:prefLabel "Baseboard Management Controller (BMC)"@en,
+        "Contrôleur de gestion de carte mère (BMC)"@fr .
+
+:BeeGFS rdf:type :FileSystemTechnology ;
+    rdfs:comment "Distributed parallel file system providing scalable and high-performance access to shared data in HPC and other high-performance computing environments."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "BeeGFS"@en ;
+    :isParallel true .
+
+:CrayCC rdf:type :Compiler ;
+    rdfs:label "Cray Compiler" ;
+    rdfs:comment "HPE Cray Compiling Environment (CCE) for C, C++ and Fortran."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Cray Compiler"@en ;
+    :softwareName "HPE Cray Compiling Environment" ;
+    :supportsLanguage "C",
+        "C++",
+        "Fortran" ;
+    :vendor "HPE" .
+
+:ElasticStack rdf:type :LoggingSolution ;
+    rdfs:label "Elastic Stack (ELK)" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Elastic Stack (ELK)"@en ;
+    :softwareName "Elastic Stack" ;
+    :vendor "Elastic" .
+
+:EnergyManagement rdf:type owl:Class ;
+    rdfs:comment "Infrastructure and tools for monitoring, optimizing, and controlling power usage within the HPC environment."@en,
+        "Infrastructure et outils pour surveiller, optimiser et contrôler la consommation d'énergie dans l'environnement HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Infrastructure ;
+    skos:prefLabel "Energy Management System"@en,
+        "Système de gestion de l'énergie"@fr .
+
+:Ethernet rdf:type owl:Class ;
+    rdfs:comment "IEEE 802.3 Ethernet networking. Used for service/management networks and, with RDMA extensions such as RoCE, also for HPC data traffic."@en,
+        "Réseau Ethernet (IEEE 802.3). Utilisé pour les réseaux de service/gestion et, avec des extensions RDMA comme RoCE, aussi pour le trafic de données HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Interconnect ;
+    skos:prefLabel "Ethernet"@en,
+        "Ethernet"@fr .
+
+:Flux rdf:type :ResourceManager ;
+    rdfs:label "Flux" ;
+    rdfs:comment "Flux Framework: hierarchical, graph-based resource and job management system."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Flux"@en ;
+    :softwareName "Flux" ;
+    :vendor "Lawrence Livermore National Laboratory" ;
+    :website "https://flux-framework.org"^^xsd:anyURI .
+
+:GCC rdf:type :Compiler ;
+    rdfs:label "GCC" ;
+    rdfs:comment "GNU Compiler Collection."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "GCC"@en ;
+    :softwareName "GCC" ;
+    :supportsLanguage "C",
+        "C++",
+        "Fortran" ;
+    :vendor "GNU Project" .
+
+:GPFS rdf:type :FileSystemTechnology ;
+    rdfs:comment "IBM distributed file system providing scalable and parallel access to shared data in HPC and enterprise environments."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "IBM Spectrum Scale (GPFS)"@en ;
+    :isParallel true .
+
+:Grafana rdf:type :MonitoringSolution ;
+    rdfs:label "Grafana" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Grafana"@en ;
+    :softwareName "Grafana" ;
+    :vendor "Grafana Labs" .
+
+:Graylog rdf:type :LoggingSolution ;
+    rdfs:label "Graylog" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Graylog"@en ;
+    :softwareName "Graylog" ;
+    :vendor "Graylog, Inc." .
+
+:IPMI rdf:type :ManagementProtocol ;
+    rdfs:label "IPMI" ;
+    rdfs:comment "Intelligent Platform Management Interface."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface> ;
+    skos:prefLabel "IPMI"@en .
+
+:InfiniBandHDR rdf:type owl:Class ;
+    rdfs:comment "InfiniBand HDR (High Data Rate) - 200 Gb/s per port."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :InfiniBand ;
+    skos:prefLabel "InfiniBand HDR"@en .
+
+:InfiniBandNDR rdf:type owl:Class ;
+    rdfs:comment "InfiniBand NDR (Next Data Rate) - 400 Gb/s per port. Used in Jean Zay H100 partition (gpu_p6)."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :InfiniBand ;
+    skos:prefLabel "InfiniBand NDR"@en .
+
+:IntelCompiler rdf:type :Compiler ;
+    rdfs:label "Intel Compiler" ;
+    rdfs:comment "Intel oneAPI DPC++/C++ and Fortran Compilers."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Intel Compiler"@en,
+        "Compilateur Intel"@fr ;
+    :softwareName "Intel oneAPI" ;
+    :supportsLanguage "C",
+        "C++",
+        "Fortran" ;
+    :vendor "Intel" .
+
+:IntelOmniPath rdf:type owl:Class ;
+    rdfs:comment "Intel's high-performance interconnect technology (OPA - 100 Gb/s)."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Interconnect ;
+    skos:prefLabel "Intel Omni-Path"@en .
+
+:JeanZayScratch rdf:type :FileSystem ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    :capacityTB 10000.0 ;
+    :mountPoint "/gpfsscratch" ;
+    :usesTechnology :Lustre .
+
+:LSF rdf:type :ResourceManager ;
+    rdfs:label "LSF" ;
+    rdfs:comment "Load Sharing Facility."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "LSF"@en ;
+    :softwareName "IBM Spectrum LSF" ;
+    :vendor "IBM" .
+
+:LiquidCooling rdf:type :CoolingSystem ;
+    rdfs:label "Liquid cooling" ;
+    rdfs:comment "Cooling based on a liquid loop (water) reaching racks, nodes or components."@en,
+        "Refroidissement par circuit de liquide (eau) atteignant les baies, les nœuds ou les composants."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:altLabel "Watercooling"@en,
+        "Watercooling"@fr ;
+    skos:prefLabel "Liquid Cooling"@en,
+        "Refroidissement liquide"@fr .
+
+:MemoryComponent owl:disjointWith :InterconnectComponent .
+
+:ModuleEnvironment rdf:type owl:Class ;
+    rdfs:comment "Software environment for dynamic module loading (e.g. Lmod, Environment Modules)."@en,
+        "Environnement logiciel pour le chargement dynamique de modules (ex : Lmod, Environment Modules)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Software ;
+    skos:prefLabel "Module Environment"@en,
+        "Environnement de modules"@fr .
+
+:NFS rdf:type :FileSystemTechnology ;
+    rdfs:comment "Client-server distributed file system primarily intended for shared access rather than high-performance parallel I/O."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Network File System"@en ;
+    :isParallel false .
+
+:NVCC rdf:type :Compiler ;
+    rdfs:label "NVCC" ;
+    rdfs:comment "NVIDIA CUDA Compiler."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "NVCC"@en ;
+    :softwareName "NVCC" ;
+    :supportsLanguage "C++",
+        "CUDA" ;
+    :vendor "NVIDIA" .
+
+:Nagios rdf:type :MonitoringSolution ;
+    rdfs:label "Nagios" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Nagios"@en ;
+    :softwareName "Nagios" ;
+    :vendor "Nagios Enterprises" .
+
+:NixOS rdf:type :LinuxDistribution ;
+    rdfs:label "NixOS" ;
+    rdfs:comment "Distribution with declarative and reproducible system configuration."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "NixOS"@en ;
+    :softwareName "NixOS" ;
+    :usesKernel :Linux ;
+    :vendor "NixOS Foundation" .
+
+:OAR rdf:type :ResourceManager ;
+    rdfs:label "OAR" ;
+    rdfs:comment "OAR: batch scheduler / resource and job management system developed in Grenoble."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "OAR"@en ;
+    :softwareName "OAR" ;
+    :website "https://oar.imag.fr"^^xsd:anyURI .
+
+:PBS rdf:type :ResourceManager ;
+    rdfs:label "PBS" ;
+    rdfs:comment "Portable Batch System — used at CEA/TGCC."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "PBS"@en ;
+    :softwareName "PBS Professional" ;
+    :vendor "Altair" .
+
+:ParallelLibrary rdf:type owl:Class ;
+    rdfs:comment "Parallel programming library or framework (e.g. OpenMPI, MPICH, CUDA, ROCm, OpenMP)."@en,
+        "Bibliothèque ou framework de programmation parallèle (ex : OpenMPI, CUDA, ROCm, OpenMP)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Software ;
+    skos:prefLabel "Parallel Library"@en,
+        "Bibliothèque parallèle"@fr .
+
+:PowerControl rdf:type :OutOfBandCapability ;
+    rdfs:label "Power on/off" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Power on/off"@en,
+        "Allumage/extinction"@fr .
+
+:PowerDistributionUnit rdf:type owl:Class ;
+    rdfs:comment "Hardware unit distributing electrical power to racks and nodes; its metered output feeds PUE calculations."@en,
+        "Unité matérielle distribuant l'énergie électrique aux baies et nœuds ; sa mesure alimente les calculs de PUE."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Infrastructure ;
+    skos:prefLabel "Power Distribution Unit (PDU)"@en,
+        "Unité de distribution d'alimentation (PDU)"@fr .
+
+:Processor owl:disjointWith :Interconnect .
+
+:ProcessorComponent owl:disjointWith :InterconnectComponent .
+
+:Prometheus rdf:type :MonitoringSolution ;
+    rdfs:label "Prometheus" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Prometheus"@en ;
+    :softwareName "Prometheus" ;
+    :vendor "Prometheus Authors (CNCF)" .
+
+:RAM owl:disjointWith :Interconnect .
+
+:RebootControl rdf:type :OutOfBandCapability ;
+    rdfs:label "Reboot" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Reboot"@en,
+        "Redémarrage"@fr .
+
+:RedHat rdf:type :LinuxDistribution ;
+    rdfs:label "Red Hat Enterprise Linux" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Red Hat"@en ;
+    :softwareName "Red Hat Enterprise Linux" ;
+    :usesKernel :Linux ;
+    :vendor "Red Hat" .
+
+:Redfish rdf:type :ManagementProtocol ;
+    rdfs:label "Redfish" ;
+    rdfs:comment "DMTF REST-based management standard, successor to IPMI."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Redfish"@en .
+
+:SLURM rdf:type :ResourceManager ;
+    rdfs:label "SLURM" ;
+    rdfs:comment "Simple Linux Utility for Resource Management — the standard job scheduler at IDRIS (Jean Zay)."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "SLURM"@en ;
+    :softwareName "SLURM" ;
+    :vendor "SchedMD" ;
+    :website "https://slurm.schedmd.com"^^xsd:anyURI .
+
+:SensorMonitoring rdf:type :OutOfBandCapability ;
+    rdfs:label "Sensor and power monitoring" ;
+    rdfs:comment "Monitoring and power-consumption data reachable through the management controller."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Sensor and power monitoring"@en,
+        "Supervision capteurs et consommation"@fr .
+
+:SerialOverLAN rdf:type :OutOfBandCapability ;
+    rdfs:label "Serial over LAN" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Serial over LAN (remote console)"@en,
+        "Console distante"@fr .
+
+:Slingshot rdf:type owl:Class ;
+    rdfs:comment "HPE Cray Slingshot high-speed interconnect (200 Gb/s), used on HPE Cray EX systems."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Interconnect ;
+    skos:prefLabel "HPE Cray Slingshot"@en .
+
+:Ubuntu rdf:type :LinuxDistribution ;
+    rdfs:label "Ubuntu" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Ubuntu"@en ;
+    :isDerivedFrom :Debian ;
+    :softwareName "Ubuntu" ;
+    :usesKernel :Linux ;
+    :vendor "Canonical" .
+
+:Zabbix rdf:type :MonitoringSolution ;
+    rdfs:label "Zabbix" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Zabbix"@en ;
+    :softwareName "Zabbix" ;
+    :vendor "Zabbix LLC" .
+
+:allocatedFromQuota rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Whether jobs on this partition are deducted from the user's compute allocation. False for prepost, visu."@en ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:boolean ;
+    skos:prefLabel "allocated from quota"@en,
+        "décompté du quota"@fr .
+
+:backedByArchive rdf:type owl:ObjectProperty ;
+    rdfs:comment "Indicates that a user-facing mount (e.g. $STORE) is backed by an archive system such as a tape library."@en ;
+    rdfs:domain :StorageMount ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :ArchiveSystem ;
+    skos:prefLabel "backed by archive"@en,
+        "adossé à l'archivage"@fr .
+
+:computerBrand rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "Computer brand"@en,
+        "Marque de calculateur"@fr .
+
+:coresCountPerNode rdf:type owl:DatatypeProperty ;
+    rdfs:comment "CPU cores per node (for CPU, number of CPU socket x cores per CPU => quantity (CPU)*coresCountPerSocket)."@en ;
+    rdfs:domain :ComputeNode ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "CPU core per node"@en .
+
+:defaultWallTime rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Default wall time for jobs on this partition when not specified by the user."@en ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "default wall time"@en,
+        "temps mur par défaut"@fr .
+
+:documentationURL rdf:type owl:DatatypeProperty ;
+    rdfs:comment "URL of the official documentation page for this center, system or partition."@en ;
+    rdfs:domain [ owl:unionOf ( :HPCCenter :Supercomputer :Partition ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:anyURI ;
+    skos:prefLabel "documentation URL"@en,
+        "URL documentation"@fr .
+
+:frontendNodeCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "frontend node count"@en,
+        "nombre de nœuds frontaux"@fr .
+
+:fundedBy rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a center or supercomputer to its funding agency."@en ;
+    rdfs:domain [ owl:unionOf ( :HPCCenter :Supercomputer ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :FundingAgency ;
+    skos:prefLabel "funded by"@en,
+        "financé par"@fr .
+
+:hasArchiveSystem rdf:type owl:ObjectProperty ;
+    rdfs:domain [ rdf:type owl:Class ;
+            owl:unionOf ( :Supercomputer :HPCCenter ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :ArchiveSystem ;
+    skos:prefLabel "has archive system"@en,
+        "a un système d'archivage"@fr .
+
+:hasBandwidth rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links interconnect to its data transfer rate."@en,
+        "Relie interconnexion à son débit."@fr ;
+    rdfs:domain :Interconnect ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :Bandwidth ;
+    skos:prefLabel "has bandwidth"@en,
+        "a bande passante"@fr .
+
+:hasCoolingSystem rdf:type owl:ObjectProperty ;
+    rdfs:comment "Cooling system serving a supercomputer, center or rack. Several values allowed (hybrid air + liquid)."@en,
+        "Système de refroidissement d'un superordinateur, centre ou baie. Plusieurs valeurs possibles (hybride air + liquide)."@fr ;
+    rdfs:domain [ rdf:type owl:Class ;
+            owl:unionOf ( :Supercomputer :HPCCenter :Rack ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :CoolingSystem ;
+    skos:prefLabel "has cooling system"@en,
+        "a un système de refroidissement"@fr .
+
+:hasInterconnectComponent rdf:type owl:ObjectProperty ;
+    rdfs:label "has interconnect component"@en,
+        "a un composant interconnexion"@fr ;
+    rdfs:comment "Links a compute node to a contextualized interconnect component (technology + link count)."@en,
+        "Lie un nœud de calcul à un composant d'interconnexion contextualisé."@fr ;
+    rdfs:domain :ComputeNode ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :InterconnectComponent ;
+    rdfs:subPropertyOf :hasComponent .
+
+:hasManagementController rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a compute node or network switch to its out-of-band management controller (BMC)."@en,
+        "Relie un nœud de calcul ou un commutateur réseau à son contrôleur de gestion hors bande (BMC)."@fr ;
+    rdfs:domain [ rdf:type owl:Class ;
+            owl:unionOf ( :ComputeNode :NetworkSwitch ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :ManagementController ;
+    skos:prefLabel "has management controller"@en,
+        "a un contrôleur de gestion"@fr .
+
+:hasPeakPerformance rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links supercomputer to its theoretical peak FLOPS (Rpeak)."@en,
+        "Relie superordinateur à sa performance théorique (Rpeak)."@fr ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :Partition ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :PeakPerformance ;
+    skos:prefLabel "has peak performance"@en,
+        "a performance crête"@fr .
+
+:hasQoS rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a partition to its Quality of Service classes, each defining a specific wall time limit, job priority and allocation deduction policy."@en,
+        "Lie une partition à ses classes de Qualité de Service, chacune définissant un temps mur, une priorité et une politique de décompte d'allocation."@fr ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :QoS ;
+    skos:prefLabel "has QoS"@en,
+        "a QoS"@fr .
+
+:hasStorageCapacity rdf:type owl:ObjectProperty ;
+    rdfs:comment "Total storage capacity of a file system or mountpoint in TB or PB. On a StorageMount, represents the per-user or per-project quota when known."@en,
+        "Capacité totale de stockage d'un système de fichiers ou d'un point de montage en To ou Po. Sur un StorageMount, représente le quota par utilisateur ou par projet lorsqu'il est connu."@fr ;
+    rdfs:domain [ owl:unionOf ( :FileSystem :StorageMount ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :StorageCapacity ;
+    skos:prefLabel "has storage capacity"@en,
+        "a capacité de stockage"@fr .
+
+:hasStorageMount rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a supercomputer or HPC center to its user-accessible storage mountpoints (e.g. $HOME, $SCRATCH, $WORK, $STORE)."@en,
+        "Lie un superordinateur ou un centre HPC à ses points de montage accessibles aux utilisateurs (ex : $HOME, $SCRATCH, $WORK, $STORE)."@fr ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :HPCCenter ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :StorageMount ;
+    skos:prefLabel "has storage mount"@en,
+        "a point de montage"@fr .
+
+:hasTapeStorage rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a tape library to the tape drive/cartridge models it holds."@en ;
+    rdfs:domain :TapeLibrary ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :TapeStorage ;
+    skos:prefLabel "has tape storage"@en,
+        "a un stockage sur bande"@fr .
+
+:hasThroughput rdf:type owl:ObjectProperty ;
+    rdfs:comment "Aggregate I/O throughput of a file system in GB/s or TB/s."@en,
+        "Débit d'E/S agrégé d'un système de fichiers en Go/s ou To/s."@fr ;
+    rdfs:domain :FileSystem ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :Throughput ;
+    skos:prefLabel "has throughput"@en,
+        "a débit"@fr .
+
+:hasTotalAcceleratorMemory rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links the partition to the total memory of all its accelerators (GPUs/APUs)."@en,
+        "Relie la partition à la mémoire totale de tous ses accélérateurs (GPU/APU)."@fr ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :MemoryCapacity ;
+    skos:prefLabel "has total accelerator memory"@en,
+        "a mémoire totale des accélérateurs"@fr .
+
+:hasTotalScalarMemory rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links the partition to the total scalar memory."@en ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :MemoryCapacity ;
+    skos:prefLabel "has total scalar memory"@en,
+        "a mémoire totale scalaire"@fr .
+
+:installedOn rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a specific software version to the system or node it is installed on. Enables queries such as 'which CUDA versions are available on Jean Zay' or 'which nodes support GCC 12'."@en,
+        "Lie une version logicielle spécifique au système ou au nœud sur lequel elle est installée. Permet des requêtes telles que 'quelles versions CUDA sont disponibles sur Jean Zay' ou 'quels nœuds supportent GCC 12'."@fr ;
+    rdfs:domain :SoftwareVersion ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range [ owl:unionOf ( :Supercomputer :ComputeNode ) ] ;
+    skos:prefLabel "installed on"@en,
+        "installé sur"@fr .
+
+:isDerivedFrom rdf:type owl:ObjectProperty ;
+    rdfs:comment "A distribution derived from another one (e.g. Ubuntu is derived from Debian)."@en ;
+    rdfs:domain :LinuxDistribution ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :LinuxDistribution ;
+    skos:prefLabel "is derived from"@en,
+        "est dérivée de"@fr .
+
+:isParallel rdf:type owl:DatatypeProperty,
+        owl:FunctionalProperty ;
+    rdfs:comment "Indicates whether the file system technology supports parallel and concurrent I/O operations from multiple compute nodes through a distributed storage architecture."@en,
+        "Indique si la technologie de système de fichiers prend en charge des opérations d'entrée/sortie parallèles et concurrentes depuis plusieurs nœuds de calcul grâce à une architecture de stockage distribuée."@fr ;
+    rdfs:domain :FileSystemTechnology ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:boolean ;
+    skos:definition "A value of true denotes a file system technology designed for high-throughput parallel access in HPC environments (e.g., Lustre, GPFS, BeeGFS). A value of false denotes technologies primarily intended for single-server or non-distributed access patterns (e.g., NFS, ext4)."@en,
+        "Une valeur vraie indique une technologie de système de fichiers conçue pour un accès parallèle à haut débit dans les environnements HPC (par exemple Lustre, GPFS, BeeGFS). Une valeur fausse indique des technologies principalement destinées à des accès non distribués ou centralisés (par exemple NFS, ext4)."@fr ;
+    skos:prefLabel "is parallel"@en,
+        "est parallèle"@fr .
+
+:isPurged rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Whether this storage space is automatically purged (e.g., scratch spaces typically are)."@en ;
+    rdfs:domain :StorageMount ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:boolean ;
+    skos:prefLabel "is purged"@en,
+        "est purgé"@fr .
+
+:isSoftware rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a specific installed version to its parent software package (e.g. version arch/a100 -> AOCC compiler)."@en,
+        "Lie une version installée spécifique à son logiciel parent (ex : version arch/a100 -> compilateur AOCC)."@fr ;
+    rdfs:domain :SoftwareVersion ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :Software ;
+    skos:prefLabel "is software"@en,
+        "est logiciel"@fr .
+
+:linkCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "link count"@en,
+        "nombre de liens"@fr ;
+    rdfs:comment "Number of physical interconnect links available on this node."@en,
+        "Nombre de liens d'interconnexion physiques disponibles sur ce nœud."@fr ;
+    rdfs:domain :InterconnectComponent ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:integer .
+
+:maxWallTime rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Maximum wall time allowed for jobs on this partition (e.g., '100:00:00', '20:00:00')."@en ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "max wall time"@en,
+        "temps mur maximum"@fr .
+
+:mountPath rdf:type owl:DatatypeProperty ;
+    rdfs:comment "The environment variable or path of the mountpoint (e.g., '$SCRATCH', '$HOME', '$STORE', '$WORK')."@en ;
+    rdfs:domain :StorageMount ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "mount path"@en,
+        "chemin de montage"@fr .
+
+:mountedOn rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a user-facing storage mountpoint to the underlying file system that backs it."@en,
+        "Lie un point de montage exposé aux utilisateurs au système de fichiers sous-jacent qui le supporte."@fr ;
+    rdfs:domain :StorageMount ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :FileSystem ;
+    skos:prefLabel "mounted on"@en,
+        "monté sur"@fr .
+
+:osVersion rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Version of the operating system (e.g., 'Red Hat 8.5', 'Ubuntu 20.04')."@en ;
+    rdfs:domain :OperatingSystem ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "OS version"@en,
+        "version SE"@fr .
+
+:partitionType rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Type of Partition (e.g. cpu, gpu, visu, etc.)."@en ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "partition type"@en,
+        "type de partition"@fr .
+
+:providesCapability rdf:type owl:ObjectProperty ;
+    rdfs:domain :ManagementController ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :OutOfBandCapability ;
+    skos:prefLabel "provides capability"@en,
+        "fournit la capacité"@fr .
+
+:quota rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Storage quota per user or project on this mount (e.g., '100 GB', '5 TB')."@en ;
+    rdfs:domain :StorageMount ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "quota"@en,
+        "quota"@fr .
+
+:requiresModule rdf:type owl:ObjectProperty ;
+    rdfs:comment "Software module that must be loaded before using this partition (e.g. arch/a100, arch/h100 for specific partitions)."@en,
+        "Module logiciel devant être chargé avant de soumettre des tâches sur cette partition."@fr ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :SoftwareVersion ;
+    skos:prefLabel "requires module"@en,
+        "nécessite module"@fr .
+
+:runsOS rdf:type owl:ObjectProperty ;
+    rdfs:comment "Operating system running on nodes."@en ;
+    rdfs:domain [ owl:unionOf ( :ComputeNode :Supercomputer ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :OperatingSystem ;
+    skos:prefLabel "runs OS"@en,
+        "exécute SE"@fr .
+
+:softwareName rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Software ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "software name"@en,
+        "nom du logiciel"@fr .
+
+:supportsCompiler rdf:type owl:ObjectProperty ;
+    rdfs:comment "Compilers available on this system or partition."@en ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :Partition ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :Compiler ;
+    skos:prefLabel "supports compiler"@en,
+        "supporte compilateur"@fr .
+
+:supportsLanguage rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Programming language supported (e.g., 'C', 'Fortran', 'CUDA')."@en ;
+    rdfs:domain :Compiler ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "supports language"@en,
+        "supporte langage"@fr .
+
+:supportsManagementProtocol rdf:type owl:ObjectProperty ;
+    rdfs:domain :ManagementController ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :ManagementProtocol ;
+    skos:prefLabel "supports management protocol"@en,
+        "supporte le protocole de gestion"@fr .
+
+:totalCoresCount rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Total number of cores at the Partition or Supercomputer level"@en ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :Partition ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "total number of cores"@en,
+        "nombre total de cœurs"@fr .
+
+:usesFileSystem rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a supercomputer to its underlying storage file systems. Represents the physical storage infrastructure."@en,
+        "Lie un superordinateur à ses systèmes de fichiers de stockage sous-jacents. Représente l'infrastructure de stockage physique."@fr ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :FileSystem ;
+    skos:prefLabel "uses file system"@en,
+        "utilise système de fichiers"@fr .
+
+:usesKernel rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links an operating system (e.g. a Linux distribution) to the kernel it is built on."@en ;
+    rdfs:domain :OperatingSystem ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :OperatingSystemKernel ;
+    skos:prefLabel "uses kernel"@en,
+        "utilise le noyau"@fr .
+
+:usesLoggingSolution rdf:type owl:ObjectProperty ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :LoggingSolution ;
+    skos:prefLabel "uses logging solution"@en,
+        "utilise solution de journalisation"@fr .
+
+:usesMonitoringSolution rdf:type owl:ObjectProperty ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :MonitoringSolution ;
+    skos:prefLabel "uses monitoring solution"@en,
+        "utilise solution de supervision"@fr .
+
+:usesResourceManager rdf:type owl:ObjectProperty ;
+    rdfs:comment "The resource manager/scheduler used by this system."@en ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :ResourceManager ;
+    skos:prefLabel "uses resource manager"@en,
+        "utilise gestionnaire de ressources"@fr .
+
+:usesTechnology rdf:type owl:ObjectProperty ;
+    rdfs:comment "Associates a file system instance with the underlying file system technology used for its implementation."@en,
+        "Associe une instance de système de fichiers à la technologie de système de fichiers utilisée pour son implémentation."@fr ;
+    rdfs:domain :FileSystem ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :FileSystemTechnology ;
+    skos:prefLabel "uses technology"@en,
+        "utilise la technologie"@fr .
+
+:versionNumber rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Version string (e.g., '23.02.1', '12.2.0')."@en ;
+    rdfs:domain :SoftwareVersion ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "version number"@en,
+        "numéro de version"@fr .
+
+:website rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( :Software :HPCCenter :Organization ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range xsd:anyURI ;
+    skos:prefLabel "website"@en,
+        "site web"@fr .
+
+:Bandwidth rdf:type owl:Class ;
+    rdfs:comment "Data transfer rate of an interconnect or memory bus (e.g. 200 Gb/s, 2 TB/s HBM3)."@en,
+        "Débit de transfert de données d'un interconnexion ou bus mémoire."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Bandwidth"@en,
+        "Bande passante"@fr .
+
+:Debian rdf:type :LinuxDistribution ;
+    rdfs:label "Debian" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Debian"@en ;
+    :softwareName "Debian" ;
+    :usesKernel :Linux ;
+    :vendor "Debian Project" .
+
+:FundingAgency rdf:type owl:Class ;
+    rdfs:comment "Agency funding HPC infrastructure (e.g. GENCI, ANR, European Commission, France 2030)."@en,
+        "Agence finançant l'infrastructure HPC (ex : GENCI, ANR, Commission européenne, France 2030)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Organization ;
+    skos:prefLabel "Funding Agency"@en,
+        "Agence de financement"@fr .
+
+:Lustre rdf:type :FileSystemTechnology ;
+    rdfs:comment "Open-source distributed file system designed for high-performance parallel I/O in large-scale HPC systems."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Lustre"@en ;
+    :isParallel true .
+
+:NetworkSwitch rdf:type owl:Class ;
+    rdfs:comment "Network switch of the interconnect or of the service/management network. Like servers, switches can have an out-of-band management controller."@en,
+        "Commutateur réseau de l'interconnexion ou du réseau de service/gestion. Comme les serveurs, les commutateurs peuvent avoir un contrôleur de gestion hors bande."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :PhysicalResource ;
+    skos:prefLabel "Network Switch"@en,
+        "Commutateur réseau"@fr .
+
+:PeakPerformance rdf:type owl:Class ;
+    rdfs:comment "Theoretical peak performance (Rpeak) in FLOPS (e.g. TFLOPS, PFLOPS)."@en,
+        "Performance crête théorique (Rpeak) en FLOPS (ex : TFLOPS, PFLOPS)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :PerformanceMetric ;
+    skos:prefLabel "Peak Performance"@en,
+        "Performance crête"@fr .
+
+:PerformanceMetric rdf:type owl:Class ;
+    rdfs:comment "Measure of computational performance."@en,
+        "Mesure de la performance de calcul."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Performance Metric"@en,
+        "Métrique de performance"@fr .
+
+:QoS rdf:type owl:Class ;
+    rdfs:comment "Scheduler QoS class defining job time limits, priority, and resource caps for a partition (e.g. qos_gpu-t3)."@en,
+        "Classe QoS de l'ordonnanceur définissant les limites de temps, la priorité et les plafonds de ressources (ex : qos_gpu-t3)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :LogicalResource ;
+    skos:prefLabel "Quality of Service (QoS)"@en,
+        "Qualité de Service (QoS)"@fr .
+
+:TapeLibrary rdf:type owl:Class ;
+    rdfs:comment "Robotic system holding tape cartridges and tape drives (e.g. LTO libraries)."@en,
+        "Système robotisé contenant des cartouches et des lecteurs de bandes (ex : bibliothèques LTO)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :ArchiveSystem ;
+    skos:prefLabel "Tape Library"@en,
+        "Bibliothèque de bandes"@fr .
+
+:Throughput rdf:type owl:Class ;
+    rdfs:comment "I/O performance of storage system, including value and unit (e.g., TB/s)."@en,
+        "Performance d'E/S d'un système de stockage."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Throughput"@en,
+        "Débit"@fr .
+
+:operatedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain :HPCCenter ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:range :Organization ;
+    skos:prefLabel "operated by"@en,
+        "exploité par"@fr .
+
+:InfiniBand rdf:type owl:Class ;
+    rdfs:comment "InfiniBand high-speed network fabric (multiple generations: HDR 200 Gb/s, NDR 400 Gb/s)."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Interconnect ;
+    skos:prefLabel "InfiniBand"@en .
+
+:OperatingSystemKernel rdf:type owl:Class ;
+    rdfs:comment "Core component of an operating system (e.g. the Linux kernel)."@en,
+        "Composant central d'un système d'exploitation (ex : le noyau Linux)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Software ;
+    owl:disjointWith :OperatingSystem ;
+    skos:prefLabel "Operating System Kernel"@en,
+        "Noyau de système d'exploitation"@fr .
+
+:PhysicalResource owl:disjointWith :Infrastructure .
+
+:ArchiveSystem rdf:type owl:Class ;
+    rdfs:comment "Long-term, low-cost, rarely accessed storage system used to archive data."@en,
+        "Système de stockage à long terme, peu coûteux et rarement consulté, utilisé pour archiver des données."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :PhysicalResource ;
+    skos:prefLabel "Archive System"@en,
+        "Système d'archivage"@fr .
+
+:CoolingSystem rdf:type owl:Class ;
+    rdfs:comment "System maintaining temperature conditions of HPC components."@en,
+        "Système maintenant les conditions de température des composants HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Infrastructure ;
+    skos:prefLabel "Cooling System"@en,
+        "Système de refroidissement"@fr .
+
+:LoggingSolution rdf:type owl:Class ;
+    rdfs:comment "Software collecting, centralizing and searching system and application logs (e.g. Elastic Stack, Graylog)."@en,
+        "Logiciel collectant, centralisant et interrogeant les journaux système et applicatifs (ex : Elastic Stack, Graylog)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Software ;
+    skos:prefLabel "Logging Solution"@en,
+        "Solution de journalisation"@fr .
+
+:ManagementProtocol rdf:type owl:Class ;
+    rdfs:comment "Protocol used to talk to a management controller (e.g. IPMI, Redfish)."@en,
+        "Protocole utilisé pour dialoguer avec un contrôleur de gestion (ex : IPMI, Redfish)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :LogicalResource ;
+    skos:prefLabel "Management Protocol"@en,
+        "Protocole de gestion"@fr .
+
+:InterconnectComponent rdf:type owl:Class ;
+    rdfs:comment "A component representing network interfaces (NICs) connecting a node to the HPC interconnect."@en,
+        "Un composant représentant les interfaces réseau (NICs) connectant un nœud à l'interconnexion HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:allValuesFrom :Interconnect ;
+            owl:onProperty :refersToModel ],
+        :HardwareComponent ;
+    skos:prefLabel "Interconnect Component"@en,
+        "Composant réseau"@fr .
+
+:Linux rdf:type :OperatingSystemKernel ;
+    rdfs:label "Linux" ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Linux"@en ;
+    :softwareName "Linux kernel" .
+
+:ManagementController rdf:type owl:Class ;
+    rdfs:comment "Dedicated controller, independent from the main CPU and operating system, used for out-of-band control and monitoring of a node or switch."@en,
+        "Contrôleur dédié, indépendant du CPU principal et du système d'exploitation, utilisé pour le contrôle et la supervision hors bande d'un nœud ou d'un commutateur."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :HardwareModel ;
+    skos:prefLabel "Management Controller"@en,
+        "Contrôleur de gestion"@fr .
+
+:Organization rdf:type owl:Class ;
+    rdfs:comment "Legal entity operating, owning, or funding HPC facilities."@en,
+        "Entité légale qui exploite, possède ou finance des installations HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    owl:equivalentClass org:Organization ;
+    skos:prefLabel "Organization"@en,
+        "Organisation"@fr .
+
+:SoftwareVersion rdf:type owl:Class ;
+    rdfs:comment "A specific version/installation of software on a system."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "Software Version"@en,
+        "Version logicielle"@fr .
+
+:Infrastructure rdf:type owl:Class ;
+    rdfs:comment "Facility-level support systems (cooling, power, energy management)."@en,
+        "Systèmes de support au niveau installation (refroidissement, alimentation, gestion de l'énergie)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :HPCResource ;
+    skos:prefLabel "Infrastructure"@en,
+        "Infrastructure"@fr .
+
+:MonitoringSolution rdf:type owl:Class ;
+    rdfs:comment "Software collecting, storing and displaying metrics (load, temperature, power, network, jobs) of HPC resources (e.g. Prometheus, Grafana, Nagios, Zabbix)."@en,
+        "Logiciel collectant, stockant et affichant des métriques (charge, température, consommation, réseau, tâches) des ressources HPC (ex : Prometheus, Grafana, Nagios, Zabbix)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Software ;
+    skos:prefLabel "Monitoring Solution"@en,
+        "Solution de supervision"@fr .
+
+:OperatingSystem rdf:type owl:Class ;
+    rdfs:comment "Operating system running on HPC nodes."@en,
+        "Système d'exploitation exécuté sur les nœuds HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Software ;
+    skos:prefLabel "Operating System"@en,
+        "Système d'exploitation"@fr .
+
+:OutOfBandCapability rdf:type owl:Class ;
+    rdfs:comment "Function reachable out-of-band, i.e. independently of the state of the node's operating system."@en,
+        "Fonction accessible hors bande, c'est-à-dire indépendamment de l'état du système d'exploitation du nœud."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :LogicalResource ;
+    skos:prefLabel "Out-of-band Capability"@en,
+        "Capacité hors bande"@fr .
+
+:FileSystem rdf:type owl:Class ;
+    rdfs:comment "Shared storage infrastructure for I/O and checkpoint data in HPC environments."@en,
+        "Infrastructure de stockage partagée utilisée pour les données d'entrée/sortie et les points de sauvegarde dans les environnements HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :LogicalResource ;
+    skos:prefLabel "File System"@en,
+        "Système de fichiers"@fr .
+
+:FileSystemTechnology rdf:type owl:Class ;
+    rdfs:comment "Software technology implementing a file system and defining its storage architecture and I/O capabilities."@en,
+        "Technologie logicielle implémentant un système de fichiers et définissant son architecture de stockage et ses capacités d'entrée/sortie."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    skos:prefLabel "File System Technology"@en,
+        "Technologie de système de fichiers"@fr .
+
+:LinuxDistribution rdf:type owl:Class ;
+    rdfs:comment "Operating system built around the Linux kernel, with its package manager and userland (e.g. Ubuntu, Red Hat, Debian, NixOS)."@en,
+        "Système d'exploitation construit autour du noyau Linux, avec son gestionnaire de paquets et ses outils utilisateur (ex : Ubuntu, Red Hat, Debian, NixOS)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :OperatingSystem ;
+    skos:prefLabel "Linux Distribution"@en,
+        "Distribution Linux"@fr .
+
+:LogicalResource owl:disjointWith :Infrastructure .
+
+:ResourceManager rdf:type owl:Class ;
+    rdfs:comment "Resource and Job Management System (RJMS): software that allocates resources (nodes, cores, GPUs, memory) to jobs, queues them and schedules their execution (e.g., SLURM, PBS, LSF, OAR, Flux)."@en,
+        "Système de gestion de ressources et de tâches (RJMS) : logiciel qui alloue les ressources (nœuds, cœurs, GPU, mémoire) aux tâches, les met en file d'attente et planifie leur exécution (ex : SLURM, PBS, LSF, OAR, Flux)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Software ;
+    skos:altLabel "Job Scheduler"@en,
+        "RJMS"@en,
+        "Resource Manager"@en,
+        "Gestionnaire de ressources"@fr,
+        "Ordonnanceur"@fr ;
+    skos:prefLabel "Resource and Job Management System (RJMS)"@en,
+        "Système de gestion de ressources et de tâches (RJMS)"@fr .
+
+:Compiler rdf:type owl:Class ;
+    rdfs:comment "Software tool for compiling source code (e.g., GCC, Intel oneAPI, NVCC, AOCC)."@en,
+        "Outil logiciel pour compiler le code source."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :Software ;
+    skos:prefLabel "Compiler"@en,
+        "Compilateur"@fr .
+
+:HPCCenter rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:positiveInteger ;
+            owl:onClass :Organization ;
+            owl:onProperty :operatedBy ] .
+
+:StorageMount rdf:type owl:Class ;
+    rdfs:comment "A specific storage mountpoint or workspace exposed to users (e.g. $HOME, $SCRATCH, $STORE, $WORK)."@en,
+        "Un point de montage ou espace de travail spécifique exposé aux utilisateurs (ex : $HOME, $SCRATCH, $STORE, $WORK)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :LogicalResource ;
+    skos:prefLabel "Storage Mount"@en,
+        "Point de montage"@fr .
+
+:Interconnect rdf:type owl:Class ;
+    rdfs:comment "High-speed network infrastructure enabling communication between compute nodes and system components."@en,
+        "Infrastructure réseau à haute vitesse permettant la communication entre les nœuds de calcul et les composants du système."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :HardwareModel ;
+    skos:prefLabel "Interconnect"@en,
+        "Interconnexion"@fr .
+
+:Software rdf:type owl:Class ;
+    rdfs:comment "General class for software used in HPC environments."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:subClassOf :LogicalResource ;
+    skos:prefLabel "Software"@en,
+        "Logiciel"@fr .
+
