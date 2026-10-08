@@ -1,0 +1,828 @@
+@prefix : <https://w3id.org/Exa-AToW/hpc#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> rdf:type owl:Ontology ;
+    rdfs:label "HPC Resource Core Ontology"@en,
+        "Ontologie noyau ressources HPC"@fr ;
+    dc:creator "Exa-AToW team" ;
+    dc:title "HPC Resource Core Ontology"@en ;
+    dcterms:created "2025-12-05"^^xsd:date ;
+    dcterms:modified "2026-10-07"^^xsd:date ;
+    rdfs:comment """Minimal vocabulary of an HPC infrastructure: supercomputer, partitions, racks, compute nodes, hardware models and installed 
+    components (processors, accelerators, memory, storage) and the quantitative attributes (TDP, die size, process node, capacities, nominal 
+    power, lifetime) that other ontologies (e.g. PIE) need to reference. 
+    Shares the namespace https://w3id.org/Exa-AToW/hpc# with the full ontology, which imports it."""@en ;
+    dc:description "Core Ontology for modeling high-performance computing resources, infrastructure, and physical characteristics."@en ;
+    owl:versionInfo "0.3.0" .
+
+skos:prefLabel rdf:type owl:AnnotationProperty .
+
+:GCD rdf:type owl:Class ;
+    rdfs:comment "Graphics Compute Die — one of the two independent compute dies on an AMD multi-chip-module accelerator card such as the MI250X. Each GCD has its own HBM stack and appears as a separate device to the OS/runtime."@en,
+        "Graphics Compute Die — l'un des deux dies de calcul indépendants d'une carte accélératrice AMD multi-chip-module (ex : MI250X). Chaque GCD possède son propre empilement HBM et apparaît comme un dispositif distinct pour l'OS/runtime."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :GPU ;
+    skos:prefLabel "GCD (Graphics Compute Die)"@en,
+        "GCD (Graphics Compute Die)"@fr .
+
+:NVMe_SSD rdf:type owl:Class ;
+    rdfs:comment "NVMe-based solid state drive, typically used as local scratch on HPC nodes."@en,
+        "Disque SSD NVMe, typiquement utilisé comme stockage scratch local sur les nœuds HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :SSD ;
+    skos:prefLabel "NVMe"@en,
+        "NVMe"@fr .
+
+:SAS_SSD rdf:type owl:Class ;
+    rdfs:comment "SAS-based solid state drive (Serial Attached SCSI), known for high reliability and endurance in server environments."@en,
+        "Disque SSD SAS, reconnu pour sa haute fiabilité et son endurance dans les environnements serveurs."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :SSD ;
+    skos:prefLabel "SAS SSD"@en,
+        "SSD SAS"@fr .
+
+:acceleratorCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :Partition ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "Total accelerator count"@en,
+        "nombre total d'accelerateurs"@fr .
+
+:acceleratorUnitsPerCard rdf:type owl:DatatypeProperty ;
+    rdfs:domain :AcceleratorCard ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:integer .
+
+:architecture rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Processor microarchitecture (e.g., 'Cascade Lake', 'Sapphire Rapids', 'Ampere', 'Hopper')."@en ;
+    rdfs:domain :Processor ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "architecture"@en,
+        "architecture"@fr .
+
+:belongsToPartition rdf:type owl:ObjectProperty ;
+    rdfs:domain :ComputeNode ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :Partition ;
+    skos:prefLabel "belongs to partition"@en,
+        "appartient à la partition"@fr .
+
+:commissioningDate rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Date when the system or generation became operational."@en ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :HardwareGeneration ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:date ;
+    skos:prefLabel "commissioning date"@en,
+        "date de mise en service"@fr .
+
+:composedOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range [ owl:unionOf ( :ComputeNode :Partition :Rack ) ] ;
+    rdfs:subPropertyOf :contains ;
+    skos:prefLabel "composed of"@en,
+        "composé de"@fr .
+
+:coresCount rdf:type owl:DatatypeProperty ;
+    rdfs:comment "CPU cores per processor: useful for APUs, the chip contains not only the GPU but also CPU."@en ;
+    rdfs:domain :Processor ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "CPU core per processor"@en .
+
+:coresCountPerSocket rdf:type owl:DatatypeProperty ;
+    rdfs:domain :CPU ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "core count in each CPU"@en,
+        "nombre de cœurs per CPU"@fr .
+
+:decommissioningDate rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Date when the system/partition/generation was retired."@en ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :Partition :ComputeNode :HardwareGeneration ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:date ;
+    skos:prefLabel "decommissioning date"@en,
+        "date de décommissionnement"@fr .
+
+:description rdf:type owl:DatatypeProperty ;
+    rdfs:domain :HPCResource ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string .
+
+:hasDieSize rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links processor to its physical silicon die size (mm²)."@en,
+        "Relie le processeur à la dimension physique de sa puce silicium (mm²)."@fr ;
+    rdfs:domain :Processor ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :DieSize ;
+    skos:prefLabel "has die size"@en,
+        "a taille de puce"@fr .
+
+:hasFrequency rdf:type owl:ObjectProperty ;
+    rdfs:comment "Base clock frequency of a processor in GHz. Used in peak performance calculations (Rpeak = cores × frequency × FLOPs/cycle)."@en,
+        "Fréquence d'horloge de base d'un processeur en GHz. Utilisée dans le calcul de la performance crête (Rpeak = cœurs × fréquence × FLOPS/cycle)."@fr ;
+    rdfs:domain :Processor ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :Frequency ;
+    skos:prefLabel "has frequency"@en,
+        "a fréquence"@fr .
+
+:hasGeneration rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a supercomputer to one of its hardware generations or extension phases."@en ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :HardwareGeneration ;
+    skos:prefLabel "has generation"@en,
+        "a génération"@fr .
+
+:hasLifetime rdf:type owl:ObjectProperty ;
+    rdfs:domain [ owl:unionOf ( :Processor :Server :ComputeNode ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :Lifetime ;
+    skos:prefLabel "has lifetime"@en,
+        "a durée de vie"@fr .
+
+:hasMemoryCapacity rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links memory/storage device to its capacity."@en,
+        "Relie mémoire/stockage à sa capacité."@fr ;
+    rdfs:domain [ owl:unionOf ( :Memory :Storage ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :MemoryCapacity ;
+    skos:prefLabel "has memory capacity"@en,
+        "a capacité mémoire"@fr .
+
+:hasMemoryComponent rdf:type owl:ObjectProperty ;
+    rdfs:label "has memory component"@en,
+        "a un composant mémoire"@fr ;
+    rdfs:comment "Links a compute node to a contextualized memory component (capacity + type)."@en,
+        "Lie un nœud de calcul à un composant mémoire contextualisé."@fr ;
+    rdfs:domain [ owl:unionOf ( :ComputeNode :AcceleratorCard ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :MemoryComponent ;
+    rdfs:subPropertyOf :hasComponent .
+
+:hasNominalPower rdf:type owl:ObjectProperty ;
+    rdfs:comment "Design-time power ceiling of a node, rack, or card. Key input for PUE microservice."@en ;
+    rdfs:domain [ owl:unionOf ( :Rack :ComputeNode :AcceleratorCard ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :NominalPower ;
+    skos:prefLabel "has nominal power"@en,
+        "a puissance nominale"@fr .
+
+:hasPartition rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a supercomputer to one of its SLURM/job-scheduler partitions."@en ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :Partition ;
+    skos:prefLabel "has partition"@en,
+        "a partition"@fr .
+
+:hasPhysicalStorageCapacity rdf:type owl:ObjectProperty ;
+    rdfs:comment "Capacity of a physical storage device like an SSD or HDD."@en ;
+    rdfs:domain :Storage ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :StorageCapacity ;
+    skos:prefLabel "has physical storage capacity"@en .
+
+:hasProcessNode rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links processor to its manufacturing technology node."@en,
+        "Relie le processeur à son nœud de fabrication."@fr ;
+    rdfs:domain :Processor ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :ProcessNode ;
+    skos:prefLabel "has process node"@en,
+        "a nœud de procédé"@fr .
+
+:hasProcessorComponent rdf:type owl:ObjectProperty ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :ProcessorComponent ;
+    rdfs:subPropertyOf :hasComponent ;
+    skos:prefLabel "has processor component"@en,
+        "a pour composant processeur"@fr .
+
+:hasStorage rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a node to its local persistent storage device."@en ;
+    rdfs:domain :ComputeNode ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :Storage ;
+    skos:prefLabel "has storage"@en .
+
+:hasTDP rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links processor to its manufacturer-specified TDP (Watts). e.g. NVIDIA A100 SXM4 -> 400W TDP, H100 SXM5 -> 700W TDP."@en,
+        "Relie le processeur à son TDP spécifié par le fabricant (Watts). ex: NVIDIA A100 SXM4->TDP 400W, H100 SXM5->TDP 700W."@fr ;
+    rdfs:domain [ owl:unionOf ( :Processor :AcceleratorCard ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :TDP ;
+    skos:prefLabel "has TDP"@en,
+        "a TDP"@fr .
+
+:hasUnit rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Unit of measurement."@en ;
+    rdfs:domain :QuantitativeValue ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "has unit"@en,
+        "a unité"@fr .
+
+:hasValue rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Numeric value."@en ;
+    rdfs:domain :QuantitativeValue ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:decimal ;
+    skos:prefLabel "has numeric value"@en,
+        "a valeur numérique"@fr .
+
+:hostedAt rdf:type owl:ObjectProperty ;
+    rdfs:comment "Supercomputer physically hosted at HPC facility."@en,
+        "Superordinateur physiquement installé dans un centre HPC."@fr ;
+    rdfs:domain :Supercomputer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :HPCCenter ;
+    skos:prefLabel "hosted at"@en,
+        "hébergé à"@fr .
+
+:hostsAccelerator rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links an accelerator card to the GPU die it hosts."@en,
+        "Lie une carte accélératrice physique au die GPU qu'elle héberge."@fr ;
+    rdfs:domain :AcceleratorCard ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :GPU ;
+    skos:prefLabel "hosts accelerator"@en,
+        "héberge accélérateur"@fr .
+
+:housedInRack rdf:type owl:ObjectProperty ;
+    rdfs:domain :ComputeNode ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :Rack ;
+    skos:prefLabel "housed in rack"@en,
+        "logé dans la baie"@fr .
+
+:identifier rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Unique identifier (e.g., hostname, serial number)."@en ;
+    rdfs:domain :HPCResource ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "identifier"@en,
+        "identifiant"@fr .
+
+:isComponentOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :HardwareComponent ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :ComputeNode ;
+    owl:inverseOf :hasComponent .
+
+:memoryModel rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Memory generation/model (e.g. 'DDR5-4800', 'HBM2e')."@en ;
+    rdfs:domain :Memory ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf :model ;
+    skos:prefLabel "memory model"@en .
+
+:nodeCount rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :Partition ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "node count"@en,
+        "nombre de nœuds"@fr .
+
+:partOf rdf:type owl:ObjectProperty ;
+    rdfs:comment "Indicates membership in a larger structure."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    owl:inverseOf :contains ;
+    skos:prefLabel "part of"@en,
+        "partie de"@fr .
+
+:partitionName rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Scheduler partition identifier (e.g., 'cpu_p1', 'gpu_p5', 'prepost')."@en ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "partition name"@en,
+        "nom de partition"@fr .
+
+:quantity rdf:type owl:DatatypeProperty ;
+    rdfs:label "quantity"@en,
+        "quantité"@fr ;
+    rdfs:comment "Number of physical instances of the referenced hardware model within the parent node."@en,
+        "Nombre d'unités physiques de ce composant matériel présentes dans le nœud."@fr ;
+    rdfs:domain :HardwareComponent ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:positiveInteger .
+
+:shortName rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Short name (e.g., 'jean-zay', 'adastra', 'topaze')."@en ;
+    rdfs:domain :HPCResource ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string .
+
+:threadCount rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Total hardware threads (cores × threads per core)."@en ;
+    rdfs:domain :CPU ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:integer ;
+    skos:prefLabel "thread count"@en,
+        "nombre de fils"@fr .
+
+:usesNodeType rdf:type owl:ObjectProperty ;
+    rdfs:comment "Indicates the type of compute node used in this partition."@en,
+        "Links a partition to its compute node type(s). Points to a shared hardware configuration, not individual nodes."@en,
+        "Lie une partition à son ou ses types de nœuds de calcul. Pointe vers une configuration matérielle partagée, non des nœuds individuels."@fr ;
+    rdfs:domain :Partition ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :ComputeNode ;
+    skos:prefLabel "uses node type"@en,
+        "utilise type de nœud"@fr .
+
+:vendor rdf:type owl:DatatypeProperty ;
+    rdfs:domain :HPCResource ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "vendor"@en,
+        "fabricant"@fr .
+
+:AcceleratedNode rdf:type owl:Class ;
+    rdfs:comment "A compute node equipped with one or more accelerator cards (GPUs or APUs). May also have a CPU (classic GPU nodes) or integrate CPU and GPU in the same package (APU nodes such as MI300A)."@en,
+        "Un nœud de calcul équipé à la fois de CPU et d'accélérateurs comme des GPU."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:onProperty :hasAcceleratorCardComponent ;
+            owl:someValuesFrom :AcceleratorCard ],
+        :ComputeNode ;
+    skos:prefLabel "Accelerated Node"@en,
+        "Nœud accéléré"@fr .
+
+:DDRMemory rdf:type owl:Class ;
+    rdfs:comment "Double Data Rate SDRAM, main memory of CPU nodes (e.g. DDR4, DDR5). Generation and speed in memoryModel."@en,
+        "SDRAM à double débit de données, mémoire principale des nœuds CPU (ex : DDR4, DDR5). Génération et vitesse dans memoryModel."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :RAM ;
+    skos:prefLabel "DDR Memory"@en,
+        "Mémoire DDR"@fr .
+
+:DieSize rdf:type owl:Class ;
+    rdfs:comment "The physical area of the CPU or GPU die. Used in environmental impact estimation."@en,
+        "Surface physique du die silicium d'un CPU ou GPU en mm². Utilisée pour l'estimation du carbone incorporé et des coûts de fabrication."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Die Size"@en,
+        "Taille de puce"@fr .
+
+:Frequency rdf:type owl:Class ;
+    rdfs:comment "Clock frequency of a processor, including value and unit (e.g., GHz)."@en,
+        "Fréquence d'horloge d'un processeur (e.g., GHz.)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Frequency"@en,
+        "Fréquence"@fr .
+
+:FrontendNode rdf:type owl:Class ;
+    rdfs:comment "Login/frontend node for user access, job submission, and compilation."@en,
+        "Nœud frontal pour l'accès utilisateur, la soumission de tâches et la compilation."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :ComputeNode ;
+    skos:prefLabel "Frontend Node"@en,
+        "Nœud frontal"@fr .
+
+:GDDRMemory rdf:type owl:Class ;
+    rdfs:comment "Graphics DDR memory used on GPUs (e.g. GDDR6 on NVIDIA L40)."@en,
+        "Mémoire DDR graphique utilisée sur les GPU (ex : GDDR6 sur NVIDIA L40)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :RAM ;
+    skos:prefLabel "GDDR Memory"@en,
+        "Mémoire GDDR"@fr .
+
+:HBMMemory rdf:type owl:Class ;
+    rdfs:comment "High Bandwidth Memory used on accelerators and some CPUs/APUs (e.g. HBM2e on A100, HBM3 on H100)."@en,
+        "Mémoire haute bande passante utilisée sur les accélérateurs et certains CPU/APU (ex : HBM2e sur A100, HBM3 sur H100)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :RAM ;
+    skos:prefLabel "HBM Memory"@en,
+        "Mémoire HBM"@fr .
+
+:HDD rdf:type owl:Class ;
+    rdfs:comment "A hard disk drive offering persistent storage, typically with higher capacity but lower I/O speed than SSDs."@en,
+        "Un disque dur offrant un stockage persistant, généralement avec une plus grande capacité mais une vitesse d'E/S inférieure."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :Storage ;
+    skos:prefLabel "HDD"@en,
+        "Disque dur (HDD)"@fr .
+
+:LPDDRMemory rdf:type owl:Class ;
+    rdfs:comment "Low-Power DDR, used as main memory on some CPUs (e.g. LPDDR5X on NVIDIA Grace)."@en,
+        "DDR basse consommation, utilisée comme mémoire principale sur certains CPU (ex : LPDDR5X sur NVIDIA Grace)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :RAM ;
+    skos:prefLabel "LPDDR Memory"@en,
+        "Mémoire LPDDR"@fr .
+
+:Lifetime rdf:type owl:Class ;
+    rdfs:comment "Operational lifespan of a hardware component (years), such as a server or processor."@en,
+        "Durée de vie opérationnelle d'un composant matériel (années)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Lifetime"@en,
+        "Durée de vie"@fr .
+
+:MemoryCapacity rdf:type owl:Class ;
+    rdfs:comment "Total amount of volatile data storage available in a computing component (e.g., RAM, HBM, VRAM)."@en,
+        "Quantité de données volatile qu'un dispositif de mémoire peut stocker (Go, To)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Memory Capacity"@en,
+        "Capacité mémoire"@fr .
+
+:NominalPower rdf:type owl:Class ;
+    rdfs:comment "Design-time power ceiling of a compute node or rack (Watts), typically the sum of component TDPs plus board and memory overhead. This is a static hardware specification, not a measured value. Published as input to PUE microservice."@en,
+        "Puissance nominale de conception d'un nœud ou d'une baie (Watts), typiquement la somme des TDP des composants plus les surcharges carte et mémoire. Spécification statique, non une mesure. Publiée en entrée du microservice PUE."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Nominal Power"@en,
+        "Puissance nominale"@fr .
+
+:PrePostNode rdf:type owl:Class ;
+    rdfs:comment "Dedicated pre/post-processing node with large memory, not deducted from CPU/GPU allocation (e.g. jean-zay-pp at IDRIS)."@en,
+        "Nœud dédié au pré/post-traitement avec grande mémoire, non décompté de l'allocation (ex : jean-zay-pp à l'IDRIS)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :ComputeNode ;
+    skos:prefLabel "Pre/Post-processing Node"@en,
+        "Nœud de pré/post-traitement"@fr .
+
+:ProcessNode rdf:type owl:Class ;
+    rdfs:comment "[Semiconductor manufacturing] Specific generation of integrated circuit fabrication technology defined by the minimum feature size of transistors and interconnects, typically measured in nanometers (nm), where smaller nodes enable denser integration of components, higher performance, and reduced power consumption in devices such as microprocessors and memory chips."@en,
+        "Nœud de procédé de fabrication de semiconducteurs en nm (ex : 7 nm, 4 nm). Corrélé à l'efficacité énergétique et à la taille de puce."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Process Node"@en,
+        "Nœud de procédé"@fr .
+
+:ScalarNode rdf:type owl:Class ;
+    rdfs:comment "A compute node equipped with general-purpose CPUs only (no accelerators)."@en,
+        "Un nœud de calcul équipé uniquement de processeurs généraux (CPU), sans accélérateurs."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:onProperty :hasCPUComponent ;
+            owl:someValuesFrom :CPUComponent ],
+        [ rdf:type owl:Restriction ;
+            owl:allValuesFrom :CPUComponent ;
+            owl:onProperty :hasCPUComponent ],
+        :ComputeNode ;
+    skos:prefLabel "Scalar Node"@en,
+        "Nœud scalaire"@fr .
+
+:Server rdf:type owl:Class ;
+    rdfs:comment "A physical server housing processors, memory, and storage."@en,
+        "Un serveur physique contenant des processeurs, de la mémoire et du stockage."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :PhysicalResource ;
+    skos:prefLabel "Server"@en,
+        "Serveur"@fr .
+
+:StorageCapacity rdf:type owl:Class ;
+    rdfs:comment "Total amount of non-volatile, persistent data storage (e.g., SSD, HDD, Parallel File Systems)."@en,
+        "Capacité totale de stockage persistant (To, Po)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "Storage Capacity"@en,
+        "Capacité de stockage"@fr .
+
+:TDP rdf:type owl:Class ;
+    rdfs:comment "Manufacturer-specified Thermal Design Power (Watts): maximum sustained power the processor's cooling system must dissipate under typical HPC workloads."@en,
+        "Puissance thermique de conception (TDP) spécifiée par le fabricant (en Watts): puissance maximale soutenue que le système de refroidissement du processeur doit dissiper sous charges HPC typiques."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :QuantitativeValue ;
+    skos:prefLabel "TDP"@en,
+        "Puissance thermique de conception (TDP)"@fr .
+
+:TapeStorage rdf:type owl:Class ;
+    rdfs:comment "Magnetic tape drive/cartridge technology (e.g. LTO) used for long-term archiving."@en,
+        "Technologie de lecteur/cartouche à bande magnétique (ex : LTO) utilisée pour l'archivage à long terme."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :Storage ;
+    skos:prefLabel "Tape Storage"@en,
+        "Stockage sur bande"@fr .
+
+:VisualizationNode rdf:type owl:Class ;
+    rdfs:comment "Dedicated visualization node with GPU, not deducted from allocation (e.g. jean-zay-visu at IDRIS)."@en,
+        "Nœud de visualisation dédié avec GPU, non décompté de l'allocation (ex : jean-zay-visu à l'IDRIS)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :ComputeNode ;
+    skos:prefLabel "Visualization Node"@en,
+        "Nœud de visualisation"@fr .
+
+:hasAcceleratorCardComponent rdf:type owl:ObjectProperty ;
+    rdfs:label "has accelerator card component"@en,
+        "a un composant carte accélératrice"@fr ;
+    rdfs:comment "Links a compute node to a contextualized accelerator card component (model + quantity)."@en,
+        "Lie un nœud de calcul à un composant carte accélératrice contextualisé (modèle + quantité)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :AcceleratorCardComponent ;
+    rdfs:subPropertyOf :hasComponent .
+
+:hosts rdf:type owl:ObjectProperty ;
+    rdfs:domain :HPCCenter ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :Supercomputer ;
+    skos:prefLabel "hosts"@en,
+        "héberge"@fr .
+
+:location rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Geographic location of the HPC center as string(e.g., 'Orsay, France'). For structured postal data, use schema:address"@en ;
+    rdfs:domain :HPCCenter ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string ;
+    rdfs:seeAlso schema:address ;
+    skos:prefLabel "location"@en,
+        "localisation"@fr .
+
+:model rdf:type owl:DatatypeProperty ;
+    rdfs:comment "Model name of a supercomputer or a processor."@en ;
+    rdfs:domain [ owl:unionOf ( :Supercomputer :HardwareModel ) ] ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range xsd:string ;
+    skos:prefLabel "model"@en,
+        "modèle"@fr .
+
+:AcceleratorCardComponent rdf:type owl:Class ;
+    rdfs:comment "A hardware component representing accelerator cards installed in a node."@en,
+        "Un composant matériel représentant des cartes accélératrices installées dans un nœud."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:allValuesFrom :AcceleratorCard ;
+            owl:onProperty :refersToModel ],
+        :HardwareComponent ;
+    skos:prefLabel "Accelerator Card Component"@en,
+        "Composant carte accélératrice"@fr .
+
+:LogicalResource rdf:type owl:Class ;
+    rdfs:comment "Software-defined or abstract resource exposed to users or schedulers."@en,
+        "Ressource définie par logiciel ou abstraite exposée aux utilisateurs ou aux ordonnanceurs."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :HPCResource ;
+    skos:prefLabel "Logical Resource"@en,
+        "Ressource logique"@fr .
+
+:MemoryComponent rdf:type owl:Class ;
+    rdfs:comment "A component representing system memory installed in a node."@en,
+        "Un composant représentant la mémoire système installée dans un nœud."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:allValuesFrom :Memory ;
+            owl:onProperty :refersToModel ],
+        :HardwareComponent ;
+    owl:disjointWith :StorageComponent ;
+    skos:prefLabel "Memory Component"@en,
+        "Composant mémoire"@fr .
+
+:ProcessorComponent rdf:type owl:Class ;
+    rdfs:comment "A hardware component representing one or more processors (CPU, GPU, APU) installed in a node."@en,
+        "Un composant matériel représentant un ou plusieurs processeurs (CPU, GPU, APU) installés dans un nœud."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:allValuesFrom :Processor ;
+            owl:onProperty :refersToModel ],
+        :HardwareComponent ;
+    owl:disjointWith :AcceleratorCardComponent,
+        :MemoryComponent,
+        :StorageComponent ;
+    skos:prefLabel "Processor Component"@en,
+        "Composant processeur"@fr .
+
+:StorageComponent rdf:type owl:Class ;
+    rdfs:comment "A component representing storage devices (SSD, HDD) attached to a node."@en,
+        "Un composant représentant les dispositifs de stockage (SSD, HDD) attachés à un nœud."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:allValuesFrom :Storage ;
+            owl:onProperty :refersToModel ],
+        :HardwareComponent ;
+    skos:prefLabel "Storage Component"@en,
+        "Composant de stockage"@fr .
+
+:contains rdf:type owl:ObjectProperty ;
+    rdfs:comment "General containment relationship in HPC hierarchy."@en ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    skos:prefLabel "contains"@en,
+        "contient"@fr .
+
+:hasCPUComponent rdf:type owl:ObjectProperty ;
+    rdfs:label "has CPU component"@en,
+        "a un composant CPU"@fr ;
+    rdfs:comment "Links a compute node to a contextualized CPU component (model + socket count)."@en,
+        "Lie un nœud de calcul à un composant CPU contextualisé (modèle + quantité)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :CPUComponent ;
+    rdfs:subPropertyOf :hasComponent .
+
+:CPU rdf:type owl:Class ;
+    rdfs:comment "The central processing unit responsible for executing general-purpose instructions."@en,
+        "L'unité centrale de traitement responsable de l'exécution des instructions générales."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Central_processing_unit> ;
+    rdfs:subClassOf :Processor ;
+    owl:disjointWith :GPU ;
+    skos:prefLabel "CPU"@en,
+        "CPU"@fr .
+
+:CPUComponent rdf:type owl:Class ;
+    rdfs:comment "A hardware component representing CPUs installed in a node."@en,
+        "Un composant matériel représentant des CPU installés dans un nœud."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:allValuesFrom :CPU ;
+            owl:onProperty :refersToModel ],
+        :ProcessorComponent ;
+    skos:prefLabel "CPU Component"@en,
+        "Composant CPU"@fr .
+
+:GPU rdf:type owl:Class ;
+    rdfs:comment "Graphics processing unit used to accelerate parallel computation tasks in HPC workloads."@en,
+        "Un processeur graphique utilisé pour accélérer les tâches de calcul parallèle dans les charges de travail HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Graphics_processing_unit> ;
+    rdfs:subClassOf :Processor ;
+    skos:prefLabel "GPU"@en,
+        "GPU"@fr .
+
+:HPCCenter rdf:type owl:Class ;
+    rdfs:comment "Institutional entity that operates and hosts one or more supercomputers."@en,
+        "Entité institutionnelle qui exploite et héberge un ou plusieurs supercalculateurs."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf [ rdf:type owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:positiveInteger ;
+            owl:onClass :Supercomputer ;
+            owl:onProperty :hosts ],
+        [ rdf:type owl:Restriction ;
+            owl:minCardinality "1"^^xsd:positiveInteger ;
+            owl:onProperty :location ] ;
+    skos:prefLabel "HPC Center"@en,
+        "Centre HPC"@fr .
+
+:HardwareGeneration rdf:type owl:Class ;
+    rdfs:comment "A discrete hardware generation or extension phase of a supercomputer (e.g. Jean Zay H100 extension, 2023)."@en,
+        "Génération matérielle ou phase d'extension d'un superordinateur (ex : extension H100 de Jean Zay)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :PhysicalResource ;
+    skos:prefLabel "Hardware Generation"@en,
+        "Génération matérielle"@fr .
+
+:Rack rdf:type owl:Class ;
+    rdfs:comment "A physical chassis housing multiple compute nodes and infrastructure elements in a datacenter."@en,
+        "Un châssis physique abritant plusieurs nœuds de calcul et éléments d'infrastructure dans un centre de données."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :PhysicalResource ;
+    skos:prefLabel "Rack"@en,
+        "Baie"@fr .
+
+:SSD rdf:type owl:Class ;
+    rdfs:comment "A solid-state drive offering high-speed persistent storage for jobs requiring fast I/O."@en,
+        "Un disque SSD offrant un stockage persistant à haute vitesse pour les tâches nécessitant des E/S rapides."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :Storage ;
+    skos:prefLabel "SSD"@en,
+        "SSD"@fr .
+
+:Memory rdf:type owl:Class ;
+    rdfs:comment "Volatile memory components used during computation (DRAM, HBM, etc.)."@en,
+        "Composants de mémoire volatile utilisés pendant le calcul (DRAM, HBM, etc.)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :HardwareModel ;
+    skos:prefLabel "Memory"@en,
+        "Mémoire"@fr .
+
+:RAM rdf:type owl:Class ;
+    rdfs:comment "Volatile DRAM-based memory: main memory of a node or on-board memory of an accelerator (DDR, LPDDR, GDDR, HBM)."@en,
+        "Mémoire volatile de type DRAM : mémoire principale d'un nœud ou mémoire embarquée d'un accélérateur (DDR, LPDDR, GDDR, HBM)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :Memory ;
+    owl:disjointWith :Storage ;
+    skos:prefLabel "RAM"@en,
+        "Mémoire vive (RAM)"@fr .
+
+:hasComponent rdf:type owl:ObjectProperty ;
+    rdfs:comment "Links a node to one of its hardware components."@en,
+        "Relie un nœud à l’un de ses composants matériels."@fr ;
+    rdfs:domain :ComputeNode ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :HardwareComponent ;
+    skos:prefLabel "has component"@en,
+        "a pour composant"@fr .
+
+:refersToModel rdf:type owl:ObjectProperty ;
+    rdfs:label "refers to hardware model"@en,
+        "réfère au modèle matériel"@fr ;
+    rdfs:domain :HardwareComponent ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:range :HardwareModel .
+
+:HPCResource rdf:type owl:Class ;
+    rdfs:comment "Root class for all physical, logical, and infrastructural resources involved in high-performance computing."@en,
+        "Classe racine pour toutes les ressources physiques, logiques et infrastructurelles du calcul haute performance."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    skos:prefLabel "HPC Resource"@en,
+        "Ressource HPC"@fr .
+
+:HardwareModel rdf:type owl:Class ;
+    rdfs:label "Hardware model"@en,
+        "Modèle matériel"@fr ;
+    rdfs:comment "Abstract description of a hardware device (CPU model, SSD model, NIC model)."@en,
+        "Description abstraite d’un composant matériel (modèle CPU, SSD, NIC)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :PhysicalResource .
+
+:PhysicalResource rdf:type owl:Class ;
+    rdfs:comment "Tangible hardware component of an HPC system."@en,
+        "Composant matériel tangible d'un système HPC."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :HPCResource ;
+    owl:disjointWith :LogicalResource ;
+    skos:prefLabel "Physical Resource"@en,
+        "Ressource physique"@fr .
+
+:AcceleratorCard rdf:type owl:Class ;
+    rdfs:comment "Physical card hosting one or more GPU/accelerator dies (e.g. NVIDIA A100 SXM4 80 GB)."@en,
+        "Carte physique hébergeant un ou plusieurs GPU/accélérateurs (ex : NVIDIA A100 SXM4 80 Go)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :HardwareModel ;
+    skos:prefLabel "Accelerator Card"@en,
+        "Carte accélératrice"@fr .
+
+:HardwareComponent rdf:type owl:Class ;
+    rdfs:comment "A contextualized hardware element within a node, representing the usage of a hardware model with a given quantity."@en,
+        "Un élément matériel contextualisé dans un nœud, représentant l’utilisation d’un modèle matériel avec une quantité donnée."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :PhysicalResource ;
+    skos:prefLabel "Hardware Component"@en,
+        "Composant matériel"@fr .
+
+:Partition rdf:type owl:Class ;
+    rdfs:comment "Logical grouping of compute nodes within a supercomputer sharing hardware characteristics or workload type, mapped to a scheduler partition (SLURM, PBS)."@en,
+        "Regroupement logique de nœuds de calcul partageant des caractéristiques matérielles ou des types de charge de travail, associé à une partition d'ordonnanceur (SLURM, PBS)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :LogicalResource ;
+    skos:prefLabel "Partition"@en,
+        "Partition"@fr .
+
+:Storage rdf:type owl:Class ;
+    rdfs:comment "Persistent storage devices and systems."@en,
+        "Dispositifs et systèmes de stockage persistant."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :HardwareModel ;
+    skos:prefLabel "Storage"@en,
+        "Stockage"@fr .
+
+:Processor rdf:type owl:Class ;
+    rdfs:comment "A general category for processing units, including CPUs and GPUs."@en,
+        "Catégorie générale pour les unités de traitement, y compris les CPU et les GPU."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Processor_(computing)> ;
+    rdfs:subClassOf :HardwareModel ;
+    owl:disjointWith :AcceleratorCard,
+        :RAM,
+        :Storage ;
+    skos:prefLabel "Processor"@en,
+        "Processeur"@fr .
+
+:QuantitativeValue rdf:type owl:Class ;
+    rdfs:comment "A value with an associated unit of measurement."@en,
+        "Valeur numérique avec une unité de mesure associée."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    skos:prefLabel "Quantitative Value"@en,
+        "Valeur quantitative"@fr .
+
+:Supercomputer rdf:type owl:Class ;
+    rdfs:comment "High-performance computing system composed of compute nodes, storage, and networking (Jean Zay, Adastra, Irene)."@en,
+        "Système de calcul haute performance composé de nœuds de calcul, stockage et réseau (Jean Zay, Adastra, Irene)."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:seeAlso <https://fr.wikipedia.org/wiki/Superordinateur> ;
+    rdfs:subClassOf :PhysicalResource ;
+    skos:prefLabel "Supercomputer"@en,
+        "Superordinateur"@fr .
+
+:ComputeNode rdf:type owl:Class ;
+    rdfs:comment "A physical or virtual machine in an HPC system that executes computational jobs."@en,
+        "Une machine physique ou virtuelle dans un système HPC qui exécute des tâches de calcul."@fr ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
+    rdfs:subClassOf :PhysicalResource ;
+    skos:prefLabel "Compute Node"@en,
+        "Nœud de calcul"@fr .
+
+[] rdf:type owl:AllDisjointClasses ;
+    owl:members ( :DDRMemory :LPDDRMemory :GDDRMemory :HBMMemory ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+    owl:members ( :SSD :HDD :TapeStorage ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+    owl:members ( :ScalarNode :AcceleratedNode :FrontendNode :PrePostNode :VisualizationNode ) .
+
