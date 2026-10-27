@@ -13,7 +13,7 @@
 
 ## Overview
 
-The **HPC Resource Ontology** is an OWL 2 DL knowledge representation designed to formally describe the hardware, software, storage infrastructure, and organizational structure of High-Performance Computing (HPC) centers. It was developed within the Exa-AToW project as the semantic backbone for describing and comparing the French national supercomputing ecosystem.
+The **HPC Resource Ontology** is an OWL 2 DL knowledge representation designed to formally describe the hardware, software, storage infrastructure, and organizational structure of High-Performance Computing (HPC) centers. It was developed within the [Exa-AToW](https://numpex.org/exaatow-architectures-and-tools-for-large-scale-workflows) project of the [PEPR NumPEx](https://numpex.org) as the semantic backbone for describing and comparing the French national supercomputing ecosystem.
 
 Once instantiated with real system data, it enables answering structured SPARQL queries such as:
 
@@ -140,7 +140,7 @@ Partition
 
 ---
 
-## Instances (ABox)
+## Instances (ABox) - in contruction
 
 All instance files share the namespace `https://w3id.org/Exa-AToW/hpc/instances#` and load together as **one graph**.
 
@@ -167,17 +167,9 @@ The onto viewer (`tools/onto_visualization/onto-viewer.html`) loads several onto
 - **Unified search** over the whole merged graph (TBox + all ABoxes), with a clickable results list (instances ranked first) and attribute matching.
 
 
-Mount the whole graph with one `owl:imports` declaration:
-
-```turtle
-<https://example.org/my-kg> a owl:Ontology ;
-    owl:imports <https://w3id.org/Exa-AToW/hpc> ,
-                <https://w3id.org/Exa-AToW/hpc/instances> .
-```
-
 ---
 
-## Validation
+## Validation - in construction
 
 SHACL shapes to be defined. All TTL files parse as Turtle and load together as one graph (verified with `rdflib` and the multi-source viewer).
 

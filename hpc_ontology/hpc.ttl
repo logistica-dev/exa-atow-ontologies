@@ -894,7 +894,7 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
     rdfs:label "NVCC" ;
     rdfs:comment "NVIDIA CUDA Compiler driver."@en ,
         "Pilote de compilation CUDA de NVIDIA."@fr ;
-    :website "https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/"^^xsd:anyURI  ,
+    :website "https://docs.nvidia.com/cuda/cuda-compiler-driver-nvcc/"^^xsd:anyURI  ;
     rdfs:seeAlso "https://en.wikipedia.org/wiki/Nvidia_CUDA_Compiler"^^xsd:anyURI  ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
     skos:prefLabel "NVCC"@en ;
