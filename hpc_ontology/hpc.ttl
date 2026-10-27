@@ -976,7 +976,7 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
     rdfs:label "PBS" ;
     rdfs:comment "Portable Batch System. Family of batch schedulers originating at NASA Ames. PBS Professional is the commercial product from Altair; OpenPBS is its open-source counterpart. Torque is a related fork."@en ,
         "Portable Batch System. Famille d’ordonnanceurs par lots créée à la NASA Ames. PBS Professional est le produit commercial d’Altair ; OpenPBS en est la version open source. Torque est un fork apparenté."@fr ;
-    :website "https://www.openpbs.org/"^^xsd:anyURI ,
+    :website "https://www.openpbs.org/"^^xsd:anyURI ;
     rdfs:seeAlso "https://en.wikipedia.org/wiki/Portable_Batch_System"^^xsd:anyURI ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
     skos:prefLabel "PBS"@en ;
