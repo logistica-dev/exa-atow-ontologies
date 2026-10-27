@@ -937,7 +937,7 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
     rdfs:comment
     "Commercial Linux distribution with a standard 10-year lifecycle for major releases such as RHEL 8, 9, and 10."@en ,
     "Distribution Linux commerciale offrant un cycle de vie standard de dix ans pour les versions majeures telles que RHEL 8, 9 et 10."@fr ;
-    :website "https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux"^^xsd:anyURI ,
+    :website "https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux"^^xsd:anyURI ;
     rdfs:seeAlso "https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux"^^xsd:anyURI ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
     skos:prefLabel "Red Hat"@en ;
@@ -950,7 +950,7 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
     rdfs:comment
     "Debian-based Linux distribution published by Canonical, with Long Term Support (LTS) releases every two years in April."@en ,
     "Distribution Linux dérivée de Debian publiée par Canonical, avec des versions à support long terme (LTS) tous les deux ans en avril."@fr ;
-    :website "https://ubuntu.com/"^^xsd:anyURI ,
+    :website "https://ubuntu.com/"^^xsd:anyURI ;
     rdfs:seeAlso "https://en.wikipedia.org/wiki/Ubuntu"^^xsd:anyURI ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
     skos:prefLabel "Ubuntu"@en ;
@@ -987,7 +987,7 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
     rdfs:label "LSF" ;
     rdfs:comment "CLoad Sharing Facility. Commercial workload manager and job scheduler developed by Platform Computing and acquired by IBM in 2012; now known as IBM Spectrum LSF."@en ,
         "Load Sharing Facility. Gestionnaire de charge et ordonnanceur commercial développé par Platform Computing, racheté par IBM en 2012 et désormais nommé IBM Spectrum LSF."@fr ;
-    :website "https://www.ibm.com/docs/en/spectrum-lsf"^^xsd:anyURI ,
+    :website "https://www.ibm.com/docs/en/spectrum-lsf"^^xsd:anyURI ;
     rdfs:seeAlso "https://en.wikipedia.org/wiki/Platform_LSF"^^xsd:anyURI ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
     skos:prefLabel "LSF"@en ;
@@ -1028,7 +1028,7 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
 :BeeGFS rdf:type :FileSystemTechnology ;
     rdfs:comment "Distributed parallel file system providing scalable, high-performance access to shared data."@en ,
         "Système de fichiers parallèle distribué offrant un accès évolutif et performant aux données partagées."@fr ;
-    :website "https://www.beegfs.io/"^^xsd:anyURI ,
+    :website "https://www.beegfs.io/"^^xsd:anyURI ;
     rdfs:seeAlso "https://en.wikipedia.org/wiki/BeeGFS"^^xsd:anyURI ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
     skos:prefLabel "BeeGFS"@en ;
@@ -1037,7 +1037,7 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
 :GPFS rdf:type :FileSystemTechnology ;
     rdfs:comment "IBM distributed parallel file system, originally GPFS and later IBM Spectrum Scale; marketed as IBM Storage Scale since 2023. Supports scalable shared storage and data tiering."@en ,
         "Système de fichiers parallèle distribué d’IBM, initialement GPFS puis IBM Spectrum Scale ; commercialisé sous le nom IBM Storage Scale depuis 2023. Prend en charge le stockage partagé évolutif et la hiérarchisation des données."@fr ;
-    :website "https://www.ibm.com/docs/en/storage-scale"^^xsd:anyURI ,
+    :website "https://www.ibm.com/docs/en/storage-scale"^^xsd:anyURI ;
     rdfs:seeAlso "https://en.wikipedia.org/wiki/GPFS"^^xsd:anyURI ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
     skos:altLabel "IBM Storage Scale"@en , "GPFS"@en ;
