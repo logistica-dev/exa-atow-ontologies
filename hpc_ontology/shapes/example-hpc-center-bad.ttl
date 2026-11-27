@@ -1,0 +1,57 @@
+###############################################################################
+# Example: an INVALID HPC Center instance (negative test)
+#
+# Deliberate errors (one per rule):
+#   - :HPCCenter missing :location
+#   - :HPCCenter :operatedBy a :Supercomputer (wrong class)
+#   - :Supercomputer missing :hostedAt
+#   - :nodeCount negative / :totalCoresCount a string
+#   - :Partition missing :partitionName
+#   - :Partition :usesNodeType a :HPCCenter (wrong class)
+#   - :maxWallTime an xsd:string instead of xsd:duration
+#   - :Throughput unit "Gbps" not in the vocabulary
+#   - :StorageMount missing :mountPath and :mountedOn a non-FileSystem
+#   - :QoS missing rdfs:label
+###############################################################################
+
+@prefix :    <https://w3id.org/Exa-AToW/hpc#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix inst: <https://w3id.org/Exa-AToW/hpc/instances/> .
+
+inst:Org_Bad a :Organization ; rdfs:label "Bad Org"@en .
+
+inst:Center_Bad a :HPCCenter ;
+    rdfs:label "Bad HPC Center"@en ;
+    # :location "missing on purpose" ;
+    :operatedBy inst:SC_Bad ;                 # wrong class (Supercomputer)
+    :hosts inst:SC_Bad ;
+    :hasStorageMount inst:Mount_Bad .
+
+inst:SC_Bad a :Supercomputer ;
+    rdfs:label "Bad Supercomputer"@en ;
+    # :hostedAt inst:Center_Bad ;             # missing
+    :nodeCount -5 ;                            # negative
+    :totalCoresCount "many" ;                  # string, not integer
+    :hasPartition inst:Part_Bad .
+
+inst:Part_Bad a :Partition ;
+    rdfs:label "Bad partition"@en ;
+    # :partitionName "cpu" ;                   # missing
+    :usesNodeType inst:Center_Bad ;            # wrong class
+    :maxWallTime "24h"^^xsd:string ;           # should be xsd:duration
+    :acceleratorCount -1 ;                     # negative
+    :hasQoS inst:QoS_Bad .
+
+inst:QoS_Bad a :QoS ;
+    # rdfs:label missing on purpose
+    :maxWallTime "24h"^^xsd:string .
+
+inst:FS_Bad a :FileSystem ;
+    rdfs:label "Bad FS"@en ;
+    :hasThroughput [ a :Throughput ; :hasValue "300"^^xsd:decimal ; :hasUnit "Gbps" ] .
+
+inst:Mount_Bad a :StorageMount ;
+    rdfs:label "Bad mount"@en ;
+    # :mountPath missing
+    :mountedOn inst:Center_Bad .               # not a FileSystem

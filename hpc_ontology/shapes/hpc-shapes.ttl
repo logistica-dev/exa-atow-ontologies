@@ -1,0 +1,823 @@
+###############################################################################
+# Exa-AToW HPC — SHACL shapes
+#
+# Aligned with:  hpc-core.ttl + hpc.ttl  (owl:versionInfo 0.3.0)
+# Purpose:       validate instances of :HPCCenter and everything a center
+#                aggregates (supercomputers, partitions, nodes, components,
+#                filesystems, mounts, QoS, software, ...).
+#
+# Notes
+# -----
+# * Severities: sh:Violation for structural requirements (mirroring the OWL
+#   restrictions in the TBox), sh:Warning for quality/recommendation rules.
+# * The TBox encodes these OWL restrictions, which are mirrored here:
+#       :HPCCenter      ⊑ ∃:location (min 1)  and  ⊑ ∃:operatedBy.:Organization
+#       :Supercomputer  ⊑ ∃:hostedAt.:HPCCenter
+#       :ScalarNode     ⊑ ∃:hasCPUComponent.:CPUComponent (some + all)
+#       :AcceleratedNode⊑ ∃:hasAcceleratorCardComponent …
+#       :*Component     ⊑ ∀:refersToModel.:<Model>
+# * Datatypes follow the TBox (e.g. :maxWallTime xsd:duration,
+#   :hasValue xsd:decimal, :nodeCount xsd:integer).
+###############################################################################
+
+@prefix :    <https://w3id.org/Exa-AToW/hpc#> .
+@prefix ex:  <https://w3id.org/Exa-AToW/hpc/shapes#> .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos:<http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<https://w3id.org/Exa-AToW/hpc/shapes>
+    a owl:Ontology ;
+    rdfs:label "Exa-AToW HPC — SHACL shapes"@en ;
+    rdfs:comment "SHACL validation shapes for the Exa-AToW HPC resource ontology (hpc-core.ttl + hpc.ttl)."@en ;
+    owl:imports <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    owl:versionInfo "0.1.0" ;
+    dcterms:created "2026-11-02"^^xsd:date .
+
+
+###############################################################################
+# 1. HPC CENTER  (the entry point: “I want to create an HPC center”)
+###############################################################################
+
+ex:HPCCenterShape
+    a sh:NodeShape ;
+    sh:targetClass :HPCCenter ;
+    rdfs:label "HPC Center"@en , "Centre HPC"@fr ;
+
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:uniqueLang true ;
+        sh:severity sh:Violation ;
+        sh:message "An :HPCCenter must have at least one rdfs:label (one per language)."@en ,
+                    "Un :HPCCenter doit avoir au moins un rdfs:label (un par langue)."@fr ;
+    ] ;
+    sh:property [
+        sh:path :location ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Violation ;
+        sh:message "An :HPCCenter must have exactly one :location (string), as required by the TBox restriction."@en ;
+    ] ;
+    sh:property [
+        sh:path :operatedBy ;
+        sh:minCount 1 ;
+        sh:class :Organization ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message "An :HPCCenter must be :operatedBy at least one :Organization (TBox restriction)."@en ;
+    ] ;
+    sh:property [
+        sh:path :fundedBy ;
+        sh:class :FundingAgency ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ;
+        sh:message "Recommended: :HPCCenter should declare its :fundedBy :FundingAgency."@en ;
+    ] ;
+    sh:property [
+        sh:path :website ;
+        sh:datatype xsd:anyURI ;
+        sh:severity sh:Warning ;
+        sh:message ":website should be an xsd:anyURI."@en ;
+    ] ;
+    sh:property [
+        sh:path :documentationURL ;
+        sh:datatype xsd:anyURI ;
+        sh:severity sh:Warning ;
+        sh:message ":documentationURL should be an xsd:anyURI."@en ;
+    ] ;
+    sh:property [
+        sh:path :shortName ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
+        sh:message ":shortName should be an xsd:string."@en ;
+    ] ;
+    sh:property [
+        sh:path :identifier ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
+        sh:message ":identifier should be an xsd:string."@en ;
+    ] ;
+    sh:property [
+        sh:path :hosts ;
+        sh:class :Supercomputer ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":hosts must point to :Supercomputer instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasStorageMount ;
+        sh:class :StorageMount ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":hasStorageMount must point to :StorageMount instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasArchiveSystem ;
+        sh:class :ArchiveSystem ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":hasArchiveSystem must point to :ArchiveSystem instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasCoolingSystem ;
+        sh:class :CoolingSystem ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ;
+        sh:message ":hasCoolingSystem must point to :CoolingSystem instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :description ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
+        sh:message ":description should be an xsd:string."@en ;
+    ] .
+
+
+ex:OrganizationShape
+    a sh:NodeShape ;
+    sh:targetClass :Organization ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:uniqueLang true ;
+        sh:severity sh:Violation ;
+        sh:message "An :Organization must have at least one rdfs:label."@en ;
+    ] ;
+    sh:property [
+        sh:path :website ;
+        sh:datatype xsd:anyURI ;
+        sh:severity sh:Warning ;
+        sh:message ":website should be an xsd:anyURI."@en ;
+    ] .
+
+ex:FundingAgencyShape
+    a sh:NodeShape ;
+    sh:targetClass :FundingAgency ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:uniqueLang true ;
+        sh:severity sh:Violation ;
+        sh:message "A :FundingAgency must have at least one rdfs:label."@en ;
+    ] ;
+    sh:property [
+        sh:path :website ;
+        sh:datatype xsd:anyURI ;
+        sh:severity sh:Warning ;
+        sh:message ":website should be an xsd:anyURI."@en ;
+    ] .
+
+
+###############################################################################
+# 2. SUPERCOMPUTER / PARTITION
+###############################################################################
+
+ex:SupercomputerShape
+    a sh:NodeShape ;
+    sh:targetClass :Supercomputer ;
+    rdfs:label "Supercomputer"@en ;
+
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:uniqueLang true ;
+        sh:severity sh:Violation ;
+        sh:message "A :Supercomputer must have at least one rdfs:label."@en ;
+    ] ;
+    sh:property [
+        sh:path :hostedAt ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:class :HPCCenter ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message "A :Supercomputer must be :hostedAt exactly one :HPCCenter (TBox restriction)."@en ;
+    ] ;
+    sh:property [
+        sh:path :usesResourceManager ;
+        sh:minCount 1 ;
+        sh:class :ResourceManager ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message "A :Supercomputer must declare at least one :usesResourceManager (:SLURM, :PBS, …)."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasPartition ;
+        sh:minCount 1 ;
+        sh:class :Partition ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message "A :Supercomputer must declare at least one :hasPartition."@en ;
+    ] ;
+    sh:property [
+        sh:path :nodeCount ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:severity sh:Violation ;
+        sh:message ":nodeCount must be a positive integer."@en ;
+    ] ;
+    sh:property [
+        sh:path :totalCoresCount ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:severity sh:Violation ;
+        sh:message ":totalCoresCount must be a positive integer."@en ;
+    ] ;
+    sh:property [
+        sh:path :acceleratorCount ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 0 ;
+        sh:severity sh:Violation ;
+        sh:message ":acceleratorCount must be a non-negative integer."@en ;
+    ] ;
+    sh:property [
+        sh:path :commissioningDate ;
+        sh:datatype xsd:date ;
+        sh:severity sh:Violation ;
+        sh:message ":commissioningDate must be an xsd:date."@en ;
+    ] ;
+    sh:property [
+        sh:path :decommissioningDate ;
+        sh:datatype xsd:date ;
+        sh:severity sh:Violation ;
+        sh:message ":decommissioningDate must be an xsd:date."@en ;
+    ] ;
+    sh:property [
+        sh:path :usesFileSystem ;
+        sh:class :FileSystem ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":usesFileSystem must point to :FileSystem instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :runsOS ;
+        sh:class :OperatingSystem ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":runsOS must point to :OperatingSystem instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :supportsCompiler ;
+        sh:class :Compiler ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":supportsCompiler must point to :Compiler instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :fundedBy ;
+        sh:class :FundingAgency ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ;
+        sh:message ":fundedBy should point to :FundingAgency instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasStorageMount ;
+        sh:class :StorageMount ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ;
+        sh:message ":hasStorageMount should point to :StorageMount instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :computerBrand ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
+        sh:message ":computerBrand should be an xsd:string."@en ;
+    ] ;
+    sh:property [
+        sh:path :model ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
+        sh:message ":model should be an xsd:string."@en ;
+    ] ;
+    sh:property [
+        sh:path :website ;
+        sh:datatype xsd:anyURI ;
+        sh:severity sh:Warning ;
+        sh:message ":website should be an xsd:anyURI."@en ;
+    ] ;
+    sh:property [
+        sh:path :documentationURL ;
+        sh:datatype xsd:anyURI ;
+        sh:severity sh:Warning ;
+        sh:message ":documentationURL should be an xsd:anyURI."@en ;
+    ] .
+
+
+ex:PartitionShape
+    a sh:NodeShape ;
+    sh:targetClass :Partition ;
+    rdfs:label "Partition"@en ;
+
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:uniqueLang true ;
+        sh:severity sh:Violation ;
+        sh:message "A :Partition must have at least one rdfs:label."@en ;
+    ] ;
+    sh:property [
+        sh:path :partitionName ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Violation ;
+        sh:message "A :Partition must have exactly one :partitionName (string)."@en ;
+    ] ;
+    sh:property [
+        sh:path :partitionType ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Violation ;
+        sh:message ":partitionType must be an xsd:string."@en ;
+    ] ;
+    sh:property [
+        sh:path :usesNodeType ;
+        sh:minCount 1 ;
+        sh:class :ComputeNode ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message "A :Partition must declare at least one :usesNodeType (:ComputeNode)."@en ;
+    ] ;
+    sh:property [
+        sh:path :nodeCount ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:severity sh:Violation ;
+        sh:message ":nodeCount must be a positive integer."@en ;
+    ] ;
+    sh:property [
+        sh:path :totalCoresCount ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:severity sh:Violation ;
+        sh:message ":totalCoresCount must be a positive integer."@en ;
+    ] ;
+    sh:property [
+        sh:path :acceleratorCount ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 0 ;
+        sh:severity sh:Violation ;
+        sh:message ":acceleratorCount must be a non-negative integer."@en ;
+    ] ;
+    sh:property [
+        sh:path :allocatedFromQuota ;
+        sh:datatype xsd:boolean ;
+        sh:severity sh:Violation ;
+        sh:message ":allocatedFromQuota must be an xsd:boolean."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasQoS ;
+        sh:class :QoS ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":hasQoS must point to :QoS instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasTotalScalarMemory ;
+        sh:class :MemoryCapacity ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":hasTotalScalarMemory must point to a :MemoryCapacity."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasTotalAcceleratorMemory ;
+        sh:class :MemoryCapacity ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ;
+        sh:message ":hasTotalAcceleratorMemory must point to a :MemoryCapacity."@en ;
+    ] ;
+    sh:property [
+        sh:path :maxWallTime ;
+        sh:datatype xsd:duration ;
+        sh:severity sh:Violation ;
+        sh:message ":maxWallTime must be an xsd:duration (e.g. \"PT20H\")."@en ;
+    ] ;
+    sh:property [
+        sh:path :defaultWallTime ;
+        sh:datatype xsd:string ;
+        sh:severity sh:Warning ;
+        sh:message ":defaultWallTime must be an xsd:string (per the TBox)."@en ;
+    ] ;
+    sh:property [
+        sh:path :supportsCompiler ;
+        sh:class :Compiler ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ;
+        sh:message ":supportsCompiler must point to :Compiler instances."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasPeakPerformance ;
+        sh:class :PeakPerformance ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ;
+        sh:message ":hasPeakPerformance must point to a :PeakPerformance."@en ;
+    ] .
+
+
+###############################################################################
+# 3. COMPUTE NODES AND COMPONENTS
+###############################################################################
+
+ex:ComputeNodeShape
+    a sh:NodeShape ;
+    sh:targetClass :ComputeNode ;
+    rdfs:label "Compute node"@en ;
+
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:uniqueLang true ;
+        sh:severity sh:Violation ;
+        sh:message "A :ComputeNode must have at least one rdfs:label."@en ;
+    ] ;
+    sh:property [
+        sh:path :coresCountPerNode ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 1 ;
+        sh:severity sh:Violation ;
+        sh:message ":coresCountPerNode must be a positive integer."@en ;
+    ] ;
+    sh:property [
+        sh:path :belongsToPartition ;
+        sh:class :Partition ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":belongsToPartition must point to a :Partition."@en ;
+    ] ;
+    sh:property [
+        sh:path :hasMemoryComponent ;
+        sh:class :MemoryComponent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message ":hasMemoryComponent must point to a :MemoryComponent."@en ;
+    ] ;
+    sh:property [
+        sh:path :housedInRack ;
+        sh:class :Rack ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ;
+        sh:message ":housedInRack should point to a :Rack."@en ;
+    ] .
+
+ex:ScalarNodeShape
+    a sh:NodeShape ;
+    sh:targetClass :ScalarNode ;
+    sh:property [
+        sh:path :hasCPUComponent ;
+        sh:minCount 1 ;
+        sh:class :CPUComponent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message "A :ScalarNode must have at least one :hasCPUComponent (:CPUComponent), per the TBox."@en ;
+    ] .
+
+ex:AcceleratedNodeShape
+    a sh:NodeShape ;
+    sh:targetClass :AcceleratedNode ;
+    sh:property [
+        sh:path :hasAcceleratorCardComponent ;
+        sh:minCount 1 ;
+        sh:class :AcceleratorCardComponent ;
+        sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ;
+        sh:message "An :AcceleratedNode must have at least one :hasAcceleratorCardComponent (:AcceleratorCardComponent)."@en ;
+    ] .
+
+ex:CPUComponentShape
+    a sh:NodeShape ;
+    sh:targetClass :CPUComponent ;
+    sh:property [ sh:path :refersToModel ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class :CPU ; sh:nodeKind sh:BlankNodeOrIRI ; sh:severity sh:Violation ;
+        sh:message "A :CPUComponent must :refersToModel exactly one :CPU."@en ] ;
+    sh:property [ sh:path :quantity ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Violation ; sh:message ":quantity must be a positive integer."@en ] .
+
+ex:ProcessorComponentShape
+    a sh:NodeShape ;
+    sh:targetClass :ProcessorComponent ;
+    sh:property [ sh:path :refersToModel ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class :Processor ; sh:nodeKind sh:BlankNodeOrIRI ; sh:severity sh:Violation ;
+        sh:message "A :ProcessorComponent must :refersToModel exactly one :Processor."@en ] ;
+    sh:property [ sh:path :quantity ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Violation ; sh:message ":quantity must be a positive integer."@en ] .
+
+ex:MemoryComponentShape
+    a sh:NodeShape ;
+    sh:targetClass :MemoryComponent ;
+    sh:property [ sh:path :refersToModel ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class :Memory ; sh:nodeKind sh:BlankNodeOrIRI ; sh:severity sh:Violation ;
+        sh:message "A :MemoryComponent must :refersToModel exactly one :Memory."@en ] ;
+    sh:property [ sh:path :quantity ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Violation ; sh:message ":quantity must be a positive integer."@en ] .
+
+ex:StorageComponentShape
+    a sh:NodeShape ;
+    sh:targetClass :StorageComponent ;
+    sh:property [ sh:path :refersToModel ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class :Storage ; sh:nodeKind sh:BlankNodeOrIRI ; sh:severity sh:Violation ;
+        sh:message "A :StorageComponent must :refersToModel exactly one :Storage."@en ] ;
+    sh:property [ sh:path :quantity ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Violation ; sh:message ":quantity must be a positive integer."@en ] .
+
+ex:AcceleratorCardComponentShape
+    a sh:NodeShape ;
+    sh:targetClass :AcceleratorCardComponent ;
+    sh:property [ sh:path :refersToModel ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class :AcceleratorCard ; sh:nodeKind sh:BlankNodeOrIRI ; sh:severity sh:Violation ;
+        sh:message "An :AcceleratorCardComponent must :refersToModel exactly one :AcceleratorCard."@en ] ;
+    sh:property [ sh:path :quantity ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Violation ; sh:message ":quantity must be a positive integer."@en ] .
+
+ex:InterconnectComponentShape
+    a sh:NodeShape ;
+    sh:targetClass :InterconnectComponent ;
+    sh:property [ sh:path :refersToModel ; sh:minCount 1 ; sh:maxCount 1 ;
+        sh:class :Interconnect ; sh:nodeKind sh:BlankNodeOrIRI ; sh:severity sh:Violation ;
+        sh:message "An :InterconnectComponent must :refersToModel exactly one :Interconnect."@en ] ;
+    sh:property [ sh:path :linkCount ; sh:datatype xsd:integer ; sh:minInclusive 0 ;
+        sh:severity sh:Warning ; sh:message ":linkCount must be a non-negative integer."@en ] .
+
+
+###############################################################################
+# 4. HARDWARE MODELS
+###############################################################################
+
+ex:HardwareModelShape
+    a sh:NodeShape ;
+    sh:targetClass :HardwareModel ;
+    sh:property [
+        sh:path rdfs:label ;
+        sh:minCount 1 ;
+        sh:uniqueLang true ;
+        sh:severity sh:Warning ;
+        sh:message "A :HardwareModel should have an rdfs:label."@en ;
+    ] .
+
+ex:ProcessorShape
+    a sh:NodeShape ;
+    sh:targetClass :Processor ;
+    sh:property [ sh:path :vendor ; sh:datatype xsd:string ; sh:severity sh:Warning ;
+        sh:message ":vendor should be an xsd:string."@en ] ;
+    sh:property [ sh:path :architecture ; sh:datatype xsd:string ; sh:severity sh:Warning ;
+        sh:message ":architecture should be an xsd:string."@en ] ;
+    sh:property [ sh:path :coresCount ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Warning ; sh:message ":coresCount must be a positive integer."@en ] ;
+    sh:property [ sh:path :threadCount ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Warning ; sh:message ":threadCount must be a positive integer."@en ] ;
+    sh:property [ sh:path :hasFrequency ; sh:class :Frequency ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":hasFrequency must point to a :Frequency."@en ] .
+
+ex:CPUShape
+    a sh:NodeShape ;
+    sh:targetClass :CPU ;
+    sh:property [ sh:path :coresCountPerSocket ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Violation ; sh:message ":coresCountPerSocket must be a positive integer."@en ] .
+
+ex:AcceleratorCardShape
+    a sh:NodeShape ;
+    sh:targetClass :AcceleratorCard ;
+    sh:property [ sh:path :acceleratorUnitsPerCard ; sh:datatype xsd:integer ; sh:minInclusive 1 ;
+        sh:severity sh:Violation ; sh:message ":acceleratorUnitsPerCard must be a positive integer."@en ] ;
+    sh:property [ sh:path :hostsAccelerator ; sh:class :GPU ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":hostsAccelerator must point to a :GPU."@en ] ;
+    sh:property [ sh:path :hasMemoryComponent ; sh:class :MemoryComponent ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":hasMemoryComponent must point to a :MemoryComponent."@en ] .
+
+ex:MemoryShape
+    a sh:NodeShape ;
+    sh:targetClass :Memory ;
+    sh:property [ sh:path :memoryModel ; sh:datatype xsd:string ; sh:severity sh:Warning ;
+        sh:message ":memoryModel should be an xsd:string (DDR4, HBM2, …)."@en ] ;
+    sh:property [ sh:path :hasMemoryCapacity ; sh:class :MemoryCapacity ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":hasMemoryCapacity must point to a :MemoryCapacity."@en ] .
+
+ex:StorageShape
+    a sh:NodeShape ;
+    sh:targetClass :Storage ;
+    sh:property [ sh:path :hasPhysicalStorageCapacity ; sh:class :StorageCapacity ;
+        sh:nodeKind sh:BlankNodeOrIRI ; sh:severity sh:Warning ;
+        sh:message ":hasPhysicalStorageCapacity must point to a :StorageCapacity."@en ] .
+
+ex:InterconnectShape
+    a sh:NodeShape ;
+    sh:targetClass :Interconnect ;
+    sh:property [ sh:path :hasBandwidth ; sh:class :Bandwidth ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":hasBandwidth must point to a :Bandwidth."@en ] .
+
+
+###############################################################################
+# 5. QUANTITATIVE VALUES  (value + unit vocabularies)
+###############################################################################
+
+ex:QuantitativeValueShape
+    a sh:NodeShape ;
+    sh:targetClass :QuantitativeValue ;
+    sh:property [ sh:path :hasValue ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ;
+        sh:severity sh:Violation ; sh:message "A :QuantitativeValue must have exactly one numeric :hasValue (xsd:decimal)."@en ] ;
+    sh:property [ sh:path :hasUnit ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ;
+        sh:severity sh:Violation ; sh:message "A :QuantitativeValue must have exactly one :hasUnit (xsd:string)."@en ] .
+
+ex:FrequencyShape a sh:NodeShape ; sh:targetClass :Frequency ;
+    sh:property [ sh:path :hasUnit ; sh:in ( "GHz" "MHz" "THz" ) ; sh:severity sh:Violation ;
+        sh:message "A :Frequency unit must be one of: GHz, MHz, THz."@en ] .
+
+ex:BandwidthShape a sh:NodeShape ; sh:targetClass :Bandwidth ;
+    sh:property [ sh:path :hasUnit ; sh:in ( "Gb/s" "Gbit/s" "Mb/s" ) ; sh:severity sh:Violation ;
+        sh:message "A :Bandwidth unit must be one of: Gb/s, Gbit/s, Mb/s."@en ] .
+
+ex:ThroughputShape a sh:NodeShape ; sh:targetClass :Throughput ;
+    sh:property [ sh:path :hasUnit ; sh:in ( "GB/s" "GiB/s" "MB/s" "TB/s" "TiB/s" ) ; sh:severity sh:Violation ;
+        sh:message "A :Throughput unit must be one of: GB/s, GiB/s, MB/s, TB/s, TiB/s."@en ] .
+
+ex:MemoryCapacityShape a sh:NodeShape ; sh:targetClass :MemoryCapacity ;
+    sh:property [ sh:path :hasUnit ; sh:in ( "GB" "GiB" "TB" "TiB" "MB" "MiB" ) ; sh:severity sh:Violation ;
+        sh:message "A :MemoryCapacity unit must be one of: GB, GiB, TB, TiB, MB, MiB."@en ] .
+
+ex:StorageCapacityShape a sh:NodeShape ; sh:targetClass :StorageCapacity ;
+    sh:property [ sh:path :hasUnit ; sh:in ( "GB" "GiB" "TB" "TiB" "PB" "PiB" "MB" "MiB" ) ; sh:severity sh:Violation ;
+        sh:message "A :StorageCapacity unit must be one of: GB, GiB, TB, TiB, PB, PiB, MB, MiB."@en ] .
+
+ex:PeakPerformanceShape a sh:NodeShape ; sh:targetClass :PeakPerformance ;
+    sh:property [ sh:path :hasUnit ; sh:in ( "PFlop/s" "TFlop/s" "GFlop/s" "PFlops" "TFlops" "GFlops" ) ;
+        sh:severity sh:Violation ;
+        sh:message "A :PeakPerformance unit must be one of: PFlop/s, TFlop/s, GFlop/s, …"@en ] .
+
+ex:NominalPowerShape a sh:NodeShape ; sh:targetClass :NominalPower ;
+    sh:property [ sh:path :hasUnit ; sh:in ( "W" "kW" "MW" ) ; sh:severity sh:Violation ;
+        sh:message "A :NominalPower unit must be one of: W, kW, MW."@en ] .
+
+
+###############################################################################
+# 6. QoS
+###############################################################################
+
+ex:QoSShape
+    a sh:NodeShape ;
+    sh:targetClass :QoS ;
+    rdfs:label "QoS"@en ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:uniqueLang true ; sh:severity sh:Violation ;
+        sh:message "A :QoS must have at least one rdfs:label (skos:prefLabel alone is not enough)."@en ] ;
+    sh:property [ sh:path :maxWallTime ; sh:datatype xsd:duration ; sh:severity sh:Violation ;
+        sh:message ":maxWallTime must be an xsd:duration (e.g. \"PT20H\")."@en ] ;
+    sh:property [ sh:path :isDefaultQoS ; sh:datatype xsd:boolean ; sh:severity sh:Warning ;
+        sh:message ":isDefaultQoS must be an xsd:boolean."@en ] ;
+    sh:property [ sh:path :maxNodesPerJob ; sh:datatype xsd:integer ; sh:minInclusive 0 ; sh:severity sh:Warning ;
+        sh:message ":maxNodesPerJob must be a non-negative integer."@en ] ;
+    sh:property [ sh:path :maxJobsPerUser ; sh:datatype xsd:integer ; sh:minInclusive 0 ; sh:severity sh:Warning ;
+        sh:message ":maxJobsPerUser must be a non-negative integer."@en ] ;
+    sh:property [ sh:path :maxCoresPerJob ; sh:datatype xsd:integer ; sh:minInclusive 0 ; sh:severity sh:Warning ;
+        sh:message ":maxCoresPerJob must be a non-negative integer."@en ] ;
+    sh:property [ sh:path :maxCoresPerUser ; sh:datatype xsd:integer ; sh:minInclusive 0 ; sh:severity sh:Warning ;
+        sh:message ":maxCoresPerUser must be a non-negative integer."@en ] ;
+    sh:property [ sh:path :maxCoresPerProject ; sh:datatype xsd:integer ; sh:minInclusive 0 ; sh:severity sh:Warning ;
+        sh:message ":maxCoresPerProject must be a non-negative integer."@en ] ;
+    sh:property [ sh:path :maxGpusPerJob ; sh:datatype xsd:integer ; sh:minInclusive 0 ; sh:severity sh:Warning ;
+        sh:message ":maxGpusPerJob must be a non-negative integer."@en ] ;
+    sh:property [ sh:path :maxGpusPerUser ; sh:datatype xsd:integer ; sh:minInclusive 0 ; sh:severity sh:Warning ;
+        sh:message ":maxGpusPerUser must be a non-negative integer."@en ] ;
+    sh:property [ sh:path :maxGpusPerProject ; sh:datatype xsd:integer ; sh:minInclusive 0 ; sh:severity sh:Warning ;
+        sh:message ":maxGpusPerProject must be a non-negative integer."@en ] .
+
+
+###############################################################################
+# 7. STORAGE / FILE SYSTEMS / OPERATING SYSTEMS / SOFTWARE
+###############################################################################
+
+ex:FileSystemShape
+    a sh:NodeShape ;
+    sh:targetClass :FileSystem ;
+    rdfs:label "File system"@en ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:uniqueLang true ; sh:severity sh:Violation ;
+        sh:message "A :FileSystem must have at least one rdfs:label."@en ] ;
+    sh:property [ sh:path :usesTechnology ; sh:class :FileSystemTechnology ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Violation ; sh:message ":usesTechnology must point to a :FileSystemTechnology (Lustre, NFS, …)."@en ] ;
+    sh:property [ sh:path :hasThroughput ; sh:class :Throughput ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":hasThroughput must point to a :Throughput."@en ] ;
+    sh:property [ sh:path :isParallel ; sh:datatype xsd:boolean ; sh:severity sh:Warning ;
+        sh:message ":isParallel must be an xsd:boolean."@en ] .
+
+ex:StorageMountShape
+    a sh:NodeShape ;
+    sh:targetClass :StorageMount ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:uniqueLang true ; sh:severity sh:Violation ;
+        sh:message "A :StorageMount must have at least one rdfs:label."@en ] ;
+    sh:property [ sh:path :mountPath ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ;
+        sh:severity sh:Violation ; sh:message "A :StorageMount must have exactly one :mountPath (string)."@en ] ;
+    sh:property [ sh:path :mountedOn ; sh:minCount 1 ; sh:maxCount 1 ; sh:class :FileSystem ;
+        sh:nodeKind sh:BlankNodeOrIRI ; sh:severity sh:Violation ;
+        sh:message "A :StorageMount must be :mountedOn exactly one :FileSystem."@en ] ;
+    sh:property [ sh:path :quota ; sh:datatype xsd:string ; sh:severity sh:Warning ;
+        sh:message ":quota should be an xsd:string."@en ] ;
+    sh:property [ sh:path :isPurged ; sh:datatype xsd:boolean ; sh:severity sh:Warning ;
+        sh:message ":isPurged must be an xsd:boolean."@en ] ;
+    sh:property [ sh:path :backedByArchive ; sh:class :ArchiveSystem ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":backedByArchive must point to an :ArchiveSystem."@en ] ;
+    sh:property [ sh:path :hasStorageCapacity ; sh:class :StorageCapacity ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":hasStorageCapacity must point to a :StorageCapacity."@en ] .
+
+ex:ArchiveSystemShape
+    a sh:NodeShape ;
+    sh:targetClass :ArchiveSystem ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:uniqueLang true ; sh:severity sh:Violation ;
+        sh:message "An :ArchiveSystem must have at least one rdfs:label."@en ] .
+
+ex:OperatingSystemShape
+    a sh:NodeShape ;
+    sh:targetClass :OperatingSystem ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:uniqueLang true ; sh:severity sh:Violation ;
+        sh:message "An :OperatingSystem must have at least one rdfs:label."@en ] ;
+    sh:property [ sh:path :osVersion ; sh:datatype xsd:string ; sh:severity sh:Warning ;
+        sh:message ":osVersion should be an xsd:string."@en ] ;
+    sh:property [ sh:path :usesKernel ; sh:class :OperatingSystemKernel ; sh:nodeKind sh:BlankNodeOrIRI ;
+        sh:severity sh:Warning ; sh:message ":usesKernel must point to an :OperatingSystemKernel."@en ] .
+
+ex:SoftwareShape
+    a sh:NodeShape ;
+    sh:targetClass :Software ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:uniqueLang true ; sh:severity sh:Violation ;
+        sh:message "A :Software must have at least one rdfs:label."@en ] ;
+    sh:property [ sh:path :softwareName ; sh:datatype xsd:string ; sh:severity sh:Warning ;
+        sh:message ":softwareName should be an xsd:string."@en ] ;
+    sh:property [ sh:path :website ; sh:datatype xsd:anyURI ; sh:severity sh:Warning ;
+        sh:message ":website should be an xsd:anyURI."@en ] .
+
+ex:CompilerShape
+    a sh:NodeShape ;
+    sh:targetClass :Compiler ;
+    sh:property [ sh:path :supportsLanguage ; sh:datatype xsd:string ; sh:severity sh:Warning ;
+        sh:message ":supportsLanguage should be an xsd:string."@en ] .
+
+ex:ResourceManagerShape
+    a sh:NodeShape ;
+    sh:targetClass :ResourceManager ;
+    sh:property [ sh:path rdfs:label ; sh:minCount 1 ; sh:uniqueLang true ; sh:severity sh:Warning ;
+        sh:message "A :ResourceManager should have an rdfs:label."@en ] .
+
+
+###############################################################################
+# 8. CROSS-CUTTING QUALITY RULES  (SPARQL, warnings)
+###############################################################################
+
+# 8.1 Every named hpc:HPCResource instance should carry an rdfs:label
+#     (QuantitativeValue instances are exempt: their meaning is value+unit).
+ex:LabeledInstanceShape
+    a sh:NodeShape ;
+    sh:target [
+        a sh:SPARQLTarget ;
+        sh:select """
+PREFIX rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX hpc:  <https://w3id.org/Exa-AToW/hpc#>
+SELECT ?this WHERE {
+  ?this rdf:type ?c .
+  ?c rdfs:subClassOf* hpc:HPCResource .
+  FILTER NOT EXISTS { ?this rdf:type ?q . ?q rdfs:subClassOf* hpc:QuantitativeValue }
+  FILTER NOT EXISTS { ?this rdfs:label ?l }
+}
+""" ;
+    ] ;
+    sh:severity sh:Warning ;
+    sh:message "Every named :HPCResource instance should have an rdfs:label (QuantitativeValue exempt)."@en .
+
+# 8.2 :hosts / :hostedAt inverse consistency
+ex:HostsInverseShape
+    a sh:NodeShape ;
+    sh:targetSubjectsOf :hosts, :hostedAt ;
+    sh:severity sh:Warning ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message ":hosts/:hostedAt are not inverse-consistent."@en ;
+        sh:select """
+PREFIX hpc: <https://w3id.org/Exa-AToW/hpc#>
+SELECT ?this WHERE {
+  { ?this hpc:hosts ?o . FILTER NOT EXISTS { ?o hpc:hostedAt ?this } }
+  UNION
+  { ?this hpc:hostedAt ?o . FILTER NOT EXISTS { ?o hpc:hosts ?this } }
+}
+""" ;
+    ] .
+
+# 8.3 decommissioningDate >= commissioningDate
+ex:DateOrderShape
+    a sh:NodeShape ;
+    sh:targetSubjectsOf :commissioningDate, :decommissioningDate ;
+    sh:severity sh:Warning ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message ":decommissioningDate must be later than or equal to :commissioningDate."@en ;
+        sh:select """
+PREFIX hpc: <https://w3id.org/Exa-AToW/hpc#>
+SELECT ?this WHERE {
+  ?this hpc:commissioningDate ?c ; hpc:decommissioningDate ?d .
+  FILTER (?d < ?c)
+}
+""" ;
+    ] .
+
+###############################################################################
+# END
+###############################################################################

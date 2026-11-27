@@ -193,6 +193,10 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
 #################################################################
 
 # --> QoS <<__
+# Represents a scheduler Quality of Service (QoS) configuration.
+# A QoS configuration defines scheduling limits and resource constraints
+# for jobs submitted to an HPC system.
+
 :QoS rdf:type owl:Class ;
     rdfs:comment "Scheduler QoS class defining job time limits, priority, and resource caps for a partition (e.g. qos_gpu-t3)."@en,
         "Classe QoS de l'ordonnanceur définissant les limites de temps, la priorité et les plafonds de ressources (ex : qos_gpu-t3)."@fr ;
@@ -200,6 +204,110 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
     rdfs:subClassOf :LogicalResource ;
     skos:prefLabel "Quality of Service (QoS)"@en,
         "Qualité de Service (QoS)"@fr .
+
+# --- Datatype Properties ---
+# These properties describe the limits and default status associated with a QoS configuration.
+# Maximum elapsed wall-clock time allowed for a job using this QoS.
+:maxWallTime rdf:type owl:DatatypeProperty ;
+    rdfs:domain [ owl:unionOf ( :Partition :QoS ) ] ;
+    rdfs:range xsd:duration ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum wall-clock time"@en,
+        "durée maximale d'exécution en temps réel"@fr ;
+    rdfs:comment "Maximum elapsed wall-clock duration allowed for a job on this partition or submitted with this QoS configuration."@en,
+        "Durée maximale écoulée autorisée pour un travail sur cette partition ou soumis avec cette configuration QoS."@fr .
+
+# Maximum number of compute nodes that a single job may use.
+:maxNodesPerJob rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum nodes per job"@en,
+        "nombre maximal de nœuds par travail"@fr ;
+    rdfs:comment "Maximum number of compute nodes that a single job using this QoS configuration is allowed to allocate."@en,
+        "Nombre maximal de nœuds de calcul qu'un seul travail utilisant cette configuration QoS est autorisé à allouer."@fr .
+
+# Maximum number of CPU cores that a single job may use.
+:maxCoresPerJob rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum cores per job"@en,
+        "nombre maximal de cœurs par travail"@fr ;
+    rdfs:comment "Maximum number of CPU cores that a single job using this QoS configuration is allowed to allocate."@en,
+        "Nombre maximal de cœurs de processeur qu'un seul travail utilisant cette configuration QoS est autorisé à allouer."@fr .
+
+# Maximum number of GPUs that a single job may use.
+:maxGpusPerJob rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum GPUs per job"@en,
+        "nombre maximal de GPU par travail"@fr ;
+    rdfs:comment "Maximum number of GPUs that a single job using this QoS configuration is allowed to allocate."@en,
+        "Nombre maximal de GPU qu'un seul travail utilisant cette configuration QoS est autorisé à allouer."@fr .
+
+# Maximum number of CPU cores that may be used by jobs belonging to one user.
+:maxCoresPerUser rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum cores per user"@en,
+        "nombre maximal de cœurs par utilisateur"@fr ;
+    rdfs:comment "Maximum number of CPU cores that a user may allocate across their jobs under this QoS configuration, subject to the scheduler's enforcement rules."@en,
+        "Nombre maximal de cœurs de processeur qu'un utilisateur peut allouer pour l'ensemble de ses travaux avec cette configuration QoS, selon les règles d'application de l'ordonnanceur."@fr .
+
+# Maximum number of GPUs that may be used by jobs belonging to one user.
+:maxGpusPerUser rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum GPUs per user"@en,
+        "nombre maximal de GPU par utilisateur"@fr ;
+    rdfs:comment "Maximum number of GPUs that a user may allocate across their jobs under this QoS configuration, subject to the scheduler's enforcement rules."@en,
+        "Nombre maximal de GPU qu'un utilisateur peut allouer pour l'ensemble de ses travaux avec cette configuration QoS, selon les règles d'application de l'ordonnanceur."@fr .
+
+# Maximum number of CPU cores that may be used by jobs belonging to one project.
+:maxCoresPerProject rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum cores per project"@en,
+        "nombre maximal de cœurs par projet"@fr ;
+    rdfs:comment "Maximum number of CPU cores that jobs associated with a project may allocate collectively under this QoS configuration, subject to the scheduler's enforcement rules."@en,
+        "Nombre maximal de cœurs de processeur que les travaux associés à un projet peuvent allouer collectivement avec cette configuration QoS, selon les règles d'application de l'ordonnanceur."@fr .
+
+# Maximum number of GPUs that may be used by jobs belonging to one project.
+:maxGpusPerProject rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum GPUs per project"@en,
+        "nombre maximal de GPU par projet"@fr ;
+    rdfs:comment "Maximum number of GPUs that jobs associated with a project may allocate collectively under this QoS configuration, subject to the scheduler's enforcement rules."@en,
+        "Nombre maximal de GPU que les travaux associés à un projet peuvent allouer collectivement avec cette configuration QoS, selon les règles d'application de l'ordonnanceur."@fr .
+
+
+# Maximum number of jobs that a user may have running or otherwise active concurrently.
+:maxJobsPerUser rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:integer ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "maximum simultaneous jobs per user"@en,
+        "nombre maximal de travaux simultanés par utilisateur"@fr ;
+    rdfs:comment "Maximum number of jobs that a user may have running or active concurrently under this QoS configuration. The exact jobs counted depend on the scheduler's configuration."@en,
+        "Nombre maximal de travaux qu'un utilisateur peut exécuter ou maintenir actifs simultanément avec cette configuration QoS. Les travaux pris en compte dépendent de la configuration de l'ordonnanceur."@fr .
+
+# Indicates whether this QoS configuration is the default for the relevant context.
+:isDefaultQoS rdf:type owl:DatatypeProperty ;
+    rdfs:domain :QoS ;
+    rdfs:range xsd:boolean ;
+    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "is default QoS"@en,
+        "est une QoS par défaut"@fr ;
+    rdfs:comment "Indicates whether this QoS configuration is the default QoS for the relevant scheduler, account, or submission context."@en,
+        "Indique si cette configuration QoS est la QoS par défaut pour l'ordonnanceur, le compte ou le contexte de soumission concerné."@fr .
+
 
 # >>-- File Systems & Storage Mounts <<--
 :FileSystem rdf:type owl:Class ;
@@ -642,14 +750,6 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
     rdfs:domain :InterconnectComponent ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
     rdfs:range xsd:integer .
-
-:maxWallTime rdf:type owl:DatatypeProperty ;
-    rdfs:comment "Maximum wall time allowed for jobs on this partition (e.g., '100:00:00', '20:00:00')."@en ;
-    rdfs:domain :Partition ;
-    rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
-    rdfs:range xsd:string ;
-    skos:prefLabel "max wall time"@en,
-        "temps mur maximum"@fr .
 
 :mountPath rdf:type owl:DatatypeProperty ;
     rdfs:comment "The environment variable or path of the mountpoint (e.g., '$SCRATCH', '$HOME', '$STORE', '$WORK')."@en ;

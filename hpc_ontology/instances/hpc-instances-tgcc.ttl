@@ -1,0 +1,588 @@
+###############################################################################
+# HPC Resource Ontology – TGCC INSTANCES
+# Center: TGCC (Bruyères-le-Châtel, CEA/DAM)
+# Systems: Irene / Joliot-Curie (academic)  
+#
+# Scope  : ONLY Irene is modelled. It is the TGCC system that academic users can
+#          access through the GENCI **eDARI** portal. Topaze (TGCC/CCRT,
+#          industrial) is deliberately EXCLUDED because it is not reachable
+#          through eDARI.
+#
+# Version : 1.0
+# Date    : 2026-10-28
+#
+# Scope
+# -----
+# This file contains ONLY the TGCC / Irene. 
+#
+# It imports the shared ontology (hpc.ttl -> hpc-core.ttl) and the centers
+# file (hpc-centers.ttl) which defines Center_TGCC, Org_CEA, Org_DAM, Org_GENCI.
+#
+# Sources
+# -------
+#   https://www-hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Supercomputer_architecture.html
+#   https://www-hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Data_spaces.html
+#   https://www-hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Job_submission.html
+#   https://www-hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Compiling.html
+#   https://www-hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Software_list.html
+#
+# Authors : Exa-AToW team 
+###############################################################################
+
+@prefix hpc:      <https://w3id.org/Exa-AToW/hpc#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc:       <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix schema:   <https://schema.org/> .
+@prefix inst:     <https://w3id.org/Exa-AToW/hpc/instances/> .
+
+<https://w3id.org/Exa-AToW/hpc/instances/hpc-instances-tgcc.ttl>
+    rdf:type owl:Ontology ;
+    owl:imports <https://w3id.org/Exa-AToW/hpc/instances/hpc-centers.ttl> ,
+                <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "HPC Instances – TGCC (Irene)"@en ,
+               "Instances HPC – TGCC (Irène)"@fr ;
+    dc:description "TGCC-only instance set: the Irene (Joliot-Curie) is a supercomputer at TGCC, its processors, cards, compute node types, partitions, QoS, storage, operating system and quantitative values."@en ;
+    owl:versionInfo "1.0" .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 1 – LINKS CENTER → INFRASTRUCTURE
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Center_TGCC is defined in hpc-centers.ttl (imported). Here only its
+#      outgoing links to the two systems and the user storage mounts.
+# FR – Center_TGCC est défini dans hpc-centers.ttl (importé). Ici uniquement
+#      ses liens vers les deux systèmes et les points de montage utilisateur.
+###############################################################################
+
+inst:Center_TGCC hpc:hosts inst:SC_Irene ;
+    hpc:hasStorageMount inst:Mount_Irene_HOME ,
+                            inst:Mount_Irene_WORK ,
+                             inst:Mount_Irene_SCRATCH ,
+                             inst:Mount_Irene_STORE .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 2 – SUPERCOMPUTERS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ─────────────────────────────────────────────────────────────────────────────
+# IRENE / JOLIOT-CURIE (TGCC / CEA)
+# ─────────────────────────────────────────────────────────────────────────────
+# EN – Five compute partitions: AMD Rome (rome), a 3 TB fat-node partition
+#      (xlarge) and three V100 partitions (v100, v100l, v100xl). EDR InfiniBand.
+# FR – Cinq partitions de calcul : AMD Rome (rome), nœuds larges de 3 To
+#      (xlarge) et trois partitions V100 (v100, v100l, v100xl). InfiniBand EDR.
+
+inst:SC_Irene rdf:type hpc:Supercomputer ;
+    rdfs:label "Irene (Joliot-Curie)"@en , "Irène (Joliot-Curie)"@fr ;
+    rdfs:comment "Supercomputer hosted at TGCC. Compute partitions: AMD Rome (2286 nodes, 128 cores), xlarge (5 fat nodes, 3 TB, Skylake + P100), v100 (32 nodes, 4 GPUs), v100l (30 nodes, 1 GPU), v100xl (2 nodes, 1 GPU, 2.9 TB). EDR InfiniBand in a pruned fat tree. Scheduler: SLURM. The peak performance published elsewhere is not reproduced here because it predates the removal of the Skylake partition."@en ,
+                 "Supercalculateur hébergé au TGCC. Partitions de calcul : AMD Rome (2286 nœuds, 128 cœurs), xlarge (5 nœuds larges, 3 To, Skylake + P100), v100 (32 nœuds, 4 GPU), v100l (30 nœuds, 1 GPU), v100xl (2 nœuds, 1 GPU, 2,9 To). InfiniBand EDR en fat tree élagué. Ordonnanceur : SLURM. La puissance crête publiée ailleurs n'est pas reprise car elle précède le retrait de la partition Skylake."@fr ;
+    hpc:shortName "irene" ;
+    hpc:identifier "https://www-hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Supercomputer_architecture.html#configuration-of-machine" ;
+    hpc:hostedAt inst:Center_TGCC ;
+    hpc:commissioningDate "2018-06-01"^^xsd:date ;   # [TBC] first Irene partitions, mid-2018 (IPSL page: "opened in June 2018")
+    hpc:documentationURL "https://hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Supercomputer_architecture.html"^^xsd:anyURI ;
+    dcterms:source <https://hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Supercomputer_architecture.html> ,
+                   <https://www-hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Data_spaces.html> ;
+    hpc:usesResourceManager hpc:SLURM ;
+    hpc:runsOS inst:OS_RHEL8 ;
+    hpc:usesFileSystem inst:FS_Irene_WORK , inst:FS_Irene_STORE , inst:FS_Irene_SCRATCH , inst:FS_Irene_NFS ;
+    hpc:fundedBy inst:Org_GENCI ;
+    hpc:supportsCompiler hpc:GCC , hpc:IntelCompiler , hpc:AOCC , hpc:NVCC ;
+    hpc:hasPartition inst:Part_Irene_rome ,
+                           inst:Part_Irene_xlarge ,
+                           inst:Part_Irene_v100 ,
+                           inst:Part_Irene_v100l ,
+                           inst:Part_Irene_v100xl ;
+    hpc:hasPeakPerformance inst:Perf_Irene_20PFlops ; 
+    hpc:computerBrand "Atos" ;                       # [TBC]
+    hpc:model "BullSequana XH2000" ;                 # [TBC]
+    # 2286 + 5 + 32 + 30 + 2 = 2355 compute nodes
+    hpc:nodeCount 2355 ;                             # sum of partitions
+    # 292608 + 560 + 1280 + 1080 + 144 = 295672
+    hpc:totalCoresCount 295672 .   
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 3 – PROCESSORS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ────────── CPUs ──────────────────────────────────────────────────────────────
+
+inst:CPU_AMD_Rome rdf:type hpc:CPU ; 
+    rdfs:label "AMD EPYC Rome"@en ;
+    rdfs:comment "64-core AMD Rome (Zen 2) CPU at 2.6 GHz. CPU of the Irene rome partition (2 per node). The exact SKU (7H12) is not stated in the TGCC documentation."@en ,
+                 "CPU AMD Rome (Zen 2) 64 cœurs à 2,6 GHz. CPU de la partition rome d'Irène (2 par nœud). Le SKU exact (7H12) n'est pas indiqué dans la documentation TGCC."@fr ;
+    hpc:vendor "AMD" ;
+    hpc:model "AMD EPYC" ; #[7H12 TBC]
+    hpc:architecture "Rome / Zen 2 (AVX2)" ;
+    hpc:coresCountPerSocket 64 ;
+    hpc:threadCount 128 ;
+    hpc:hasFrequency inst:Freq_2_6GHz .
+
+#Intel Xeon Platinum 8176 (Skylake)"??? 
+inst:CPU_Intel_Skylake_28c_TGCC rdf:type hpc:CPU ; 
+    rdfs:label "Intel Xeon Skylake 28-core (Irene xlarge)"@en ;
+    rdfs:comment "28-core Intel Skylake CPU at 2.1 GHz. CPU of the Irene xlarge partition (4 per node)."@en ,
+                 "CPU Intel Skylake 28 cœurs à 2,1 GHz. CPU de la partition xlarge d'Irène (4 par nœud)."@fr ;
+    hpc:vendor "Intel" ;
+    hpc:architecture "Skylake" ;
+    hpc:coresCountPerSocket 28 ;
+    hpc:threadCount 56 ;
+    hpc:hasFrequency inst:Freq_2_1GHz .
+
+# Intel Xeon Gold 6230 (Cascade Lake)???
+inst:CPU_Intel_CascadeLake_20c_TGCC rdf:type hpc:CPU ; 
+    rdfs:label "Intel Xeon Cascade Lake 20-core (Irene v100)"@en ;
+    rdfs:comment "20-core Intel Cascade Lake CPU at 2.1 GHz (AVX512). CPU of the Irene v100 partition (2 per node)."@en ,
+                 "CPU Intel Cascade Lake 20 cœurs à 2,1 GHz (AVX512). CPU de la partition v100 d'Irène (2 par nœud)."@fr ;
+    hpc:vendor "Intel" ;
+    hpc:architecture "Cascade Lake" ;
+    hpc:coresCountPerSocket 20 ;
+    hpc:threadCount 40 ;
+    hpc:hasFrequency inst:Freq_2_1GHz .
+
+#Intel Xeon Gold 6240 (Cascade Lake)???
+inst:CPU_Intel_CascadeLake_18c_TGCC rdf:type hpc:CPU ;  
+    rdfs:label "Intel Xeon Cascade Lake 18-core (Irene v100l, v100xl)"@en ;
+    rdfs:comment "18-core Intel Cascade Lake CPU at 2.6 GHz (AVX512). CPU of the Irene v100l (2 per node) and v100xl (4 per node) partitions."@en ,
+                 "CPU Intel Cascade Lake 18 cœurs à 2,6 GHz (AVX512). CPU des partitions v100l (2 par nœud) et v100xl (4 par nœud) d'Irène."@fr ;
+    hpc:vendor "Intel" ;
+    hpc:architecture "Cascade Lake" ;
+    hpc:coresCountPerSocket 18 ;
+    hpc:threadCount 36 ;
+    hpc:hasFrequency inst:Freq_2_6GHz .
+
+# ────────── GPUs ──────────────────────────────────────────────────────────────
+# EN – GPU memory sizes are not stated in the sources, so no memory component is
+#      declared on these cards. IRIs carry a _TGCC suffix so they never clash
+#      with the IDRIS V100/A100 individuals when the files are merged.
+
+#SXM2 32 GB (die)?
+inst:GPU_NvidiaV100_TGCC rdf:type hpc:GPU ;              #  model; memory not stated
+    rdfs:label "NVIDIA Tesla V100 (TGCC, memory variant not stated)"@en ;
+    rdfs:comment "NVIDIA Volta V100 GPU used in Irene (v100, v100l, v100xl)."@en ,
+                 "GPU NVIDIA Volta V100 utilisé dans Irène (v100, v100l, v100xl)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla V100" ;
+    hpc:architecture "Volta" .
+
+#(16 GB HBM2)?
+inst:GPU_NvidiaP100_TGCC rdf:type hpc:GPU ;              # 
+    rdfs:label "NVIDIA Tesla P100 (TGCC)"@en ;
+    rdfs:comment "NVIDIA Pascal P100 GPU of the Irene xlarge nodes (1 per node)."@en ,
+                 "GPU NVIDIA Pascal P100 des nœuds xlarge d'Irène (1 par nœud)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla P100" ;
+    hpc:architecture "Pascal" .
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 4 – ACCELERATOR CARDS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+inst:Card_NvidiaV100_TGCC rdf:type hpc:AcceleratorCard ;
+    rdfs:label "NVIDIA Tesla V100 card (TGCC)"@en ;
+    rdfs:comment "NVIDIA V100 card. Memory size not stated in the sources."@en ,
+                 "Carte NVIDIA V100. Taille mémoire non précisée dans les sources."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla V100" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaV100_TGCC .
+
+inst:Card_NvidiaP100_TGCC rdf:type hpc:AcceleratorCard ; # [SRC]
+    rdfs:label "NVIDIA Tesla P100 card (TGCC)"@en ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla P100" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaP100_TGCC .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 5 – COMPUTE NODES (node TYPES)
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ──── Irene ───────────────────────────────────────────────────────────────────
+inst:Node_Irene_rome rdf:type hpc:ScalarNode ;
+    rdfs:label "Irene Rome Compute Node"@en ,
+               "Nœud de calcul Irene Rome"@fr ;
+    rdfs:comment "Rome partition has 2286 nodes, each with 2 AMD Rome processors, 64 cores per processor at 2.6 GHz (128 cores per node), and 228 GB RAM per node. The nodes are connected through an EDR InfiniBand network in a pruned FAT tree topology. The exact CPU model (AMD Rome 7H12) and the number of interconnect links per node are not confirmed by the public TGCC documentation."@en ,
+                 "La partition Rome a 2286 nœuds, chacun équipé de 2 processeurs AMD Rome, de 64 cœurs par processeur à 2,6 GHz (128 cœurs par nœud) et de 228 Go de RAM par nœud. Les nœuds sont connectés par un réseau InfiniBand EDR en topologie FAT tree élaguée. Le modèle exact du processeur (AMD Rome 7H12) et le nombre de liens d'interconnexion par nœud ne sont pas confirmés par la documentation publique du TGCC."@fr ;
+    hpc:coresCountPerNode 128 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_AMD_Rome ; 
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_Irene_228GB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_InfiniBand_EDR  #linkCount 1?
+    ] ;
+    hpc:belongsToPartition inst:Part_Irene_rome .
+
+
+inst:Node_Irene_xlarge rdf:type hpc:AcceleratedNode ; 
+    rdfs:label "Irene xlarge fat node"@en ,
+               "Nœud large xlarge d'Irène"@fr ;
+    rdfs:comment "5 fat nodes for shared-memory jobs: 4×28-core Intel Skylake @2.1 GHz (112 cores), 3 TB RAM, 1×NVIDIA P100. Local IO: 2 HDD of 1 TB + 1 SSD/NVMe of 1.6 TB (not modeled). The number of interconnect links per node is not confirmed by the public TGCC documentation."@en ,
+                 "5 nœuds larges pour calculs en mémoire partagée : 4×Intel S à 2,1 GHz (112 cœurs), 3 To de RAM, 1×NVIDIA P100. IO locales : 2 HDD de 1 To + 1 SSD/NVMe de 1,6 To (non modélisés). Le nombre de liens d'interconnexion par nœud n'est pas confirmé par la documentation publique du TGCC."@fr ;
+    hpc:coresCountPerNode 112 ;
+    hpc:hasCPUComponent [ 
+        rdf:type hpc:CPUComponent ; 
+        hpc:refersToModel inst:CPU_Intel_Skylake_28c_TGCC ; 
+        hpc:quantity 4 
+    ] ;
+    hpc:hasMemoryComponent [ 
+        rdf:type hpc:MemoryComponent ; 
+        hpc:refersToModel inst:Mem_Irene_3TB ; 
+        hpc:quantity 1 
+    ] ;
+    hpc:hasAcceleratorCardComponent [ 
+        rdf:type hpc:AcceleratorCardComponent ; 
+        hpc:refersToModel inst:Card_NvidiaP100_TGCC ; 
+        hpc:quantity 1 
+    ] ;
+    hpc:hasInterconnectComponent [ 
+        rdf:type hpc:InterconnectComponent ; 
+        hpc:refersToModel inst:IC_InfiniBand_EDR
+    ] ;
+#        hpc:linkCount 1 -> not given
+    hpc:belongsToPartition inst:Part_Irene_xlarge .
+
+inst:Node_Irene_v100 rdf:type hpc:AcceleratedNode ; 
+    rdfs:label "Irene v100 GPU node"@en ,
+               "Nœud GPU v100 d'Irène"@fr ;
+    rdfs:comment "32 nodes. 2×20-core Intel Cascade Lake @2.1 GHz (40 cores), 175 GB RAM, 4×NVIDIA V100. The number of interconnect links per node is not confirmed by the public TGCC documentation."@en ,
+                 "32 nœuds. 2×Intel Cascade Lake 20 cœurs à 2,1 GHz (40 cœurs), 175 Go de RAM, 4×NVIDIA V100. Le nombre de liens d'interconnexion par nœud n'est pas confirmé par la documentation publique du TGCC."@fr ;
+    hpc:coresCountPerNode 40 ;
+    hpc:hasCPUComponent [ 
+        rdf:type hpc:CPUComponent ; 
+        hpc:refersToModel inst:CPU_Intel_CascadeLake_20c_TGCC ; 
+        hpc:quantity 2 
+    ] ;
+    hpc:hasMemoryComponent [ 
+        rdf:type hpc:MemoryComponent ; 
+        hpc:refersToModel inst:Mem_Irene_175GB ; 
+        hpc:quantity 1 
+    ] ;
+    hpc:hasAcceleratorCardComponent [ 
+        rdf:type hpc:AcceleratorCardComponent ; 
+        hpc:refersToModel inst:Card_NvidiaV100_TGCC ; 
+        hpc:quantity 4 
+    ] ;
+    hpc:hasInterconnectComponent [ 
+        rdf:type hpc:InterconnectComponent ; 
+        hpc:refersToModel inst:IC_InfiniBand_EDR 
+        #hpc:linkCount 1 -> not information given
+    ] ;
+    hpc:belongsToPartition inst:Part_Irene_v100 .
+
+inst:Node_Irene_v100l rdf:type hpc:AcceleratedNode ; 
+    rdfs:label "Irene v100l GPU node"@en ,
+               "Nœud GPU v100l d'Irène"@fr ;
+    rdfs:comment "30 nodes. 2×18-core Intel Cascade Lake @2.6 GHz (36 cores), 355 GB RAM, 1×NVIDIA V100. The number of interconnect links per node is not confirmed by the public TGCC documentation."@en ,
+                 "30 nœuds. 2×Intel Cascade Lake 18 cœurs à 2,6 GHz (36 cœurs), 355 Go de RAM, 1×NVIDIA V100. Le nombre de liens d'interconnexion par nœud n'est pas confirmé par la documentation publique du TGCC."@fr ;
+    hpc:coresCountPerNode 36 ;
+    hpc:hasCPUComponent [ 
+        rdf:type hpc:CPUComponent ; 
+        hpc:refersToModel inst:CPU_Intel_CascadeLake_18c_TGCC ; 
+        hpc:quantity 2 
+    ] ;
+    hpc:hasMemoryComponent [ 
+        rdf:type hpc:MemoryComponent ; 
+        hpc:refersToModel inst:Mem_Irene_355GB ; 
+        hpc:quantity 1 
+    ] ;
+    hpc:hasAcceleratorCardComponent [ 
+        rdf:type hpc:AcceleratorCardComponent ; 
+        hpc:refersToModel inst:Card_NvidiaV100_TGCC ; 
+        hpc:quantity 1 
+    ] ;
+    hpc:hasInterconnectComponent [ 
+        rdf:type hpc:InterconnectComponent ; 
+        hpc:refersToModel inst:IC_InfiniBand_EDR  # hpc:linkCount 1 --> not given
+    ] ;
+    hpc:belongsToPartition inst:Part_Irene_v100l .
+
+inst:Node_Irene_v100xl rdf:type hpc:AcceleratedNode ; 
+    rdfs:label "Irene v100xl GPU node"@en ,
+               "Nœud GPU v100xl d'Irène"@fr ;
+    rdfs:comment "2 nodes. 4×18-core Intel Cascade Lake @2.6 GHz (72 cores), 2.9 TB RAM, 1×NVIDIA V100. The number of interconnect links per node is not confirmed by the public TGCC documentation."@en ,
+                 "2 nœuds. 4×Intel Cascade Lake 18 cœurs à 2,6 GHz (72 cœurs), 2,9 To de RAM, 1×NVIDIA V100. Le nombre de liens d'interconnexion par nœud n'est pas confirmé par la documentation publique du TGCC."@fr ;
+    hpc:coresCountPerNode 72 ;
+    hpc:hasCPUComponent [ 
+        rdf:type hpc:CPUComponent ; 
+        hpc:refersToModel inst:CPU_Intel_CascadeLake_18c_TGCC ; 
+        hpc:quantity 4
+    ] ;
+    hpc:hasMemoryComponent [ 
+        rdf:type hpc:MemoryComponent ; 
+        hpc:refersToModel inst:Mem_Irene_2_9TB ; 
+        hpc:quantity 1 
+    ] ;
+    hpc:hasAcceleratorCardComponent [ 
+        rdf:type hpc:AcceleratorCardComponent ; 
+        hpc:refersToModel inst:Card_NvidiaV100_TGCC ; 
+        hpc:quantity 1 
+    ] ;
+    hpc:hasInterconnectComponent [ 
+        rdf:type hpc:InterconnectComponent ; 
+        hpc:refersToModel inst:IC_InfiniBand_EDR #  hpc:linkCount 1 
+    ] ;
+    hpc:belongsToPartition inst:Part_Irene_v100xl .
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 6 – INTERCONNECTS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+inst:IC_InfiniBand_EDR rdf:type hpc:InfiniBand ;
+    rdfs:label "InfiniBand EDR"@en ,
+               "InfiniBand EDR"@fr ;
+    rdfs:comment "EDR InfiniBand network in a pruned FAT tree topology, used for I/O and inter-node communication on Irene. The exact bandwidth is not specified in the public TGCC documentation cited."@en ,
+                 "Réseau InfiniBand EDR en topologie FAT tree élaguée, utilisé pour les E/S et les communications entre nœuds sur Irene. Le débit exact n'est pas précisé dans la documentation publique du TGCC citée."@fr .
+#   hpc:hasBandwidth inst:BW_100Gbps  -> bandwidth is not specified.
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 7 – PARTITIONS (SLURM)
+# ══════════════════════════════════════════════════════════════════════════════
+# No QoS is declared: TGCC/CCRT QoS limits were not found in the public pages
+# consulted. (Placeholder QoS individuals of v1.0 were removed.)
+###############################################################################
+
+inst:Part_Irene_rome rdf:type hpc:Partition ;    
+    rdfs:label "Irene Rome (AMD Rome) partition"@en ,
+               "Partition Irène Rome (AMD Rome)"@fr ;
+    rdfs:comment "Rome partition. 2286 nodes × 128 cores = 292608 cores, EDR InfiniBand."@en ,
+                 "Partition Rome. 2286 nœuds × 128 cœurs = 292608 cœurs, InfiniBand EDR."@fr ;
+    hpc:partitionName "rome" ;
+    hpc:partitionType "cpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:usesNodeType inst:Node_Irene_rome ;
+    hpc:nodeCount 2286 ;
+    hpc:totalCoresCount 292608 .
+
+inst:Part_Irene_xlarge rdf:type hpc:Partition ; 
+    rdfs:label "Irene xlarge partition"@en ,
+               "Partition Irène xlarge"@fr ;
+    rdfs:comment "5 fat nodes (112 cores, TB RAM and one NVIDIA Pascal P100 GPU). The partition provides 560 cores in total and is intended for computations using no more than one node."@en ,
+                 "5 nœuds larges (112 cœurs, 3 To de RAM et d'un GPU NVIDIA Pascal P100). La partition fournit 560 cœurs au total et est destinée aux calculs n'utilisant pas plus d'un nœud."@fr ;
+    hpc:partitionName "xlarge" ;
+    hpc:partitionType "gpu+cpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:usesNodeType inst:Node_Irene_xlarge ;
+    hpc:nodeCount 5 ;
+    hpc:totalCoresCount 560 ;
+    hpc:acceleratorCount 5 .
+
+inst:Part_Irene_v100 rdf:type hpc:Partition ;
+    rdfs:label "Irene v100 partition"@en ,
+               "Partition Irène v100"@fr ;
+    rdfs:comment "32 nodes × (40 cores, 4×V100) = 1280 cores, 128 GPUs."@en ,
+                 "32 nœuds × (40 cœurs, 4×V100) = 1280 cœurs, 128 GPU."@fr ;
+    hpc:partitionName "v100" ;
+    hpc:partitionType "gpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:usesNodeType inst:Node_Irene_v100 ;
+    hpc:nodeCount 32 ;
+    hpc:totalCoresCount 1280 ;
+    hpc:acceleratorCount 128 .
+
+inst:Part_Irene_v100l rdf:type hpc:Partition ;
+    rdfs:label "Irene v100l partition"@en ,
+               "Partition Irène v100l"@fr ;
+    rdfs:comment "30 nodes × (36 CPU cores, 355 GB, 1×NVIDIA Tesla V100 GPU) = 1080 cores, 30 GPUs. Each node has 355 GB RAM."@en ,
+                 "30 nœuds × (36 cœurs CPU, 355 Go, 1×GPU NVIDIA Tesla V100) = 1080 cœurs, 30 GPUs. Chaque nœud dispose de 355 Go de RAM."@fr ;
+    hpc:partitionName "v100l" ;
+    hpc:partitionType "gpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:usesNodeType inst:Node_Irene_v100l ;
+    hpc:nodeCount 30 ;
+    hpc:totalCoresCount 1080 ;
+    hpc:acceleratorCount 30 .
+
+inst:Part_Irene_v100xl rdf:type hpc:Partition ; 
+    rdfs:label "Irene v100xl partition"@en ,
+               "Partition Irène v100xl"@fr ;
+    rdfs:comment "2 nodes × (72 CPU cores, 2.9 TB RAM, 1×NVIDIA Tesla V100 GPU) = 144 cores, 2 GPUs. (The TGCC page lists the GPU total as 30, an apparent copy of the v100l line; 2 is the node count.)"@en ,
+                 "2 nœuds × (72 cœurs CPU, 2,9 To RAM, 1×GPU NVIDIA Tesla V100) = 144 cœurs, 2 GPU. (La page TGCC indique 30 GPU, apparemment recopié de la ligne v100l ; 2 est le nombre de nœuds.)"@fr ;
+    hpc:partitionName "v100xl" ;
+    hpc:partitionType "gpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:usesNodeType inst:Node_Irene_v100xl ;
+    hpc:nodeCount 2 ;
+    hpc:totalCoresCount 144 ;
+    hpc:acceleratorCount 2 .
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 8 – FILE SYSTEMS & STORAGE MOUNTS
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Irene: HOME is on NFS (NOT Lustre); WORK, SCRATCH, STORE are on Lustre.
+#      Source: TGCC "Data spaces" page.
+# FR – Irène : HOME est sur NFS (PAS Lustre) ; WORK, SCRATCH, STORE sur Lustre.
+###############################################################################
+
+inst:FS_Irene_NFS rdf:type hpc:FileSystem ;
+    rdfs:label "Irene – NFS file system"@en ,
+               "Irène – système de fichiers NFS"@fr ;
+    rdfs:comment "HOME is hosted on NFS. It is a low-throughput filesystem with backup; the documented quota is 5 GB per user."@en ,
+                 "HOME est hébergé sur NFS. Le système de fichiers a un faible débit et dispose de sauvegardes ; le quota documenté est de 5 Go par utilisateur."@fr ;
+    hpc:usesTechnology hpc:NFS .
+
+inst:FS_Irene_WORK rdf:type hpc:FileSystem ;
+    rdfs:label "Irene – WORK file system"@en ,
+               "Irène – système de fichiers WORK"@fr ;
+    rdfs:comment "Lustre via routers. The documented data transfer rate is 70 GB/s. WORK is not purged and is not backed up."@en ,
+                 "Lustre via des routeurs. Le débit de transfert documenté est de 70 Go/s. WORK n'est ni purgé ni sauvegardé."@fr ;
+    hpc:usesTechnology hpc:Lustre .
+
+inst:FS_Irene_SCRATCH rdf:type hpc:FileSystem ;
+    rdfs:label "Irene – SCRATCH file system"@en ,
+               "Irène – système de fichiers SCRATCH"@fr ;
+    rdfs:comment "Lustre filesystem for temporary computational data. The documented data transfer rate is 300 GB/s. Files not accessed for 60 days are automatically purged; empty directories older than 30 days are removed."@en ,
+                 "Système de fichiers Lustre destiné aux données temporaires de calcul. Le débit de transfert documenté est de 300 Go/s. Les fichiers non consultés pendant 60 jours sont automatiquement purgés ; les répertoires vides depuis plus de 30 jours sont supprimés."@fr ;
+    hpc:usesTechnology hpc:Lustre .
+
+inst:FS_Irene_STORE rdf:type hpc:FileSystem ;
+    rdfs:label "Irene – STORE file system"@en ,
+               "Irène – système de fichiers STORE"@fr ;
+    rdfs:comment "Lustre + HSM, with migration between high-speed disk storage and magnetic tape. The documented data transfer rate is 200 GB/s."@en ,
+                 "Lustre + HSM, avec migration entre le stockage disque à haut débit et les bandes magnétiques. Le débit de transfert documenté est de 200 Go/s."@fr ;
+    hpc:usesTechnology hpc:Lustre .
+
+
+#----- Irene mounts
+inst:Mount_Irene_HOME rdf:type hpc:StorageMount ;
+    rdfs:label "Irene – HOME"@en ,
+               "Irène – HOME"@fr ;
+    rdfs:comment "Low-throughput NFS space for sources and job submission scripts. Data are backed up; backup retention is 6 months."@en ,
+                 "Espace NFS à faible débit pour les sources et les scripts de soumission des travaux. Les données sont sauvegardées ; la rétention des sauvegardes est de 6 mois."@fr ;
+    hpc:mountPath "$HOME" ;
+    hpc:quota "5 GB per user" ;
+    hpc:mountedOn inst:FS_Irene_NFS .
+
+inst:Mount_Irene_WORK rdf:type hpc:StorageMount ;
+    rdfs:label "Irene – WORK"@en ,
+               "Irène – WORK"@fr ;
+    rdfs:comment "Permanent working space for commonly used files, source code and binaries. It is neither purged nor backed up."@en ,
+                 "Espace de travail permanent pour les fichiers courants, les codes sources et les binaires. Il n'est ni purgé ni sauvegardé."@fr ;
+    hpc:mountPath "$CCCWORKDIR" ;
+    hpc:quota "5 TB and 500000 files per group" ;
+    hpc:isPurged false ;
+    hpc:mountedOn inst:FS_Irene_WORK .
+
+inst:Mount_Irene_SCRATCH rdf:type hpc:StorageMount ;
+    rdfs:label "Irene – SCRATCH"@en ,
+               "Irène – SCRATCH"@fr ;
+    rdfs:comment "Fast temporary space for computational data and code output. The default quota is 100 TB and 2 million inodes per data space. Files not accessed for 60 days are automatically purged; empty directories older than 30 days are removed."@en ,
+                 "Espace temporaire rapide pour les données de calcul et les sorties de code. Le quota par défaut est de 100 To et de 2 millions d'inodes par espace de données. Les fichiers non consultés pendant 60 jours sont automatiquement purgés ; les répertoires vides depuis plus de 30 jours sont supprimés."@fr ;
+    hpc:mountPath "$CCCSCRATCHDIR" ;
+    hpc:quota "Default: 100 TB and 2 million inodes per data space" ;
+    hpc:isPurged true ;
+    hpc:mountedOn inst:FS_Irene_SCRATCH .
+
+inst:Mount_Irene_STORE rdf:type hpc:StorageMount ;
+    rdfs:label "Irene – STORE"@en ,
+               "Irène – STORE"@fr ;
+    rdfs:comment "Large-file and archive storage using Lustre + HSM. The documented quota is 50000 files per group, with an expected file size of 10 GB to 1 TB. There is no conventional space quota; usage is monitored through an account-scoring system."@en ,
+                 "Stockage de gros fichiers et d'archives utilisant Lustre + HSM. Le quota documenté est de 50000 fichiers par groupe, avec une taille attendue de 10 Go à 1 To. Il n'y a pas de quota conventionnel d'espace ; l'utilisation est suivie au moyen d'un système de notation des comptes."@fr ;
+    hpc:mountPath "$CCCSTOREDIR" ;
+    hpc:quota "50000 files per group; no space quota" ;
+    hpc:mountedOn inst:FS_Irene_STORE .
+
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 9 – OPERATING SYSTEM
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+inst:OS_RHEL8 rdf:type hpc:OperatingSystem ;
+    rdfs:label "Red Hat Enterprise Linux 8 (Irene/TGCC)"@en ,
+               "Red Hat Enterprise Linux 8 (Irène/TGCC)"@fr ;
+    rdfs:comment "RHEL 8.x family. Not stated in the pages consulted on 2026-10-28: confirm the OS and minor version with TGCC (it may have moved to RHEL 9)."@en ,
+                 "Famille RHEL 8.x. Non indiqué dans les pages consultées le 2026-10-28 : confirmer l'OS et la version mineure auprès du TGCC (migration vers RHEL 9 possible)."@fr ;
+    hpc:softwareName "Red Hat Enterprise Linux" ;
+    hpc:vendor "Red Hat" .
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 10 – MEMORY MODELS
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – TGCC documents memory in GB per node (usable RAM as reported by Slurm).
+#      Values are recorded as documented, in GB, without converting to GiB.
+#      DDR generations are not stated in the sources, so memoryModel is omitted.
+###############################################################################
+
+inst:Mem_Irene_228GB rdf:type hpc:RAM ;
+    rdfs:label "228 GB RAM (Irene rome node, documented)"@en ;
+    rdfs:comment "RAM per Irene rome node as documented by TGCC (228 GB). Physical memory is probably 256 GB [INF]."@en ;
+    hpc:hasMemoryCapacity [ rdf:type hpc:MemoryCapacity ; hpc:hasValue "228"^^xsd:decimal ; hpc:hasUnit "GB" ] .
+
+inst:Mem_Irene_3TB rdf:type hpc:RAM ;
+    rdfs:label "3 TB RAM (Irene xlarge node)"@en ;
+    hpc:hasMemoryCapacity [ rdf:type hpc:MemoryCapacity ; hpc:hasValue "3"^^xsd:decimal ; hpc:hasUnit "TB" ] .
+
+inst:Mem_Irene_175GB rdf:type hpc:RAM ;
+    rdfs:label "175 GB RAM (Irene v100 node)"@en ;
+    hpc:hasMemoryCapacity [ rdf:type hpc:MemoryCapacity ; hpc:hasValue "175"^^xsd:decimal ; hpc:hasUnit "GB" ] .
+
+inst:Mem_Irene_355GB rdf:type hpc:RAM ;
+    rdfs:label "355 GB RAM (Irene v100l node)"@en ;
+    hpc:hasMemoryCapacity [ rdf:type hpc:MemoryCapacity ; hpc:hasValue "355"^^xsd:decimal ; hpc:hasUnit "GB" ] .
+
+inst:Mem_Irene_2_9TB rdf:type hpc:RAM ;
+    rdfs:label "2.9 TB RAM (Irene v100xl node)"@en ;
+    hpc:hasMemoryCapacity [ rdf:type hpc:MemoryCapacity ; hpc:hasValue "2.9"^^xsd:decimal ; hpc:hasUnit "TB" ] .
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 11 – QUANTITATIVE VALUES
+# ══════════════════════════════════════════════════════════════════════════════
+# Identical named individuals (Freq_2_1GHz, Freq_2_6GHz, BW_100Gbps, BW_200Gbps)
+# may also appear in other instance files with the same triples: this merges
+# cleanly in RDF.
+###############################################################################
+
+inst:Freq_2_1GHz  rdf:type hpc:Frequency ; hpc:hasValue "2.1"^^xsd:decimal  ; hpc:hasUnit "GHz" .
+inst:Freq_2_45GHz rdf:type hpc:Frequency ; hpc:hasValue "2.45"^^xsd:decimal ; hpc:hasUnit "GHz" .
+inst:Freq_2_6GHz  rdf:type hpc:Frequency ; hpc:hasValue "2.6"^^xsd:decimal  ; hpc:hasUnit "GHz" .
+
+inst:BW_100Gbps rdf:type hpc:Bandwidth ; hpc:hasValue "100"^^xsd:decimal ; hpc:hasUnit "Gb/s" .
+inst:BW_200Gbps rdf:type hpc:Bandwidth ; hpc:hasValue "200"^^xsd:decimal ; hpc:hasUnit "Gb/s" .
+
+inst:TP_280GBps rdf:type hpc:Throughput ; hpc:hasValue "280"^^xsd:decimal ; hpc:hasUnit "GB/s" .
+
+# Peak performance [not stated in the public docs but in eDari website
+inst:Perf_Irene_20PFlops rdf:type hpc:PeakPerformance ;
+    rdfs:label "Irene – ~20 PFlop/s peak"@en ,
+               "Irène – ~20 PFlop/s crête"@fr ;
+    hpc:hasValue "20"^^xsd:decimal ;
+    hpc:hasUnit "PFlop/s" .
+
+
+###############################################################################
+# END OF TGCC / IRENE INSTANCES
+###############################################################################

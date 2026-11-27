@@ -1,0 +1,279 @@
+###########################################################################
+# HPC Resource Ontology – HPC CENTERS instances (ABox)
+# French national HPC centers: IDRIS (CNRS), TGCC (CEA), CINES
+# Institutional, geographic and funding information only.
+#
+# Version     : 1.0
+# Date        : 2026-10-28
+# Authors     : Exa-AToW team - CH
+#
+# Notes       :
+#   EN – Supercomputers, storage mounts and the links hosts / hasStorageMount are in
+#        the per-center files hpc-instances-{idris,tgcc,cines}.ttl, which import this file.
+#   FR – Les supercalculateurs, les montages de stockage et les liens hosts /
+#        hasStorageMount sont dans hpc-instances.ttl, qui importe ce fichier.
+###############################################################################
+
+@prefix hpc:      <https://w3id.org/Exa-AToW/hpc#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc:       <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix schema:   <https://schema.org/> .
+@prefix inst:     <https://w3id.org/Exa-AToW/hpc/instances/> .
+
+<https://w3id.org/Exa-AToW/hpc/instances/hpc-centers.ttl>
+    rdf:type owl:Ontology ;
+    owl:imports <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "HPC Centers – French National HPC Centers"@en ,
+               "Centres HPC – Centres nationaux de calcul français"@fr ;
+    dc:description "Bureaucratic directory of the French national HPC centers (IDRIS, TGCC, CINES): operating organizations, funding agencies, legal names, addresses and websites. No resource (hardware) information."@en ,
+                   "Annuaire administratif des centres nationaux de calcul français (IDRIS, TGCC, CINES) : organismes exploitants, agences de financement, dénominations, adresses et sites web. Aucune information matérielle (ressources)."@fr ;
+    dcterms:created "2026-10-08"^^xsd:date ;
+    dcterms:modified "2026-10-28"^^xsd:date ;
+    dcterms:publisher "Exa-AToW team" ;
+    owl:versionInfo "1.0" .
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 1 – ORGANIZATIONS / ORGANISATIONS
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Institutions that operate and fund the French national HPC centers.
+# FR – Institutions qui exploitent et financent les centres nationaux de calcul.
+###############################################################################
+
+# ──── Ministry (common parent) ───────────────────────────────────────────────
+inst:Org_MESR rdf:type hpc:Organization ;
+    rdfs:label "Ministère de l'Enseignement supérieur et de la Recherche"@fr ,
+               "French Ministry of Higher Education and Research"@en ;
+    rdfs:comment "Supervising ministry for CNRS and CINES."@en ,
+                 "Ministère de tutelle du CNRS et du CINES."@fr ;
+    schema:alternateName "MESR" ;
+    schema:url "https://www.enseignementsup-recherche.gouv.fr"^^xsd:anyURI ;
+    hpc:website "https://www.enseignementsup-recherche.gouv.fr"^^xsd:anyURI .
+
+# ──── Host organizations ─────────────────────────────────────────────────────
+inst:Org_CNRS rdf:type hpc:Organization ;
+    rdfs:label "CNRS"@en , "CNRS"@fr ;
+    rdfs:comment "Centre National de la Recherche Scientifique – parent body of IDRIS."@en ,
+                 "Centre National de la Recherche Scientifique – organisme de tutelle de l'IDRIS."@fr ;
+    schema:legalName "Centre National de la Recherche Scientifique" ;
+    schema:alternateName "CNRS" ;
+    hpc:shortName "cnrs" ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "ROR" ;
+        schema:value "02feahw73" ;
+        schema:url <https://ror.org/02feahw73>
+    ] ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "Wikidata" ;
+        schema:value "Q280413" ;
+        schema:url <https://www.wikidata.org/entity/Q280413>
+    ] ;
+    schema:parentOrganization inst:Org_MESR ;
+    schema:foundingDate "1939-10-19"^^xsd:date ;
+    schema:url "https://www.cnrs.fr"^^xsd:anyURI ;
+    hpc:website "https://www.cnrs.fr"^^xsd:anyURI .
+
+inst:Org_CEA rdf:type hpc:Organization , hpc:FundingAgency ;   # needed as range of hpc:fundedBy (Topaze/CCRT); confirm that CEA is the right funder
+    rdfs:label "CEA"@en , "CEA"@fr ;
+    rdfs:comment "Commissariat à l'Énergie Atomique et aux Énergies Alternatives. Operates TGCC. Placed under the joint supervision of the Ministries of Research and of the Armed Forces."@en ,
+                 "Commissariat à l'Énergie Atomique et aux Énergies Alternatives. Opérateur du TGCC. Placé sous la double tutelle des ministères de la Recherche et des Armées."@fr ;
+    schema:legalName "Commissariat à l'énergie atomique et aux énergies alternatives" ;
+    schema:alternateName "CEA" ;
+    hpc:shortName "cea" ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "ROR" ;
+        schema:value "00jjx8s55" ;
+        schema:url <https://ror.org/00jjx8s55>
+    ] ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "Wikidata" ;
+        schema:value "Q868550" ;
+        schema:url <https://www.wikidata.org/entity/Q868550>
+    ] ;
+    schema:foundingDate "1945-10-18"^^xsd:date ;
+    schema:url "https://www.cea.fr"^^xsd:anyURI ;
+    hpc:website "https://www.cea.fr"^^xsd:anyURI .
+
+inst:Org_DAM rdf:type hpc:Organization ;
+    rdfs:label "CEA/DAM"@en , "CEA/DAM"@fr ;
+    rdfs:comment "Direction des Applications Militaires du CEA. Operates TGCC."@en ,
+                 "Direction des Applications Militaires du CEA. Opérateur du TGCC."@fr ;
+    schema:legalName "Direction des Applications Militaires" ;
+    schema:alternateName "CEA/DAM" , "DAM" ;
+    hpc:shortName "dam" ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "ROR" ;
+        schema:value "01d5pah27" ;
+        schema:url <https://ror.org/01d5pah27>
+    ] ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "Wikidata" ;
+        schema:value "Q41566944" ;
+        schema:url <https://www.wikidata.org/entity/Q41566944>
+    ] ;
+    schema:parentOrganization inst:Org_CEA ;
+    schema:url "https://www-hpc.cea.fr"^^xsd:anyURI ;
+    hpc:website "https://www-hpc.cea.fr"^^xsd:anyURI .
+    
+
+# ──── Operating organizations (HPC divisions) ────────────────────────────────
+inst:Org_IDRIS rdf:type hpc:Organization ;
+    rdfs:label "IDRIS"@en , "IDRIS"@fr ;
+    rdfs:comment "Institut du Développement et des Ressources en Informatique Scientifique. HPC division of CNRS, operator of Jean Zay."@en ,
+                 "Institut du Développement et des Ressources en Informatique Scientifique. Division HPC du CNRS, opérateur de Jean Zay."@fr ;
+    schema:legalName "Institut du développement et des ressources en informatique scientifique" ;
+    schema:alternateName "IDRIS" ;
+    hpc:shortName "idris" ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "ROR" ;
+        schema:value "02jz7m443" ;
+        schema:url <https://ror.org/02jz7m443>
+    ] ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "Wikidata" ;
+        schema:value "Q3152216" ;
+        schema:url <https://www.wikidata.org/entity/Q3152216>
+    ] ;
+    schema:parentOrganization inst:Org_CNRS ;
+    schema:url "http://www.idris.fr"^^xsd:anyURI ;
+    hpc:website "http://www.idris.fr"^^xsd:anyURI .
+
+inst:Org_CINES rdf:type hpc:Organization ;
+    rdfs:label "CINES"@en , "CINES"@fr ;
+    rdfs:comment "Centre Informatique National de l'Enseignement Supérieur. Operates Adastra in Montpellier."@en ,
+                 "Centre Informatique National de l'Enseignement Supérieur. Opérateur d'Adastra à Montpellier."@fr ;
+    schema:legalName "Centre Informatique National de l'Enseignement Supérieur" ;
+    schema:alternateName "CINES" ;
+    hpc:shortName "cines" ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "ROR" ;
+        schema:value "00gnrwz95" ;
+        schema:url <https://ror.org/00gnrwz95>
+    ] ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "Wikidata" ;
+        schema:value "Q2945791" ;
+        schema:url <https://www.wikidata.org/entity/Q2945791>
+    ] ;
+    schema:parentOrganization inst:Org_MESR ;
+    schema:url "https://www.cines.fr"^^xsd:anyURI ;
+    hpc:website "https://www.cines.fr"^^xsd:anyURI .
+
+# ──── Funding agencies ───────────────────────────────────────────────────────
+inst:Org_GENCI rdf:type hpc:FundingAgency ;
+    rdfs:label "GENCI"@en , "GENCI"@fr ;
+    rdfs:comment "Grand Équipement National de Calcul Intensif. National agency that funds and coordinates HPC access in France on behalf of the State."@en ,
+                 "Grand Équipement National de Calcul Intensif. Agence nationale qui finance et coordonne l'accès au calcul intensif en France pour le compte de l'État."@fr ;
+    schema:legalName "Grand Équipement National de Calcul Intensif" ;
+    schema:alternateName "GENCI" ;
+    hpc:shortName "genci" ;
+    schema:identifier [
+        rdf:type schema:PropertyValue ;
+        schema:propertyID "GRID" ;
+        schema:value "grid.424526.3"
+    ] ;
+    schema:url "https://www.genci.fr"^^xsd:anyURI ;
+    hpc:website "https://www.genci.fr"^^xsd:anyURI .
+
+inst:Org_France2030 rdf:type hpc:FundingAgency ;
+    rdfs:label "France 2030"@en , "France 2030"@fr ;
+    rdfs:comment "French government investment plan. Funds HPC equipment acquisition (national and EuroHPC co-funding)."@en ,
+                 "Plan d'investissement du gouvernement français. Finance l'acquisition d'équipements HPC (cofinancement national et EuroHPC)."@fr ;
+    schema:alternateName "France 2030" ;
+    hpc:shortName "france2030" ;
+    schema:url "https://www.info.gouv.fr/grand-dossier/france-2030"^^xsd:anyURI ;
+    rdfs:seeAlso <https://www.info.gouv.fr/grand-dossier/france-2030> .
+
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 2 – HPC CENTERS / CENTRES HPC
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – The three main French national HPC centers.
+# FR – Les trois principaux centres nationaux de calcul intensif français.
+#
+# Address policy:
+#   schema:address is AUTHORITATIVE and structured.
+#   hpc:location is kept for backward compatibility with existing queries
+#   but should be considered a non-authoritative display string.
+###############################################################################
+
+inst:Center_IDRIS rdf:type hpc:HPCCenter , schema:ResearchOrganization ;
+    rdfs:label "IDRIS HPC Center"@en , "Centre HPC IDRIS"@fr ;
+    rdfs:comment "IDRIS (Institut du développement et des ressources en informatique scientifique) is the major center for very high-performance numerical simulation for the CNRS."@en ,
+                 "L'IDRIS (Institut du développement et des ressources en informatique scientifique) est le centre majeur de simulation numérique intensive de haut niveau du CNRS."@fr ;
+    schema:alternateName "IDRIS" , "Centre IDRIS" ;
+    hpc:shortName "idris" ;
+    schema:address [
+        rdf:type schema:PostalAddress ;
+        schema:streetAddress "Bâtiment 506, Rue John Von Neumann" ;
+        schema:postalCode "91403" ;
+        schema:addressLocality "Orsay" ;
+        schema:addressRegion "Île-de-France" ;
+        schema:addressCountry "FR"
+    ] ;
+    hpc:location "Orsay, Essonne, Île-de-France, France" ;   # non-authoritative display string
+    schema:url "http://www.idris.fr"^^xsd:anyURI ;
+    hpc:website "http://www.idris.fr"^^xsd:anyURI ;
+    hpc:documentationURL "http://www.idris.fr/docs/jean-zay/jean-zay/jean-zay-presentation"^^xsd:anyURI ;
+    hpc:operatedBy inst:Org_IDRIS ;
+    hpc:fundedBy inst:Org_GENCI , inst:Org_France2030 .      # France 2030 = equipment funding
+
+inst:Center_TGCC rdf:type hpc:HPCCenter , schema:ResearchOrganization ;
+    rdfs:label "TGCC – Très Grand Centre de Calcul"@en , "TGCC – Très Grand Centre de Calcul"@fr ;
+    rdfs:comment "TGCC (Very Large Computing Center) at Bruyères-le-Châtel (Essonne), operated by CEA/DAM. Hosts the national academic and CCRT industrial systems."@en ,
+                 "Le TGCC (Très Grand Centre de Calcul) à Bruyères-le-Châtel (Essonne), opéré par la CEA/DAM. Héberge les systèmes académiques nationaux et industriels (CCRT)."@fr ;
+    schema:alternateName "TGCC" , "Très Grand Centre de Calcul" ;
+    hpc:shortName "tgcc" ;
+    schema:address [
+        rdf:type schema:PostalAddress ;
+        schema:streetAddress "Terres de la Guépière" ;
+        schema:description "CEA Bruyères-le-Châtel, Bâtiment TGCC. Courrier postal acheminé via 91297 Arpajon Cedex." ;
+        schema:postalCode "91297" ;
+        schema:addressLocality "Bruyères-le-Châtel" ;
+        schema:addressRegion "Île-de-France" ;
+        schema:addressCountry "FR"
+    ] ;
+    hpc:location "Bruyères-le-Châtel, Essonne, Île-de-France, France" ;   # non-authoritative display string
+    schema:url "https://www-hpc.cea.fr/en/TGCC.html"^^xsd:anyURI ;
+    hpc:website "https://www-hpc.cea.fr/en/TGCC.html"^^xsd:anyURI ;
+    hpc:documentationURL "https://hpc.cea.fr/tgcc-public/en/html/toc/fulldoc/Supercomputer_architecture.html"^^xsd:anyURI ;
+    hpc:operatedBy inst:Org_DAM ;
+    hpc:fundedBy inst:Org_GENCI , inst:Org_France2030 .      # France 2030 = equipment funding
+
+inst:Center_CINES rdf:type hpc:HPCCenter , schema:ResearchOrganization ;
+    rdfs:label "CINES HPC Center"@en , "Centre HPC CINES"@fr ;
+    rdfs:comment "CINES in Montpellier (Hérault) is the national center for higher-education computing, operated under the Ministry of Higher Education and Research."@en ,
+                 "Le CINES à Montpellier (Hérault) est le centre national de calcul de l'enseignement supérieur, opéré sous la tutelle du ministère de l'Enseignement supérieur et de la Recherche."@fr ;
+    schema:alternateName "CINES" , "Centre Informatique National de l'Enseignement Supérieur" ;
+    hpc:shortName "cines" ;
+    schema:address [
+        rdf:type schema:PostalAddress ;
+        schema:streetAddress "950 rue de St Priest" ;
+        schema:postalCode "34097" ;
+        schema:addressLocality "Montpellier" ;
+        schema:addressRegion "Occitanie" ;
+        schema:addressCountry "FR"
+    ] ;
+    hpc:location "Montpellier, Hérault, Occitanie, France" ;   # non-authoritative display string
+    schema:url "https://www.cines.fr"^^xsd:anyURI ;
+    hpc:website "https://www.cines.fr"^^xsd:anyURI ;
+    hpc:documentationURL "https://www.cines.fr/calcul/adastra/"^^xsd:anyURI ;
+    hpc:operatedBy inst:Org_CINES ;
+    hpc:fundedBy inst:Org_GENCI , inst:Org_France2030 .      # France 2030 = equipment funding
+

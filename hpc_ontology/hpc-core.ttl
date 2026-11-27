@@ -899,7 +899,7 @@ skos:prefLabel rdf:type owl:AnnotationProperty .
         "Nombre d'unités physiques de ce composant matériel présentes dans le nœud."@fr ;
     rdfs:domain :HardwareComponent ;
     rdfs:isDefinedBy <https://w3id.org/Exa-AToW/hpc/hpc-core.ttl> ;
-    rdfs:range xsd:positiveInteger .
+    rdfs:range xsd:integer .
 
 
 :commissioningDate rdf:type owl:DatatypeProperty ;

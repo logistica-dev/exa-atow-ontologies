@@ -1,0 +1,1119 @@
+###############################################################################
+# HPC Resource Ontology – IDRIS INSTANCES 
+# Center: IDRIS (Orsay, CNRS)  –  System: Jean Zay (HPE SGI 8600)
+#
+# Status  : IDRIS-only instances.
+# Version : 1.0
+# Date    : 2026-10-28
+#
+# Scope
+# -----
+# This file contains ONLY the IDRIS / Jean Zay individuals. 
+#
+# It imports the shared ontology (hpc.ttl -> hpc-core.ttl) and the centers
+# file (hpc-centers.ttl) which defines Center_IDRIS, Org_IDRIS, Org_CNRS,
+# Org_GENCI, ...
+#
+# Main sources
+# ------------
+#   http://www.idris.fr/docs/jean-zay/jean-zay/jean-zay-hardware/
+#   http://www.idris.fr/docs/jean-zay/environnement/espaces-disques/
+#
+# Confidence markers
+# ------------------
+#   [TBC] value to be confirmed. Extrapolated / representative value.
+#
+# Authors : Exa-AToW team - CHC
+###############################################################################
+
+@prefix hpc:      <https://w3id.org/Exa-AToW/hpc#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc:       <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix schema:   <https://schema.org/> .
+@prefix inst:     <https://w3id.org/Exa-AToW/hpc/instances/> .
+
+<https://w3id.org/Exa-AToW/hpc/instances/hpc-instances-idris.ttl>
+    rdf:type owl:Ontology ;
+    owl:imports <https://w3id.org/Exa-AToW/hpc/instances/hpc-centers.ttl> ,
+                <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "HPC Instances – IDRIS (Jean Zay)"@en ,
+               "Instances HPC – IDRIS (Jean Zay)"@fr ;
+    dc:description "IDRS-only instance set: the Jean Zay supercomputer at IDRIS, its processors, cards, compute node types, partitions, QoS, modules, storage, operating system and quantitative values."@en ;
+    owl:versionInfo "1.0" .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 1 – LINKS CENTER → INFRASTRUCTURE
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Center_IDRIS is defined in hpc-centers.ttl (imported). Here only its
+#      outgoing links to the system and the user storage mounts.
+# FR – Center_IDRIS est défini dans hpc-centers.ttl (importé). Ici uniquement
+#      ses liens vers le système et les points de montage utilisateur.
+###############################################################################
+
+inst:Center_IDRIS hpc:hosts inst:SC_JeanZay ;
+    hpc:hasStorageMount inst:Mount_JZ_HOME ,
+                             inst:Mount_JZ_WORK ,
+                             inst:Mount_JZ_SCRATCH ,
+                             inst:Mount_JZ_STORE .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 2 – SUPERCOMPUTER
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Jean Zay is an HPE SGI 8600 at IDRIS, Orsay, operated for CNRS within
+#      GENCI. CPU partition (cpu_p1), V100 partitions (gpu_p13, gpu_p2),
+#      A100 partition (gpu_p5) and H100 extension (gpu_p6), plus prepost, visu
+#      and frontend. ~125.9 PFlop/s peak total since 2024. SLURM.
+# FR – Jean Zay est un HPE SGI 8600 à l'IDRIS, Orsay, exploité pour le CNRS
+#      dans le cadre de GENCI. Partition CPU (cpu_p1), partitions V100
+#      (gpu_p13, gpu_p2), partition A100 (gpu_p5) et extension H100 (gpu_p6),
+#      plus prepost, visu et frontaux. ~125,9 PFlop/s crête depuis 2024. SLURM.
+###############################################################################
+
+inst:SC_JeanZay rdf:type hpc:Supercomputer ;
+    rdfs:label "Jean Zay"@en , "Jean Zay"@fr ;
+    rdfs:comment "Supercomputer at IDRIS (Orsay): HPE SGI 8600 part (cpu_p1, gpu_p13, gpu_p2, gpu_p5; Intel Omni-Path) plus Bull BullSequana XH3000 part (gpu_p6, H100; InfiniBand). CPU partition (Intel Xeon Gold 6248), V100 partitions (gpu_p13, gpu_p2), A100 partition (gpu_p5) and H100 extension (gpu_p6). ~125.9 PFlop/s peak total since 2024. Scheduler: SLURM."@en ,
+                 "Supercalculateur de l'IDRIS (Orsay) : partie HPE SGI 8600 (cpu_p1, gpu_p13, gpu_p2, gpu_p5 ; Intel Omni-Path) et partie Bull BullSequana XH3000 (gpu_p6, H100 ; InfiniBand). Partition CPU (Intel Xeon Gold 6248), partitions V100 (gpu_p13, gpu_p2), partition A100 (gpu_p5) et extension H100 (gpu_p6). ~125,9 PFlop/s crête totale depuis 2024. Ordonnanceur : SLURM."@fr ;
+    hpc:shortName "jean-zay" ;
+    hpc:identifier "jean-zay.idris.fr" ;
+    hpc:hostedAt inst:Center_IDRIS ;
+    hpc:commissioningDate "2019-06-01"^^xsd:date ;   # first phase in production mid-2019; H100 extension 2023/2024
+    hpc:documentationURL "http://www.idris.fr/docs/jean-zay/jean-zay/jean-zay-hardware/"^^xsd:anyURI ;
+    dcterms:source <http://www.idris.fr/docs/jean-zay/jean-zay/jean-zay-hardware> ,
+                   <http://www.idris.fr/docs/jean-zay/slurm/slurm_partitions_gpu> ,
+                   <http://www.idris.fr/docs/jean-zay/slurm/slurm_partitions_cpu> ,
+                   <http://www.idris.fr/docs/jean-zay/environnement/espaces-disques> ;
+    hpc:usesResourceManager hpc:SLURM ;
+    hpc:runsOS inst:OS_RHEL96 ;
+    hpc:usesFileSystem inst:FS_JeanZay_Lustre ;
+    hpc:fundedBy inst:Org_GENCI ;
+    hpc:supportsCompiler hpc:GCC , hpc:IntelCompiler , hpc:NVCC ;
+    hpc:hasPartition inst:Part_JZ_cpu_p1 ,
+                           inst:Part_JZ_gpu_p13 ,
+                           inst:Part_JZ_gpu_p2 ,
+                           inst:Part_JZ_gpu_p5 ,
+                           inst:Part_JZ_gpu_p6 ,
+                           inst:Part_JZ_prepost ,
+                           inst:Part_JZ_visu ,
+                           inst:Part_JZ_frontend ;
+    hpc:hasPeakPerformance inst:Perf_JZ_125PFlops ;
+    hpc:computerBrand "HPE / Eviden (Bull)" ;
+    hpc:model "HPE SGI 8600 + Bull BullSequana XH3000" ;
+    hpc:frontendNodeCount 5 ;                        
+    # Compute partitions: 720 cpu_p1 + 396 gpu_p13 + 31 gpu_p2 + 52 gpu_p5 + 364 gpu_p6
+    hpc:nodeCount 1563 ;                             #  sum of partitions
+    # 720×40 + 396×40 + 31×24 + 52×64 + 364×96 = 83656
+    hpc:totalCoresCount 83656 .                      #  sum of partitions
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 3 – PROCESSORS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ────────── CPUs ──────────────────────────────────────────────────────────────
+
+inst:CPU_Intel_XeonGold_6248 rdf:type hpc:CPU ; 
+    rdfs:label "Intel Xeon Gold 6248 (Cascade Lake)"@en ;
+    rdfs:comment "20-core Intel Cascade Lake CPU at 2.5 GHz. CPU of Jean Zay cpu_p1, gpu_p13, visu and frontend nodes (2 per node)."@en ,
+                 "CPU Intel Cascade Lake 20 cœurs à 2,5 GHz. CPU des nœuds cpu_p1, gpu_p13, visu et frontaux de Jean Zay (2 par nœud)."@fr ;
+    hpc:vendor "Intel" ;
+    hpc:model "Intel Xeon Gold 6248" ;
+    hpc:architecture "Cascade Lake" ;
+    hpc:coresCountPerSocket 20 ;
+    hpc:threadCount 40 ;
+    hpc:hasFrequency inst:Freq_2_5GHz .
+
+inst:CPU_Intel_XeonGold_6226 rdf:type hpc:CPU ;  
+    rdfs:label "Intel Xeon Gold 6226 (Cascade Lake)"@en ;
+    rdfs:comment "12-core Intel Cascade Lake CPU at 2.7 GHz. CPU of Jean Zay gpu_p2 nodes (2 per node)."@en ,
+                 "CPU Intel Cascade Lake 12 cœurs à 2,7 GHz. CPU des nœuds gpu_p2 de Jean Zay (2 par nœud)."@fr ;
+    hpc:vendor "Intel" ;
+    hpc:model "Intel Xeon Gold 6226" ;
+    hpc:architecture "Cascade Lake" ;
+    hpc:coresCountPerSocket 12 ;
+    hpc:threadCount 24 ;
+    hpc:hasFrequency inst:Freq_2_7GHz .
+
+inst:CPU_AMD_Milan_EPYC_7543 rdf:type hpc:CPU ;
+    rdfs:label "AMD EPYC 7543 (Milan)"@en ;
+    rdfs:comment "32-core AMD Milan (Zen 3) CPU at 2.8 GHz. CPU of Jean Zay gpu_p5 (A100) nodes (2 per node)."@en ,
+                 "CPU AMD Milan (Zen 3) 32 cœurs à 2,8 GHz. CPU des nœuds gpu_p5 (A100) de Jean Zay (2 par nœud)."@fr ;
+    hpc:vendor "AMD" ;
+    hpc:model "AMD EPYC 7543" ;
+    hpc:architecture "Milan / Zen 3" ;
+    hpc:coresCountPerSocket 32 ;
+    hpc:threadCount 64 ;
+    hpc:hasFrequency inst:Freq_2_8GHz .
+
+inst:CPU_Intel_SapphireRapids_8468 rdf:type hpc:CPU ;
+    rdfs:label "Intel Xeon Platinum 8468 (Sapphire Rapids)"@en ;
+    rdfs:comment "48-core Intel Sapphire Rapids CPU at 2.1 GHz. CPU of Jean Zay gpu_p6 (H100) nodes and of the compil_h100 node (2 per node)."@en ,
+                 "CPU Intel Sapphire Rapids 48 cœurs à 2,1 GHz. CPU des nœuds gpu_p6 (H100) et du nœud compil_h100 de Jean Zay (2 par nœud)."@fr ;
+    hpc:vendor "Intel" ;
+    hpc:model "Intel Xeon Platinum 8468" ;
+    hpc:architecture "Sapphire Rapids" ;
+    hpc:coresCountPerSocket 48 ;
+    hpc:threadCount 96 ;
+    hpc:hasFrequency inst:Freq_2_1GHz .
+
+inst:CPU_Intel_Skylake_6132 rdf:type hpc:CPU ;          
+    rdfs:label "Intel Xeon Skylake 6132 (prepost)"@en ;
+    rdfs:comment "Intel Skylake CPU of the prepost nodes (4 per node), documented by IDRIS as 12 cores at 3.2 GHz."@en ,
+                 "CPU Intel Skylake des nœuds prepost (4 par nœud), documenté par l'IDRIS à 12 cœurs à 3,2 GHz."@fr ;
+    hpc:vendor "Intel" ;
+    hpc:model "Intel Xeon 6132" ;
+    hpc:architecture "Skylake" ;
+    hpc:coresCountPerSocket 12 ;
+    hpc:threadCount 24 ;
+    hpc:hasFrequency inst:Freq_3_2GHz .
+
+# ────────── GPUs ──────────────────────────────────────────────────────────────
+
+inst:GPU_NvidiaV100_SXM2_16GB rdf:type hpc:GPU ;
+    rdfs:label "NVIDIA Tesla V100 SXM2 16 GB (die)"@en ;
+    rdfs:comment "NVIDIA Volta V100 GPU die with 16 GB HBM2. Used in Jean Zay gpu_p13 (gpu_p13_v100_16g) nodes."@en ,
+                 "Die GPU NVIDIA Volta V100 avec 16 Go HBM2. Utilisé dans les nœuds gpu_p13 (gpu_p13_v100_16g) de Jean Zay."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla V100 SXM2 16 GB" ;
+    hpc:architecture "Volta" .
+
+inst:GPU_NvidiaV100_SXM2_32GB rdf:type hpc:GPU ;
+    rdfs:label "NVIDIA Tesla V100 SXM2 32 GB (die)"@en ;
+    rdfs:comment "NVIDIA Volta V100 GPU die with 32 GB HBM2. Used in Jean Zay gpu_p13 (32 GB variant) and gpu_p2 nodes."@en ,
+                 "Die GPU NVIDIA Volta V100 avec 32 Go HBM2. Utilisé dans les nœuds gpu_p13 (variante 32 Go) et gpu_p2 de Jean Zay."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla V100 SXM2 32 GB" ;
+    hpc:architecture "Volta" .
+
+inst:GPU_NvidiaA100_SXM4_80GB rdf:type hpc:GPU ;
+    rdfs:label "NVIDIA A100 SXM4 80 GB (die)"@en ;
+    rdfs:comment "NVIDIA Ampere A100 GPU die with 80 GB HBM2e. Used in Jean Zay gpu_p5 nodes (8 per node)."@en ,
+                 "Die GPU NVIDIA Ampere A100 avec 80 Go HBM2e. Utilisé dans les nœuds gpu_p5 de Jean Zay (8 par nœud)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "A100 SXM4 80 GB" ;
+    hpc:architecture "Ampere" .
+
+inst:GPU_NvidiaH100_SXM5_80GB rdf:type hpc:GPU ;
+    rdfs:label "NVIDIA H100 SXM5 80 GB (die)"@en ;
+    rdfs:comment "NVIDIA Hopper H100 GPU die with 80 GB HBM3. Used in the Jean Zay gpu_p6 H100 extension (4 per node)."@en ,
+                 "Die GPU NVIDIA Hopper H100 avec 80 Go HBM3. Utilisé dans l'extension H100 gpu_p6 de Jean Zay (4 par nœud)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "H100 SXM5 80 GB" ;
+    hpc:architecture "Hopper" .
+
+inst:GPU_NvidiaQuadroP6000 rdf:type hpc:GPU ;
+    rdfs:label "NVIDIA Quadro P6000"@en ;
+    rdfs:comment "NVIDIA Pascal Quadro P6000 graphics GPU. Used in Jean Zay visu nodes (1 per node)."@en ,
+                 "GPU graphique NVIDIA Pascal Quadro P6000. Utilisé dans les nœuds visu de Jean Zay (1 par nœud)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Quadro P6000" ;
+    hpc:architecture "Pascal" .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 4 – ACCELERATOR CARDS
+# ══════════════════════════════════════════════════════════════════════════════
+# Cards are the unit of allocation; memory is modeled at card level.
+###############################################################################
+
+inst:Card_NvidiaV100_16GB rdf:type hpc:AcceleratorCard ;
+    rdfs:label "NVIDIA Tesla V100 SXM2 16 GB card"@en ;
+    rdfs:comment "NVIDIA V100 SXM2 card with 16 GB HBM2. Used in Jean Zay gpu_p13_v100_16g nodes (4 per node)."@en ,
+                 "Carte NVIDIA V100 SXM2 16 Go HBM2. Utilisée dans les nœuds gpu_p13_v100_16g de Jean Zay (4 par nœud)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla V100 SXM2 16 GB" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaV100_SXM2_16GB ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_V100_HBM2_16GiB ;
+        hpc:quantity 1
+    ] .
+
+inst:Card_NvidiaV100_32GB rdf:type hpc:AcceleratorCard ;
+    rdfs:label "NVIDIA Tesla V100 SXM2 32 GB card"@en ;
+    rdfs:comment "NVIDIA V100 SXM2 card with 32 GB HBM2. Used in Jean Zay gpu_p13 (32 GB variant) and gpu_p2 nodes (4 or 8 per node)."@en ,
+                 "Carte NVIDIA V100 SXM2 32 Go HBM2. Utilisée dans les nœuds gpu_p13 (variante 32 Go) et gpu_p2 de Jean Zay (4 ou 8 par nœud)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla V100 SXM2 32 GB" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaV100_SXM2_32GB ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_V100_HBM2_32GiB ;
+        hpc:quantity 1
+    ] .
+
+inst:Card_NvidiaA100_80GB rdf:type hpc:AcceleratorCard ;
+    rdfs:label "NVIDIA A100 SXM4 80 GB card"@en ;
+    rdfs:comment "NVIDIA A100 SXM4 card with 80 GB HBM2e. Used in Jean Zay gpu_p5 nodes (8 per node). TDP 400 W."@en ,
+                 "Carte NVIDIA A100 SXM4 80 Go HBM2e. Utilisée dans les nœuds gpu_p5 de Jean Zay (8 par nœud). TDP 400 W."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "A100 SXM4 80 GB" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaA100_SXM4_80GB ;
+    hpc:hasTDP [ rdf:type hpc:TDP ; hpc:hasValue "400"^^xsd:decimal ; hpc:hasUnit "W" ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_A100_HBM2e_80GiB ;
+        hpc:quantity 1
+    ] .
+
+inst:Card_NvidiaH100_80GB rdf:type hpc:AcceleratorCard ;
+    rdfs:label "NVIDIA H100 SXM5 80 GB card"@en ;
+    rdfs:comment "NVIDIA H100 SXM5 card with 80 GB HBM3. Used in the Jean Zay gpu_p6 H100 extension (4 per node). TDP 700 W."@en ,
+                 "Carte NVIDIA H100 SXM5 80 Go HBM3. Utilisée dans l'extension H100 gpu_p6 de Jean Zay (4 par nœud). TDP 700 W."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "H100 SXM5 80 GB" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaH100_SXM5_80GB ;
+    hpc:hasTDP [ rdf:type hpc:TDP ; hpc:hasValue "700"^^xsd:decimal ; hpc:hasUnit "W" ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_H100_HBM3_80GiB ;
+        hpc:quantity 1
+    ] .
+
+inst:Card_NvidiaV100_JZ_prepost rdf:type hpc:AcceleratorCard ; 
+    rdfs:label "NVIDIA Tesla V100 card (prepost, memory variant not stated)"@en ;
+    rdfs:comment "NVIDIA Tesla V100 card of the prepost nodes (1 per node). IDRIS does not state the memory size, so no memory component is declared."@en ,
+                 "Carte NVIDIA Tesla V100 des nœuds prepost (1 par nœud). L'IDRIS ne précise pas la mémoire ; aucun composant mémoire n'est déclaré."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Tesla V100" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaV100_SXM2_32GB .     # [TBC] die model reused; variant unknown
+
+inst:Card_NvidiaQuadroP6000 rdf:type hpc:AcceleratorCard ;
+    rdfs:label "NVIDIA Quadro P6000 card"@en ;
+    rdfs:comment "NVIDIA Quadro P6000 card of the visu nodes (1 per node)."@en ,
+                 "Carte NVIDIA Quadro P6000 des nœuds visu (1 par nœud)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "Quadro P6000" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaQuadroP6000 .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 5 – COMPUTE NODES (node TYPES)
+# ══════════════════════════════════════════════════════════════════════════════
+# Representative node TYPES referenced by partitions (not individual nodes).
+###############################################################################
+
+# ──── cpu_p1 scalar node ──────────────────────────────────────────────────────
+# 720 nodes. 2× Intel Xeon Gold 6248 (20 cores) = 40 cores/node. 192 GiB DDR4.
+# 1× Intel Omni-Path 100 Gb/s NIC.
+inst:Node_JZ_cpu_p1 rdf:type hpc:ScalarNode ;
+    rdfs:label "Jean Zay – cpu_p1 scalar node type"@en ,
+               "Jean Zay – type nœud scalaire cpu_p1"@fr ;
+    rdfs:comment "720 scalar CPU nodes. 2×Intel Xeon Gold 6248 (40 cores/node), 192 GiB DDR4, 1×Intel Omni-Path 100 Gb/s. Used for pure-MPI and memory-bandwidth-bound jobs."@en ,
+                 "720 nœuds CPU scalaires. 2×Intel Xeon Gold 6248 (40 cœurs/nœud), 192 Gio DDR4, 1×Intel Omni-Path 100 Gb/s. Destinés aux calculs MPI et aux charges limitées par la bande passante mémoire."@fr ;
+    hpc:coresCountPerNode 40 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_XeonGold_6248 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_2933_192GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_OmniPath_100G ;
+        hpc:linkCount 1
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_cpu_p1 .
+
+# ──── gpu_p13 V100 node types (16 GB and 32 GB) ───────────────────────────────
+inst:Node_JZ_gpu_p13_v100_16g rdf:type hpc:AcceleratedNode ;
+    rdfs:label "Jean Zay – gpu_p13 V100 16 GB node type"@en ,
+               "Jean Zay – type nœud gpu_p13 V100 16 Go"@fr ;
+    rdfs:comment "126 nodes. 2×Intel Xeon Gold 6248 (40 cores), 192 GiB DDR4, 4×NVIDIA V100 SXM2 16 GB. 1×Omni-Path NIC."@en ,
+                 "126 nœuds. 2×Intel Xeon Gold 6248 (40 cœurs), 192 Gio DDR4, 4×NVIDIA V100 SXM2 16 Go. 1×NIC Omni-Path."@fr ;
+    hpc:coresCountPerNode 40 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_XeonGold_6248 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_2933_192GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaV100_16GB ;
+        hpc:quantity 4
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_OmniPath_100G ;
+        hpc:linkCount 1
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_gpu_p13 .
+
+inst:Node_JZ_gpu_p13_v100_32g rdf:type hpc:AcceleratedNode ;
+    rdfs:label "Jean Zay – gpu_p13 V100 32 GB node type"@en ,
+               "Jean Zay – type nœud gpu_p13 V100 32 Go"@fr ;
+    rdfs:comment "270 nodes. 2×Intel Xeon Gold 6248 (40 cores), 192 GiB DDR4, 4×NVIDIA V100 SXM2 32 GB. 1×Omni-Path NIC."@en ,
+                 "270 nœuds. 2×Intel Xeon Gold 6248 (40 cœurs), 192 Gio DDR4, 4×NVIDIA V100 SXM2 32 Go. 1×NIC Omni-Path."@fr ;
+    hpc:coresCountPerNode 40 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_XeonGold_6248 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_2933_192GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaV100_32GB ;
+        hpc:quantity 4
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_OmniPath_100G ;
+        hpc:linkCount 1
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_gpu_p13 .
+
+# ──── gpu_p2 node types (larger memory / 8 GPUs) ─────────────────────────────
+inst:Node_JZ_gpu_p2s rdf:type hpc:AcceleratedNode ;
+    rdfs:label "Jean Zay – gpu_p2s node type"@en ,
+               "Jean Zay – type nœud gpu_p2s"@fr ;
+    rdfs:comment "20 nodes. 2×Intel Xeon Gold 6226 (24 cores), 384 GiB DDR4, 8×NVIDIA V100 SXM2 32 GB. 2×Omni-Path NIC."@en ,
+                 "20 nœuds. 2×Intel Xeon Gold 6226 (24 cœurs), 384 Gio DDR4, 8×NVIDIA V100 SXM2 32 Go. 2×NIC Omni-Path."@fr ;
+    hpc:coresCountPerNode 24 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_XeonGold_6226 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_2933_384GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaV100_32GB ;
+        hpc:quantity 8
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_OmniPath_100G ;
+        hpc:linkCount 2
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_gpu_p2 .
+
+inst:Node_JZ_gpu_p2l rdf:type hpc:AcceleratedNode ;
+    rdfs:label "Jean Zay – gpu_p2l node type"@en ,
+               "Jean Zay – type nœud gpu_p2l"@fr ;
+    rdfs:comment "11 nodes with large memory. 2×Intel Xeon Gold 6226 (24 cores), 768 GiB DDR4, 8×NVIDIA V100 SXM2 32 GB. 2×Omni-Path NIC."@en ,
+                 "11 nœuds à grande mémoire. 2×Intel Xeon Gold 6226 (24 cœurs), 768 Gio DDR4, 8×NVIDIA V100 SXM2 32 Go. 2×NIC Omni-Path."@fr ;
+    hpc:coresCountPerNode 24 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_XeonGold_6226 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_2933_768GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaV100_32GB ;
+        hpc:quantity 8
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_OmniPath_100G ;
+        hpc:linkCount 2
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_gpu_p2 .
+
+# ──── gpu_p5 A100 node ────────────────────────────────────────────────────────
+inst:Node_JZ_gpu_p5_a100 rdf:type hpc:AcceleratedNode ;
+    rdfs:label "Jean Zay – gpu_p5 A100 node type"@en ,
+               "Jean Zay – type nœud gpu_p5 A100"@fr ;
+    rdfs:comment "52 nodes. 2×AMD EPYC 7543 Milan (64 cores), 512 GiB DDR4, 8×NVIDIA A100 SXM4 80 GB. 1×Omni-Path NIC."@en ,
+                 "52 nœuds. 2×AMD EPYC 7543 Milan (64 cœurs), 512 Gio DDR4, 8×NVIDIA A100 SXM4 80 Go. 1×NIC Omni-Path."@fr ;
+    hpc:coresCountPerNode 64 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_AMD_Milan_EPYC_7543 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_3200_512GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaA100_80GB ;
+        hpc:quantity 8
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_OmniPath_100G ;
+        hpc:linkCount 1
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_gpu_p5 .
+
+# ──── gpu_p6 H100 node (Bull BullSequana XH3000) ─────────────────────────────
+inst:Node_JZ_gpu_p6_h100 rdf:type hpc:AcceleratedNode ;
+    rdfs:label "Jean Zay – gpu_p6 H100 node type"@en ,
+               "Jean Zay – type nœud gpu_p6 H100"@fr ;
+    rdfs:comment "364 nodes (Bull BullSequana XH3000). 2×Intel Xeon Platinum 8468 Sapphire Rapids (96 cores/node, 2.1 GHz), 512 GiB memory (468 GiB usable), 4×NVIDIA H100 SXM5 80 GB. InfiniBand; the IDRIS page does not state the generation)."@en ,
+                 "364 nœuds (Bull BullSequana XH3000). 2×Intel Xeon Platinum 8468 Sapphire Rapids (96 cœurs/nœud, 2,1 GHz), 512 Gio de mémoire (468 Gio utiles), 4×NVIDIA H100 SXM5 80 Go. InfiniBand ; la génération n'est pas précisée par l'IDRIS)."@fr ;
+    hpc:coresCountPerNode 96 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_SapphireRapids_8468 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR5_512GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaH100_80GB ;
+        hpc:quantity 4
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_InfiniBand_NDR_400G ;   #[TBC]
+        hpc:linkCount 1      # [TBC]
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_gpu_p6 .
+
+
+# ──── prepost / visu / frontend (representative) ─────────────────────────────
+inst:Node_JZ_prepost rdf:type hpc:PrePostNode ;
+    rdfs:label "Jean Zay – prepost node type"@en ,
+               "Jean Zay – type nœud pré/post-traitement"@fr ;
+    rdfs:comment "4 large-memory pre/post-processing nodes: 4×Intel Skylake 6132 (12 cores @ 3.2 GHz as documented, 48 cores/node), 3 TiB memory, 1×NVIDIA Tesla V100, 1.5 TB internal NVMe (not modeled). Also used by the archive partition. Not deducted from the compute allocation."@en ,
+                 "4 nœuds de pré/post-traitement à large mémoire : 4×Intel Skylake 6132 (12 cœurs à 3,2 GHz selon la doc, 48 cœurs/nœud), 3 To de mémoire, 1×NVIDIA Tesla V100, disque NVMe interne de 1,5 To (non modélisé). Utilisés aussi par la partition archive. Non décomptés de l'allocation."@fr ;
+    hpc:coresCountPerNode 48 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_Skylake_6132 ;
+        hpc:quantity 4
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_3TiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaV100_JZ_prepost ;
+        hpc:quantity 1
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_prepost .
+
+inst:Node_JZ_visu rdf:type hpc:VisualizationNode ;
+    rdfs:label "Jean Zay – visualization node type"@en ,
+               "Jean Zay – type nœud visualisation"@fr ;
+    rdfs:comment "5 scalar visualization nodes: 2×Intel Cascade Lake 6248 (40 cores/node), 192 GiB, 1×NVIDIA Quadro P6000. Not deducted from the compute allocation."@en ,
+                 "5 nœuds de visualisation de type scalaire : 2×Intel Cascade Lake 6248 (40 cœurs/nœud), 192 Gio, 1×NVIDIA Quadro P6000. Non décomptés de l'allocation."@fr ;
+    hpc:coresCountPerNode 40 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_XeonGold_6248 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_2933_192GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaQuadroP6000 ;
+        hpc:quantity 1
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_visu .
+
+inst:Node_JZ_frontend rdf:type hpc:FrontendNode ; 
+    rdfs:label "Jean Zay – frontend/login node type"@en ,
+               "Jean Zay – type nœud frontal"@fr ;
+    rdfs:comment "5 frontend nodes reached by SSH: 2×Intel Cascade Lake 6248 (40 cores/node), 192 GiB."@en ,
+                 "5 nœuds frontaux (connexion SSH) : 2×Intel Cascade Lake 6248 (40 cœurs/nœud), 192 Gio."@fr ;
+    hpc:coresCountPerNode 40 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_Intel_XeonGold_6248 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_2933_192GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:belongsToPartition inst:Part_JZ_frontend .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 6 – INTERCONNECTS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+inst:IC_OmniPath_100G rdf:type hpc:IntelOmniPath ;
+    rdfs:label "Intel Omni-Path – 100 Gb/s"@en ,
+               "Intel Omni-Path – 100 Gb/s"@fr ;
+    rdfs:comment "Intel Omni-Path Architecture (OPA) 100 Gb/s interconnect used on Jean Zay's cpu_p1, gpu_p13, gpu_p2 and gpu_p5 nodes."@en ,
+                 "Interconnexion Intel Omni-Path Architecture (OPA) 100 Gb/s utilisée sur les nœuds cpu_p1, gpu_p13, gpu_p2 et gpu_p5 de Jean Zay."@fr ;
+    hpc:hasBandwidth inst:BW_100Gbps .
+
+inst:IC_InfiniBand_NDR_400G rdf:type hpc:InfiniBandNDR ;
+    rdfs:label "InfiniBand NDR – 400 Gb/s"@en ,
+               "InfiniBand NDR – 400 Gb/s"@fr ;
+    rdfs:comment "InfiniBand NDR (Next Data Rate) 400 Gb/s per port. Used in the Jean Zay H100 partition (gpu_p6)."@en ,
+                 "InfiniBand NDR (Next Data Rate) 400 Gb/s par port. Utilisé dans la partition H100 (gpu_p6) de Jean Zay."@fr ;
+    hpc:hasBandwidth inst:BW_400Gbps .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 7 – PARTITIONS (SLURM)
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+inst:Part_JZ_cpu_p1 rdf:type hpc:Partition ;
+    rdfs:label "Jean Zay – cpu_p1 scalar partition"@en ,
+               "Jean Zay – partition scalaire cpu_p1"@fr ;
+    rdfs:comment "Scalar CPU partition. 720 Intel Cascade Lake nodes (40 cores/node, 192 GiB). SLURM partition name cpu_p1. QoS: qos_cpu-t3 (20 h), qos_cpu-t4 (100 h), qos_cpu-dev (2 h)."@en ,
+                 "Partition CPU scalaire. 720 nœuds Intel Cascade Lake (40 cœurs/nœud, 192 Gio). Nom SLURM cpu_p1. QoS : qos_cpu-t3 (20 h), qos_cpu-t4 (100 h), qos_cpu-dev (2 h)."@fr ;
+    hpc:partitionName "cpu_p1" ;
+    hpc:partitionType "cpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:nodeCount 720 ;
+    hpc:totalCoresCount 28800 ;
+    # 720 nodes × 192 GiB = 138,240 GiB = 135 TiB
+    hpc:hasTotalScalarMemory [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "135"^^xsd:decimal ;
+        hpc:hasUnit "TiB"
+    ] ;
+    hpc:maxWallTime "PT100H"^^xsd:duration ;
+    hpc:defaultWallTime "00:10:00" ;
+    hpc:usesNodeType inst:Node_JZ_cpu_p1 ;
+    hpc:hasQoS inst:qos_jz_cpu_t3 , inst:qos_jz_cpu_t4 , inst:qos_jz_cpu_dev ;
+    hpc:supportsCompiler hpc:GCC , hpc:IntelCompiler .
+
+inst:Part_JZ_gpu_p13 rdf:type hpc:Partition ; 
+    rdfs:label "Jean Zay – gpu_p13 V100 partition"@en ,
+               "Jean Zay – partition gpu_p13 V100"@fr ;
+    rdfs:comment "V100 partition. 396 nodes (126 with 16 GB + 270 with 32 GB, 4 GPUs/node). QoS: qos_gpu-t3 (20 h), qos_gpu-t4 (100 h), qos_gpu-dev (2 h)."@en ,
+                 "Partition V100. 396 nœuds (126 en 16 Go + 270 en 32 Go, 4 GPU/nœud). QoS : qos_gpu-t3 (20 h), qos_gpu-t4 (100 h), qos_gpu-dev (2 h)."@fr ;
+    hpc:partitionName "gpu_p13" ;
+    hpc:partitionType "gpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:nodeCount 396 ;
+    hpc:totalCoresCount 15840 ;
+    hpc:acceleratorCount 1584 ;
+    hpc:maxWallTime "PT100H"^^xsd:duration ;
+    hpc:defaultWallTime "00:10:00" ;
+    hpc:usesNodeType inst:Node_JZ_gpu_p13_v100_16g , inst:Node_JZ_gpu_p13_v100_32g ;
+    hpc:hasQoS inst:qos_jz_gpu_t3 , inst:qos_jz_gpu_t4 , inst:qos_jz_gpu_dev ;
+    hpc:supportsCompiler hpc:GCC , hpc:IntelCompiler , hpc:NVCC .
+
+inst:Part_JZ_gpu_p2 rdf:type hpc:Partition ;
+    rdfs:label "Jean Zay – gpu_p2 V100 partition"@en ,
+               "Jean Zay – partition gpu_p2 V100"@fr ;
+    rdfs:comment "V100 partition with 8 GPUs per node: 20 gpu_p2s (384 GiB) + 11 gpu_p2l (768 GiB). QoS: qos_gpu-t3/t4/dev."@en ,
+                 "Partition V100 avec 8 GPU par nœud : 20 gpu_p2s (384 Gio) + 11 gpu_p2l (768 Gio). QoS : qos_gpu-t3/t4/dev."@fr ;
+    hpc:partitionName "gpu_p2" ;
+    hpc:partitionType "gpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:nodeCount 31 ;
+    hpc:totalCoresCount 744 ;
+    hpc:acceleratorCount 248 ;
+    hpc:maxWallTime "PT100H"^^xsd:duration ;
+    hpc:defaultWallTime "00:10:00" ;
+    hpc:usesNodeType inst:Node_JZ_gpu_p2s , inst:Node_JZ_gpu_p2l ;
+    hpc:hasQoS inst:qos_jz_gpu_t3 , inst:qos_jz_gpu_t4 , inst:qos_jz_gpu_dev ;
+    hpc:supportsCompiler hpc:GCC , hpc:IntelCompiler , hpc:NVCC .
+
+inst:Part_JZ_gpu_p5 rdf:type hpc:Partition ;
+    rdfs:label "Jean Zay – gpu_p5 A100 partition"@en ,
+               "Jean Zay – partition gpu_p5 A100"@fr ;
+    rdfs:comment "A100 partition (June 2022 extension). 52 nodes, 8×NVIDIA A100 80 GB per node. Select with '-C a100'. Max 20 h (no long QoS). QoS: qos_gpu_a100-t3 (20 h), qos_gpu_a100-dev (2 h)."@en ,
+                 "Partition A100 (extension juin 2022). 52 nœuds, 8×NVIDIA A100 80 Go par nœud. Sélection avec '-C a100'. 20 h max (pas de QoS longue). QoS : qos_gpu_a100-t3 (20 h), qos_gpu_a100-dev (2 h)."@fr ;
+    hpc:partitionName "gpu_p5" ;
+    hpc:partitionType "gpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:nodeCount 52 ;
+    hpc:totalCoresCount 3328 ;
+    hpc:acceleratorCount 416 ;
+    hpc:maxWallTime "PT20H"^^xsd:duration ;
+    hpc:defaultWallTime "00:10:00" ;
+    hpc:usesNodeType inst:Node_JZ_gpu_p5_a100 ;
+    hpc:hasQoS inst:qos_jz_gpu_a100_t3 , inst:qos_jz_gpu_a100_dev ;
+    hpc:supportsCompiler hpc:GCC , hpc:IntelCompiler , hpc:NVCC .
+
+inst:Part_JZ_gpu_p6 rdf:type hpc:Partition ;
+    rdfs:label "Jean Zay – gpu_p6 H100 partition"@en ,
+               "Jean Zay – partition gpu_p6 H100"@fr ;
+    rdfs:comment "H100 partition (July 2024 extension, Bull BullSequana XH3000). 364 nodes × 4 H100 80 GB = 1456 H100. Select with '-C h100'. QoS: qos_gpu_h100-t3 (20 h), -t4 (100 h), -dev (2 h)."@en ,
+                 "Partition H100 (extension juillet 2024, Bull BullSequana XH3000). 364 nœuds × 4 H100 80 Go = 1456 H100. Sélection avec '-C h100'. QoS : qos_gpu_h100-t3 (20 h), -t4 (100 h), -dev (2 h)."@fr ;
+    hpc:partitionName "gpu_p6" ;
+    hpc:partitionType "gpu" ;
+    hpc:allocatedFromQuota true ;
+    hpc:nodeCount 364 ;
+    hpc:totalCoresCount 34944 ;                            # 364×96
+    hpc:acceleratorCount 1456 ;                            # 364×4
+    hpc:maxWallTime "PT100H"^^xsd:duration ;
+    hpc:defaultWallTime "00:10:00" ;
+    hpc:usesNodeType inst:Node_JZ_gpu_p6_h100 ;
+    hpc:hasQoS inst:qos_jz_gpu_h100_t3 , inst:qos_jz_gpu_h100_t4 , inst:qos_jz_gpu_h100_dev ;
+    hpc:supportsCompiler hpc:GCC , hpc:IntelCompiler , hpc:NVCC .
+
+inst:Part_JZ_prepost rdf:type hpc:Partition ; 
+    rdfs:label "Jean Zay – prepost partition"@en ,
+               "Jean Zay – partition pré/post-traitement"@fr ;
+    rdfs:comment "Pre/post-processing partition, 4 large-memory nodes with one V100 each. Not deducted from the compute allocation. Default 2 h, max 20 h. The archive partition uses the same nodes."@en ,
+                 "Partition de pré/post-traitement, 4 nœuds à large mémoire avec un V100 chacun. Non décomptée de l'allocation. 2 h par défaut, 20 h max. La partition archive utilise les mêmes nœuds."@fr ;
+    hpc:partitionName "prepost" ;
+    hpc:partitionType "prepost" ;
+    hpc:allocatedFromQuota false ;
+    hpc:nodeCount 4 ;
+    hpc:totalCoresCount 192 ;
+    hpc:maxWallTime "PT20H"^^xsd:duration ;
+    hpc:defaultWallTime "02:00:00" ;
+    hpc:usesNodeType inst:Node_JZ_prepost .
+
+inst:Part_JZ_visu rdf:type hpc:Partition ;
+    rdfs:label "Jean Zay – visu partition"@en ,
+               "Jean Zay – partition visualisation"@fr ;
+    rdfs:comment "Visualization partition, 5 nodes, not deducted from the compute allocation. Default 10 min, max 4 h."@en ,
+                 "Partition de visualisation, 5 nœuds, non décomptée de l'allocation. 10 min par défaut, 4 h max."@fr ;
+    hpc:partitionName "visu" ;
+    hpc:partitionType "visualization" ;
+    hpc:allocatedFromQuota false ;
+    hpc:nodeCount 5 ;
+    hpc:totalCoresCount 200 ;
+    hpc:maxWallTime "PT4H"^^xsd:duration ;
+    hpc:defaultWallTime "00:10:00" ;
+    hpc:usesNodeType inst:Node_JZ_visu .
+
+inst:Part_JZ_frontend rdf:type hpc:Partition ; 
+    rdfs:label "Jean Zay – frontend partition"@en ,
+               "Jean Zay – partition frontale"@fr ;
+    rdfs:comment "Frontend/login nodes (SSH). NOT deducted from the compute allocation. Note: IDRIS also has compil, compil_h100 and archive service partitions, not modeled here."@en ,
+                 "Nœuds frontaux de connexion (SSH). NON décomptés de l'allocation. Note : l'IDRIS dispose aussi des partitions de service compil, compil_h100 et archive, non modélisées ici."@fr ;
+    hpc:partitionName "frontend" ;
+    hpc:partitionType "frontend" ;
+    hpc:allocatedFromQuota false ;
+    hpc:nodeCount 5 ;
+    hpc:totalCoresCount 200 ;  # 5 nodes x 40 coeurs per node
+    hpc:usesNodeType inst:Node_JZ_frontend .
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 8 – QUALITY OF SERVICE (QoS)
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Concrete Jean Zay QoS from jean_zay.json. Quotas and time limits are
+#      carried in rdfs:comment because the current ontology has no dedicated
+#      QoS quota datatype property. The partition-level hpc:maxWallTime
+#      already records the maximum.
+# FR – QoS concrètes de Jean Zay (jean_zay.json). Les quotas et limites de
+#      temps sont portés par rdfs:comment car l'ontologie n'a pas encore de
+#      propriété de quota dédiée à la QoS.
+###############################################################################
+
+inst:qos_jz_cpu_t3 rdf:type hpc:QoS  ;
+    rdfs:label "Jean Zay CPU Default QoS (t3)"@en ;
+    rdfs:comment "Default QoS for CPU jobs on Jean Zay with standard limits."@en ;
+    hpc:isDefaultQoS "true"^^xsd:boolean ;
+    hpc:maxWallTime "PT20H"^^xsd:duration ;          # 20 horas máximo
+    hpc:maxNodesPerJob 256 ;                        # 256 nodos (10240 cœurs physiques)
+    hpc:maxCoresPerJob 10240 ;
+    hpc:maxCoresPerUser 20480 ;                     # 512 nodos (20480 cœurs)
+    hpc:maxCoresPerProject 20480 .                  # 512 nodos (20480 cœurs)
+
+# long executions
+inst:qos_jz_cpu_t4 rdf:type hpc:QoS  ;
+    rdfs:label "Jean Zay CPU Long Jobs QoS (t4)"@en ;
+    rdfs:comment "QoS for longer executions up to 100h with restricted scale."@en ;
+    hpc:isDefaultQoS "false"^^xsd:boolean ;
+    hpc:maxWallTime "PT100H"^^xsd:duration ;         # 100 horas máximo
+    hpc:maxNodesPerJob 4 ;                          # 4 nodos (160 cœurs)
+    hpc:maxCoresPerJob 160 ;
+    hpc:maxCoresPerUser 640 ;                       # 16 nodos (640 cœurs)
+    hpc:maxCoresPerProject 640 .                    # 16 nodos (640 cœurs)
+
+# development and tests -
+inst:qos_jz_cpu_dev rdf:type hpc:QoS  ;
+    rdfs:label "Jean Zay CPU Development QoS (dev)"@en ;
+    rdfs:comment "QoS reserved for brief code developments and test executions."@en ;
+    hpc:isDefaultQoS "false"^^xsd:boolean ;
+    hpc:maxWallTime "PT2H"^^xsd:duration ;          # 2 horas máximo
+    hpc:maxNodesPerJob 128 ;                        # 128 nodos (5120 cœurs)
+    hpc:maxCoresPerJob 5120 ;
+    hpc:maxCoresPerUser 5120 ;                      # 128 nodos por usuario
+    hpc:maxCoresPerProject 5120 ;                   # 128 nodos por proyecto
+    hpc:maxJobsPerUser 10 .                         # Máximo 10 trabajos simultáneos
+
+# --- V100 GPU QoS instances ---
+# Default QoS for V100 GPU jobs.
+inst:qos_jz_gpu_t3 rdf:type hpc:QoS ;
+    rdfs:label "Jean Zay V100 GPU Default QoS (t3)"@en,
+        "QoS GPU V100 par défaut de Jean Zay (t3)"@fr ;
+    rdfs:comment "Default QoS for V100 GPU jobs, with a maximum elapsed wall time of 20 hours and limits of 640 GPUs per job, per user, and per project."@en,
+        "QoS par défaut pour les travaux GPU V100, avec une durée maximale écoulée de 20 heures et des limites de 640 GPU par travail, par utilisateur et par projet."@fr ;
+    hpc:isDefaultQoS true ;
+    hpc:maxWallTime "PT20H"^^xsd:duration ;
+    hpc:maxGpusPerJob 640 ;
+    hpc:maxGpusPerUser 640 ;
+    hpc:maxGpusPerProject 640 .
+
+# Extended wall-time QoS for V100 GPU jobs.
+inst:qos_jz_gpu_t4 rdf:type hpc:QoS ;
+    rdfs:label "Jean Zay V100 GPU Extended QoS (t4)"@en,
+        "QoS GPU V100 longue durée de Jean Zay (t4)"@fr ;
+    rdfs:comment "QoS for longer V100 GPU jobs, which must be explicitly requested. Maximum elapsed wall time is 100 hours, with limits of 16 GPUs per job, 96 GPUs per user, 96 GPUs per project, and 256 GPUs across all jobs using this QoS (not modeled in the instance)."@en,
+        "QoS pour les travaux GPU V100 de longue durée, qui doit être demandée explicitement. La durée maximale écoulée est de 100 heures, avec des limites de 16 GPU par travail, 96 GPU par utilisateur, 96 GPU par projet et 256 GPU pour l'ensemble des travaux utilisant cette QoS."@fr ;
+    hpc:isDefaultQoS false ;
+    hpc:maxWallTime "PT100H"^^xsd:duration ;
+    hpc:maxGpusPerJob 16 ;
+    hpc:maxGpusPerUser 96 ;
+    hpc:maxGpusPerProject 96 .
+
+# Development and testing QoS for V100 GPU jobs.
+inst:qos_jz_gpu_dev rdf:type hpc:QoS ;
+    rdfs:label "Jean Zay V100 GPU Development QoS"@en,
+        "QoS GPU V100 de développement de Jean Zay"@fr ;
+    rdfs:comment "QoS reserved for short V100 GPU development and testing jobs. Maximum elapsed wall time is 2 hours. Limits are 32 GPUs per job, per user, and per project, 10 simultaneous pending or running jobs per user, and 512 GPUs across all jobs using this QoS (maxGpusPerQoS, not modeled in the instance)."@en,
+        "QoS réservée aux travaux courts de développement et de test sur GPU V100. La durée maximale écoulée est de 2 heures. Les limites sont de 32 GPU par travail, par utilisateur et par projet, de 10 travaux simultanés en attente ou en cours d'exécution par utilisateur, et de 512 GPU pour l'ensemble des travaux utilisant cette QoS."@fr ;
+    hpc:isDefaultQoS false ;
+    hpc:maxWallTime "PT2H"^^xsd:duration ;
+    hpc:maxGpusPerJob 32 ;
+    hpc:maxGpusPerUser 32 ;
+    hpc:maxGpusPerProject 32 ;
+    hpc:maxJobsPerUser 10 .
+
+# --- A100 GPU QoS instances ---
+# Default QoS for A100 GPU jobs.
+inst:qos_jz_gpu_a100_t3 rdf:type hpc:QoS ;
+    rdfs:label "Jean Zay A100 GPU Default QoS (t3)"@en,
+        "QoS GPU A100 par défaut de Jean Zay (t3)"@fr ;
+    rdfs:comment "Default QoS for A100 GPU jobs, with a maximum elapsed wall time of 20 hours and limits of 128 GPUs per job, 256 GPUs per user, and 256 GPUs per project. No aggregate QoS GPU limit is specified in the supplied documentation."@en,
+        "QoS par défaut pour les travaux GPU A100, avec une durée maximale écoulée de 20 heures et des limites de 128 GPU par travail, 256 GPU par utilisateur et 256 GPU par projet. Aucun plafond global de GPU par QoS n'est indiqué dans la documentation fournie."@fr ;
+    hpc:isDefaultQoS true ;
+    hpc:maxWallTime "PT20H"^^xsd:duration ;
+    hpc:maxGpusPerJob 128 ;
+    hpc:maxGpusPerUser 256 ;
+    hpc:maxGpusPerProject 256 .
+
+# Development and testing QoS for A100 GPU jobs.
+inst:qos_jz_gpu_a100_dev rdf:type hpc:QoS ;
+    rdfs:label "Jean Zay A100 GPU Development QoS"@en,
+        "QoS GPU A100 de développement de Jean Zay"@fr ;
+    rdfs:comment "QoS reserved for short A100 GPU development and testing jobs. Maximum elapsed wall time is 2 hours. Limits are 32 GPUs per job, per user, and per project, 10 simultaneous pending or running jobs per user, and 128 GPUs across all jobs using this QoS (maxGpusPerQoS, not modeled in the instance)."@en,
+        "QoS réservée aux travaux courts de développement et de test sur GPU A100. La durée maximale écoulée est de 2 heures. Les limites sont de 32 GPU par travail, par utilisateur et par projet, de 10 travaux simultanés en attente ou en cours d'exécution par utilisateur, et de 128 GPU pour l'ensemble des travaux utilisant cette QoS."@fr ;
+    hpc:isDefaultQoS false ;
+    hpc:maxWallTime "PT2H"^^xsd:duration ;
+    hpc:maxGpusPerJob 32 ;
+    hpc:maxGpusPerUser 32 ;
+    hpc:maxGpusPerProject 32 ;
+    hpc:maxJobsPerUser 10 .
+
+# --- H100 GPU QoS instances ---
+# Default QoS for H100 GPU jobs.
+inst:qos_jz_gpu_h100_t3 rdf:type hpc:QoS ;
+    rdfs:label "Jean Zay H100 GPU Default QoS (t3)"@en,
+        "QoS GPU H100 par défaut de Jean Zay (t3)"@fr ;
+    rdfs:comment "Default QoS for H100 GPU jobs, with a maximum elapsed wall time of 20 hours and limits of 512 GPUs per job, per user, and per project. No aggregate QoS GPU limit is specified in the supplied documentation."@en,
+        "QoS par défaut pour les travaux GPU H100, avec une durée maximale écoulée de 20 heures et des limites de 512 GPU par travail, par utilisateur et par projet. Aucun plafond global de GPU par QoS n'est indiqué dans la documentation fournie."@fr ;
+    hpc:isDefaultQoS true ;
+    hpc:maxWallTime "PT20H"^^xsd:duration ;
+    hpc:maxGpusPerJob 512 ;
+    hpc:maxGpusPerUser 512 ;
+    hpc:maxGpusPerProject 512 .
+
+# Extended wall-time QoS for H100 GPU jobs.
+inst:qos_jz_gpu_h100_t4 rdf:type hpc:QoS ;
+    rdfs:label "Jean Zay H100 GPU Extended QoS (t4)"@en,
+        "QoS GPU H100 longue durée de Jean Zay (t4)"@fr ;
+    rdfs:comment "QoS for longer H100 GPU jobs, which must be explicitly requested. Maximum elapsed wall time is 100 hours, with limits of 16 GPUs per job, 64 GPUs per user, 64 GPUs per project, and 192 GPUs across all jobs using this QoS (maxGpusPerQoS, not modeled in the instance)."@en,
+        "QoS pour les travaux GPU H100 de longue durée, qui doit être demandée explicitement. La durée maximale écoulée est de 100 heures, avec des limites de 16 GPU par travail, 64 GPU par utilisateur, 64 GPU par projet et 192 GPU pour l'ensemble des travaux utilisant cette QoS."@fr ;
+    hpc:isDefaultQoS false ;
+    hpc:maxWallTime "PT100H"^^xsd:duration ;
+    hpc:maxGpusPerJob 16 ;
+    hpc:maxGpusPerUser 64 ;
+    hpc:maxGpusPerProject 64 .
+
+# Development and testing QoS for H100 GPU jobs.
+inst:qos_jz_gpu_h100_dev rdf:type hpc:QoS ;
+    rdfs:label "Jean Zay H100 GPU Development QoS"@en,
+        "QoS GPU H100 de développement de Jean Zay"@fr ;
+    rdfs:comment "QoS reserved for short H100 GPU development and testing jobs. Maximum elapsed wall time is 2 hours. Limits are 32 GPUs per job, per user, and per project, 10 simultaneous pending or running jobs per user, and 384 GPUs across all jobs using this QoS (maxGpusPerQoS, not modeled in the instance)."@en,
+        "QoS réservée aux travaux courts de développement et de test sur GPU H100. La durée maximale écoulée est de 2 heures. Les limites sont de 32 GPU par travail, par utilisateur et par projet, de 10 travaux simultanés en attente ou en cours d'exécution par utilisateur, et de 384 GPU pour l'ensemble des travaux utilisant cette QoS."@fr ;
+    hpc:isDefaultQoS false ;
+    hpc:maxWallTime "PT2H"^^xsd:duration ;
+    hpc:maxGpusPerJob 32 ;
+    hpc:maxGpusPerUser 32 ;
+    hpc:maxGpusPerProject 32 ;
+    hpc:maxJobsPerUser 10 .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 9 – FILE SYSTEM & STORAGE MOUNTS
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Jean Zay's shared storage is a Lustre file system. The legacy
+#      :JeanZayScratch record in hpc.ttl is contradictory (GPFS capacity +
+#      Lustre technology); here we provide a clean Lustre file system and the
+#      four user workspaces ($HOME, $WORK, $SCRATCH, $STORE).
+# FR – Le stockage partagé de Jean Zay est un système Lustre. L'enregistrement
+#      historique :JeanZayScratch dans hpc.ttl est contradictoire ; on fournit
+#      ici un système Lustre propre et les quatre espaces utilisateur.
+# Verified 2026-10-28 against the IDRIS 'Espaces disques' page. Quotas are DEFAULTS
+# (per user for HOME, per project for WORK/STORE) and can be raised on request.
+###############################################################################
+
+### check, isParallelis a property of FileSystemTechno?
+inst:FS_JeanZay_Lustre rdf:type hpc:FileSystem ;
+    rdfs:label "Jean Zay – Lustre parallel file system"@en ,
+               "Jean Zay – système de fichiers parallèle Lustre"@fr ;
+    rdfs:comment "Shared Lustre file system. Three storage tiers: 8.5 PB SSD, 44 PB rotating disks and 56 PB magnetic tape. Total throughput is not published as a single figure; per-space figures are in the mount comments."@en ,
+                 "Système de fichiers Lustre partagé. Trois niveaux : 8,5 Po SSD, 44 Po disques rotatifs, 56 Po bandes magnétiques. Pas de débit global publié ; les débits par espace sont dans les commentaires des montages."@fr ;
+    hpc:usesTechnology hpc:Lustre .
+
+inst:Mount_JZ_HOME rdf:type hpc:StorageMount ;
+    rdfs:label "Jean Zay – HOME"@en , "Jean Zay – HOME"@fr ;
+    rdfs:comment "Per-user home, backed up. Default quota 3 GB and 150k inodes per user."@en ,
+                 "Répertoire personnel par utilisateur, sauvegardé. Quota par défaut 3 Go et 150 k inodes par utilisateur."@fr ;
+    hpc:mountPath "$HOME" ;
+    hpc:quota "3 GB per user; 150000 inodes" ;
+    hpc:isPurged false ;
+    hpc:mountedOn inst:FS_JeanZay_Lustre .
+
+inst:Mount_JZ_WORK rdf:type hpc:StorageMount ;
+    rdfs:label "Jean Zay – WORK"@en , "Jean Zay – WORK"@fr ;
+    rdfs:comment "Per-project workspace on rotating disks (about 350 GB/s read, 300 GB/s write). Not purged, NOT backed up. Default quota 5 TB and 500k inodes per project."@en ,
+                 "Espace de travail par projet sur disques rotatifs (environ 350 Go/s en lecture, 300 Go/s en écriture). Non purgé, NON sauvegardé. Quota par défaut 5 To et 500 k inodes par projet."@fr ;
+    hpc:mountPath "$WORK" ;
+    hpc:quota "5 TB per project; 500000 inodes" ;
+    hpc:isPurged false ;
+    hpc:mountedOn inst:FS_JeanZay_Lustre .
+
+inst:Mount_JZ_SCRATCH rdf:type hpc:StorageMount ;
+    rdfs:label "Jean Zay – SCRATCH"@en , "Jean Zay – SCRATCH"@fr ;
+    rdfs:comment "SSD scratch (about 1.5 TB/s read, 1.1 TB/s write), 4.6 PB shared by all users, not backed up. Unused files (not read nor modified) are deleted after 30 days. Only very large safety quotas. $JOBSCRATCH (per-job directory) is not modeled."@en ,
+                 "Scratch SSD (environ 1,5 To/s en lecture, 1,1 To/s en écriture), 4,6 Po partagés par tous les utilisateurs, non sauvegardé. Les fichiers inutilisés (ni lus ni modifiés) sont supprimés après 30 jours. Quotas de sécurité très larges. $JOBSCRATCH (répertoire par job) non modélisé."@fr ;
+    hpc:mountPath "$SCRATCH" ;
+    hpc:isPurged true ;
+    hpc:mountedOn inst:FS_JeanZay_Lustre ;
+    hpc:hasStorageCapacity [
+        rdf:type hpc:StorageCapacity ;
+        hpc:hasValue "4.6"^^xsd:decimal ;
+        hpc:hasUnit "PB"
+    ] .
+
+inst:Mount_JZ_STORE rdf:type hpc:StorageMount ;
+    rdfs:label "Jean Zay – STORE"@en , "Jean Zay – STORE"@fr ;
+    rdfs:comment "Long-term archive (disk cache + magnetic tape), not backed up, not purged. Default quota 50 TB and 100k inodes per project. Since 22 July 2024 only reachable from frontends and prepost/archive/compil/visu partitions, NOT from compute nodes."@en ,
+                 "Archivage à long terme (cache disque + bandes), non sauvegardé, non purgé. Quota par défaut 50 To et 100 k inodes par projet. Depuis le 22 juillet 2024 accessible uniquement depuis les frontales et les partitions prepost/archive/compil/visu, PAS depuis les nœuds de calcul."@fr ;
+    hpc:mountPath "$STORE" ;
+    hpc:quota "50 TB per project; 100000 inodes" ;
+    hpc:isPurged false ;
+    hpc:mountedOn inst:FS_JeanZay_Lustre .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 10 – OPERATING SYSTEM
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+inst:OS_RHEL94 rdf:type hpc:OperatingSystem ;
+    rdfs:label "Red Hat Enterprise Linux 9.4"@en ,
+               "Red Hat Enterprise Linux 9.4"@fr ;
+    rdfs:comment "RHEL 9.4 deployed on Jean Zay since 01/04/2025."@en ,
+                 "RHEL 9.4 déployé sur Jean Zay depuis le 01/04/2025."@fr ;
+    hpc:softwareName "Red Hat Enterprise Linux" ;
+    hpc:osVersion "9.4" ;
+    hpc:vendor "Red Hat" .
+
+inst:OS_RHEL96 rdf:type hpc:OperatingSystem ;
+    rdfs:label "Red Hat Enterprise Linux 9.6"@en ,
+               "Red Hat Enterprise Linux 9.6"@fr ;
+    rdfs:comment "RHEL 9.6 deployed on Jean Zay since 17/02/2026 (RHEL 9.4 before). Slurm 23.11.3 since 01/10/2024."@en ,
+                 "RHEL 9.6 déployé sur Jean Zay depuis le 17/02/2026 (RHEL 9.4 auparavant). Slurm 23.11.3 depuis le 01/10/2024."@fr ;
+    hpc:softwareName "Red Hat Enterprise Linux" ;
+    hpc:osVersion "9.6" ;
+    hpc:vendor "Red Hat" .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 12 – MEMORY MODELS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ──── CPU RAM ─────────────────────────────────────────────────────────────────
+inst:Mem_DDR4_2933_192GiB rdf:type hpc:RAM ;
+    rdfs:label "192 GiB DDR4-2933 (Jean Zay CPU RAM)"@en ;
+    rdfs:comment "CPU RAM for Jean Zay cpu_p1, gpu_p13, visu and frontend nodes. 192 GiB per node."@en ,
+                 "RAM CPU pour les nœuds cpu_p1, gpu_p13, visu et frontaux de Jean Zay. 192 Gio par nœud."@fr ;
+    hpc:memoryModel "DDR4-2933" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "192"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_DDR4_2933_384GiB rdf:type hpc:RAM ;
+    rdfs:label "384 GiB DDR4-2933 (Jean Zay gpu_p2s node RAM)"@en ;
+    rdfs:comment "CPU RAM for Jean Zay gpu_p2s nodes. 384 GiB per node."@en ,
+                 "RAM CPU pour les nœuds gpu_p2s de Jean Zay. 384 Gio par nœud."@fr ;
+    hpc:memoryModel "DDR4-2933" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "384"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_DDR4_2933_768GiB rdf:type hpc:RAM ;
+    rdfs:label "768 GiB DDR4-2933 (Jean Zay gpu_p2l node RAM)"@en ;
+    rdfs:comment "CPU RAM for the large-memory Jean Zay gpu_p2l nodes. 768 GiB per node."@en ,
+                 "RAM CPU pour les nœuds gpu_p2l à grande mémoire de Jean Zay. 768 Gio par nœud."@fr ;
+    hpc:memoryModel "DDR4-2933" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "768"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_DDR4_3200_512GiB rdf:type hpc:RAM ;
+    rdfs:label "512 GiB DDR4-3200 (Jean Zay gpu_p5 A100 node RAM)"@en ;
+    rdfs:comment "CPU RAM for Jean Zay gpu_p5 A100 nodes. 512 GiB per node."@en ,
+                 "RAM CPU pour les nœuds gpu_p5 A100 de Jean Zay. 512 Gio par nœud."@fr ;
+    hpc:memoryModel "DDR4-3200" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "512"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_DDR5_512GiB rdf:type hpc:RAM ;
+    rdfs:label "512 GiB DDR5 (Jean Zay gpu_p6 H100 node RAM)"@en ;
+    rdfs:comment "CPU RAM for Jean Zay gpu_p6 H100 nodes. 512 GiB per node (468 GiB usable under Slurm). DDR5 assumed from the Sapphire Rapids platform."@en ,
+                 "RAM CPU pour les nœuds gpu_p6 H100 de Jean Zay. 512 Gio par nœud (468 Gio utiles sous Slurm). DDR5 déduite de la plateforme Sapphire Rapids."@fr ;
+    hpc:memoryModel "DDR5" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "512"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_DDR4_3TiB rdf:type hpc:RAM ;
+    rdfs:label "3 TiB DDR4 (Jean Zay prepost node RAM)"@en ;
+    rdfs:comment "CPU RAM of the prepost nodes, documented by IDRIS as 3 To per node. DDR4 assumed for Skylake."@en ,
+                 "RAM CPU des nœuds prepost, documentée par l'IDRIS à 3 To par nœud. DDR4 supposée pour Skylake."@fr ;
+    hpc:memoryModel "DDR4" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "3"^^xsd:decimal ;
+        hpc:hasUnit "TiB"
+    ] .
+
+# ──── GPU / Accelerator memory (HBM) ─────────────────────────────────────────
+inst:Mem_V100_HBM2_16GiB rdf:type hpc:HBMMemory ;
+    rdfs:label "16 GiB HBM2 (NVIDIA V100)"@en ;
+    rdfs:comment "HBM2 memory on the NVIDIA V100 SXM2 16 GB card."@en ,
+                 "Mémoire HBM2 sur la carte NVIDIA V100 SXM2 16 Go."@fr ;
+    hpc:memoryModel "HBM2" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "16"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_V100_HBM2_32GiB rdf:type hpc:HBMMemory ;
+    rdfs:label "32 GiB HBM2 (NVIDIA V100)"@en ;
+    rdfs:comment "HBM2 memory on the NVIDIA V100 SXM2 32 GB card."@en ,
+                 "Mémoire HBM2 sur la carte NVIDIA V100 SXM2 32 Go."@fr ;
+    hpc:memoryModel "HBM2" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "32"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_A100_HBM2e_80GiB rdf:type hpc:HBMMemory ;
+    rdfs:label "80 GiB HBM2e (NVIDIA A100)"@en ;
+    rdfs:comment "HBM2e memory on the NVIDIA A100 SXM4 80 GB card."@en ,
+                 "Mémoire HBM2e sur la carte NVIDIA A100 SXM4 80 Go."@fr ;
+    hpc:memoryModel "HBM2e" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "80"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_H100_HBM3_80GiB rdf:type hpc:HBMMemory ;
+    rdfs:label "80 GiB HBM3 (NVIDIA H100)"@en ;
+    rdfs:comment "HBM3 memory on the NVIDIA H100 SXM5 80 GB card."@en ,
+                 "Mémoire HBM3 sur la carte NVIDIA H100 SXM5 80 Go."@fr ;
+    hpc:memoryModel "HBM3" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "80"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 12 – QUANTITATIVE VALUES
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ──── Clock frequencies ──────────────────────────────────────────────────────
+inst:Freq_2_1GHz rdf:type hpc:Frequency ; hpc:hasValue "2.1"^^xsd:decimal ; hpc:hasUnit "GHz" .
+inst:Freq_2_5GHz rdf:type hpc:Frequency ; hpc:hasValue "2.5"^^xsd:decimal ; hpc:hasUnit "GHz" .
+inst:Freq_2_7GHz rdf:type hpc:Frequency ; hpc:hasValue "2.7"^^xsd:decimal ; hpc:hasUnit "GHz" .
+inst:Freq_2_8GHz rdf:type hpc:Frequency ; hpc:hasValue "2.8"^^xsd:decimal ; hpc:hasUnit "GHz" .
+inst:Freq_3_2GHz rdf:type hpc:Frequency ; hpc:hasValue "3.2"^^xsd:decimal ; hpc:hasUnit "GHz" .
+
+# ──── Interconnect bandwidths ─────────────────────────────────────────────────
+inst:BW_100Gbps rdf:type hpc:Bandwidth ; hpc:hasValue "100"^^xsd:decimal ; hpc:hasUnit "Gb/s" .
+inst:BW_400Gbps rdf:type hpc:Bandwidth ; hpc:hasValue "400"^^xsd:decimal ; hpc:hasUnit "Gb/s" .
+
+# ──── Peak performance values ─────────────────────────────────────────────────
+inst:Perf_JZ_125PFlops rdf:type hpc:PeakPerformance ;
+    rdfs:label "Jean Zay – 125.9 PFlop/s peak (since July 2024)"@en ,
+               "Jean Zay – 125,9 PFlop/s crête (depuis juillet 2024)"@fr ;
+    hpc:hasValue "125.9"^^xsd:decimal ;
+    hpc:hasUnit "PFlop/s" .
+
+###############################################################################
+# END OF IDRIS / JEAN ZAY INSTANCES
+###############################################################################

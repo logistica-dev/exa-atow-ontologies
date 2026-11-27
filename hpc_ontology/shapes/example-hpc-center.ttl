@@ -1,0 +1,120 @@
+###############################################################################
+# Example: a MINIMAL VALID HPC Center instance
+#
+# This file is a template for anyone creating a new :HPCCenter.
+# It validates against shapes/hpc-shapes.ttl with 0 violations.
+#
+# Run:  python3 validate.py --data example-hpc-center.ttl
+###############################################################################
+
+@prefix :    <https://w3id.org/Exa-AToW/hpc#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix inst: <https://w3id.org/Exa-AToW/hpc/instances/> .
+
+# ─── Institution ─────────────────────────────────────────────────────────────
+inst:Org_Example a :Organization ;
+    rdfs:label "Example Computing Institute"@en , "Institut de calcul exemple"@fr ;
+    :website "https://example.org"^^xsd:anyURI .
+
+inst:Fund_Example a :FundingAgency ;
+    rdfs:label "Example National Funding Agency"@en .
+
+# ─── The HPC center ──────────────────────────────────────────────────────────
+inst:Center_Example a :HPCCenter ;
+    rdfs:label "Example HPC Center"@en , "Centre HPC exemple"@fr ;
+    :location "Example City (Country)" ;
+    :operatedBy inst:Org_Example ;
+    :fundedBy inst:Fund_Example ;
+    :website "https://example.org/hpc"^^xsd:anyURI ;
+    :shortName "EXHPC" ;
+    :hosts inst:SC_Example ;
+    :hasStorageMount inst:Mount_Example .
+
+# ─── Supercomputer ───────────────────────────────────────────────────────────
+inst:SC_Example a :Supercomputer ;
+    rdfs:label "Example Supercomputer"@en ;
+    :hostedAt inst:Center_Example ;
+    :usesResourceManager :SLURM ;
+    :runsOS inst:OS_Example ;
+    :supportsCompiler :GCC ;
+    :usesFileSystem inst:FS_Example ;
+    :hasPartition inst:Part_Example ;
+    :commissioningDate "2025-01-15"^^xsd:date ;
+    :nodeCount 100 ;
+    :totalCoresCount 12800 ;
+    :computerBrand "ExampleVendor" ;
+    :model "EX-1" .
+
+# ─── Partition ───────────────────────────────────────────────────────────────
+inst:Part_Example a :Partition ;
+    rdfs:label "Example CPU partition"@en ;
+    :partitionName "cpu" ;
+    :partitionType "cpu" ;
+    :allocatedFromQuota true ;
+    :usesNodeType inst:Node_Example ;
+    :nodeCount 100 ;
+    :totalCoresCount 12800 ;
+    :maxWallTime "PT24H"^^xsd:duration ;
+    :hasQoS inst:QoS_Example ;
+    :hasTotalScalarMemory [
+        a :MemoryCapacity ;
+        :hasValue "22800"^^xsd:decimal ;
+        :hasUnit "GB"
+    ] .
+
+# ─── Compute node + components ───────────────────────────────────────────────
+inst:Node_Example a :ScalarNode ;
+    rdfs:label "Example scalar node"@en ;
+    :coresCountPerNode 128 ;
+    :belongsToPartition inst:Part_Example ;
+    :hasCPUComponent [
+        a :CPUComponent ;
+        :refersToModel inst:CPU_Example ;
+        :quantity 2
+    ] ;
+    :hasMemoryComponent [
+        a :MemoryComponent ;
+        :refersToModel inst:Mem_Example ;
+        :quantity 1
+    ] .
+
+inst:CPU_Example a :CPU ;
+    rdfs:label "Example 64-core CPU"@en ;
+    :vendor "ExampleVendor" ;
+    :architecture "ExampleArch" ;
+    :coresCountPerSocket 64 ;
+    :threadCount 128 ;
+    :hasFrequency [ a :Frequency ; :hasValue "2.6"^^xsd:decimal ; :hasUnit "GHz" ] .
+
+inst:Mem_Example a :RAM ;
+    rdfs:label "Example node RAM 228 GB"@en ;
+    :memoryModel "DDR4" ;
+    :hasMemoryCapacity [ a :MemoryCapacity ; :hasValue "228"^^xsd:decimal ; :hasUnit "GB" ] .
+
+# ─── QoS ─────────────────────────────────────────────────────────────────────
+inst:QoS_Example a :QoS ;
+    rdfs:label "Example default QoS"@en ;
+    :isDefaultQoS true ;
+    :maxWallTime "PT24H"^^xsd:duration ;
+    :maxNodesPerJob 100 ;
+    :maxCoresPerJob 12800 .
+
+# ─── Storage ─────────────────────────────────────────────────────────────────
+inst:FS_Example a :FileSystem ;
+    rdfs:label "Example SCRATCH (Lustre)"@en ;
+    :usesTechnology :Lustre ;
+    :isParallel true ;
+    :hasThroughput [ a :Throughput ; :hasValue "300"^^xsd:decimal ; :hasUnit "GB/s" ] .
+
+inst:Mount_Example a :StorageMount ;
+    rdfs:label "Example SCRATCH mount"@en ;
+    :mountPath "$SCRATCH" ;
+    :mountedOn inst:FS_Example ;
+    :quota "100 TB/group" ;
+    :isPurged true .
+
+# ─── Operating system ────────────────────────────────────────────────────────
+inst:OS_Example a :OperatingSystem ;
+    rdfs:label "Example Linux distribution"@en ;
+    :osVersion "1.0" .

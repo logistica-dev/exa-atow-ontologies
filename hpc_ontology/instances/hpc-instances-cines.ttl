@@ -1,0 +1,721 @@
+###############################################################################
+# HPC Resource Ontology – CINES INSTANCES 
+# Center: CINES (Montpellier)  –  System: Adastra (HPE Cray EX4000)
+#
+# File    : hpc-instances-cines.ttl
+# Status  : CINES-only instances
+# Version : 1.0
+# Date    : 2026-10-28
+#
+# Scope
+# -----
+# This file contains ONLY the CINES / Adastra individuals. 
+#
+# It imports the shared ontology (hpc.ttl -> hpc-core.ttl) and the centers
+# file (hpc-centers.ttl) which defines Center_CINES, Org_CINES, Org_GENCI, ...
+#
+#
+# Sources
+# -------
+#   https://www.cines.fr/calcul/adastra/
+#   https://dci.dci-gitlab.cines.fr/webextranet/architecture/index.html
+#
+# Authors : Exa-AToW team - CH
+###############################################################################
+
+@prefix hpc:      <https://w3id.org/Exa-AToW/hpc#> .
+@prefix owl:      <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:      <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:     <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:     <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix dc:       <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms:  <http://purl.org/dc/terms/> .
+@prefix schema:   <https://schema.org/> .
+@prefix inst:     <https://w3id.org/Exa-AToW/hpc/instances/> .
+
+<https://w3id.org/Exa-AToW/hpc/instances/hpc-instances-cines.ttl>
+    rdf:type owl:Ontology ;
+    owl:imports <https://w3id.org/Exa-AToW/hpc/instances/hpc-centers.ttl> ,
+                <https://w3id.org/Exa-AToW/hpc/hpc.ttl> ;
+    rdfs:label "Exa-AToW HPC Instances – CINES (Adastra)"@en ,
+               "Exa-AToW Instances HPC – CINES (Adastra)"@fr ;
+    dc:description "CINES-only instance set: the Adastra supercomputer at CINES, its processors, cards, compute node types, partitions, storage, operating system and quantitative values."@en ;
+    owl:versionInfo "1.0" .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 1 – LINKS CENTER → INFRASTRUCTURE
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Center_CINES is defined in hpc-centers.ttl (imported). Here only its
+#      outgoing links to the system and the user storage mounts.
+# FR – Center_CINES est défini dans hpc-centers.ttl (importé). Ici uniquement
+#      ses liens vers le système et les points de montage utilisateur.
+###############################################################################
+
+inst:Center_CINES hpc:hosts inst:SC_Adastra ;
+    hpc:hasStorageMount inst:Mount_Adastra_HOME ,
+                             inst:Mount_Adastra_SCRATCH ,
+                             inst:Mount_Adastra_WORK ,
+                             inst:Mount_Adastra_STORE .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 2 – SUPERCOMPUTER
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Adastra is an HPE Cray EX4000 at CINES, Montpellier. Scalar partition
+#      (AMD Genoa), accelerated partition (AMD Trento + MI250X) and APU
+#      partition (Adastra2 / MI300A). ~79.9 PFlop/s peak total (sum of the partition peaks). SLURM. 
+# FR – Adastra est un HPE Cray EX4000 au CINES à Montpellier. Partition
+#      scalaire (AMD Genoa), accélérée (AMD Trento + MI250X) et APU
+#      (Adastra2 / MI300A). ~79,9 PFlop/s crête (somme des crêtes des partitions). SLURM.
+###############################################################################
+
+inst:SC_Adastra rdf:type hpc:Supercomputer ;
+    rdfs:label "Adastra"@en , "Adastra"@fr ;
+    rdfs:comment "HPE Cray EX4000 supercomputer at CINES. Scalar partition (AMD Genoa) + accelerated partition (AMD Trento + MI250X) + APU partition (Adastra2/MI300A). Direct liquid cooling (DLC). ~79.9 PFlop/s theoretical Binary64 peak (sum of the three partition peaks published by CINES: 4.01 + 68.9 + 6.98). Ranked 3rd on Green500 in 2022."@en ,
+                 "Supercalculateur HPE Cray EX4000 au CINES. Partition scalaire (AMD Genoa) + partition accélérée (AMD Trento + MI250X) + partition APU (Adastra2/MI300A). Refroidissement liquide direct (DLC). ~79,9 PFlop/s crête théorique Binary64 (somme des trois crêtes de partition publiées par le CINES : 4,01 + 68,9 + 6,98). Classé 3e au Green500 en 2022."@fr ;
+    hpc:shortName "adastra" ;
+    hpc:identifier "adastra.cines.fr" ;
+    hpc:hostedAt inst:Center_CINES ;
+    hpc:commissioningDate "2022-09-01"^^xsd:date ;
+    hpc:documentationURL "https://www.cines.fr/calcul/adastra/"^^xsd:anyURI ;
+    dcterms:source <https://dci.dci-gitlab.cines.fr/webextranet/architecture/index.html> ,
+                   <https://www.cines.fr/calcul/adastra/> ;
+    hpc:usesResourceManager hpc:SLURM ;
+    hpc:runsOS inst:OS_RHEL88 ;
+    hpc:usesFileSystem inst:FS_Adastra_Lustre ;
+    hpc:fundedBy inst:Org_GENCI ;
+    hpc:supportsCompiler hpc:GCC , hpc:AOCC , hpc:CrayCC ;
+    hpc:hasPartition inst:Part_Adastra_scalar ,
+                           inst:Part_Adastra_gpu ,
+                           inst:Part_Adastra_apu ,
+                           inst:Part_Adastra_visu ,
+                           inst:Part_Adastra_frontend ;
+    hpc:hasPeakPerformance inst:Perf_Adastra_80PFlops ;
+    hpc:computerBrand "HPE" ;
+    hpc:model "Cray EX4000" ;
+    hpc:frontendNodeCount 10 ;
+    # Total: 928 = 544 scalar + 356 GPU + 28 APU (not counting 12 visu + 10 frontend)
+    hpc:nodeCount 928 ;
+    # 544×192 (Scalar) + 356×64 (Accelerated) + 28×96 (APU)
+    hpc:totalCoresCount 129920 .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 3 – PROCESSORS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ────────── CPUs ──────────────────────────────────────────────────────────────
+
+inst:CPU_AMD_EPYC7A53_Trento rdf:type hpc:CPU ;
+    rdfs:label "AMD EPYC 7A53 Trento Adastra accelerated"@en ;
+    rdfs:comment "64-core AMD Trento CPU at 2.0 GHz. CPU of Adastra MI250X accelerated nodes."@en ,
+                 "CPU AMD Trento 64 cœurs à 2.0 GHz. CPU des nœuds accélérés MI250X d'Adastra."@fr ;
+    hpc:vendor "AMD" ;
+    hpc:model "AMD EPYC 7A53" ;
+    hpc:architecture "Trento / Zen 3" ;
+    hpc:coresCountPerSocket 64 ;
+    hpc:threadCount 128 ;
+    hpc:hasFrequency inst:Freq_2GHz .
+
+inst:CPU_AMD_EPYC9654_Genoa rdf:type hpc:CPU ;
+    rdfs:label "AMD EPYC 9654 (Genoa)"@en ;
+    rdfs:comment "AMD Genoa CPU with 96 cores at 2.4 GHz (boost 3.7 GHz). Used in Adastra scalar nodes (768 GiB DDR5), visualization/prepost nodes (2048 GiB DDR5) and frontend nodes (512 GiB DDR5)."@en ,
+                 "CPU AMD Genoa 96 cœurs à 2,4 GHz (boost 3,7 GHz). Utilisé dans les nœuds scalaires (768 Gio DDR5), visualisation/pré-post (2048 Gio DDR5) et frontaux (512 Gio DDR5) d'Adastra."@fr ;
+    hpc:vendor "AMD" ;
+    hpc:model "AMD EPYC 9654" ;
+    hpc:architecture "Genoa / Zen 4" ;
+    hpc:coresCountPerSocket 96 ;
+    hpc:threadCount 192 ;
+    hpc:hasFrequency inst:Freq_2_4GHz .
+
+# ────────── GPUs ──────────────────────────────────────────────────────────────
+
+inst:GPU_AMDInstinctMI250X rdf:type hpc:GPU ;
+    rdfs:label "AMD Instinct MI250X (die)"@en ;
+    rdfs:comment "AMD CDNA2 (Aldebaran) GPU die. Each physical MI250X OAM card contains 2 GCDs (Graphics Compute Dies), each appearing as an independent device to the OS/ROCm runtime. 64 GB HBM2e per GCD = 128 GB per card."@en ,
+                 "Die GPU AMD CDNA2 (Aldebaran). Chaque carte physique MI250X OAM contient 2 GCDs (Graphics Compute Dies), chacun apparaissant comme un dispositif indépendant pour l'OS/ROCm runtime. 64 Go HBM2e par GCD = 128 Go par carte."@fr ;
+    hpc:vendor "AMD" ;
+    hpc:model "Instinct MI250X" ;
+    hpc:architecture "CDNA2 / Aldebaran" .
+
+inst:GPU_AMDInstinctMI300A rdf:type hpc:GPU ;
+    rdfs:label "AMD Instinct MI300A (APU die)"@en ;
+    rdfs:comment "AMD CDNA3 APU die integrating 24 Zen4 CPU cores + GPU compute dies + 128 GB HBM3 (unified CPU+GPU memory). Each Adastra2 node has 4 MI300A packages = 96 CPU cores + 512 GB HBM3 total per node."@en ,
+                 "Die APU AMD CDNA3 intégrant 24 cœurs CPU Zen4 + dies de calcul GPU + 128 Go HBM3 (mémoire unifiée CPU+GPU). Chaque nœud Adastra2 dispose de 4 packages MI300A = 96 cœurs CPU + 512 Go HBM3 total par nœud."@fr ;
+    hpc:vendor "AMD" ;
+    hpc:model "Instinct MI300A" ;
+    hpc:architecture "CDNA3" ;
+    hpc:coresCount 24 ;
+    hpc:hasFrequency inst:Freq_2_1GHz .
+
+inst:GPU_NvidiaL40 rdf:type hpc:GPU ;
+    rdfs:label "NVIDIA L40"@en ;
+    rdfs:comment "NVIDIA Ada Lovelace L40 GPU. 48 GB GDDR6 memory. Used in Adastra visualization/prepost nodes (2 L40 per node)."@en ,
+                 "GPU NVIDIA Ada Lovelace L40. 48 Go GDDR6. Utilisé dans les nœuds de visualisation/pré-post d'Adastra (2 L40 par nœud)."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "L40" ;
+    hpc:architecture "Ada Lovelace" .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 4 – ACCELERATOR CARDS
+# ══════════════════════════════════════════════════════════════════════════════
+# Cards are the unit of allocation; memory is modeled at card level.
+###############################################################################
+
+inst:Card_MI250X rdf:type hpc:AcceleratorCard ;
+    rdfs:label "AMD Instinct MI250X OAM card"@en ;
+    rdfs:comment "AMD OAM (Open Accelerator Module) MI250X card used in Adastra EX235a blades. Contains 2 GCDs, each with 64 GiB HBM2e = 128 GiB total per card. Each card has its own Slingshot NIC. ROCm detects each GCD as an independent GPU device."@en ,
+                 "Carte AMD OAM MI250X utilisée dans les lames Adastra EX235a. Contient 2 GCDs, chacun avec 64 Gio HBM2e = 128 Gio total par carte. Chaque carte dispose de son propre NIC Slingshot. ROCm détecte chaque GCD comme un dispositif GPU indépendant."@fr ;
+    hpc:vendor "AMD" ;
+    hpc:model "Instinct MI250X OAM" ;
+    hpc:acceleratorUnitsPerCard 2 ;   # 2 GCDs per physical card
+    hpc:hostsAccelerator inst:GPU_AMDInstinctMI250X ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_MI250X_HBM_128GiB ;
+        hpc:quantity 1
+    ] .
+
+inst:Card_MI300A rdf:type hpc:AcceleratorCard ;
+    rdfs:label "AMD Instinct MI300A APU package"@en ;
+    rdfs:comment "AMD MI300A APU with integrated CPU (24-core Zen4) + GPU (CDNA3) silicon. 128 GiB HBM3 unified shared memory between CPU and GPU on the same package. Used in Adastra2 (28 nodes × 4 packages)."@en ,
+                 "APU AMD MI300A avec CPU (24 cœurs Zen4) + GPU (CDNA3) intégrés. 128 Gio HBM3 mémoire partagée unifiée entre CPU et GPU sur le même package. Utilisé dans Adastra2 (28 nœuds × 4 packages)."@fr ;
+    hpc:vendor "AMD" ;
+    hpc:model "Instinct MI300A" ;
+    hpc:hostsAccelerator inst:GPU_AMDInstinctMI300A ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_MI300A_HBM_128GiB ;
+        hpc:quantity 1
+    ] .
+
+inst:Card_NvidiaL40 rdf:type hpc:AcceleratorCard ;
+    rdfs:label "NVIDIA L40 card"@en ;
+    rdfs:comment "NVIDIA L40 48 GB GDDR6 card used in Adastra visualization/prepost nodes. Designed for professional visualization and media workloads."@en ,
+                 "Carte NVIDIA L40 48 Go GDDR6 utilisée dans les nœuds de visualisation/pré-post d'Adastra."@fr ;
+    hpc:vendor "NVIDIA" ;
+    hpc:model "L40" ;
+    hpc:acceleratorUnitsPerCard 1 ;
+    hpc:hostsAccelerator inst:GPU_NvidiaL40 ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_NvidiaL40_48GiB ;
+        hpc:quantity 1
+    ] .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 5 – COMPUTE NODES (node TYPES)
+# ══════════════════════════════════════════════════════════════════════════════
+# Representative node TYPES referenced by partitions (not individual nodes).
+###############################################################################
+
+# ──── Scalar node (Genoa) ─────────────────────────────────────────────────────
+# 544 nodes. 2× AMD EPYC 9654 (96 cores each) = 192 cores/node.
+# 768 GiB DDR5-4800. 1× Slingshot 200 Gb/s NIC.
+# Nominal node power: ~945 W.
+inst:Node_Adastra_Scalar rdf:type hpc:ScalarNode ;
+    rdfs:label "Adastra – scalar node type (AMD Genoa)"@en ,
+               "Adastra – type nœud scalaire (AMD Genoa)"@fr ;
+    rdfs:comment "544 scalar nodes (HPE Cray EX blades). 2×AMD EPYC 9654 Genoa (192 CPU cores/node), 768 GiB DDR5-4800, 1×Slingshot 11 NIC 200 Gb/s. Zen4 architecture with AVX-512 (emulated via AVX2). ~7.37 TFlop/s per node."@en ,
+                 "544 nœuds scalaires (lames HPE Cray EX). 2×AMD EPYC 9654 Genoa (192 cœurs CPU/nœud), 768 Gio DDR5-4800, 1×NIC Slingshot 11 200 Gb/s. Architecture Zen4 avec AVX-512 (émulé via AVX2). ~7,37 TFlop/s par nœud."@fr ;
+    hpc:coresCountPerNode 192 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_AMD_EPYC9654_Genoa ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR5_4800_768GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_Slingshot11_200G ;
+        hpc:linkCount 1
+    ] ;
+    hpc:hasNominalPower [
+        rdf:type hpc:NominalPower ;
+        hpc:hasValue "945"^^xsd:decimal ;
+        hpc:hasUnit "W"
+    ] ;
+    hpc:belongsToPartition inst:Part_Adastra_scalar .
+
+# ──── GPU node (MI250X) ───────────────────────────────────────────────────────
+# 356 nodes. 1× AMD EPYC 7A53 Trento (64 cores). 256 GiB DDR4-3200.
+# 4× MI250X cards (each with 2 GCDs = 8 GCDs visible per node).
+# 4× Slingshot NICs. Nominal node power: ~2670 W.
+inst:Node_Adastra_GPU rdf:type hpc:AcceleratedNode ;
+    rdfs:label "Adastra – accelerated MI250X node type"@en ,
+               "Adastra – type nœud accéléré MI250X"@fr ;
+    rdfs:comment "356 accelerated nodes (HPE Cray EX235a blades). 1×AMD EPYC 7A53 Trento (64 cores), 256 GiB DDR4-3200, 4×AMD Instinct MI250X OAM (8 GCDs visible per node, 512 GiB HBM2e total). 4×Slingshot 11 NICs = 800 Gb/s injection bandwidth. ROCm programming stack. ~191.6 TFlop/s per node (FP64)."@en ,
+                 "356 nœuds accélérés (lames HPE Cray EX235a). 1×AMD EPYC 7A53 Trento (64 cœurs), 256 Gio DDR4-3200, 4×AMD Instinct MI250X OAM (8 GCDs visibles par nœud, 512 Gio HBM2e total). 4×NICs Slingshot 11 = 800 Gb/s de bande passante d'injection. Pile ROCm. ~191,6 TFlop/s par nœud (FP64)."@fr ;
+    hpc:coresCountPerNode 64 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_AMD_EPYC7A53_Trento ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR4_3200_256GiB ;
+        hpc:quantity 1
+    ] ;
+    # 4 physical MI250X cards per node; each card has 2 GCDs = 8 GCDs visible to OS/ROCm
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_MI250X ;
+        hpc:quantity 4
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_Slingshot11_200G ;
+        hpc:linkCount 4
+    ] ;
+    hpc:hasNominalPower [
+        rdf:type hpc:NominalPower ;
+        hpc:hasValue "2670"^^xsd:decimal ;
+        hpc:hasUnit "W"
+    ] ;
+    hpc:belongsToPartition inst:Part_Adastra_gpu .
+
+# ──── APU node (MI300A) — Adastra2 ───────────────────────────────────────────
+# 28 nodes. 4× AMD MI300A packages per node.
+# Per node: 96 CPU cores, 512 GiB HBM3 unified, 4× Slingshot NICs.
+inst:Node_Adastra_APU rdf:type hpc:AcceleratedNode ;
+    rdfs:label "Adastra2 – MI300A APU node type"@en ,
+               "Adastra2 – type nœud APU MI300A"@fr ;
+    rdfs:comment "28 APU nodes (Adastra2, Oct 2023, HPE Cray EX255a blades). 4×AMD MI300A per node: integrated CPU (24-core Zen4 per package = 96 CPU cores/node) + GPU (CDNA3) + 128 GiB HBM3 unified memory per package = 512 GiB HBM3 total per node. No separate DDR RAM. 4×Slingshot 11 NICs (1 per MI300A) = 800 Gb/s. Ranked 3rd Green500 Nov 2024."@en ,
+                 "28 nœuds APU (Adastra2, oct. 2023, lames HPE Cray EX255a). 4×AMD MI300A par nœud : CPU intégré (24 cœurs Zen4 par package = 96 cœurs CPU/nœud) + GPU (CDNA3) + 128 Gio HBM3 mémoire unifiée par package = 512 Gio HBM3 total par nœud. Pas de RAM DDR séparée. 4×NICs Slingshot 11 (1 par MI300A) = 800 Gb/s. Classé 3e Green500 nov. 2024."@fr ;
+    hpc:coresCountPerNode 96 ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_MI300A ;
+        hpc:quantity 4
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_Slingshot11_200G ;
+        hpc:linkCount 4
+    ] ;
+    hpc:belongsToPartition inst:Part_Adastra_apu .
+    # NOTE: no hasCPUComponent — CPU is embedded in MI300A package.
+    # NOTE: no hasMemoryComponent (RAM) — HBM3 is the sole memory.
+
+# ──── Visualization / prepost node ───────────────────────────────────────────
+# 12 nodes. 2× AMD EPYC 9654 Genoa (192 cores/node). 2048 GiB DDR5-4800.
+# 2× NVIDIA L40 (48 GiB GDDR6 each). 1× Slingshot NIC. Not deducted from quota.
+inst:Node_Adastra_Visu rdf:type hpc:VisualizationNode ;
+    rdfs:label "Adastra – visualization/prepost node type"@en ,
+               "Adastra – type nœud visualisation/pré-post"@fr ;
+    rdfs:comment "12 visualization and pre/post-processing nodes (HPE Cray ProLiant DL385 Gen11). 2×AMD EPYC 9654 Genoa (192 cores/node), 2048 GiB DDR5-4800, 2×NVIDIA L40 (48 GiB GDDR6 each). 1×Slingshot 11 NIC. NOT deducted from compute allocation."@en ,
+                 "12 nœuds de visualisation et pré/post-traitement (HPE Cray ProLiant DL385 Gen11). 2×AMD EPYC 9654 Genoa (192 cœurs/nœud), 2048 Gio DDR5-4800, 2×NVIDIA L40 (48 Gio GDDR6 chacun). 1×NIC Slingshot 11. NON décompté de l'allocation de calcul."@fr ;
+    hpc:coresCountPerNode 192 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_AMD_EPYC9654_Genoa ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR5_4800_2048GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasAcceleratorCardComponent [
+        rdf:type hpc:AcceleratorCardComponent ;
+        hpc:refersToModel inst:Card_NvidiaL40 ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_Slingshot11_200G ;
+        hpc:linkCount 1
+    ] ;
+    hpc:belongsToPartition inst:Part_Adastra_visu .
+
+# ──── Frontend / transfer node ───────────────────────────────────────────────
+# 10 nodes. 2× AMD EPYC 9654 Genoa (192 cores/node). 512 GiB DDR5-4800.
+# 1× Slingshot NIC. 4× 1.6 TiB SAS SSD in RAID10 = 3.2 TiB usable.
+inst:Node_Adastra_Frontend rdf:type hpc:FrontendNode ;
+    rdfs:label "Adastra – frontend/transfer node type"@en ,
+               "Adastra – type nœud frontal/transfert"@fr ;
+    rdfs:comment "10 frontend and transfer nodes. 2×AMD EPYC 9654 Genoa (192 cores/node), 512 GiB DDR5-4800, 1×Slingshot 11 NIC 200 Gb/s, 4×1.6 TiB SAS MU SSD (RAID10 = 3.2 TiB usable). Used for SSH access, job submission, and data transfers. NOT deducted from compute allocation."@en ,
+                 "10 nœuds frontaux et de transfert. 2×AMD EPYC 9654 Genoa (192 cœurs/nœud), 512 Gio DDR5-4800, 1×NIC Slingshot 11 200 Gb/s, 4×1,6 Tio SSD SAS MU (RAID10 = 3,2 Tio utiles). Utilisés pour l'accès SSH, la soumission de tâches et les transferts de données. NON décompté de l'allocation de calcul."@fr ;
+    hpc:coresCountPerNode 192 ;
+    hpc:hasCPUComponent [
+        rdf:type hpc:CPUComponent ;
+        hpc:refersToModel inst:CPU_AMD_EPYC9654_Genoa ;
+        hpc:quantity 2
+    ] ;
+    hpc:hasMemoryComponent [
+        rdf:type hpc:MemoryComponent ;
+        hpc:refersToModel inst:Mem_DDR5_4800_512GiB ;
+        hpc:quantity 1
+    ] ;
+    hpc:hasInterconnectComponent [
+        rdf:type hpc:InterconnectComponent ;
+        hpc:refersToModel inst:IC_Slingshot11_200G ;
+        hpc:linkCount 1
+    ] ;
+    hpc:hasComponent [
+        rdf:type hpc:StorageComponent ;
+        hpc:refersToModel inst:Storage_SAS_SSD_1_6TiB ;
+        hpc:quantity 4
+    ] ;
+    hpc:belongsToPartition inst:Part_Adastra_frontend .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 6 – INTERCONNECT
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+inst:IC_Slingshot11_200G rdf:type hpc:Slingshot ;
+    rdfs:label "HPE Cray Slingshot 11 – 200 Gb/s"@en ,
+               "HPE Cray Slingshot 11 – 200 Gb/s"@fr ;
+    rdfs:comment "HPE Cray Slingshot 11 high-speed interconnect with dragonfly topology and adaptive routing. 200 Gb/s per NIC port. Used in all Adastra nodes. Accelerated nodes have 4 NICs (one per MI250X card) = 800 Gb/s total injection bandwidth per node."@en ,
+                 "Interconnexion HPE Cray Slingshot 11 haute vitesse avec topologie dragonfly et routage adaptatif. 200 Gb/s par port NIC. Utilisé sur tous les nœuds d'Adastra. Les nœuds accélérés ont 4 NICs (un par carte MI250X) = 800 Gb/s de bande passante totale par nœud."@fr ;
+    hpc:hasBandwidth inst:BW_200Gbps .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 7 – PARTITIONS (SLURM)
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+inst:Part_Adastra_scalar rdf:type hpc:Partition ;
+    rdfs:label "Adastra – scalar partition (AMD Genoa)"@en ,
+               "Adastra – partition scalaire (AMD Genoa)"@fr ;
+    rdfs:comment "Scalar partition of Adastra. 544 AMD Genoa nodes (192 cores/node, 768 GB DDR5). HPE Cray Slingshot 11."@en ,
+                 "Partition scalaire d'Adastra. 544 nœuds AMD Genoa (192 cœurs/nœud, 768 Go DDR5). HPE Cray Slingshot 11."@fr ;
+    hpc:partitionName "Adastra Scalar - Genoa" ;
+    hpc:allocatedFromQuota true ;
+    hpc:partitionType "cpu" ;
+    hpc:hasPeakPerformance [
+        rdf:type hpc:PeakPerformance ;
+        hpc:hasValue "4.01"^^xsd:decimal ;
+        hpc:hasUnit "PFlop/s" ;
+    ] ;
+    # 544 nodes × 768 GiB = 417,792 GiB -> 408 TiB
+    hpc:hasTotalScalarMemory [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "408"^^xsd:decimal ;
+        hpc:hasUnit "TiB"
+    ] ;
+    hpc:usesNodeType inst:Node_Adastra_Scalar ;
+    hpc:nodeCount 544 ;
+    hpc:totalCoresCount 104448 ;
+    hpc:supportsCompiler hpc:GCC , hpc:AOCC , hpc:CrayCC .
+
+inst:Part_Adastra_gpu rdf:type hpc:Partition ;
+    rdfs:label "Adastra – GPU partition (MI250X)"@en ,
+               "Adastra – partition GPU (MI250X)"@fr ;
+    rdfs:comment "Accelerated GPU partition. 356 HPE Cray EX235a nodes, 1 AMD Trento + 4×MI250X per node. ROCm software stack."@en ,
+                 "Partition GPU accélérée. 356 nœuds HPE Cray EX235a, 1 AMD Trento + 4×MI250X par nœud. Pile logicielle ROCm."@fr ;
+    hpc:partitionName "Adastra Accelerated - MI250X" ;
+    hpc:allocatedFromQuota true ;
+    hpc:partitionType "gpu+cpu" ;
+    hpc:nodeCount 356 ;
+    # 356 nodes × 64 cores/node
+    hpc:totalCoresCount 22784 ;
+    # 356 nodes × 4 cards/node = 1424 physical cards (= 2848 GCDs visible to ROCm)
+    hpc:acceleratorCount 1424 ;
+    hpc:hasPeakPerformance [
+        rdf:type hpc:PeakPerformance ;
+        hpc:hasValue "68.9"^^xsd:decimal  ;
+        hpc:hasUnit "PFlop/s" ;
+    ] ;
+    # 356 nodes × 256 GiB DDR4 = 91,136 GiB ≈ 89 TiB CPU RAM
+    hpc:hasTotalScalarMemory [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "89"^^xsd:decimal ;
+        hpc:hasUnit "TiB" ;
+    ] ;
+    # 356 nodes × 4 cards × 128 GiB HBM2e = 182,272 GiB ≈ 178 TiB
+    hpc:hasTotalAcceleratorMemory [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "178"^^xsd:decimal ;
+        hpc:hasUnit "TiB" ;
+    ] ;
+    hpc:usesNodeType inst:Node_Adastra_GPU .
+
+inst:Part_Adastra_apu rdf:type hpc:Partition ;
+    rdfs:label "Adastra2 – APU partition (MI300A)"@en ,
+               "Adastra2 – partition APU (MI300A)"@fr ;
+    rdfs:comment "MI300A APU partition (Adastra2, 2024). 28 nodes with unified CPU+GPU memory. Very energy-efficient. Green500 3rd Nov. 2024."@en ,
+                 "Partition APU MI300A (Adastra2, 2024). 28 nœuds avec mémoire CPU+GPU unifiée. Très économe en énergie. Green500 3e nov. 2024."@fr ;
+    hpc:partitionName "Adastra APU - MI300A" ;
+    hpc:allocatedFromQuota true ;
+    hpc:partitionType "apu" ;
+    hpc:nodeCount 28 ;
+    # 28 nodes × 4 MI300A × 24 CPU cores = 2688 CPU cores
+    hpc:totalCoresCount 2688 ;
+    # 28 nodes × 4 packages/node = 112 MI300A packages
+    hpc:acceleratorCount 112 ;
+    hpc:hasPeakPerformance [
+        rdf:type hpc:PeakPerformance ;
+        hpc:hasValue "6.98"^^xsd:decimal ;
+        hpc:hasUnit "PFlop/s" ;
+    ] ;
+    # 28 nodes × 4 MI300A × 128 GiB HBM3 = 14336 GiB ≈ 14 TiB unified memory
+    hpc:hasTotalAcceleratorMemory [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "14"^^xsd:decimal ;
+        hpc:hasUnit "TiB" ;
+    ] ;
+    hpc:usesNodeType inst:Node_Adastra_APU .
+
+inst:Part_Adastra_visu rdf:type hpc:Partition ;
+    rdfs:label "Adastra – visualization/prepost partition"@en ,
+               "Adastra – partition visualisation/pré-post"@fr ;
+    rdfs:comment "Visualization and pre/post-processing partition. 12 nodes, 2×AMD EPYC 9654 Genoa (192 cores/node), 2048 GiB DDR5, 2×NVIDIA L40 (48 GiB GDDR6 each). NOT deducted from compute allocation."@en ,
+                 "Partition de visualisation et pré/post-traitement. 12 nœuds, 2×AMD EPYC 9654 Genoa (192 cœurs/nœud), 2048 Gio DDR5, 2×NVIDIA L40 (48 Gio GDDR6 chacun). NON décompté de l'allocation de calcul."@fr ;
+    hpc:partitionName "Adastra visualization" ;
+    hpc:allocatedFromQuota false ;
+    hpc:partitionType "visualization" ;
+    hpc:nodeCount 12 ;
+    hpc:totalCoresCount 2304 ;
+    # 12 nodes × 2048 GiB = 24576 GiB ≈ 24 TiB
+    hpc:hasTotalScalarMemory [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "24"^^xsd:decimal ;
+        hpc:hasUnit "TiB"
+    ] ;
+    # 12 nodes × 2 L40 cards = 24 cards × 48 GiB = 1152 GiB
+    hpc:hasTotalAcceleratorMemory [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "1152"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] ;
+    hpc:usesNodeType inst:Node_Adastra_Visu .
+
+inst:Part_Adastra_frontend rdf:type hpc:Partition ;
+    rdfs:label "Adastra Frontend and Transfer Partition"@en ,
+               "Partition frontale et de transfert d'Adastra"@fr ;
+    rdfs:comment "Frontend and transfer partition. 10 login nodes used for SSH access, job submission, and data transfers. NOT deducted from compute allocation."@en ,
+                 "Partition frontale et de transfert. 10 nœuds de connexion utilisés pour l'accès SSH, la soumission de tâches et les transferts de données. NON décompté de l'allocation de calcul."@fr ;
+    hpc:partitionName "Adastra Frontend - Proliant DL385 Gen11" ;
+    hpc:partitionType "frontend, transfer" ;
+    hpc:allocatedFromQuota false ;
+    hpc:nodeCount 10 ;
+    # 10 nodes × 192 cores
+    hpc:totalCoresCount 1920 ;
+    hpc:usesNodeType inst:Node_Adastra_Frontend .
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 8 – FILE SYSTEM & STORAGE MOUNTS
+# ══════════════════════════════════════════════════════════════════════════════
+# EN – Dual Cray ClusterStor E1000 (Lustre): HOME 125 TiB SSD + SCRATCH
+#      1.89 PiB SSD. Scratch is purged after 30 days.
+# FR – Double Cray ClusterStor E1000 (Lustre) : HOME 125 Tio SSD + SCRATCH
+#      1,89 Pio SSD. Scratch purgé après 30 jours.
+###############################################################################
+
+inst:FS_Adastra_Lustre rdf:type hpc:FileSystem ;
+    rdfs:label "Adastra – Lustre parallel file system (Cray ClusterStor E1000)"@en ,
+               "Adastra – Système de fichiers parallèle Lustre (Cray ClusterStor E1000)"@fr ;
+    rdfs:comment "Dual Cray ClusterStor E1000 storage: HOME (125 TiB SSD, 77 GiB/s read) + SCRATCH (1.89 PiB SSD, 1086 GiB/s read, 786 GiB/s write). Scratch purged after 30 days."@en ,
+                 "Double stockage Cray ClusterStor E1000 : HOME (125 Tio SSD, 77 Gio/s en lecture) + SCRATCH (1,89 Pio SSD, 1086 Gio/s en lecture, 786 Gio/s en écriture). Scratch purgé après 30 jours."@fr ;
+    hpc:usesTechnology hpc:Lustre ;
+    hpc:hasThroughput inst:TP_1086GiBps .
+
+inst:Mount_Adastra_HOME rdf:type hpc:StorageMount ;
+    rdfs:label "Adastra – HOME (125 TiB SSD)"@en ,
+               "Adastra – HOME (125 Tio SSD)"@fr ;
+    hpc:mountPath "$HOME" ;
+    hpc:isPurged false ;
+    hpc:mountedOn inst:FS_Adastra_Lustre ;
+    hpc:hasStorageCapacity inst:StorageCap_125TiB .
+
+inst:Mount_Adastra_SCRATCH rdf:type hpc:StorageMount ;
+    rdfs:label "Adastra – SCRATCH (1.89 PiB SSD)"@en ,
+               "Adastra – SCRATCH (1,89 Pio SSD)"@fr ;
+    rdfs:comment "Scratch space: 1.89 PiB SSD. Purged after 30 days of inactivity."@en ,
+                 "Espace scratch : 1,89 Pio SSD. Purgé après 30 jours d'inactivité."@fr ;
+    hpc:mountPath "$SCRATCH" ;
+    hpc:isPurged true ;
+    hpc:mountedOn inst:FS_Adastra_Lustre ;
+    hpc:hasStorageCapacity inst:StorageCap_1_89PiB .
+
+inst:Mount_Adastra_WORK rdf:type hpc:StorageMount ;
+    rdfs:label "Adastra – $WORK"@en ,
+               "Adastra – $WORK"@fr ;
+    rdfs:comment "Mid-term storage for job results. Never purged. Not backed up."@en ,
+                 "Stockage à moyen terme pour les résultats de calcul. Jamais purgé. Non sauvegardé."@fr ;
+    hpc:mountPath "$WORK" ;
+    hpc:isPurged false ;
+    hpc:mountedOn inst:FS_Adastra_Lustre .
+
+inst:Mount_Adastra_STORE rdf:type hpc:StorageMount ;
+    rdfs:label "Adastra – $STORE"@en ,
+               "Adastra – $STORE"@fr ;
+    rdfs:comment "Long-term storage. Never purged. Backed up."@en ,
+                 "Stockage à long terme. Jamais purgé. Sauvegardé."@fr ;
+    hpc:mountPath "$STORE" ;
+    hpc:isPurged false ;
+    hpc:mountedOn inst:FS_Adastra_Lustre .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 9 – OPERATING SYSTEM
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+inst:OS_RHEL88 rdf:type hpc:OperatingSystem ;
+    rdfs:label "Red Hat Enterprise Linux 8.8"@en ,
+               "Red Hat Enterprise Linux 8.8"@fr ;
+    rdfs:comment "RHEL 8.8 (Ootpa) deployed on Adastra."@en ,
+                 "RHEL 8.8 (Ootpa) déployé sur Adastra."@fr ;
+    hpc:softwareName "Red Hat Enterprise Linux" ;
+    hpc:osVersion "8.8" ;
+    hpc:vendor "Red Hat" .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 10 – MEMORY MODELS
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ──── CPU RAM ─────────────────────────────────────────────────────────────────
+inst:Mem_DDR4_3200_256GiB rdf:type hpc:RAM ;
+    rdfs:label "256 GiB DDR4-3200 (Adastra GPU node CPU RAM)"@en ;
+    rdfs:comment "CPU-side RAM for Adastra MI250X accelerated nodes. 256 GiB DDR4-3200 per node."@en ,
+                 "RAM côté CPU pour les nœuds accélérés MI250X d'Adastra. 256 Gio DDR4-3200 par nœud."@fr ;
+    hpc:memoryModel "DDR4-3200" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "256"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_DDR5_4800_768GiB rdf:type hpc:RAM ;
+    rdfs:label "768 GiB DDR5-4800 (Adastra scalar node RAM)"@en ;
+    rdfs:comment "CPU RAM for Adastra scalar nodes (AMD Genoa). 768 GiB DDR5-4800 per node (12 channels × 32 GiB DIMM × 2 sockets)."@en ,
+                 "RAM CPU pour les nœuds scalaires d'Adastra (AMD Genoa). 768 Gio DDR5-4800 par nœud (12 canaux × 32 Gio DIMM × 2 sockets)."@fr ;
+    hpc:memoryModel "DDR5-4800" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "768"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_DDR5_4800_2048GiB rdf:type hpc:RAM ;
+    rdfs:label "2048 GiB DDR5-4800 (Adastra visu/prepost node RAM)"@en ;
+    rdfs:comment "CPU RAM for Adastra visualization/prepost nodes. 2048 GiB DDR5-4800 per node (16 channels × 64 GiB DIMM × 2 sockets)."@en ,
+                 "RAM CPU pour les nœuds de visualisation/pré-post d'Adastra. 2048 Gio DDR5-4800 par nœud (16 canaux × 64 Gio DIMM × 2 sockets)."@fr ;
+    hpc:memoryModel "DDR5-4800" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "2048"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+inst:Mem_DDR5_4800_512GiB rdf:type hpc:RAM ;
+    rdfs:label "512 GiB DDR5-4800 (Adastra frontend node RAM)"@en ;
+    rdfs:comment "CPU RAM for Adastra frontend and transfer nodes. 512 GiB DDR5-4800 per node."@en ,
+                 "RAM CPU pour les nœuds frontaux et de transfert d'Adastra. 512 Gio DDR5-4800 par nœud."@fr ;
+    hpc:memoryModel "DDR5-4800" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "512"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+# ──── GPU / Accelerator memory (HBM / GDDR) ──────────────────────────────────
+inst:Mem_MI250X_HBM_128GiB rdf:type hpc:HBMMemory ;
+    rdfs:label "128 GiB HBM2e (AMD MI250X card)"@en ;
+    rdfs:comment "HBM2e memory on AMD MI250X OAM card. 128 GiB total = 2 GCDs × 64 GiB. Each GCD has its own HBM stack."@en ,
+                 "Mémoire HBM2e sur carte AMD MI250X OAM. 128 Gio total = 2 GCDs × 64 Gio. Chaque GCD possède son propre empilement HBM."@fr ;
+    hpc:memoryModel "HBM2e" ;
+    hpc:hasMemoryCapacity inst:MemCap_128GiB .
+
+inst:Mem_MI300A_HBM_128GiB rdf:type hpc:HBMMemory ;
+    rdfs:label "128 GiB HBM3 (AMD MI300A package)"@en ;
+    rdfs:comment "Unified HBM3 memory on AMD MI300A APU package. Shared between integrated CPU and GPU compute dies. 128 GiB per package."@en ,
+                 "Mémoire HBM3 unifiée sur package APU AMD MI300A. Partagée entre les dies CPU et GPU intégrés. 128 Gio par package."@fr ;
+    hpc:memoryModel "HBM3" ;
+    hpc:hasMemoryCapacity inst:MemCap_128GiB .
+
+inst:Mem_NvidiaL40_48GiB rdf:type hpc:GDDRMemory ;
+    rdfs:label "48 GiB GDDR6 (NVIDIA L40)"@en ;
+    rdfs:comment "GDDR6 memory on NVIDIA L40 card. 48 GiB per card."@en ,
+                 "Mémoire GDDR6 sur carte NVIDIA L40. 48 Gio par carte."@fr ;
+    hpc:memoryModel "GDDR6" ;
+    hpc:hasMemoryCapacity [
+        rdf:type hpc:MemoryCapacity ;
+        hpc:hasValue "48"^^xsd:decimal ;
+        hpc:hasUnit "GiB"
+    ] .
+
+# ──── Local storage ───────────────────────────────────────────────────────────
+inst:Storage_SAS_SSD_1_6TiB rdf:type hpc:SAS_SSD ;
+    rdfs:label "1.6 TiB SAS MU SSD (frontend node)"@en ;
+    rdfs:comment "SAS Mixed-Use SSD 1.6 TiB. Frontend nodes are equipped with 4 units configured in RAID10 = 3.2 TiB usable."@en ,
+                 "SSD SAS Mixed-Use 1,6 Tio. Les nœuds frontaux en sont équipés de 4 unités configurées en RAID10 = 3,2 Tio utiles."@fr ;
+    hpc:hasPhysicalStorageCapacity [
+        rdf:type hpc:StorageCapacity ;
+        hpc:hasValue "1.6"^^xsd:decimal ;
+        hpc:hasUnit "TiB"
+    ] .
+
+
+###############################################################################
+# ══════════════════════════════════════════════════════════════════════════════
+# SECTION 11 – QUANTITATIVE VALUES
+# ══════════════════════════════════════════════════════════════════════════════
+###############################################################################
+
+# ──── Clock frequencies ──────────────────────────────────────────────────────
+# NOTE: Freq_2GHz was referenced by the Trento CPU but was missing in the
+#       canonical hpc-instances.ttl -> declared here to remove the dangling ref.
+inst:Freq_2GHz    rdf:type hpc:Frequency ; hpc:hasValue "2.0"^^xsd:decimal ; hpc:hasUnit "GHz" .
+inst:Freq_2_1GHz  rdf:type hpc:Frequency ; hpc:hasValue "2.1"^^xsd:decimal ; hpc:hasUnit "GHz" .
+inst:Freq_2_4GHz  rdf:type hpc:Frequency ; hpc:hasValue "2.4"^^xsd:decimal ; hpc:hasUnit "GHz" .
+
+# ──── Interconnect bandwidths ─────────────────────────────────────────────────
+inst:BW_200Gbps rdf:type hpc:Bandwidth ; hpc:hasValue "200"^^xsd:decimal ; hpc:hasUnit "Gb/s" .
+
+# ──── Memory capacities ───────────────────────────────────────────────────────
+inst:MemCap_128GiB rdf:type hpc:MemoryCapacity ;
+    hpc:hasValue "128"^^xsd:decimal ;
+    hpc:hasUnit "GiB" .
+
+# ──── Storage capacities (file system) ───────────────────────────────────────
+inst:StorageCap_125TiB rdf:type hpc:StorageCapacity ;
+    hpc:hasValue "125"^^xsd:decimal ;
+    hpc:hasUnit "TiB" .
+
+inst:StorageCap_1_89PiB rdf:type hpc:StorageCapacity ;
+    hpc:hasValue "1.89"^^xsd:decimal ;
+    hpc:hasUnit "PiB" .
+
+# ──── File system throughputs ─────────────────────────────────────────────────
+inst:TP_1086GiBps rdf:type hpc:Throughput ;
+    hpc:hasValue "1086"^^xsd:decimal ;
+    hpc:hasUnit "GiB/s" .
+
+# ──── Peak performance values ─────────────────────────────────────────────────
+inst:Perf_Adastra_80PFlops rdf:type hpc:PeakPerformance ;
+    rdfs:label "Adastra – ~79.9 PFlop/s peak (sum of partition peaks)"@en ,
+               "Adastra – ~79,9 PFlop/s crête (somme des crêtes de partition)"@fr ;
+    hpc:hasValue "79.9"^^xsd:decimal ;
+    hpc:hasUnit "PFlop/s" .
+
+###############################################################################
+# END OF CINES / ADASTRA INSTANCES
+###############################################################################
